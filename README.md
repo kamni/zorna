@@ -62,5 +62,5 @@ This project is open sourced under [GNU GPL Version 3](http://www.gnu.org/licens
 
 Author
 ------
-Noureddine AYACHI - [Twitter](http://twitter.com/#infoafraz) [E-mail](mailto://nayachi@afraz.fr)
+Noureddine AYACHI - [Twitter](http://twitter.com/infoafraz) [E-mail](mailto://nayachi@afraz.fr)
 
