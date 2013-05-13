@@ -11,7 +11,8 @@ The best way to test ZORNA is to use virtualenv. Virtualenv creates a virtual en
 
 To do this, install virtualenv as follows:
 
-  sudo pip install virtualenv
+	$ sudo pip install virtualenv
+	
 Once the installation is done, create a virtual environment as follows:
 
 	$ cd ~
