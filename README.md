@@ -15,8 +15,8 @@ To do this, install virtualenv as follows:
 Once the installation is done, create a virtual environment as follows:
 
 	$ cd ~
-$ virtualenv MyENV
-$ cd MyENV
+	$ virtualenv MyENV
+	$ cd MyENV
 Activate the virtual environment by typing the following command:
 
 	$ source bin/activate      ( ou bin/activate on Windows )
@@ -25,7 +25,7 @@ Notice that the prompt changes. This indicates that your virtual environment is 
 Continue by typing the following commands (update distribute and create the directory that will contain our test site)
 
 	(myENV)$ easy_install -U distribute
-(myENV)$ mkdir zornasite
+	(myENV)$ mkdir zornasite
 
 Download the latest version:
 [website](https://github.com/zorna/zorna/zipball/master
@@ -40,15 +40,15 @@ Install requirements:
 Execute the following commands to create tables in the database and do the migration:
 
 	(myENV)$ cd zornasite
-(myENV)$ python manage.py syncdb --all
-(myENV)$ python manage.py migrate --fake
+	(myENV)$ python manage.py syncdb --all
+	(myENV)$ python manage.py migrate --fake
 
 When creating tables, you will be asked for information needed to create the super administrator.
 
 Create the following symbolic links:
 
 	(myENV)$ cd public
-(myENV)$ ln -s ../../lib/python2.7/site-packages/ckeditor/static/ckeditor/ ckeditor
+	(myENV)$ ln -s ../../lib/python2.7/site-packages/ckeditor/static/ckeditor/ ckeditor
 
 Finally execute the following command from zornasite directory
 
