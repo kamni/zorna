@@ -27,8 +27,7 @@ Continue by typing the following commands (update distribute and create the dire
 	(myENV)$ easy_install -U distribute
 	(myENV)$ mkdir zornasite
 
-Download the latest version:
-[website](https://github.com/zorna/zorna/zipball/master)
+[Download the latest release](https://github.com/zorna/zorna/zipball/master)
 
 Unpack the archive in the directory zornasite:
 
