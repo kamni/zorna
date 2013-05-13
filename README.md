@@ -55,7 +55,7 @@ Finally execute the following command from zornasite directory
 	(myENV)$ python manage.py runserver
 And fire your browser to:
 
-	http://http://127.0.0.1:8000/
+	http://127.0.0.1:8000/
 
 License
 -------
