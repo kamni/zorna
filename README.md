@@ -56,3 +56,11 @@ And fire your browser to:
 
 	http://http://127.0.0.1:8000/
 
+License
+-------
+This project is open sourced under [GNU GPL Version 3](http://www.gnu.org/licenses/gpl-3.0.html).
+
+Author
+------
+Noureddine AYACHI - [Twitter](http://twitter.com/#infoafraz) [E-mail](mailto://nayachi@afraz.fr)
+
