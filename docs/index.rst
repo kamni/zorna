@@ -11,9 +11,10 @@ Getting Started
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-  fr/guides/acl
+    fr/index
+    en/index
 
 
 Indices and tables
