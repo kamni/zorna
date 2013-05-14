@@ -45,7 +45,11 @@ Execute the following commands to create tables in the database and do the migra
 
 When creating tables, you will be asked for information needed to create the super administrator.
 
-Create the following symbolic links:
+Create folder where ZORNA will store media files ( user-uploaded content )
+
+	(myEnv)$ mkdir upload && mkdir upload/ickeditor
+
+Create the following symbolic link for ckeditor static files :
 
 	(myENV)$ cd public
 	(myENV)$ ln -s ../../lib/python2.7/site-packages/ckeditor/static/ckeditor/ ckeditor
