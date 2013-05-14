@@ -14,6 +14,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+  guides/acl
 
 
 Indices and tables
