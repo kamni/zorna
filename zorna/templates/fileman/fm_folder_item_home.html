@@ -1,0 +1,48 @@
+{% load i18n %}
+<li class="webpage">
+	<table>
+		<tr>
+			<td width="1%" valign="top">
+		      	<a href="{% url get_file %}?file={{ f.file_info.path}}/{{ f.file_info.realname}}">
+		        	{% if f.file_info.ext in "pdf xls ppt doc" %}
+		          	<img src="{{ MEDIA_URL }}images/icons/{{f.file_info.ext}}.gif" />
+		        	{% else %}
+		          	<img src="{{ MEDIA_URL }}images/icons/txt.gif" />
+		        	{% endif %}
+				</a>				
+			</td>
+			<td>
+				<ul class="options">
+					<li>{{f.file_path}}</li>
+					{% if f.file_info.manager%}
+					<li><a title="{% trans "Properties"%}" href="#" rel="{{cdir}}" class="properties"><img src="/zmedia/images/icons/properties.png" alt="{% trans "Properties"%}"/></a></li>
+					{% endif %}
+				</ul>
+				<a rel="{{ f.file_info.path}}/" fid="{{f.pk}}" href="{% url get_file %}?file={{ f.file_info.path}}/{{ f.file_info.realname}}" class="title">{{f.file_info.name}}</a>
+				<br />
+				<span class="smalltext">&nbsp;{{f.description}}</span>
+				<div>
+			    	<ul class="fm-tags">
+				    	{% for tag in f.get_tag_list %}
+				    		<li><a href="#">{{tag}}</a></li>
+				    	{% endfor %}
+			    	</ul>		
+					<ul class="options-wrapper">
+						<li>
+							<div class="creator">
+								<span class="smalltext">{{f.owner.get_full_name}} {% trans "on" %} {{f.time_created}}</span>
+							</div>
+						</li>
+						{% if f.time_created != f.time_updated %}
+						<li>
+							<div class="modifier">
+								<span class="smalltext">{{f.modifier.get_full_name}} {% trans "on" %} {{f.time_updated}}</span>
+							</div>
+						</li>
+						{% endif %}
+					</ul>				
+				</div>
+			</td>
+		</tr>
+	</table>
+</li>

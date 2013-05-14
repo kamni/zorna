@@ -1,0 +1,55 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="zbloc">
+  <h1>{{ title }}</h1>
+<form id="form_edit_field" action="" method="post">{% csrf_token %}
+  <input type="hidden" name="tempfile" value="{{tempfile}}"/>
+  <input type="hidden" name="separator" value="{{separator}}"/>
+  <input type="hidden" name="encoding" value="{{encoding}}"/>
+  <fieldset class="module aligned">
+  	{% if message %}
+  	<div>
+		<ul class="errorlist">
+    		<li>{{ message }}</li>
+  		</ul>
+  	</div>
+  	{% endif %}
+  {% for row in csv_header %}
+  <div class="form-row">
+    <div>
+  		<table>
+  			<tr>
+  				<td>
+			      <label>{{ row.label }}</label>
+  				</td>
+  				<td>
+  					<select name="field_type_{{row.id}}">
+  						<option value="0">-----------</option>
+  						{% for field in user_field_choices %}
+  						<option value="{{field.id}}">{{field.label}}</option>
+  						{% endfor %}
+  						</optgroup>
+  					</select>
+  				</td>
+  			</tr>
+  		</table>       	
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="{% trans "Import" %}" />
+</form>
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "account/admin_right_menu.html" %}
+{% endblock %}

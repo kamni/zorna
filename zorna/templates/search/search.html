@@ -1,0 +1,65 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/search.css" />
+{% endblock %}
+
+{% block zorna_left_content %}
+	<div id="search">
+    <h2>{% trans "Search results"%}</h2>
+	{% for k,p in results.iteritems %}
+		<div class="result_type">
+    	{% if k == "faqs" %}
+        	<h3>{% trans "Faqs" %}</h3>
+		{% endif %}
+    	{% if k == "articles" %}
+        	<h3>{% trans "Articles" %}</h3>
+    	{% endif %}
+		</div>
+    {% for result in p.page.object_list %}
+    	<div class="search_results">
+    		<div class="item {{k}}">
+    			<div class="object_content">
+    				<h3>
+				        <a href="{{ result.object.get_absolute_url }}">{{ result.object }}</a>
+    				</h3>
+    				<div class="object_header">
+	    				{% if k == "articles" %}
+    					<span>{% trans "Article"%} | {{result.pub_date|date:"d M Y"}}</span>
+	    				| <strong>{% trans "By"%} {{result.author}}</strong>
+	    				{% endif %}
+	    				{% if k == "faqs" %}
+    					<span>{% trans "Faq"%} | {{result.faq_name}} | {{result.category }}</span>
+	    				{% endif %}
+    				</div>
+    				<p style="margin: 1px 50px 5px 4px;">
+    				{% if k == "faqs" %}
+    				{{result.object.answer|striptags|truncatewords_html:50|safe}}
+    				{% endif %}
+    				{% if k == "articles" %}
+    				{{result.object.body|striptags|truncatewords_html:50|safe}}
+    				{% endif %}
+    				</p>
+    			</div>
+    		</div>
+    	</div>
+    {% endfor %}
+
+    {% if p.page.has_previous or p.page.has_next %}
+        <div class="pagination_container">
+            <span class="previous" >{% if p.page.has_previous %}
+            	<a href="?what={{k}}&amp;q={{ query }}&amp;page={{ p.page.previous_page_number }}">{% endif %}Previous{% if p.page.has_previous %}</a>{% endif %}</span>
+            |
+            <span class="next" >{% if p.page.has_next %}<a href="?what={{k}}&amp;q={{ query }}&amp;page={{ p.page.next_page_number }}">{% endif %}Next{% if p.page.has_next %}</a>{% endif %}</span>
+        </div>
+    {% endif %}
+    {% empty %}
+        <p>{% trans "No results found" %}</p>
+    {% endfor %}
+	</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "search/search_form.html" %}
+{% endblock %}

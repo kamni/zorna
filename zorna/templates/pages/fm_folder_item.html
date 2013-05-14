@@ -1,0 +1,14 @@
+{% load i18n %}
+		<li class="webpage">
+			<ul class="options">
+				<li><a title="{% trans "Rename page"%}" href="#" class="edit_label" rel="{{cdir}}">{% trans "Rename"%}</a></li>
+				<li><a title="{% trans "Clone this page"%}" href="#" rel="{{cdir}}" class="clone">{% trans "Clone"%}</a></li>
+				<li><a title="{% trans "Delete this page from the server" %}" href="#" rel="{{cdir}}" class="delete">{% trans "Delete" %}</a></li>
+				<li><a title="{% trans "Cut this page" %}" href="#" rel="{{cdir}}" class="cut">{% trans "Cut" %}</a></li>
+			</ul>
+			<a title="{{f}}" href="#" rel="{{cdir}}" class="title">{{f}}</a>
+			{% if file_type == "file"%}
+			<br />
+			<a class="url details" rel="external" href="{% url zorna_content cdir|add:'/'|add:f %}/" title="{% url zorna_content f %}">{{f}}.html</a>
+			{% endif %}
+		</li>

@@ -1,0 +1,53 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load articles_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/articles.css" />
+{% endblock %}
+
+{% block zorna_page_content %}
+{% get_categories_by_permission reader as reader_categories %}
+{% get_recent_stories 5 as stories %}
+  <div id="category_content">
+        {% for story in stories %}
+        <div id="story_topbar">
+          <ul class="story_categories ps-red">
+          {% for cat in story.current_categories %}
+          {% if cat.pk in reader_categories %}
+          <li><a href="{{ cat.get_url_path }}">{{ cat.name }}</a></li>
+          {%  endif %}
+          {% endfor %}
+          </ul>
+        </div>
+	    <div class="category_stories_item">
+	      {% if story.image %}
+	      <div class="{% cycle 'hp_story_img_right' 'hp_story_img_left' %}">
+	        <img src="{% url get_story_image story.pk %}" class="imgresize">
+	      </div>
+	      {% endif %}
+	      <div class="hp_story_text">
+	        <div class="hp_story_title">
+	          <a href="{% url view_story story.current_category.pk story.pk story.slug %}">{{ story.title }}</a>
+	        </div>
+	        <div class="hp_story_intro">
+	          <a href="{% url view_story story.current_category.pk story.pk story.slug %}">{{story.body|striptags|truncatewords_html:50|safe}}</a>
+	        </div>
+	        {% get_story_attachments story as attachments %}
+	        {% if attachments %}
+		        <div>
+		        	<ul class="hp_story_files">
+		        	{% for doc in attachments %}
+		        		<li><a href="{{doc.file_url}}" title="{{doc.description}}">{{doc.file_name}}</a></li>
+		        	{% endfor %}
+		        	</ul>
+		        </div>
+	        {% endif %}
+	        <div class="hp_story_author">
+	          &mdash; par {{story.get_owner_full_name }},&nbsp;<span class="hp_story_date">{{ story.time_created }}</span>
+	        </div>
+	      </div>
+	    </div> 
+        {% endfor %}
+  </div>
+{% endblock %}

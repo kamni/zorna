@@ -1,0 +1,8 @@
+{% load i18n %}
+<h3><a href="{{ next }}">{{ community.name }}</a></h3>
+<ul>
+  <li><a href="{% url community_members community.pk  %}?next={{next}}">{% trans "Members" %}</a></li>
+  <li><a href="{% url community_managers community.pk  %}?next={{next}}">{% trans "Managers" %}</a></li>
+  <li><a href="{% url manage_community_members community.pk  %}?next={{next}}">{% trans "Add/Remove members" %}</a></li>
+  <li><a href="{% url manage_community_managers community.pk  %}?next={{next}}">{% trans "Add/Remove managers" %}</a></li>
+</ul>

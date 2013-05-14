@@ -1,0 +1,18 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	var json_data = {{ json_data|safe }};
+	$("#{{ input_suggest }}").autocomplete(json_data,
+			{ 
+			dataType: "json",
+            parse: function(data) {
+                return $.map(data, function(row) {
+                    return { data:row, value:row[1], result:row[0] };
+                });
+			}
+			}).result(
+	                function(e, data, value) {
+	                    $("#{{ input_result }}").val(data[1]);
+	                }
+	            );
+});
+</script>

@@ -1,0 +1,3031 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-27 16:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: .\models.py:40
+msgid "Date created"
+msgstr ""
+
+#: .\models.py:41
+msgid "Date updated"
+msgstr ""
+
+#: .\models.py:42
+msgid "Enabled"
+msgstr ""
+
+#: .\utils.py:118 .\utils.py:121 .\templates\skins\default\full.html.py:5
+#: .\templates\skins\default\left_middle_right.html.py:5
+#: .\templates\skins\default\left_right.html.py:5
+msgid "Intranet"
+msgstr ""
+
+#: .\account\forms.py:19 .\account\forms.py:74
+msgid "Password"
+msgstr ""
+
+#: .\account\forms.py:21 .\account\forms.py:76
+msgid "Password (again)"
+msgstr ""
+
+#: .\account\forms.py:28 .\account\forms.py:102
+msgid "You must type the same password each time"
+msgstr ""
+
+#: .\account\forms.py:30
+msgid "You must type password"
+msgstr ""
+
+#: .\account\forms.py:36
+msgid "Username"
+msgstr ""
+
+#: .\account\forms.py:37 .\account\forms.py:79
+msgid "Email address"
+msgstr ""
+
+#: .\account\forms.py:38 .\account\forms.py:77
+#: .\templates\account\users_administrators.html.py:24
+#: .\templates\account\users_group.html.py:25
+#: .\templates\account\users_list.html.py:15
+msgid "Firstname"
+msgstr ""
+
+#: .\account\forms.py:39 .\account\forms.py:78
+#: .\templates\account\users_administrators.html.py:25
+#: .\templates\account\users_group.html.py:26
+#: .\templates\account\users_list.html.py:16
+msgid "Lastname"
+msgstr ""
+
+#: .\account\forms.py:40
+msgid "active"
+msgstr ""
+
+#: .\account\forms.py:40
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: .\account\forms.py:59 .\account\forms.py:89
+msgid ""
+"That username has invalid characters. The valid values are letters, numbers "
+"and underscore."
+msgstr ""
+
+#: .\account\forms.py:66 .\account\forms.py:94
+msgid "This username is already taken. Please choose another."
+msgstr ""
+
+#: .\account\forms.py:72
+msgid "Login ID"
+msgstr ""
+
+#: .\account\forms.py:142
+msgid "Account activation on"
+msgstr ""
+
+#: .\account\forms.py:151
+msgid "Your site has recorded a new registration"
+msgstr ""
+
+#: .\account\forms.py:182 .\articles\forms.py:56
+#, python-format
+msgid ""
+"%(ext)s is an invalid file extension. Authorized extensions are : %"
+"(valid_exts_list)s"
+msgstr ""
+
+#: .\account\forms.py:185
+msgid "Please, choose a valid image file"
+msgstr ""
+
+#: .\account\models.py:19 .\acl\models.py:93 .\articles\models.py:21
+#: .\communities\models.py:22 .\fileman\models.py:17 .\notes\models.py:19
+msgid "name"
+msgstr ""
+
+#: .\account\models.py:74
+msgid "activation key"
+msgstr ""
+
+#: .\account\models.py:76
+msgid "last activity"
+msgstr ""
+
+#: .\account\models.py:77 .\site\models.py:44
+msgid "groups"
+msgstr ""
+
+#: .\account\models.py:78
+msgid ""
+"In addition to the permissions manually assigned, this user will also get "
+"all permissions granted to each group he/she is in."
+msgstr ""
+
+#: .\account\models.py:83
+msgid "User profile"
+msgstr ""
+
+#: .\account\models.py:145
+msgid "User avatar"
+msgstr ""
+
+#: .\account\models.py:149
+#, python-format
+msgid "Avatar for %s"
+msgstr ""
+
+#: .\account\views.py:196 .\templates\account\admin_right_menu.html.py:15
+msgid "Add new group"
+msgstr ""
+
+#: .\account\views.py:216
+msgid "Update group"
+msgstr ""
+
+#: .\acl\models.py:95
+msgid "codename"
+msgstr ""
+
+#: .\acl\models.py:99
+msgid "permission"
+msgstr ""
+
+#: .\acl\models.py:100
+msgid "permissions"
+msgstr ""
+
+#: .\acl\models.py:350
+msgid "Acl permission"
+msgstr ""
+
+#: .\acl\models.py:351
+msgid "Acl permissions"
+msgstr ""
+
+#: .\acl\models.py:406
+#, python-format
+msgid "Can %(check)s this %(object_name)s"
+msgstr ""
+
+#: .\articles\feeds.py:10
+msgid "Updates on changes and additions to "
+msgstr ""
+
+#: .\articles\feeds.py:17
+#, python-format
+msgid "Articles for category %s"
+msgstr ""
+
+#: .\articles\feeds.py:23
+#, python-format
+msgid "Articles recently published in category %s"
+msgstr ""
+
+#: .\articles\forms.py:30 .\faq\forms.py:26 .\faq\forms.py:48
+msgid "You must provide a slug or a category name"
+msgstr ""
+
+#: .\articles\forms.py:33 .\notes\forms.py:32
+msgid "Attachment"
+msgstr ""
+
+#: .\articles\forms.py:34 .\articles\models.py:106 .\fileman\forms.py:32
+#: .\fileman\forms.py:38 .\forms\forms.py:50 .\forms\models.py:36
+#: .\forms\models.py:68 .\notes\forms.py:33
+#: .\templates\communities\admin_list_communities.html.py:19
+#: .\templates\forms\list_lists.html.py:37
+msgid "Description"
+msgstr ""
+
+#: .\articles\forms.py:41 .\articles\forms.py:43 .\communities\models.py:118
+#: .\pages\forms.py:20
+#: .\templates\admin\account\usergroup\change_list_table.html.py:10
+#: .\templates\admin\pages\page\change_list_table.html.py:9
+msgid "title"
+msgstr ""
+
+#: .\articles\forms.py:42 .\articles\models.py:22 .\articles\models.py:75
+#: .\fileman\models.py:18 .\notes\models.py:20
+msgid "slug"
+msgstr ""
+
+#: .\articles\forms.py:44 .\notes\forms.py:11
+msgid "body"
+msgstr ""
+
+#: .\articles\forms.py:69
+msgid "You must provide a slug or a story title"
+msgstr ""
+
+#: .\articles\models.py:23 .\forms\models.py:78
+msgid "Template"
+msgstr ""
+
+#: .\articles\models.py:24 .\articles\models.py:81
+msgid "Allow comment"
+msgstr ""
+
+#: .\articles\models.py:28
+msgid "articles category"
+msgstr ""
+
+#: .\articles\models.py:29
+msgid "articles categories"
+msgstr ""
+
+#: .\articles\models.py:52
+msgid "Who can browse this category"
+msgstr ""
+
+#: .\articles\models.py:53
+msgid "Who can submit articles to this category"
+msgstr ""
+
+#: .\articles\models.py:54
+msgid "Who can manage this category"
+msgstr ""
+
+#: .\articles\models.py:73
+msgid "categories"
+msgstr ""
+
+#: .\articles\models.py:74 .\articles\models.py:116 .\notes\forms.py:10
+#: .\templates\articles\story_default.html.py:89
+#: .\templates\articles\writer_stories_list.html.py:17
+msgid "Title"
+msgstr ""
+
+#: .\articles\models.py:76
+msgid "Head"
+msgstr ""
+
+#: .\articles\models.py:77
+msgid "Body"
+msgstr ""
+
+#: .\articles\models.py:84
+msgid "story"
+msgstr ""
+
+#: .\articles\models.py:85
+msgid "stories"
+msgstr ""
+
+#: .\articles\models.py:108 .\articles\models.py:118
+msgid "article"
+msgstr ""
+
+#: .\articles\models.py:111 .\articles\models.py:112
+msgid "article attachments"
+msgstr ""
+
+#: .\articles\models.py:117
+msgid "Comment"
+msgstr ""
+
+#: .\articles\models.py:121
+msgid "article comment"
+msgstr ""
+
+#: .\articles\models.py:122
+msgid "article comments"
+msgstr ""
+
+#: .\calendars\forms.py:10
+msgid "-----"
+msgstr ""
+
+#: .\calendars\forms.py:11
+msgid "Weekly"
+msgstr ""
+
+#: .\calendars\forms.py:12
+msgid "Daily"
+msgstr ""
+
+#: .\calendars\forms.py:13
+msgid "Monthly"
+msgstr ""
+
+#: .\calendars\forms.py:14
+msgid "Yearly"
+msgstr ""
+
+#: .\calendars\forms.py:17 .\calendars\forms.py:23
+msgid "S"
+msgstr ""
+
+#: .\calendars\forms.py:18
+msgid "M"
+msgstr ""
+
+#: .\calendars\forms.py:19 .\calendars\forms.py:21
+msgid "T"
+msgstr ""
+
+#: .\calendars\forms.py:20
+msgid "W"
+msgstr ""
+
+#: .\calendars\forms.py:22
+msgid "F"
+msgstr ""
+
+#: .\calendars\forms.py:31 .\communities\forms.py:112 .\forms\forms.py:461
+#: .\forms\forms.py:518 .\site\models.py:14
+msgid "Start date"
+msgstr ""
+
+#: .\calendars\forms.py:32 .\communities\forms.py:113 .\forms\forms.py:462
+#: .\forms\forms.py:519 .\site\models.py:15
+msgid "End date"
+msgstr ""
+
+#: .\calendars\forms.py:32 .\calendars\forms.py:45 .\communities\forms.py:113
+#: .\communities\forms.py:124 .\site\forms.py:26
+msgid "The end time must be later than start time."
+msgstr ""
+
+#: .\calendars\forms.py:33
+msgid "Until date"
+msgstr ""
+
+#: .\calendars\forms.py:33
+msgid "This date is ignored for one time only events."
+msgstr ""
+
+#: .\calendars\forms.py:34
+msgid "Rule"
+msgstr ""
+
+#: .\calendars\forms.py:34
+msgid "Select '----' for a one time only event."
+msgstr ""
+
+#: .\calendars\forms.py:35
+msgid "Repeat on"
+msgstr ""
+
+#: .\calendars\forms.py:36
+msgid "Repeat every"
+msgstr ""
+
+#: .\calendars\models.py:21 .\calendars\models.py:58
+#: .\communities\models.py:28
+msgid "background color"
+msgstr ""
+
+#: .\calendars\models.py:24
+msgid "calendar category"
+msgstr ""
+
+#: .\calendars\models.py:25
+msgid "calendar categories"
+msgstr ""
+
+#: .\calendars\models.py:58
+msgid "If used, calendar category is ignored."
+msgstr ""
+
+#: .\calendars\models.py:59
+msgid "location"
+msgstr ""
+
+#: .\calendars\models.py:60
+msgid "Busy"
+msgstr ""
+
+#: .\calendars\models.py:66 .\calendars\models.py:67
+msgid "Event details"
+msgstr ""
+
+#: .\calendars\models.py:92
+msgid "secret key"
+msgstr ""
+
+#: .\calendars\models.py:99
+msgid "zorna calendar"
+msgstr ""
+
+#: .\calendars\models.py:100
+msgid "zorna calendars"
+msgstr ""
+
+#: .\calendars\models.py:116
+msgid "Can view event details"
+msgstr ""
+
+#: .\calendars\models.py:117
+msgid "Can make change to events"
+msgstr ""
+
+#: .\calendars\models.py:118
+msgid "Can add new event"
+msgstr ""
+
+#: .\communities\api.py:156 .\communities\views.py:791
+#: .\templates\communities\home_base.html.py:78
+msgid "Followed posts"
+msgstr ""
+
+#: .\communities\api.py:158 .\communities\views.py:797
+#: .\templates\communities\home_base.html.py:84
+msgid "Recent messages"
+msgstr ""
+
+#: .\communities\api.py:160 .\communities\views.py:794
+#: .\templates\communities\home_base.html.py:81
+msgid "Direct to me"
+msgstr ""
+
+#: .\communities\api.py:165
+msgid "Content type"
+msgstr ""
+
+#: .\communities\api.py:167 .\communities\views.py:1016 .\forms\forms.py:68
+#: .\forms\models.py:77 .\templates\articles\story_default.html.py:93
+msgid "Message"
+msgstr ""
+
+#: .\communities\api.py:169 .\templates\communities\home_base.html.py:104
+msgid "All"
+msgstr ""
+
+#: .\communities\forms.py:31
+msgid "Recipients"
+msgstr ""
+
+#: .\communities\forms.py:32 .\communities\views.py:810
+msgid "Attachments"
+msgstr ""
+
+#: .\communities\forms.py:104
+msgid "Choose"
+msgstr ""
+
+#: .\communities\forms.py:104
+msgid "Enter names"
+msgstr ""
+
+#: .\communities\forms.py:105
+msgid "Manager"
+msgstr ""
+
+#: .\communities\forms.py:105
+msgid "Check this if you want to invite these people as managers"
+msgstr ""
+
+#: .\communities\forms.py:106
+msgid "Tell them why you're adding them"
+msgstr ""
+
+#: .\communities\forms.py:122
+msgid "You must specify start and end dates"
+msgstr ""
+
+#: .\communities\forms.py:178 .\communities\forms.py:182
+msgid "You must specify at least two choices"
+msgstr ""
+
+#: .\communities\forms.py:207
+msgid "Invalid url"
+msgstr ""
+
+#: .\communities\forms.py:209
+msgid "Invalid url or script embed codes are not supported"
+msgstr ""
+
+#: .\communities\models.py:23 .\pages\forms.py:22
+msgid "description"
+msgstr ""
+
+#: .\communities\models.py:25
+msgid "Option of making your community Public, Private, or Hidden"
+msgstr ""
+
+#: .\communities\models.py:26
+msgid "enable calendar"
+msgstr ""
+
+#: .\communities\models.py:27
+msgid "Enable this option to let members access calendar community"
+msgstr ""
+
+#: .\communities\models.py:31
+msgid "community"
+msgstr ""
+
+#: .\communities\models.py:32 .\communities\models.py:47
+msgid "communities"
+msgstr ""
+
+#: .\communities\models.py:40
+msgid "Who can join this community"
+msgstr ""
+
+#: .\communities\models.py:41
+msgid "Who can manage this community"
+msgstr ""
+
+#: .\communities\models.py:46
+msgid "message"
+msgstr ""
+
+#: .\communities\models.py:48 .\communities\models.py:106
+msgid "users"
+msgstr ""
+
+#: .\communities\models.py:50
+msgid "followers"
+msgstr ""
+
+#: .\communities\models.py:53
+msgid "community message"
+msgstr ""
+
+#: .\communities\models.py:54
+msgid "community messages"
+msgstr ""
+
+#: .\communities\models.py:67
+msgid "community message extra info"
+msgstr ""
+
+#: .\communities\models.py:68
+msgid "community messages extra info"
+msgstr ""
+
+#: .\communities\models.py:75
+msgid "event"
+msgstr ""
+
+#: .\communities\models.py:78
+msgid "community event"
+msgstr ""
+
+#: .\communities\models.py:79
+msgid "community events"
+msgstr ""
+
+#: .\communities\models.py:93 .\faq\forms.py:51 .\faq\models.py:63
+msgid "question"
+msgstr ""
+
+#: .\communities\models.py:96
+msgid "poll"
+msgstr ""
+
+#: .\communities\models.py:97
+msgid "polls"
+msgstr ""
+
+#: .\communities\models.py:104
+msgid "choice"
+msgstr ""
+
+#: .\communities\models.py:109
+msgid "poll choice"
+msgstr ""
+
+#: .\communities\models.py:110
+msgid "poll choices"
+msgstr ""
+
+#: .\communities\models.py:117 .\communities\models.py:122
+msgid "url"
+msgstr ""
+
+#: .\communities\models.py:119
+msgid "excerpt"
+msgstr ""
+
+#: .\communities\models.py:123
+msgid "urls"
+msgstr ""
+
+#: .\communities\views.py:38
+msgid "Error"
+msgstr ""
+
+#: .\communities\views.py:47
+msgid "Poll"
+msgstr ""
+
+#: .\communities\views.py:83 .\communities\views.py:86
+msgid "Polls"
+msgstr ""
+
+#: .\communities\views.py:208
+msgid "Event"
+msgstr ""
+
+#: .\communities\views.py:244 .\communities\views.py:247
+#: .\communities\views.py:309
+msgid "Events"
+msgstr ""
+
+#: .\communities\views.py:339
+msgid "Link"
+msgstr ""
+
+#: .\communities\views.py:375 .\communities\views.py:378
+msgid "Links"
+msgstr ""
+
+#: .\communities\views.py:696 .\communities\views.py:864
+#: .\templates\communities\home_base.html.py:87
+#: .\templates\communities\manager_right_menu.html.py:4
+msgid "Members"
+msgstr ""
+
+#: .\communities\views.py:710
+#: .\templates\communities\manager_right_menu.html.py:5
+msgid "Managers"
+msgstr ""
+
+#: .\communities\views.py:725
+msgid "Members of "
+msgstr ""
+
+#: .\communities\views.py:753
+msgid "Managers of "
+msgstr ""
+
+#: .\communities\views.py:800 .\templates\communities\home_base.html.py:75
+msgid "Messages"
+msgstr ""
+
+#: .\communities\views.py:1004 .\communities\views.py:1497
+msgid "Access Denied"
+msgstr ""
+
+#: .\communities\views.py:1027
+#: .\templates\communities\message_entry.html.py:57
+msgid "Follow"
+msgstr ""
+
+#: .\communities\views.py:1028
+#: .\templates\communities\message_entry.html.py:54
+msgid "Unfollow"
+msgstr ""
+
+#: .\communities\views.py:1155
+#, python-format
+msgid "New reply from %s"
+msgstr ""
+
+#: .\communities\views.py:1470
+#, python-format
+msgid "%(user)s added you to %(community)s"
+msgstr ""
+
+#: .\communities\views.py:1473
+msgid "manager"
+msgstr ""
+
+#: .\communities\views.py:1475
+msgid "member"
+msgstr ""
+
+#: .\faq\forms.py:52 .\faq\models.py:64
+msgid "answer"
+msgstr ""
+
+#: .\faq\models.py:25
+msgid "Who can browse this faq"
+msgstr ""
+
+#: .\faq\models.py:26
+msgid "Who can manage this faq"
+msgstr ""
+
+#: .\faq\models.py:37 .\faq\models.py:66 .\forms\models.py:119
+msgid "sort order"
+msgstr ""
+
+#: .\fileman\forms.py:13 .\forms\forms.py:49 .\forms\models.py:35
+#: .\forms\models.py:66 .\templates\fileman\file_properties_popup.html.py:3
+#: .\templates\forms\list_lists.html.py:36
+msgid "Name"
+msgstr ""
+
+#: .\fileman\forms.py:14
+msgid "Slug"
+msgstr ""
+
+#: .\fileman\forms.py:28
+msgid "You must provide a slug or a folder name"
+msgstr ""
+
+#: .\fileman\forms.py:31 .\fileman\forms.py:37 .\forms\forms.py:98
+#: .\templates\fileman\log_files.html.py:16
+msgid "File"
+msgstr ""
+
+#: .\fileman\models.py:19
+msgid "Inherit permissions"
+msgstr ""
+
+#: .\fileman\models.py:23
+msgid "folder"
+msgstr ""
+
+#: .\fileman\models.py:24
+msgid "folders"
+msgstr ""
+
+#: .\fileman\models.py:39
+msgid "Who can browse this folder"
+msgstr ""
+
+#: .\fileman\models.py:40
+msgid "Who can upload files to this folder"
+msgstr ""
+
+#: .\fileman\models.py:41
+msgid "Who can manage this folder"
+msgstr ""
+
+#: .\fileman\models.py:51
+msgid "file"
+msgstr ""
+
+#: .\fileman\models.py:55
+#, python-format
+msgid "file %s"
+msgstr ""
+
+#: .\fileman\views.py:411
+msgid "Folder renamed successfully"
+msgstr ""
+
+#: .\fileman\views.py:418 .\fileman\views.py:436
+msgid "Invalid folder name"
+msgstr ""
+
+#: .\fileman\views.py:429
+msgid "Folder created successfully"
+msgstr ""
+
+#: .\fileman\views.py:439 .\fileman\views.py:478 .\fileman\views.py:518
+#: .\fileman\views.py:550 .\fileman\views.py:629 .\fileman\views.py:635
+#: .\notes\views.py:166 .\notes\views.py:190 .\notes\views.py:254
+#: .\notes\views.py:338
+msgid "Access denied"
+msgstr ""
+
+#: .\fileman\views.py:473 .\fileman\views.py:513 .\fileman\views.py:545
+#: .\fileman\views.py:624
+msgid "Incorrect path"
+msgstr ""
+
+#: .\fileman\views.py:494
+msgid "File renamed successfully"
+msgstr ""
+
+#: .\fileman\views.py:497 .\fileman\views.py:532 .\fileman\views.py:609
+#: .\fileman\views.py:678
+msgid "Invalid file path"
+msgstr ""
+
+#: .\fileman\views.py:526
+msgid "File deleted successfully"
+msgstr ""
+
+#: .\fileman\views.py:529
+msgid "Invalid file name"
+msgstr ""
+
+#: .\fileman\views.py:585
+msgid "Files uploaded successfully"
+msgstr ""
+
+#: .\fileman\views.py:587
+msgid "No file uploaded"
+msgstr ""
+
+#: .\fileman\views.py:593 .\fileman\views.py:665 .\notes\views.py:230
+msgid "Invalid form"
+msgstr ""
+
+#: .\fileman\views.py:659
+msgid "File updated successfully"
+msgstr ""
+
+#: .\forms\api.py:169 .\forms\views.py:134 .\forms\views.py:171
+#: .\forms\views.py:197 .\forms\views.py:239 .\forms\views.py:289
+#: .\forms\views.py:336 .\forms\views.py:352 .\forms\views.py:400
+#: .\forms\views.py:441 .\forms\views.py:840 .\forms\views.py:877
+#: .\forms\views.py:914 .\forms\views.py:945 .\forms\views.py:985
+#: .\forms\views.py:1068 .\templates\forms\home.html.py:59
+#: .\templatetags\zorna_tags.py:110 .\templatetags\zorna_tags.py:143
+msgid "Forms"
+msgstr ""
+
+#: .\forms\fields.py:27 .\forms\views.py:818
+msgid "Single line text"
+msgstr ""
+
+#: .\forms\fields.py:28 .\forms\views.py:819
+msgid "Multi line text"
+msgstr ""
+
+#: .\forms\fields.py:29 .\forms\views.py:820
+msgid "Email"
+msgstr ""
+
+#: .\forms\fields.py:30
+msgid "Check box"
+msgstr ""
+
+#: .\forms\fields.py:31
+msgid "Check boxes"
+msgstr ""
+
+#: .\forms\fields.py:32
+msgid "Drop down"
+msgstr ""
+
+#: .\forms\fields.py:33
+msgid "Multi select"
+msgstr ""
+
+#: .\forms\fields.py:34
+msgid "Radio buttons"
+msgstr ""
+
+#: .\forms\fields.py:35
+msgid "File upload"
+msgstr ""
+
+#: .\forms\fields.py:36 .\forms\views.py:821
+msgid "Date"
+msgstr ""
+
+#: .\forms\fields.py:37 .\forms\views.py:822
+msgid "Date/time"
+msgstr ""
+
+#: .\forms\fields.py:38
+msgid "Hidden"
+msgstr ""
+
+#: .\forms\fields.py:39
+msgid "Captcha"
+msgstr ""
+
+#: .\forms\fields.py:40
+msgid "Registered user"
+msgstr ""
+
+#: .\forms\fields.py:41
+msgid "Decimal"
+msgstr ""
+
+#: .\forms\fields.py:42
+msgid "Integer"
+msgstr ""
+
+#: .\forms\fields.py:43 .\forms\models.py:122
+msgid "Reference"
+msgstr ""
+
+#: .\forms\forms.py:46
+msgid "You must provide a slug or a workspace name"
+msgstr ""
+
+#: .\forms\forms.py:56 .\forms\models.py:52
+msgid "Value"
+msgstr ""
+
+#: .\forms\forms.py:62 .\forms\models.py:69
+msgid "Button text"
+msgstr ""
+
+#: .\forms\forms.py:65 .\forms\models.py:74
+msgid "From address"
+msgstr ""
+
+#: .\forms\forms.py:66 .\forms\models.py:75
+msgid "Send copies to"
+msgstr ""
+
+#: .\forms\forms.py:67 .\forms\models.py:76
+msgid "Subject"
+msgstr ""
+
+#: .\forms\forms.py:89 .\templates\forms\export_form.html.py:53
+msgid "Semicolon"
+msgstr ""
+
+#: .\forms\forms.py:90 .\templates\forms\export_form.html.py:54
+msgid "Comma"
+msgstr ""
+
+#: .\forms\forms.py:91
+msgid "Tabulation"
+msgstr ""
+
+#: .\forms\forms.py:94
+msgid "UTF-8"
+msgstr ""
+
+#: .\forms\forms.py:95
+msgid "ISO-8859-1"
+msgstr ""
+
+#: .\forms\forms.py:99
+msgid "Separator"
+msgstr ""
+
+#: .\forms\forms.py:100
+msgid "Other"
+msgstr ""
+
+#: .\forms\forms.py:101
+msgid "Encoding"
+msgstr ""
+
+#: .\forms\forms.py:146 .\forms\forms.py:149 .\forms\forms.py:171
+#: .\forms\forms.py:535 .\forms\forms.py:542 .\forms\forms.py:557
+#: .\forms\forms.py:573 .\forms\models.py:380 .\forms\models.py:407
+#: .\templates\skins\default\header.html.py:15
+msgid "User"
+msgstr ""
+
+#: .\forms\forms.py:298 .\forms\forms.py:312
+msgid "You must provide a registered user"
+msgstr ""
+
+#: .\forms\forms.py:307
+msgid "A record with this user already exist"
+msgstr ""
+
+#: .\forms\forms.py:320
+msgid "You must provide a valid form entry"
+msgstr ""
+
+#: .\forms\forms.py:475 .\forms\forms.py:507 .\forms\forms.py:532
+#: .\forms\forms.py:578
+msgid "Creation date"
+msgstr ""
+
+#: .\forms\forms.py:476 .\forms\forms.py:509 .\forms\forms.py:548
+#: .\forms\forms.py:580
+msgid "Row ID"
+msgstr ""
+
+#: .\forms\models.py:27
+msgid "Who can use this workspace"
+msgstr ""
+
+#: .\forms\models.py:40 .\forms\models.py:56
+msgid "list"
+msgstr ""
+
+#: .\forms\models.py:41 .\forms\models.py:57
+msgid "lists"
+msgstr ""
+
+#: .\forms\models.py:69 .\templates\fileman\upload_documents.html.py:47
+msgid "Submit"
+msgstr ""
+
+#: .\forms\models.py:70
+msgid "Bind to account"
+msgstr ""
+
+#: .\forms\models.py:70
+msgid "If checked, each record will be linked to user account"
+msgstr ""
+
+#: .\forms\models.py:71
+msgid "Bind to entry"
+msgstr ""
+
+#: .\forms\models.py:71
+msgid "If filled, each record will be linked to target form entry"
+msgstr ""
+
+#: .\forms\models.py:72
+msgid "Response"
+msgstr ""
+
+#: .\forms\models.py:73 .\templates\communities\home_members.html.py:31
+msgid "Send email"
+msgstr ""
+
+#: .\forms\models.py:73
+msgid "If checked, an email will be sent"
+msgstr ""
+
+#: .\forms\models.py:74
+msgid "The address the email will be sent from"
+msgstr ""
+
+#: .\forms\models.py:75
+msgid "One or more email addresses, separated by commas"
+msgstr ""
+
+#: .\forms\models.py:83 .\forms\models.py:84
+msgid "forms form"
+msgstr ""
+
+#: .\forms\models.py:92
+msgid "Who can see the list of recordings of this form"
+msgstr ""
+
+#: .\forms\models.py:93
+msgid "Who can create new records"
+msgstr ""
+
+#: .\forms\models.py:94
+msgid "Who can modify records"
+msgstr ""
+
+#: .\forms\models.py:113
+msgid "Label"
+msgstr ""
+
+#: .\forms\models.py:115
+msgid "Help text"
+msgstr ""
+
+#: .\forms\models.py:116
+msgid "Required"
+msgstr ""
+
+#: .\forms\models.py:117
+msgid "Visible"
+msgstr ""
+
+#: .\forms\models.py:118
+msgid "Default value"
+msgstr ""
+
+#: .\forms\models.py:120
+msgid "Type"
+msgstr ""
+
+#: .\forms\models.py:127
+msgid "forms field"
+msgstr ""
+
+#: .\forms\models.py:128
+msgid "forms fields"
+msgstr ""
+
+#: .\forms\models.py:164 .\forms\models.py:313
+msgid "form entry"
+msgstr ""
+
+#: .\forms\models.py:165 .\forms\models.py:314
+msgid "form entries"
+msgstr ""
+
+#: .\forms\views.py:347 .\forms\views.py:394 .\forms\views.py:437
+#: .\templates\forms\fields_menu.html.py:8
+#: .\templates\forms\forms_navigation.html.py:26
+msgid "Lists"
+msgstr ""
+
+#: .\forms\views.py:823
+msgid "List"
+msgstr ""
+
+#: .\forms\views.py:983
+msgid "Export Entries"
+msgstr ""
+
+#: .\notes\models.py:23
+msgid "note category"
+msgstr ""
+
+#: .\notes\models.py:24
+msgid "note categories"
+msgstr ""
+
+#: .\notes\models.py:33
+msgid "Who can browse notes in this category"
+msgstr ""
+
+#: .\notes\models.py:42
+msgid "content"
+msgstr ""
+
+#: .\notes\models.py:45
+msgid "note"
+msgstr ""
+
+#: .\notes\models.py:46
+msgid "notes"
+msgstr ""
+
+#: .\notes\models.py:76
+msgid "Note attachment"
+msgstr ""
+
+#: .\notes\models.py:80
+#, python-format
+msgid "Attachment for %s"
+msgstr ""
+
+#: .\notes\views.py:157
+msgid "Category created successfully"
+msgstr ""
+
+#: .\notes\views.py:163 .\notes\views.py:187
+msgid "You must give a valid name"
+msgstr ""
+
+#: .\notes\views.py:184
+msgid "Category renamed successfully"
+msgstr ""
+
+#: .\notes\views.py:201
+msgid "Invalid category note"
+msgstr ""
+
+#: .\notes\views.py:225
+msgid "Note created successfully"
+msgstr ""
+
+#: .\notes\views.py:265
+msgid "Invalid note"
+msgstr ""
+
+#: .\notes\views.py:281
+msgid "Note deleted successfully"
+msgstr ""
+
+#: .\notes\views.py:310
+msgid "Note updated successfully"
+msgstr ""
+
+#: .\pages\forms.py:21
+msgid "keywords"
+msgstr ""
+
+#: .\site\models.py:13
+msgid "alert"
+msgstr ""
+
+#: .\site\models.py:26
+msgid "Who can view this alert"
+msgstr ""
+
+#: .\site\models.py:35
+msgid "Confirm account by validating address email"
+msgstr ""
+
+#: .\site\models.py:36
+msgid "Manual confirmation by administrators"
+msgstr ""
+
+#: .\site\models.py:37
+msgid "Confirm account without address email validation"
+msgstr ""
+
+#: .\site\models.py:41
+msgid "allow registration"
+msgstr ""
+
+#: .\site\models.py:42
+msgid "Enable this option to let users register on your site"
+msgstr ""
+
+#: .\site\models.py:76
+msgid "option"
+msgstr ""
+
+#: .\site\models.py:77
+msgid "key"
+msgstr ""
+
+#: .\site\models.py:89
+msgid "Who can access this option"
+msgstr ""
+
+#: .\site\models.py:94
+msgid "Who can have personal calendar"
+msgstr ""
+
+#: .\site\models.py:95
+msgid "Who can store personal documents on the server"
+msgstr ""
+
+#: .\site\models.py:96
+msgid "Who can manage static pages"
+msgstr ""
+
+#: .\site\models.py:97
+msgid "Who can manage pages templates"
+msgstr ""
+
+#: .\templates\account\activate.html.py:8
+msgid "Account successfully activated"
+msgstr ""
+
+#: .\templates\account\activate.html.py:10
+#: .\templates\skins\default\header.html.py:36
+msgid "Log in"
+msgstr ""
+
+#: .\templates\account\activate.html.py:14
+msgid "Account activation failed"
+msgstr ""
+
+#: .\templates\account\activation_email.html.py:4
+#: .\templates\account\activation_email.html.py:21
+msgid "Dear"
+msgstr ""
+
+#: .\templates\account\activation_email.html.py:10
+#, python-format
+msgid ""
+"Thank you for signing up on %(domain)s. Please click on the Button below to "
+"activate your account"
+msgstr ""
+
+#: .\templates\account\activation_email.html.py:11
+#: .\templates\account\activation_email.html.py:25
+#, python-format
+msgid "Link is valid for %(expiration_days)s days."
+msgstr ""
+
+#: .\templates\account\activation_email.html.py:14
+#: .\templates\account\registration_email.html.py:15
+msgid "Activate Account"
+msgstr ""
+
+#: .\templates\account\activation_email.html.py:23
+#, python-format
+msgid ""
+"Thank you for signing up on %(domain)s. Please click on the link below to "
+"activate your account"
+msgstr ""
+
+#: .\templates\account\add_avatar.html.py:4
+#: .\templates\account\user_profile_avatar.html.py:40
+msgid "Upload New Image"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:5
+#: .\templates\account\users_administrators.html.py:34
+#: .\templates\account\users_list.html.py:31
+#: .\templates\account\users_list.html.py:32
+msgid "Click to edit user profile"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:5
+msgid "Edit profile"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:6
+msgid "Click to change user password"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:6
+#: .\templates\account\change_my_password.html.py:9
+#: .\templates\account\change_my_password.html.py:23
+#: .\templates\account\edit_password_user.html.py:23
+#: .\templates\account\user_settings.html.py:30
+msgid "Change password"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:7
+#: .\templates\account\users_administrators.html.py:36
+msgid "Click to list user groups"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:7
+#: .\templates\account\groups_user.html.py:14
+msgid "User groups"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:10
+msgid "Users/Groups"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:12
+msgid "Administrators list"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:12
+msgid "Administrators"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:13
+msgid "Users list"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:13
+#: .\templates\acl\acl_users.html.py:68 .\templatetags\zorna_tags.py:145
+msgid "Users"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:14
+#: .\templates\account\groups_list.html.py:14
+msgid "Groups list"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:14
+#: .\templates\account\groups_list.html.py:18 .\templatetags\zorna_tags.py:144
+msgid "Groups"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:15
+msgid "Click to add new group"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:16
+msgid "Click to add new user"
+msgstr ""
+
+#: .\templates\account\admin_right_menu.html.py:16
+msgid "Add new user"
+msgstr ""
+
+#: .\templates\account\edit_group.html.py:29
+#: .\templates\account\users_administrators.html.py:41
+#: .\templates\articles\edit_article.html.py:187
+#: .\templates\communities\edit_plugin.html.py:16
+#: .\templates\communities\edit_plugin.html.py:21
+#: .\templates\communities\manage_community_users.html.py:40
+#: .\templates\fileman\file_properties.html.py:128
+#: .\templates\notes\notes_edit_note.html.py:149
+msgid "Update"
+msgstr ""
+
+#: .\templates\account\edit_password_user.html.py:6
+msgid "Change password for"
+msgstr ""
+
+#: .\templates\account\edit_user.html.py:6
+msgid "User profile for"
+msgstr ""
+
+#: .\templates\account\groups_list.html.py:26
+msgid "Click to edit group"
+msgstr ""
+
+#: .\templates\account\groups_list.html.py:27
+#: .\templates\acl\acl_groups.html.py:50
+msgid "Group members"
+msgstr ""
+
+#: .\templates\account\groups_user.html.py:16
+msgid "Update groups for"
+msgstr ""
+
+#: .\templates\account\groups_user.html.py:21
+#: .\templates\site\site_registration.html.py:62
+msgid "Group"
+msgstr ""
+
+#: .\templates\account\groups_user.html.py:30
+msgid "Click to edit this group"
+msgstr ""
+
+#: .\templates\account\groups_user.html.py:31
+msgid "Click to see members of this group"
+msgstr ""
+
+#: .\templates\account\login.html.py:36
+msgid "Login"
+msgstr ""
+
+#: .\templates\account\registration_complete_email.html.py:6
+msgid "You are now registered. Activation email sent."
+msgstr ""
+
+#: .\templates\account\registration_complete_noemail.html.py:6
+msgid ""
+"You are now registered. Yout must wait the administrator to activate your "
+"account."
+msgstr ""
+
+#: .\templates\account\registration_complete_novalidation.html.py:6
+msgid "You are now registered. You can now log on our site"
+msgstr ""
+
+#: .\templates\account\registration_email.html.py:4
+#: .\templates\account\registration_email.html.py:22
+msgid "Dear Administrator"
+msgstr ""
+
+#: .\templates\account\registration_email.html.py:10
+#: .\templates\account\registration_email.html.py:24
+msgid "Your site has recorded an new registration from"
+msgstr ""
+
+#: .\templates\account\registration_email.html.py:12
+#: .\templates\account\registration_email.html.py:28
+msgid "To let user log on your site, you must confirm his registration"
+msgstr ""
+
+#: .\templates\account\user_profile.html.py:10
+#: .\templates\account\user_settings_home.html.py:10
+msgid "Personnal informations"
+msgstr ""
+
+#: .\templates\account\user_profile_avatar.html.py:10
+#: .\templates\account\user_settings.html.py:27
+msgid "Change your photo"
+msgstr ""
+
+#: .\templates\account\user_profile_avatar.html.py:41
+msgid "Delete current image"
+msgstr ""
+
+#: .\templates\account\user_settings.html.py:24
+msgid "Change your profile"
+msgstr ""
+
+#: .\templates\account\users_administrators.html.py:19
+#: .\templates\communities\manage_community_users.html.py:21
+msgid "Enter the name of the user you want to add"
+msgstr ""
+
+#: .\templates\account\users_group.html.py:16
+msgid "Members of group"
+msgstr ""
+
+#: .\templates\account\users_group.html.py:20
+msgid "Add user to"
+msgstr ""
+
+#: .\templates\account\users_list.html.py:6
+msgid "Users  list"
+msgstr ""
+
+#: .\templates\account\users_list.html.py:9
+#: .\templates\communities\home_base.html.py:129
+#: .\templates\communities\home_base.html.py:137
+#: .\templates\forms\browse_entries.html.py:20
+msgid "Search"
+msgstr ""
+
+#: .\templates\account\users_list.html.py:26
+msgid "Account active"
+msgstr ""
+
+#: .\templates\account\users_list.html.py:28
+msgid "Account disabled"
+msgstr ""
+
+#: .\templates\account\users_list.html.py:34
+msgid "User's groups"
+msgstr ""
+
+#: .\templates\acl\acl_groups.html.py:15
+#: .\templates\acl\admin_acl_users.html.py:24
+#: .\templates\articles\publication_right_menu.html.py:8
+#: .\templates\articles\right_menu.html.py:9
+#: .\templates\communities\admin_right_menu.html.py:7
+#: .\templates\faq\admin_right_menu.html.py:8
+#: .\templates\fileman\right_menu.html.py:8
+#: .\templates\forms\admin_right_menu.html.py:8
+#: .\templates\site\admin_right_menu.html.py:7
+msgid "Permissions by groups"
+msgstr ""
+
+#: .\templates\acl\acl_groups.html.py:23
+msgid "Load permissions from"
+msgstr ""
+
+#: .\templates\acl\acl_groups.html.py:86
+#: .\templates\acl\admin_acl_users.html.py:23
+#: .\templates\acl\user_acl_users.html.py:23
+#: .\templates\calendars\calendar_edit.html.py:69
+#: .\templates\calendars\calendar_edit.html.py:97
+#: .\templates\fileman\fm_folder_content.html.py:41
+#: .\templates\fileman\fm_folder_content.html.py:57
+#: .\templates\notes\notes_view_notes.html.py:57
+#: .\templates\pages\fm_edit_template.html.py:33
+#: .\templates\pages\fm_manage_folder.html.py:43
+#: .\templates\pages\fm_manage_folder.html.py:58
+#: .\templates\pages\fm_manage_folder.html.py:67
+msgid "Cancel"
+msgstr ""
+
+#: .\templates\acl\acl_groups.html.py:87
+#: .\templates\acl\admin_acl_users.html.py:16
+#: .\templates\acl\user_acl_users.html.py:15
+#: .\templates\articles\publication_right_menu.html.py:7
+#: .\templates\articles\right_menu.html.py:8
+#: .\templates\communities\admin_right_menu.html.py:8
+#: .\templates\faq\admin_right_menu.html.py:7
+#: .\templates\fileman\right_menu.html.py:7
+#: .\templates\forms\admin_right_menu.html.py:7
+#: .\templates\site\admin_right_menu.html.py:8
+msgid "Permissions by users"
+msgstr ""
+
+#: .\templates\acl\acl_groups.html.py:89
+#: .\templates\acl\admin_acl_users.html.py:26
+#: .\templates\acl\user_acl_users.html.py:27
+#: .\templates\calendars\calendar_share.html.py:51
+msgid "Help on permissions"
+msgstr ""
+
+#: .\templates\acl\acl_groups.html.py:94
+msgid ""
+"Allow++ and Deny++ allow you to grant or deny rights to the group and its "
+"descendants"
+msgstr ""
+
+#: .\templates\acl\acl_users.html.py:11
+msgid "Update permissions for"
+msgstr ""
+
+#: .\templates\acl\acl_users.html.py:14
+msgid "Add user"
+msgstr ""
+
+#: .\templates\admin\account\usergroup\change_list.html.py:4
+msgid "List of groups"
+msgstr ""
+
+#: .\templates\admin\account\usergroup\change_list.html.py:10
+#: .\templates\admin\pages\page\change_list.html.py:10
+msgid "Home"
+msgstr ""
+
+#: .\templates\admin\pages\page\change_list.html.py:4
+msgid "List of pages"
+msgstr ""
+
+#: .\templates\articles\category_default.html.py:19
+msgid "archive"
+msgstr ""
+
+#: .\templates\articles\category_default.html.py:71
+msgid "Archives"
+msgstr ""
+
+#: .\templates\articles\category_default.html.py:83
+msgid "RSS feed"
+msgstr ""
+
+#: .\templates\articles\category_default.html.py:86
+msgid "Last entries"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:34
+msgid "Are you sur you want to delete this article"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:43
+msgid "Edit story"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:51
+#: .\templates\articles\list_categories.html.py:19
+#: .\templates\articles\new_article.html.py:41
+#: .\templates\articles\right_menu.html.py:12
+#: .\templates\faq\manager_right_menu.html.py:6
+msgid "Categories"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:54
+#: .\templates\articles\new_article.html.py:44
+msgid "Collapse All"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:54
+#: .\templates\articles\new_article.html.py:44
+msgid "Expand All"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:84
+msgid "Delete this attachment"
+msgstr ""
+
+#: .\templates\articles\edit_article.html.py:188
+#: .\templates\calendars\calendar_edit.html.py:165
+#: .\templates\communities\message_entry.html.py:63
+#: .\templates\communities\message_reply.html.py:17
+#: .\templates\fileman\fm_folder_content.html.py:40
+#: .\templates\fileman\fm_folder_item.html.py:19
+#: .\templates\forms\form_details.html.py:75
+#: .\templates\forms\new_field.html.py:69
+#: .\templates\forms\new_form.html.py:67
+#: .\templates\notes\notes_edit_note.html.py:150
+#: .\templates\pages\fm_folder_item.html.py:6
+#: .\templates\pages\fm_manage_folder.html.py:42
+#: .\templates\site\edit_alert.html.py:46
+msgid "Delete"
+msgstr ""
+
+#: .\templates\articles\edit_category.html.py:22
+#: .\templates\faq\edit_category.html.py:22
+#: .\templates\site\edit_calendar_category.html.py:26
+msgid "Update category"
+msgstr ""
+
+#: .\templates\articles\edit_category.html.py:24
+#: .\templates\articles\right_menu.html.py:15
+#: .\templates\faq\edit_category.html.py:24
+#: .\templates\site\edit_calendar_category.html.py:28
+msgid "Add new category"
+msgstr ""
+
+#: .\templates\articles\list_categories.html.py:14
+#: .\templates\articles\right_menu.html.py:14
+msgid "Articles categories"
+msgstr ""
+
+#: .\templates\articles\list_categories.html.py:25
+#: .\templates\communities\admin_list_communities.html.py:25
+#: .\templates\faq\list_faqs.html.py:24
+#: .\templates\fileman\list_folders.html.py:26
+#: .\templates\forms\form_menu.html.py:21
+#: .\templates\forms\list_workspaces.html.py:24
+#: .\templates\site\list_alerts.html.py:25
+#: .\templates\site\list_options.html.py:26
+msgid "Click to edit rights"
+msgstr ""
+
+#: .\templates\articles\list_categories.html.py:26
+msgid "Click to edit articles category"
+msgstr ""
+
+#: .\templates\articles\new_article.html.py:33
+msgid "New story"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:6
+#: .\templates\articles\right_menu.html.py:7
+#: .\templates\fileman\right_menu.html.py:6
+msgid "Click to edit category"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:6
+#: .\templates\articles\right_menu.html.py:7
+msgid "Edit category"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:7
+#: .\templates\articles\right_menu.html.py:8
+#: .\templates\communities\admin_right_menu.html.py:8
+#: .\templates\faq\admin_right_menu.html.py:7
+#: .\templates\fileman\right_menu.html.py:7
+#: .\templates\forms\admin_right_menu.html.py:7
+#: .\templates\site\admin_right_menu.html.py:8
+msgid "Click to edit permissions by users"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:8
+#: .\templates\articles\right_menu.html.py:9
+#: .\templates\communities\admin_right_menu.html.py:7
+#: .\templates\faq\admin_right_menu.html.py:8
+#: .\templates\fileman\right_menu.html.py:8
+#: .\templates\forms\admin_right_menu.html.py:8
+#: .\templates\site\admin_right_menu.html.py:7
+msgid "Click to edit permissions by groups"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:11
+msgid "Stories"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:13
+msgid "List of my stories"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:13
+#: .\templates\articles\writer_stories_list.html.py:12
+msgid "My stories"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:14
+msgid "Click to begin writing a new story"
+msgstr ""
+
+#: .\templates\articles\publication_right_menu.html.py:14
+msgid "Write new story"
+msgstr ""
+
+#: .\templates\articles\right_menu.html.py:14
+msgid "List of articles categories"
+msgstr ""
+
+#: .\templates\articles\right_menu.html.py:15
+#: .\templates\site\admin_right_menu.html.py:28
+msgid "Click to add new category"
+msgstr ""
+
+#: .\templates\articles\story_default.html.py:32
+#: .\templates\articles\story_default.html.py:45
+msgid "comment"
+msgstr ""
+
+#: .\templates\articles\story_default.html.py:85
+msgid "Leave a Comment"
+msgstr ""
+
+#: .\templates\articles\story_default.html.py:97
+msgid "Post Comment"
+msgstr ""
+
+#: .\templates\articles\story_default.html.py:134
+msgid "His recent posts"
+msgstr ""
+
+#: .\templates\articles\story_default.html.py:150
+#: .\templates\calendars\calendar.html.py:216
+#: .\templates\notes\notes_view_notes.html.py:9
+msgid "Share"
+msgstr ""
+
+#: .\templates\articles\story_default.html.py:156
+#: .\templates\articles\story_default.html.py:157
+#: .\templates\articles\story_default.html.py:159
+#: .\templates\articles\story_default.html.py:160
+msgid "Share in"
+msgstr ""
+
+#: .\templates\articles\writer_stories_list.html.py:18
+msgid "Updated on"
+msgstr ""
+
+#: .\templates\articles\writer_stories_list.html.py:19
+msgid "Created on"
+msgstr ""
+
+#: .\templates\articles\writer_stories_list.html.py:27
+#, python-format
+msgid "Published on one category"
+msgid_plural "Published on %(counter)s categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\articles\writer_stories_list.html.py:29
+#: .\templates\communities\admin_list_communities.html.py:26
+#: .\templates\site\list_alerts.html.py:27
+#: .\templates\site\list_calendar_categories.html.py:24
+msgid "Click to edit item"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:21
+msgid "all-day"
+msgstr ""
+
+#. Translators: This text is used in javascript
+#: .\templates\calendars\calendar.html.py:54
+msgid "Today"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:55
+msgid "Month"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:56
+msgid "Week"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:57
+msgid "Day"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:60
+msgid "January"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:61
+msgid "February"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:62
+msgid "March"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:63
+msgid "April"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:64
+#: .\templates\calendars\calendar.html.py:77
+msgid "May"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:65
+msgid "June"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:66
+msgid "July"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:67
+msgid "August"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:68
+msgid "September"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:69
+msgid "October"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:70
+msgid "November"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:71
+msgid "December"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:73
+msgid "Jan"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:74
+msgid "Feb"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:75
+msgid "Mar"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:76
+msgid "Apr"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:78
+msgid "Jun"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:79
+msgid "Jul"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:80
+msgid "Aug"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:81
+msgid "Sep"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:82
+msgid "Oct"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:83
+msgid "Nov"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:84
+msgid "Dec"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:85
+msgid "Sun"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:85
+msgid "Mon"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:85
+msgid "Tue"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:86
+msgid "Mer"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:86
+msgid "Thu"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:86
+msgid "Fri"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:86
+msgid "Sat"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:88
+msgid "Sunday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:88
+msgid "Monday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:88
+msgid "Tuesday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:88
+msgid "Wednesday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:89
+msgid "Thursday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:89
+msgid "Friday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:89
+msgid "Saturday"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:92
+msgid "Event Title:"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:138
+#: .\templates\notes\notes_view_notes.html.py:51
+#: .\templates\site\list_calendar_categories.html.py:17
+msgid "Category"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:140
+msgid "Author"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:142
+msgid "Location"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:155
+msgid "You are not allowed to update this event"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:159
+msgid "Error, reload page an try agin"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:206
+msgid "Calendar settings"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:207
+#: .\templates\calendars\calendar_edit.html.py:145
+#: .\templates\calendars\calendar_edit.html.py:181
+#: .\templates\calendars\calendar_settings.html.py:48
+#: .\templates\calendars\calendar_share.html.py:20
+#: .\templatetags\zorna_tags.py:101
+msgid "Calendar"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:215
+msgid "Create event"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:221
+msgid "My calendars"
+msgstr ""
+
+#: .\templates\calendars\calendar.html.py:230
+msgid "Other calendars"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:61
+#: .\templates\calendars\calendar_edit.html.py:89
+msgid "Only this instance"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:65
+#: .\templates\calendars\calendar_edit.html.py:93
+msgid "All events in the series"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:127
+#: .\templates\calendars\calendar_edit.html.py:135
+msgid "Reccurrent event"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:131
+msgid "Would you like to change only this event or all events in the series"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:139
+msgid "Would you like to delete only this event or all events in the series"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:158
+#: .\templates\calendars\calendar_settings.html.py:31
+#: .\templates\calendars\calendar_share.html.py:33
+msgid "Back to calendars"
+msgstr ""
+
+#: .\templates\calendars\calendar_edit.html.py:163
+#: .\templates\forms\edit_form_template.html.py:38
+#: .\templates\forms\new_field.html.py:67
+#: .\templates\forms\new_form.html.py:66 .\templates\forms\new_list.html.py:70
+#: .\templates\forms\new_master_field.html.py:42
+#: .\templates\pages\fm_edit_file.html.py:57
+#: .\templates\pages\fm_edit_template.html.py:31
+#: .\templates\site\edit_alert.html.py:44
+msgid "Save"
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:11
+msgid ""
+"This will invalidate any existing private feeds. Are you sure you want to "
+"reset the private URL feed"
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:21
+msgid "Private address URLs"
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:44
+msgid ""
+"This is the private address for calendar. Don't share this address with "
+"others unless you want them to see all the events on calendar."
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:49
+msgid "Address url"
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:60
+msgid ""
+"Copy and paste this into any calendar product that supports the iCal format"
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:61
+msgid "Reset Private URL"
+msgstr ""
+
+#: .\templates\calendars\calendar_settings.html.py:61
+msgid "Reset"
+msgstr ""
+
+#: .\templates\calendars\settings_right_menu.html.py:2
+#: .\templatetags\zorna_tags.py:114
+msgid "Settings"
+msgstr ""
+
+#: .\templates\calendars\settings_right_menu.html.py:4
+msgid "Private address"
+msgstr ""
+
+#: .\templates\communities\admin_list_communities.html.py:13
+#: .\templates\communities\admin_list_communities.html.py:18
+#: .\templates\communities\admin_right_menu.html.py:11
+#: .\templates\communities\admin_right_menu.html.py:13
+#: .\templates\communities\list_communities.html.py:13
+#: .\templates\communities\list_communities.html.py:26
+#: .\templates\communities\list_communities.html.py:102
+#: .\templatetags\zorna_tags.py:78 .\templatetags\zorna_tags.py:140
+msgid "Communities"
+msgstr ""
+
+#: .\templates\communities\admin_right_menu.html.py:6
+msgid "Click to edit community"
+msgstr ""
+
+#: .\templates\communities\admin_right_menu.html.py:6
+msgid "Edit community"
+msgstr ""
+
+#: .\templates\communities\admin_right_menu.html.py:13
+msgid "List of communities"
+msgstr ""
+
+#: .\templates\communities\admin_right_menu.html.py:14
+msgid "Click to edit add new community"
+msgstr ""
+
+#: .\templates\communities\admin_right_menu.html.py:14
+#: .\templates\communities\edit_community.html.py:28
+msgid "Add new community"
+msgstr ""
+
+#: .\templates\communities\community_invite_member.html.py:33
+msgid "Invite user to join community:"
+msgstr ""
+
+#: .\templates\communities\community_invite_member.html.py:52
+msgid "Add"
+msgstr ""
+
+#: .\templates\communities\edit_community.html.py:26
+msgid "Update community"
+msgstr ""
+
+#: .\templates\communities\email_follower_html.html.py:3
+#: .\templates\communities\email_follower_text.html.py:2
+#: .\templates\communities\email_invite_html.html.py:3
+#: .\templates\communities\email_invite_text.html.py:2
+msgid "Hi"
+msgstr ""
+
+#: .\templates\communities\email_follower_html.html.py:9
+#: .\templates\communities\email_follower_text.html.py:3
+msgid "Someone"
+msgstr ""
+
+#: .\templates\communities\email_follower_html.html.py:9
+#: .\templates\communities\email_follower_text.html.py:3
+msgid "replied to a message that you follow"
+msgstr ""
+
+#: .\templates\communities\email_follower_html.html.py:12
+msgid "To read the message, click on the button below"
+msgstr ""
+
+#: .\templates\communities\email_follower_html.html.py:15
+msgid "Read message"
+msgstr ""
+
+#: .\templates\communities\email_follower_text.html.py:9
+msgid "To read the message, click on the link below"
+msgstr ""
+
+#: .\templates\communities\email_invite_html.html.py:9
+#: .\templates\communities\email_invite_text.html.py:3
+msgid "added you to community"
+msgstr ""
+
+#: .\templates\communities\email_invite_html.html.py:9
+#: .\templates\communities\email_invite_text.html.py:3
+msgid "as"
+msgstr ""
+
+#: .\templates\communities\email_invite_html.html.py:12
+msgid "Let's work togheter, click on the button below"
+msgstr ""
+
+#: .\templates\communities\email_invite_html.html.py:15
+msgid "Let's go"
+msgstr ""
+
+#: .\templates\communities\email_invite_text.html.py:8
+msgid "Let's work togheter, click on the link below"
+msgstr ""
+
+#: .\templates\communities\forms_form.html.py:73
+#: .\templates\forms\form_for_form_header.html.py:36
+msgid "Are you sur you want to delete this entry"
+msgstr ""
+
+#: .\templates\communities\home.html.py:137
+#: .\templates\communities\home_files.html.py:18
+#: .\templates\communities\home_plugin.html.py:21
+msgid "From"
+msgstr ""
+
+#: .\templates\communities\home.html.py:154
+msgid "More"
+msgstr ""
+
+#: .\templates\communities\home_base.html.py:90
+msgid "Files"
+msgstr ""
+
+#: .\templates\communities\home_base.html.py:113
+msgid "Actions"
+msgstr ""
+
+#: .\templates\communities\home_base.html.py:115
+msgid "Show members"
+msgstr ""
+
+#: .\templates\communities\home_base.html.py:116
+msgid "Show managers"
+msgstr ""
+
+#: .\templates\communities\home_base.html.py:117
+msgid "Invite..."
+msgstr ""
+
+#: .\templates\communities\home_base.html.py:143
+msgid "Last files"
+msgstr ""
+
+#: .\templates\communities\home_files.html.py:37
+#: .\templates\communities\home_plugin.html.py:40
+#: .\templates\communities\message_entry.html.py:12
+msgid "to"
+msgstr ""
+
+#: .\templates\communities\home_files.html.py:73
+#: .\templates\communities\home_members.html.py:52
+#: .\templates\communities\home_plugin.html.py:68
+#: .\templates\forms\browse_entries.html.py:112
+msgid "Total"
+msgstr ""
+
+#: .\templates\communities\home_plugin.html.py:50
+#: .\templates\communities\message_entry.html.py:41
+#: .\templates\communities\message_entry.html.py:62
+#: .\templates\communities\message_reply.html.py:16
+#: .\templates\notes\note_item.html.py:9
+msgid "Edit"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:27
+#: .\templates\fileman\fm_home.html.py:410
+msgid "My communities"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:28
+msgid "Last activity"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:39
+msgid "Join community"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:41
+msgid "Leave community"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:43
+msgid "Public"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:45
+msgid "Private"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:72
+msgid " for "
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:82
+msgid "posted a message"
+msgstr ""
+
+#: .\templates\communities\list_communities.html.py:84
+msgid "updated the message"
+msgstr ""
+
+#: .\templates\communities\manager_right_menu.html.py:6
+msgid "Add/Remove members"
+msgstr ""
+
+#: .\templates\communities\manager_right_menu.html.py:7
+msgid "Add/Remove managers"
+msgstr ""
+
+#: .\templates\communities\members_widget.html.py:3
+msgid "Major contributors"
+msgstr ""
+
+#: .\templates\communities\message_entry.html.py:20
+msgid "Followers"
+msgstr ""
+
+#: .\templates\communities\message_entry.html.py:50
+msgid "Reply"
+msgstr ""
+
+#: .\templates\communities\poll_form.html.py:59
+#: .\templates\forms\formset_details.html.py:11
+#: .\templates\forms\new_list.html.py:14
+msgid "Add another"
+msgstr ""
+
+#: .\templates\communities\poll_form.html.py:60
+#: .\templates\forms\formset_details.html.py:12
+#: .\templates\forms\new_list.html.py:15
+msgid "Remove"
+msgstr ""
+
+#: .\templates\communities\poll_results.html.py:29
+msgid "votes"
+msgstr ""
+
+#: .\templates\communities\poll_results.html.py:36
+msgid "total votes"
+msgstr ""
+
+#: .\templates\faq\admin_right_menu.html.py:6
+msgid "Click to edit faq details"
+msgstr ""
+
+#: .\templates\faq\admin_right_menu.html.py:6
+msgid "Edit faq"
+msgstr ""
+
+#: .\templates\faq\admin_right_menu.html.py:11
+#: .\templates\faq\admin_right_menu.html.py:13
+#: .\templates\faq\list_faqs.html.py:13 .\templates\faq\list_faqs.html.py:18
+#: .\templates\faq\manager_list_faqs.html.py:12
+#: .\templates\faq\manager_list_faqs.html.py:16
+#: .\templates\faq\manager_right_menu.html.py:12
+#: .\templates\faq\manager_right_menu.html.py:14
+#: .\templatetags\zorna_tags.py:105 .\templatetags\zorna_tags.py:141
+msgid "Faqs"
+msgstr ""
+
+#: .\templates\faq\admin_right_menu.html.py:13
+#: .\templates\faq\manager_right_menu.html.py:14
+msgid "List of faqs"
+msgstr ""
+
+#: .\templates\faq\admin_right_menu.html.py:14
+msgid "Click to add new faq"
+msgstr ""
+
+#: .\templates\faq\admin_right_menu.html.py:14
+#: .\templates\faq\edit_faq.html.py:24
+msgid "Add new faq"
+msgstr ""
+
+#: .\templates\faq\browse_faq.html.py:15
+#: .\templates\faq\list_categories.html.py:33
+#: .\templates\faq\list_questions.html.py:33
+#: .\templates\faq\manager_edit_faq.html.py:13
+msgid "Faq"
+msgstr ""
+
+#: .\templates\faq\edit_faq.html.py:22
+msgid "Update faq"
+msgstr ""
+
+#: .\templates\faq\edit_question.html.py:22
+msgid "Update question"
+msgstr ""
+
+#: .\templates\faq\edit_question.html.py:24
+msgid "Add new question"
+msgstr ""
+
+#: .\templates\faq\list_categories.html.py:38
+msgid "Faq categories"
+msgstr ""
+
+#: .\templates\faq\list_categories.html.py:46
+msgid "Click to edit faq category"
+msgstr ""
+
+#: .\templates\faq\list_categories.html.py:47
+#: .\templates\faq\manager_right_menu.html.py:8
+msgid "Click to list questions"
+msgstr ""
+
+#: .\templates\faq\list_categories.html.py:47
+#: .\templates\faq\manager_right_menu.html.py:8
+msgid "Questions"
+msgstr ""
+
+#: .\templates\faq\list_categories.html.py:52
+#: .\templates\faq\list_questions.html.py:50
+#: .\templates\forms\order_fields.html.py:49
+msgid "Update Order"
+msgstr ""
+
+#: .\templates\faq\list_faqs.html.py:25
+#: .\templates\faq\manager_list_faqs.html.py:23
+#: .\templates\faq\manager_list_faqs.html.py:24
+msgid "Click to edit faq"
+msgstr ""
+
+#: .\templates\faq\list_questions.html.py:38
+msgid "Faq questions"
+msgstr ""
+
+#: .\templates\faq\list_questions.html.py:45
+msgid "Click to edit question"
+msgstr ""
+
+#: .\templates\faq\manager_list_faqs.html.py:24
+msgid "Browse"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:5
+msgid "Click to manage faq"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:5
+msgid "Manage faq"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:6
+msgid "Click to list faq category"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:7
+msgid "Click to add faq category"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:7
+msgid "Add category"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:9
+msgid "Click to add question"
+msgstr ""
+
+#: .\templates\faq\manager_right_menu.html.py:9
+msgid "Add question"
+msgstr ""
+
+#: .\templates\faq\user_right_menu.html.py:2
+msgid "Faq content"
+msgstr ""
+
+#: .\templates\fileman\edit_folder.html.py:21
+msgid "Update folder"
+msgstr ""
+
+#: .\templates\fileman\edit_folder.html.py:23
+#: .\templates\fileman\right_menu.html.py:14
+msgid "Add new folder"
+msgstr ""
+
+#: .\templates\fileman\file_properties.html.py:22
+#: .\templates\fileman\file_properties_popup.html.py:5
+#: .\templates\notes\note_item.html.py:11
+msgid "Created"
+msgstr ""
+
+#: .\templates\fileman\file_properties.html.py:34
+#: .\templates\fileman\file_properties.html.py:58
+msgid "By"
+msgstr ""
+
+#: .\templates\fileman\file_properties.html.py:46
+#: .\templates\fileman\file_properties_popup.html.py:7
+#: .\templates\notes\note_item.html.py:11
+msgid "Updated"
+msgstr ""
+
+#: .\templates\fileman\file_properties_popup.html.py:4
+msgid "Size"
+msgstr ""
+
+#: .\templates\fileman\file_properties_popup.html.py:6
+#: .\templates\fileman\file_properties_popup.html.py:8
+msgid "by"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:7
+msgid "Upload file"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:10
+#: .\templates\pages\fm_manage_folder.html.py:8
+msgid "Rename this folder"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:10
+#: .\templates\fileman\fm_folder_item.html.py:18
+#: .\templates\notes\notes_view_notes.html.py:10
+#: .\templates\pages\fm_folder_item.html.py:4
+#: .\templates\pages\fm_manage_folder.html.py:8
+msgid "Rename"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:12
+#: .\templates\fileman\fm_folder_content.html.py:56
+#: .\templates\fileman\fm_home.html.py:22
+#: .\templates\notes\notes_view_notes.html.py:56
+#: .\templates\pages\fm_manage_folder.html.py:11
+#: .\templates\pages\fm_manage_folder.html.py:66
+#: .\templates\pages\fmbrowser_home.html.py:31
+msgid "Create new folder"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:12
+#: .\templates\pages\fm_manage_folder.html.py:11
+msgid "New folder"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:31
+msgid "There are currently no files in this folder"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:38
+#: .\templates\pages\fm_manage_folder.html.py:40
+msgid ""
+"Permanently delete this file from the server? This will remove the file from "
+"the server completely!"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_content.html.py:53
+#: .\templates\pages\fm_manage_folder.html.py:63
+msgid "Folder"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_item.html.py:17
+#: .\templates\pages\fm_edit_file.html.py:25
+msgid "Properties"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_item.html.py:18
+msgid "Rename file"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_item.html.py:19
+msgid "Delete this file from the server"
+msgstr ""
+
+#: .\templates\fileman\fm_folder_item.html.py:34
+#: .\templates\fileman\fm_folder_item.html.py:39
+msgid "on"
+msgstr ""
+
+#: .\templates\fileman\fm_home.html.py:23
+#: .\templates\pages\fmbrowser_home.html.py:32
+msgid "Rename folder"
+msgstr ""
+
+#: .\templates\fileman\fm_home.html.py:404
+msgid "My documents"
+msgstr ""
+
+#: .\templates\fileman\fm_home.html.py:416
+msgid "Shared folders"
+msgstr ""
+
+#: .\templates\fileman\fm_home.html.py:422
+#: .\templates\notes\notes_home.html.py:290
+#: .\templates\pages\fmbrowser_home.html.py:731
+msgid "Loading..."
+msgstr ""
+
+#: .\templates\fileman\list_folders.html.py:15
+#: .\templates\fileman\list_folders.html.py:20
+#: .\templates\fileman\right_menu.html.py:11
+#: .\templates\fileman\right_menu.html.py:13 .\templatetags\zorna_tags.py:142
+msgid "Folders"
+msgstr ""
+
+#: .\templates\fileman\list_folders.html.py:27
+msgid "Click to edit folder"
+msgstr ""
+
+#: .\templates\fileman\log_files.html.py:11
+msgid "Files added"
+msgstr ""
+
+#: .\templates\fileman\right_menu.html.py:6
+msgid "Edit folder"
+msgstr ""
+
+#: .\templates\fileman\right_menu.html.py:13
+msgid "List of folders"
+msgstr ""
+
+#: .\templates\fileman\right_menu.html.py:14
+msgid "Click to add new folder"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:6
+msgid "Click to edit workspace details"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:6
+msgid "Edit workspace"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:11
+#: .\templates\forms\list_workspaces.html.py:13
+msgid "Forms workspaces"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:13
+msgid "List of workspaces"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:13
+#: .\templates\forms\list_workspaces.html.py:18
+msgid "Workspaces"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:14
+msgid "Click to add new workspace"
+msgstr ""
+
+#: .\templates\forms\admin_right_menu.html.py:14
+#: .\templates\forms\edit_workspace.html.py:23
+msgid "Add new workspace"
+msgstr ""
+
+#: .\templates\forms\browse_entries.html.py:52
+msgid "Click to view this entry"
+msgstr ""
+
+#: .\templates\forms\browse_entries.html.py:54
+msgid "Click to edit this entry"
+msgstr ""
+
+#: .\templates\forms\edit_workspace.html.py:21
+msgid "Update workspace"
+msgstr ""
+
+#: .\templates\forms\export_form.html.py:50
+msgid "Export CSV"
+msgstr ""
+
+#: .\templates\forms\export_form.html.py:51
+msgid "with separator"
+msgstr ""
+
+#: .\templates\forms\export_form.html.py:55
+msgid "Tab"
+msgstr ""
+
+#: .\templates\forms\export_form.html.py:57
+msgid "or type another caracter"
+msgstr ""
+
+#: .\templates\forms\export_form.html.py:65
+msgid "View entries"
+msgstr ""
+
+#: .\templates\forms\fields_home.html.py:31
+msgid "Fields"
+msgstr ""
+
+#: .\templates\forms\fields_home.html.py:31 .\templates\forms\home.html.py:59
+#: .\templates\site\admin_right_menu.html.py:24
+#: .\templates\site\admin_right_menu.html.py:28
+msgid "New"
+msgstr ""
+
+#: .\templates\forms\fields_menu.html.py:8
+msgid "Click to display lists"
+msgstr ""
+
+#: .\templates\forms\fields_menu.html.py:11
+#: .\templates\forms\list_lists.html.py:23
+msgid "Click to add new list"
+msgstr ""
+
+#: .\templates\forms\fields_menu.html.py:11
+#: .\templates\forms\list_lists.html.py:23
+msgid "New list"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:9
+msgid "Click to edit form"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:9
+msgid "Edit form"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:12
+msgid "Click to add new field"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:12
+msgid "New field"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:15
+msgid "Click to import form fields"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:15
+msgid "Import fields"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:18
+msgid "Click to order fields"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:18
+msgid "Order fields"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:21
+msgid "Permissions"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:24
+msgid "Click to export entries"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:24
+msgid "Export entries"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:27
+msgid "Click to browse entries"
+msgstr ""
+
+#: .\templates\forms\form_menu.html.py:27
+msgid "Browse entries"
+msgstr ""
+
+#: .\templates\forms\forms_navigation.html.py:20
+msgid "Masters"
+msgstr ""
+
+#: .\templates\forms\forms_navigation.html.py:26
+msgid "Click to list lists"
+msgstr ""
+
+#: .\templates\forms\import_file_csv.html.py:41
+msgid "Next"
+msgstr ""
+
+#: .\templates\forms\import_process_file_csv.html.py:27
+msgid "Existing field"
+msgstr ""
+
+#: .\templates\forms\import_process_file_csv.html.py:32
+msgid "New type"
+msgstr ""
+
+#: .\templates\forms\import_process_file_csv.html.py:38
+msgid "Unique"
+msgstr ""
+
+#: .\templates\forms\import_process_file_csv.html.py:46
+msgid "Import"
+msgstr ""
+
+#: .\templates\forms\list_workspaces.html.py:25
+msgid "Click to edit workspace"
+msgstr ""
+
+#: .\templates\forms\new_field.html.py:22
+msgid "Are you sur you want to delete this field"
+msgstr ""
+
+#: .\templates\forms\new_field.html.py:71
+msgid "Save and continue"
+msgstr ""
+
+#: .\templates\forms\new_form.html.py:19
+msgid ""
+"Are you sur you want to delete this form. All associated data will be "
+"deleted!"
+msgstr ""
+
+#: .\templates\forms\order_fields.html.py:37
+msgid "Form fields"
+msgstr ""
+
+#: .\templates\forms\reference.html.py:23
+msgid "Choose a field to reference"
+msgstr ""
+
+#: .\templates\notes\notes_edit_note.html.py:8
+#: .\templates\notes\notes_view_notes.html.py:25
+#: .\templates\pages\fm_edit_template.html.py:14
+#: .\templates\pages\fm_manage_folder.html.py:18
+#: .\templates\pages\fmbrowser_home.html.py:725
+msgid "Templates"
+msgstr ""
+
+#: .\templates\notes\notes_edit_note.html.py:10
+#: .\templates\notes\notes_view_notes.html.py:27
+#: .\templates\pages\fm_edit_file.html.py:5
+#: .\templates\pages\fm_edit_template.html.py:14
+#: .\templates\pages\fm_manage_folder.html.py:20
+#: .\templates\pages\fmbrowser_home.html.py:720
+#: .\templatetags\zorna_tags.py:98
+msgid "Pages"
+msgstr ""
+
+#: .\templates\notes\notes_home.html.py:23
+#: .\templates\notes\notes_view_notes.html.py:11
+#: .\templates\notes\notes_view_notes.html.py:17
+msgid "Create new category"
+msgstr ""
+
+#: .\templates\notes\notes_home.html.py:24
+msgid "Rename category"
+msgstr ""
+
+#: .\templates\notes\notes_home.html.py:280 .\templatetags\zorna_tags.py:112
+msgid "Notes"
+msgstr ""
+
+#: .\templates\notes\notes_home.html.py:284
+msgid "Shared notes"
+msgstr ""
+
+#: .\templates\notes\notes_view_notes.html.py:8
+msgid "Add note"
+msgstr ""
+
+#: .\templates\notes\notes_view_notes.html.py:9
+msgid "Share this category"
+msgstr ""
+
+#: .\templates\notes\notes_view_notes.html.py:10
+msgid "Rename this category"
+msgstr ""
+
+#: .\templates\notes\notes_view_notes.html.py:11
+#: .\templates\notes\notes_view_notes.html.py:17
+msgid "New category"
+msgstr ""
+
+#: .\templates\notes\notes_view_notes.html.py:15
+msgid "Shared by"
+msgstr ""
+
+#: .\templates\notes\notes_view_notes.html.py:44
+msgid "There are currently no notes in this category"
+msgstr ""
+
+#: .\templates\pages\fm_edit_file.html.py:22
+msgid "Content"
+msgstr ""
+
+#: .\templates\pages\fm_edit_file.html.py:46
+msgid "Nothing to edit"
+msgstr ""
+
+#: .\templates\pages\fm_edit_file.html.py:58
+msgid "Edit source"
+msgstr ""
+
+#: .\templates\pages\fm_edit_file.html.py:59
+msgid "Preview"
+msgstr ""
+
+#: .\templates\pages\fm_folder_item.html.py:4
+msgid "Rename page"
+msgstr ""
+
+#: .\templates\pages\fm_folder_item.html.py:5
+msgid "Clone this page"
+msgstr ""
+
+#: .\templates\pages\fm_folder_item.html.py:5
+msgid "Clone"
+msgstr ""
+
+#: .\templates\pages\fm_folder_item.html.py:6
+msgid "Delete this page from the server"
+msgstr ""
+
+#: .\templates\pages\fm_folder_item.html.py:7
+msgid "Cut this page"
+msgstr ""
+
+#: .\templates\pages\fm_folder_item.html.py:7
+msgid "Cut"
+msgstr ""
+
+#: .\templates\pages\fm_manage_folder.html.py:33
+msgid "There are currently no files enabled for editing"
+msgstr ""
+
+#: .\templates\pages\fm_manage_folder.html.py:55
+msgid "New Filename"
+msgstr ""
+
+#: .\templates\pages\fm_manage_folder.html.py:57
+msgid "Create New Webpage"
+msgstr ""
+
+#: .\templates\pages\fmbrowser_home.html.py:33
+msgid "Paste"
+msgstr ""
+
+#: .\templates\pages\fmbrowser_home.html.py:478
+msgid "You will lose the changes made in the editor"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:4
+msgid "Alert"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:6
+msgid "Click to edit alert"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:6
+msgid "Edit alert"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:11
+msgid "Site configuration"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:14
+#: .\templates\site\version.html.py:12
+msgid "Version"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:17
+msgid "List of options"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:17
+#: .\templates\site\list_options.html.py:13
+msgid "Options"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:20
+#: .\templates\site\site_registration.html.py:24
+msgid "Site registration"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:23
+msgid "List of alerts"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:23
+#: .\templates\site\list_alerts.html.py:13
+#: .\templates\site\list_alerts.html.py:18
+msgid "Alerts"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:24
+msgid "Click to add new alert"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:27
+msgid "List of calendar categories"
+msgstr ""
+
+#: .\templates\site\admin_right_menu.html.py:27
+#: .\templates\site\list_calendar_categories.html.py:13
+msgid "Calendar categories"
+msgstr ""
+
+#: .\templates\site\html_email_template.html.py:36
+msgid "Regards"
+msgstr ""
+
+#: .\templates\site\html_email_template.html.py:37
+msgid "The ZORNA Portal Team"
+msgstr ""
+
+#: .\templates\site\list_options.html.py:18
+msgid "Option"
+msgstr ""
+
+#: .\templates\site\list_options.html.py:19
+msgid "Key"
+msgstr ""
+
+#: .\templates\site\site_registration.html.py:57
+msgid "By default, assign registered users to groups"
+msgstr ""
+
+#: .\templates\site\version.html.py:19
+msgid "ZORNA version"
+msgstr ""
+
+#: .\templates\site\version.html.py:31
+msgid "DJANGO version"
+msgstr ""
+
+#: .\templates\site\version.html.py:43
+msgid "PYTHON version"
+msgstr ""
+
+#: .\templates\skins\default\header.html.py:12
+msgid "Log out"
+msgstr ""
+
+#: .\templates\skins\default\header.html.py:25
+msgid "Administrator"
+msgstr ""
+
+#: .\templates\skins\default\header.html.py:38
+msgid "Register"
+msgstr ""
+
+#: .\templates\skins\default\page_menu.html.py:8
+msgid "Accueil"
+msgstr ""
+
+#: .\templatetags\zorna_tags.py:81 .\templatetags\zorna_tags.py:86
+msgid "Documents"
+msgstr ""
+
+#: .\templatetags\zorna_tags.py:91
+msgid "Publication"
+msgstr ""
+
+#: .\templatetags\zorna_tags.py:139
+msgid "Articles"
+msgstr ""
+
+#: .\templatetags\zorna_tags.py:146
+msgid "Site"
+msgstr ""

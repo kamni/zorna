@@ -1,0 +1,50 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Menus" %} </h1>
+<table id="item-table-dnd">
+  <thead>
+    <tr>
+    <th width="1%"></th>
+    <th>{% trans "menu items" %}</th>
+    <th>{% trans "Slug" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items_list %}
+    <tr id="node-{{ item.id }}" class="{% if item.parent %}child-of-node-{{item.parent.id}}{% endif %}">
+    <td width="1%"></td>
+    <td><a href="{% url menus_edit_item item.pk %}" title="{% trans "Click to edit menu item" %}">{{item.name}}</a></td>
+    <td>{{item.slug}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#item-table-dnd").treeTable(
+      { treeColumn : 1, initialState: 'expanded' }
+  );
+});
+</script>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "menus/right_menu.html" %}
+{% endblock %}
+

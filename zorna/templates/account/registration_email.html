@@ -1,0 +1,32 @@
+{% load i18n %}
+{% if mime_type = 'html' %}
+<div style= "font: bold 14px Tahoma, Verdana, sans-serif; color:#336699">
+	{% trans "Dear Administrator" %}</div>
+<br>
+<table cellspacing= "0" cellpadding= "0" >
+<tr>
+<td width= "10">&nbsp;</td>
+<td style= "font:11px tahoma,verdana,sans-serif" align= "left">
+{% trans "Your site has recorded an new registration from" %}:<br /><br />
+{{user.get_full_name}}&nbsp;&lt;{{user.email}}&gt;<br /><br />
+{% trans "To let user log on your site, you must confirm his registration" %}. <br /><br />
+<span style= "background:#81b747;height:15px;width:148px;font-size:12px;text-align:center;display:block;padding:4px 0px;border:1px solid white;">
+<a id= "btn" href= "{{url}}" target= "_blank" style= "display:block;height:100%;width:148px;color:white;text-decoration:none;font-size:12px;min-height:0%;font-family:tahoma;font-weight:bolder;">
+	&nbsp;&nbsp;&nbsp;&nbsp;{% trans "Activate Account" %}&nbsp;&nbsp;&nbsp;&nbsp;
+</a>
+</span>
+</td>
+</tr>
+</table>
+{% else %}
+{% trans "Dear Administrator" %}
+
+{% trans "Your site has recorded an new registration from" %}:
+
+{{user.get_full_name}} <{{user.email}}>
+
+{% trans "To let user log on your site, you must confirm his registration" %}
+
+{{url}}
+
+{% endif %}

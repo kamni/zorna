@@ -1,0 +1,180 @@
+{% load i18n %}
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+	<h1 class="hnpath">
+		{% for component in cdir_components %}
+			  <a href="#" rel="{{component.rel}}/" class="npath">{{component.text}}</a> &raquo;
+		{% endfor%}
+			  <span class="nlast">{{file_name}}</span>
+	</h1>	
+</div>
+<form action="{% url fm_properties_view %}" id="form_properties" method="post" enctype="multipart/form-data">{% csrf_token %}
+<input type="hidden" name="dir" value="{{file_path}}">
+<input type="hidden" name="file_name" value="{{file_name}}">
+<input type="hidden" name="file_id" value="{{file_id}}">
+<table width="100%">
+	<tr>
+		<td>
+		<fieldset class="module aligned">
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label for="id-updated-by">{% trans "Created" %}</label>
+	  				</td>
+	  				<td>
+				      <p id="id-updated-by">{{ file.time_created }}</p>
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label for="id-updated-by">{% trans "By" %}</label>
+	  				</td>
+	  				<td>
+				      <p id="id-updated-by">{{ file.get_owner_full_name }}</p>
+	  				</td>
+	  			</tr>
+	  		</table>	        	
+		</div>
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label for="id-updated-by">{% trans "Updated" %}</label>
+	  				</td>
+	  				<td>
+				      <p id="id-updated-by">{{ file.time_updated }}</p>
+	  				</td>
+	  			</tr>
+	  		</table>	        	
+        </div>
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label for="id-updated-by">{% trans "By" %}</label>
+	  				</td>
+	  				<td>
+				      <p id="id-updated-by">{{ file.get_modifier_full_name }}</p>
+	  				</td>
+	  			</tr>
+	  		</table>	        	
+		</div>
+	  	<div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ form.file.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form.file.errors %}
+				      <ul class="errorlist">
+				      {% for error in form.file.errors %}
+				        <li>{{ error }}</li>
+				      {% endfor %}
+				      </ul>
+				      {% endif %}
+				      {{ form.file }}
+	  				</td>
+	  			</tr>
+	  		</table>	
+	  	</div>
+	  	<div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ form.description.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form.description.errors %}
+				  		<ul class="errorlist">
+				  		{% for error in form.description.errors %}
+				    	<li>{{ error }}</li>
+				  		{% endfor %}
+				  		</ul>
+				  		{% endif %}
+				      {{ form.description }}
+	  				</td>
+	  			</tr>
+	  		</table>	
+	  	</div>
+	  	<div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ form.tags.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form.tags.errors %}
+				      <ul class="errorlist">
+				      {% for error in form.tags.errors %}
+				        <li>{{ error }}</li>
+				      {% endfor %}
+				      </ul>
+				      {% endif %}
+				      {{ form.tags }}
+	  				</td>
+	  			</tr>
+	  		</table>	
+	  	</div>
+{% if folder and folder.email_notification == 2 %}
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label for="id_notify_users">{% trans "Notify users"%}</label>
+	  				</td>
+	  				<td>
+				  		{% trans "Send an email to notify users" %}
+			      		<br />
+	  					<input type="checkbox" id="id_notify_users" name="notify_users">
+	  				</td>
+	  			</tr>
+	  		</table> 
+		</div>
+{% endif %}
+	  	<div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+	  				</td>
+	  				<input type="submit" value="{% trans "Update"%}" />
+	  				<td>
+	  				</td>
+	  			</tr>
+	  		</table>	
+	  	</div>
+		</fieldset>	
+		</td>
+	</tr>
+</table>
+</form>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.form.js"></script>
+<script type="text/javascript">
+<!--
+	function showcontent(responseText, statusText, xhr, $form) {
+		showStatus('<p>' + responseText.message + '</p>', responseText.status, 5000);
+		dirlistHandler({'dir':$("INPUT[name=dir]").val(), 'search_tag': ''}, '{{folder_content_url}}');	
+	}
+	{% load fileman_tags %}
+	{% auto_completion_search_tags_zornafile "id_tags" "id_tags_pk"  %}	
+	$("#id_tags").multiselect({completions: members_data, enable_new_options: true});
+	$('#form_properties').submit(function(){
+		$(this).ajaxSubmit({
+			target: "#status",
+			dataType: 'json',
+			iframe: true,
+			success: showcontent
+		});
+		return false;
+	});
+
+	$("#fm-wrapper-bloc h1 a").click(function(event){
+		dirlistHandler({'dir':$(this).attr('rel')}, '{{folder_content_url}}');
+	});		
+				
+-->
+</script>

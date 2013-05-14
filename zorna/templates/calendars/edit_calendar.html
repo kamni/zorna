@@ -1,0 +1,42 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  {% if resource_calendar %}
+  <h1>{% trans "Update calendar" %}:&nbsp;{{ resource_calendar.name }}</h1>
+  {% else %}
+  <h1>{% trans "Add new calendar" %}</h1>
+  {% endif %}
+<form action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+		{% if field.errors %}
+		<ul class="errorlist">
+  		{% for error in field.errors %}
+    		<li>{{ error }}</li>
+  		{% endfor %}
+  		</ul>
+  		{% endif %}
+      {{ field.label_tag }}{{ field }}
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="Submit" />
+</form>
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "calendars/admin_right_menu.html" %}
+{% endblock %}

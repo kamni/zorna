@@ -1,0 +1,20 @@
+{% load i18n %}
+<div id="forms-right-path"  class="forms_right_path">
+	{% if workspaces %}
+	<select id="workspace-selector" name="workspace-selector">
+	{% for work in workspaces %}
+	<option value="{{work.slug}}" {% if current_workspace == work.slug%}selected="selected"{%endif%}>{{work.name}}</option>
+	{% endfor %}
+	{% endif %}
+	</select>
+	<span class="path-action">
+	  <a href="{{path_url}}"  target="iframe_right_content" class="forms-path">{{path_url_text}}</a>
+	</span>
+	{% if item_name %}
+	<span>/</span>
+	<span class="path-name">
+	  {{item_name}}
+	</span>
+	{% endif %}
+</div>
+        

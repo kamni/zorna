@@ -1,0 +1,52 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/forms.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/splitter.js"></script>
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#forms-wrapper").splitter({
+		type: "v",
+		outline: true,
+		minLeft: 0, sizeLeft: 250, minRight: 100,
+		resizeToWidth: true,
+		accessKey: 'I'
+	});
+
+});
+</script>
+
+<div class="bloc-forms">
+<div class="forms-wrapper" id="forms-wrapper">
+	<div id="forms-left-panel">
+		<div class="forms-left-header">
+			<div class="forms_left_header_title">
+				<span class="path-name">{% trans "Fields" %}</span>&nbsp;[ <a id="afieldnew" href="{% url forms_add_list %}"  target="iframe_right_content">{% trans "New" %}</a> ]
+				</div>
+		</div>
+		<div id="forms-left-items" class="forms-left-items">
+
+		</div>
+	</div>
+	<div id="forms-right-panel">
+		<div class="forms-right-header">
+        </div>
+		<div id="forms-right-content">
+		<iframe name="iframe_right_content" style="width:100%; height:100%;" src="{{url_frame}}">
+		</iframe>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% endblock %}
+

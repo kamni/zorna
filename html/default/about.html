@@ -1,0 +1,66 @@
+{% extends "layout_lr.html" %}
+{% load i18n %}
+
+{% zorna 
+description: ''
+author: '1'
+created: '2013-02-09 15:35:35.344904'
+keywords: ''
+title: 'About'
+
+%}
+
+{% block __partie_gauche %}
+<p>
+	<strong><span style="color:#800000;"><span style="font-size: 36px;">A propos</span></span></strong></p>
+<p>
+	<span style="font-size:18px;"><span style="color: #670133;">Zorna est un portail collaboratif con&ccedil;u par la soci&eacute;t&eacute; AFRAZ pour faciliter l&#39;&eacute;change, la communication et le partage au sein de l&#39;entreprise. Enti&egrave;rement &eacute;crit en Python et bas&eacute; sur le framework DJANGO, il fonctionne sur un serveur Apache (Linux, Unix ou Windows) et peut utiliser n&#39;importe quel type de base de donn&eacute;es ( MySQL, Postgres, Oracle, etc ... )</span></span></p>
+<p>
+	<span style="color:#800000;"><span style="font-size: 16px;">Il int&egrave;gre nativeement, entre autres, les fonctionnalit&eacute;s suivantes: </span></span></p>
+<ul>
+	<li>
+		Publications d&#39;articles Gestion des fichiers ( Personnels et partag&eacute;s )</li>
+	<li>
+		Espaces collaboratifs pour des groupes d&#39;utilisateurs ( microblogging, discussion instantan&eacute;e, planification d&#39;&eacute;v&egrave;nements, &eacute;change de fichiers, suivi des messages )</li>
+	<li>
+		Moteur de recherche</li>
+	<li>
+		Gestion des utilisateurs et des groupes</li>
+	<li>
+		Gestion des droits au niveau des groupes et aussi par utilisateur</li>
+	<li>
+		Partage d&#39;agendas</li>
+	<li>
+		Gestion des FAQs</li>
+	<li>
+		Une gestion des notes tr&egrave;s &eacute;labor&eacute;e. N&#39;oubliez rien, notez tout et partager ces notes avec d&#39;autres utilisateurs</li>
+	<li>
+		Creation de formulaires avec gestion des droits et possibilit&eacute; d&#39;exporter les donn&eacute;es enregistr&eacute;es vers EXCEL ou un autre tableur</li>
+	<li>
+		Authentification LDAP</li>
+	<li>
+		Et d&#39;autres fonctionnalit&eacute;s encore ...</li>
+</ul>
+<p>
+	<u><span style="color:#800000;"><span style="font-size: 16px;">ZORNA peut &ecirc;tre utilis&eacute; par : </span></span></u></p>
+<ul>
+	<li>
+		Des entreprises, en intranet ou extranet, pour mieux communiquer et partager de l&#39;information avec les clients et les collaborateurs</li>
+	<li>
+		Des &eacute;tablissements d&#39;enseignements pour mettre en place un r&eacute;seau social d&#39;apprentissage entre enseignants et &eacute;l&egrave;ves</li>
+	<li>
+		Des collectivit&eacute;s Des associations</li>
+	<li>
+		Etc...</li>
+</ul>
+
+{% endblock %}
+
+{% block __partie_droite %}
+<p style="font-size: 1.2em;">
+	<b>ZORNA</b></p>
+<p>
+	<b>Vous souhaitez plus d&#39;informations? N&#39;h&eacute;sitez pas &agrave; consulter notre site <a href="http://www.afraz.fr/">AFRAZ</a></b></p>
+<p>
+	<b>Si vous souhaitez voir une d&eacute;monstration, n&#39;h&eacute;sitez pas &agrave; <a href="http://www.afraz.fr/forms/form/contact/" target="_blank">nous contacter</a> </b></p>
+{% endblock %}

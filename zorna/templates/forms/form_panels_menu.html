@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load acl_tags %}
+<table width="100%">
+<tr>
+<td>
+<div class="fields-tools">
+	<ul>
+		<li>
+			<a href="{% url forms_form_panels current_form.pk %}"  title="{% trans "Click to set form panels" %}">
+				<img src="{{ MEDIA_URL }}images/icons/panel-16x16.gif" />{% trans "Panels" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_form_panel_add current_form.pk %}"  title="{% trans "Click to add new panel for this form" %}">
+				<img src="{{ MEDIA_URL }}images/add.png" />{% trans "Add" %}</a>
+		</li>
+	</ul>	
+</div>
+</td>
+</tr>
+</table>

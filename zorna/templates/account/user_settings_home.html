@@ -1,0 +1,13 @@
+{% extends "account/user_settings.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+{% endblock %}
+
+{% block main_content %}
+<div>
+  <h3>{% trans "Personnal informations" %}</h3>
+</div>
+{{profile}}
+{% endblock %}

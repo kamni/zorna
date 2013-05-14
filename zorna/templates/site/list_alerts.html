@@ -1,0 +1,39 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Alerts" %}</h1>  
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Alerts" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for alert in alert_list %}
+    <tr>
+    <td width="1%">
+    	<a href="{% acl_groups_object_url alert%}?next={% url admin_list_alerts %}" title="{% trans "Click to edit rights" %}"><img src="{{ MEDIA_URL }}images/access.png" /></a></a>
+    	</td>
+    <td><a href="{% url admin_edit_alert alert.pk %}" title="{% trans "Click to edit item" %}">{{alert.text}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "site/admin_right_menu.html" %}
+{% endblock %}
+

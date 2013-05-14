@@ -1,0 +1,39 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Communities" %}</h1>  
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Communities" %}</th>
+    <th>{% trans "Description" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for community in communities_list %}
+    <tr>
+    <td width="1%"><a href="{% acl_groups_object_url community%}?next={% url admin_list_communities %}" title="{% trans "Click to edit rights" %}"><img src="{{ MEDIA_URL }}images/access.png" /></a></td>
+    <td><a href="{% url admin_edit_community community.id %}" title="{% trans "Click to edit item" %}">{{community.name}}</a></td>
+    <td>{{community.description}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "communities/admin_right_menu.html" %}
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Options" %}</h1>  
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Option" %}</th>
+    <th>{% trans "Key" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for opt in opt_list %}
+    <tr>
+    <td width="1%">
+    	<a href="{% acl_groups_object_url opt %}?next={% url admin_list_options %}" title="{% trans "Click to edit rights" %}"><img src="{{ MEDIA_URL }}images/access.png" /></a></a>
+    	</td>
+    <td>{% trans opt.option %}</td>
+    <td>{{opt.key}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "site/admin_right_menu.html" %}
+{% endblock %}
+

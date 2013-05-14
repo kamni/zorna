@@ -1,0 +1,99 @@
+{% load i18n %}
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+		{% if manager %}
+<div id="fm_folder_options">
+	<ul class="options">
+		<li><a title="{% trans "Multiple uploading"%}" class="fupload" href="#">{% trans "Multiple uploading" %}</a></li>
+	</ul>
+</div>
+		{% endif %}
+	<h1 class="hnpath">
+		{% for component in cdir_components %}
+			  <a href="#" rel="{{component.rel}}/" class="npath">{{component.text}}</a>{% if not forloop.last %} &raquo;{% endif %}
+		{% endfor%}
+	</h1>	
+</div>
+<form action="{% url fm_upload_view %}" id="form_upload" method="post" enctype="multipart/form-data">{% csrf_token %}
+<input type="hidden" id="folder_dest" name="dir" value="{{folder_dest}}"/>
+<table width="100%">
+	<tr>
+		<td>
+{{ form_set.management_form }}
+{%  for form in form_set.forms %}
+		<fieldset class="module aligned">
+{% for field in form %}
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ field.label_tag }}
+	  				</td>
+	  				<td>
+					{% if field.errors %}
+		  			<ul class="errorlist">
+		      		{% for error in field.errors %}
+		        		<li>{{ error }}</li>
+		      		{% endfor %}
+		      		</ul>
+		      		{% endif %}
+					  {{ field }}
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+{% endfor %}
+		</fieldset>	
+{% endfor %}
+{% if folder and folder.email_notification == 2 %}
+		<fieldset class="module aligned">
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label for="id_notify_users">{% trans "Notify users"%}</label>
+	  				</td>
+	  				<td>
+				  		{% trans "Send an email to notify users" %}
+			      		<br />
+	  					<input type="checkbox" id="id_notify_users" name="notify_users">
+	  				</td>
+	  			</tr>
+	  		</table> 
+	  	</div>       	
+		</fieldset>
+{% endif %}
+		</td>
+	</tr>
+</table>
+<input type="submit" id="buploadfiles" value="{% trans "Submit" %}" />
+</form>
+<div id="commom_template" class="hidden">
+	<input type="hidden" name="path_rel" value="{{folder_dest}}/" />
+	<input type="hidden" name="upload_url" value="{% url fm_multiple_upload_view %}" />
+</div>
+
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.form.js"></script>
+<script type="text/javascript">
+<!--
+	function showcontent(responseText, statusText, xhr, $form) {
+		showStatus('<p>' + responseText.message + '</p>', responseText.status, 5000);
+		dirlistHandler({'dir':$("INPUT[name=dir]").val(), 'search_tag': ''}, '{{folder_content_url}}');	
+	}
+	{% load fileman_tags %}
+	{% auto_completion_search_tags_zornafile "id_tags" "id_tags_pk"  %}	
+	$(".zorna-tags").multiselect({completions: members_data, enable_new_options: true});
+	$('#form_upload').submit(function(){
+		$(this).ajaxSubmit({
+			target: "#status",
+			dataType: 'json',
+			iframe: true,
+			success: showcontent
+		});
+		return false;
+	});
+				
+	$("#fm-wrapper-bloc h1 a").click(function(event){
+		dirlistHandler({'dir':$(this).attr('rel')}, '{{folder_content_url}}');
+	});		
+-->
+</script>

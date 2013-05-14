@@ -1,0 +1,9 @@
+{{ object.title }}
+{{ object.body }}
+{{ object.owner.get_full_name }}
+{% for comment in object.articlecomments_set.all %}
+{{comment.title}} {{comment.comment}}  {{comment.get_owner_full_name}}
+{% endfor %}
+{% for file in object.articleattachments_set.all %}
+{{file.attached_file.name}} {{file.description}}
+{% endfor %}

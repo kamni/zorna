@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load humanize %}
+<div id="reply_container-{{reply.id}}" class="reply_container">
+	<img src="{{ MEDIA_URL }}images/reply.png" class="img-reply"/>
+	<div id="reply_entry_header-{{reply.id}}" msgid="{{reply.id}}"  class="reply_entry_header msg_header">
+		<a href="?{{current_query_string}}&from_id={{reply.owner.pk}}">{{ reply.get_owner_full_name }}</a>&nbsp;<span class="msg-date">{{ reply.time_updated }}</span>
+	</div>
+	<div class="up-triangle">
+		<img src="{{ MEDIA_URL }}images/tri_up.gif" />
+	</div>
+  	<div id="reply_entry_text-{{reply.id}}" msgid="{{reply.id}}"  class="reply_entry_body">
+      <p id="msg_entry_text-{{reply.id}}" msgid="{{reply.id}}"  class="msg_entry_edit">{{ reply.message}}</p>
+  	</div>
+  	<div id="reply_entry_footer-{{reply.id}}"	class="reply_entry_footer">
+		{% if reply.owner_id == request.user.pk or reply.manager %}
+      	<a id="a-edit-{{reply.id}}" msgid="{{reply.id}}" href="#">{% trans "Edit" %}</a>
+      	<a id="a-rdelete-{{reply.id}}" msgid="{{reply.id}}" href="#">{% trans "Delete" %}</a>
+      	{% endif %}
+  	</div>     
+</div>  

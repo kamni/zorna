@@ -1,0 +1,115 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/publication.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/treeview/jquery.treeview.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/treeview/jquery.treeview.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  	$("#id_title").keyup(function() { $("#id_slug").val(string_to_slug($("#id_title").val())); });
+	$("#zorna-menu-root").treeview({
+		collapsed: true,
+		animated: "medium",
+		control:"#sidetreecontrol",
+		persist: "location"
+	});
+});
+
+-->
+</script>
+
+
+<div class="bloc">
+  <h1>{% trans "New story" %} </h1>
+
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+  <fieldset class="module aligned">
+  {% load articles_tags %}
+  {% category_roots writer as roots %}
+  {% if roots.count %}
+  <span class="label">{% trans "Categories"%}</span>	
+<div class="margin-form">
+  <div id="sidetreecontrol">
+  	<a href="?#">{% trans "Collapse All" %}</a> | <a href="?#">{% trans "Expand All" %}</a>
+  </div>
+  <ul id="zorna-menu-root">
+    {% for e in roots %}
+    <li>
+      <input type="checkbox" name="_selected_action" value="{{e.pk}}" />{{e.name}}
+      {% category_childs writer e as childs %}
+      {% if childs %}
+	    <ul>{% for child in childs %}{% pages_item_menu child "reader" "articles/category_item_menu.html" %}{% endfor %}</ul>
+	  {% endif %}
+      </li>
+    {% endfor %}  
+  </ul>
+  {% endif %}
+ </div>
+  </fieldset>
+
+  <fieldset class="module aligned">
+  {% for field in form_story %}
+  <div class="form-row">
+    <div>
+		{% if field.errors %}
+		<ul class="errorlist">
+  		{% for error in field.errors %}
+    		<li>{{ error }}</li>
+  		{% endfor %}
+  		</ul>
+  		{% endif %}
+      <span class="{%if field.field.required %}required{% endif%}">{{ field.label_tag }}</span>{{ field }}
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+{{ form_attachments.management_form }}
+{%  for form in form_attachments.forms %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+		{% if field.errors %}
+		<ul class="errorlist">
+  		{% for error in field.errors %}
+    		<li>{{ error }}</li>
+  		{% endfor %}
+  		</ul>
+  		{% endif %}
+      {{ field.label_tag }}{{ field }}
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+{% endfor %}
+  <fieldset class="module aligned">
+  <div class="form-row">
+	<div>
+	<label for="id_notify_users">{% trans "Notify users"%}</label>
+	{% trans "If allowed, send an email to notify users" %}
+	<br />
+	<input type="checkbox" id="id_notify_users" name="notify_users">
+	</div>  	
+  </div>  
+  </fieldset>
+
+<input type="submit" name="baddarticle" value="Submit" />
+</form>
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "articles/publication_right_menu.html" %}
+{% endblock %}

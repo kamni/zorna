@@ -1,0 +1,489 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/fileman.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jqueryFileTree.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.multiselect.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/ui-layout/jquery.layout-latest.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.livequery.min.js"></script>
+{% comment %} jqueryFileTree has been hacked to support live query{% endcomment %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jqueryFileTree.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.multiselect.js"></script>
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<script type="text/javascript">
+<!--
+var trans_create_new_folder = '{% trans "Create new folder" %}';
+var trans_rename_folder = '{% trans "Rename folder" %}';
+var trans_delete_folder = '{% trans "Delete folder" %}';
+var URL = '';
+
+function basename(path){return path.replace(/.*\//,"");}
+
+// Manage folder ( create and rename)
+var manage_folder = {
+	show: function(a) {
+		$(".confirm").remove();
+		// Show section
+		if ($(a).hasClass('delete')){
+			$("#manage_webpages ul.h-list").prepend('<li id="active_foption" class="confirm remove" style="display: none;"></li>');
+			$("#active_foption").html( $("#delete_folder_template").html() );			
+		} else  {
+			$("#manage_webpages ul.h-list").prepend('<li id="active_foption" class="foption confirm" style="display: none;"></li>');
+			$("#active_foption").html( $("#foption_template").html() );
+		}
+		$("#active_foption").slideDown();
+		
+		if($(a).hasClass('delete')) {
+			// Perform delete
+			$("#active_foption .accept").click( function() {
+				manage_folder.remove();
+				return false;
+			});
+		} else { 
+			if($(a).hasClass('rename')) {
+				$("#active_foption INPUT[name=new_folder]").val($("h1.hnpath span.nlast").html());
+				$("#active_foption INPUT[name=what]").val('rename');
+				$("#active_foption .foption").val(trans_rename_folder);
+			} else {
+				$("#active_foption INPUT[name=what]").val('create');
+				$("#active_foption .foption").val(trans_create_new_folder);
+			}
+
+			// Handle key presses
+			$("#active_foption INPUT[name=new_folder]").keypress( function(e) {
+				if( e.keyCode == 13 ) manage_folder.manage();
+				if( e.keyCode == 27 ) manage_folder.hide('normal');
+			});
+			
+			// Proceed with management
+			$("#active_foption .foption").click( function() {
+				manage_folder.manage();
+				return false;
+			});
+
+		}
+		// Cancel
+		$("#active_foption .cancel").click( function() {
+			manage_folder.hide('normal');
+			return false;
+		});
+	},
+	
+	hide: function(speed, callback) {
+		if( !speed ) speed = 0;
+		$("#active_foption").slideUp(speed, function() {
+			$(this).remove();
+			if( callback ) callback.call();
+		});	},
+	
+	manage: function() {
+		var what = $("#active_foption INPUT[name=what]").val();
+		var path_rel = $("INPUT[name=path_rel]").val();
+		var	new_folder = $("#active_foption INPUT[name=new_folder]").val();
+		var params = {
+			path_rel: path_rel,
+			new_folder: new_folder,
+			what: what,
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		
+		$("#active_foption").addClass('wait').find(':input').attr('disabled', true);
+		$.post('{% url fm_manage_folder %}', params, function(r) {
+			$("#active_foption").removeClass('wait').find(':input').attr('disabled', false);
+			if( r.status == 'success' ) {
+				if(what == 'rename') {
+					$("#left-panel a[rel="+path_rel+"]").html(new_folder).attr('rel', r.data);
+					$("h1.hnpath span.nlast").html(new_folder);
+					$("INPUT[name=path_rel]").val(r.data);
+				} else {
+					$("#left-panel a[rel="+path_rel+"]").last().after(r.data);
+				}
+				manage_folder.hide('normal');
+			} else {
+				alert(r.message);
+			}
+		}, 'json');
+		
+	},
+
+	remove: function() {
+		var path_rel = $("INPUT[name=path_rel]").val();
+		var params = {
+			path_rel: path_rel,
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		
+		$("#active_foption").addClass('wait');
+		$.post('{% url fm_delete_folder %}', params, function(r) {
+			$("#active_foption").removeClass('wait').find(':input').attr('disabled', false);
+			if( r.status == 'success' ) {
+				$("#left-panel a[rel="+path_rel+"]").remove();
+				dirlistHandler({'dir':r.data}, URL);
+			} else {
+				alert(r.message);
+			}
+		}, 'json');
+		
+	}
+
+};
+
+// Handles change file name
+var labelEditor = {
+	src: null,
+	rel: null,
+	id: null,
+	originalFileName: null,
+	
+	show: function(li) {
+		$(".confirm").remove();
+		// Hide existing editors
+		labelEditor.hide();
+		labelEditor.src = $(li).find('.title');
+		labelEditor.rel = $(labelEditor.src).attr('rel');
+		labelEditor.originalFileName = $(labelEditor.src).html();
+		labelEditor.id = $(labelEditor.src).attr('fid');
+		// Show textfield
+		$(labelEditor.src).hide().after('<input type="text" id="new_label" class="textfield" size="40" maxlength="60" />');
+		// Focus on the textfield
+		var filename = $(labelEditor.src).html();
+		$("#new_label").val( filename ).focus().select();
+		// Handle save/discard
+		$("#new_label").keypress( function(e) {
+			if( e.keyCode == 13 ) labelEditor.save();
+			if( e.keyCode == 27 ) labelEditor.hide();
+		}).blur( function() {
+			labelEditor.save();
+		});
+	},
+	hide: function() {
+		$("#new_label").remove();
+		$(".title").show();
+		labelEditor.src = null;
+		labelEditor.originalFileName = null;
+		labelEditor.rel = null;
+		labelEditor.id = null;
+	},
+	save: function() {
+		var li = $(labelEditor.src).parents('LI.webpage');
+		var new_label = $("#new_label").val();
+		var src = labelEditor.src;
+		var fid = labelEditor.id;
+		var rel = labelEditor.rel;
+		new_label = new_label.replace(/^ +/g, '');
+		new_label = new_label.replace(/ +$/g, '');
+		// New title can't be empty or just spaces
+		if( new_label.replace(/ /g, '') == '') new_label = labelEditor.originalFileName;
+		// Hide textfield
+		$("#new_label").remove();
+		// Update label and short label
+		$(labelEditor.src).text(new_label).show();
+		// Only send the request if the title has changed
+		if( new_label != labelEditor.originalFileName ) {
+			var params = {
+				dir: rel +fid+','+ labelEditor.originalFileName,
+				new_name: new_label,
+				csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+			};
+			$(li).addClass('wait');
+			labelEditor.hide();
+			$.post('{% url fm_rename_file %}', params, function(r) {
+				if( r.status == 'success' ) {
+					$(li).removeClass('wait');
+					$(src).html(r.new_name);
+					$(src).attr('href', '{% url get_file %}?file='+rel +fid +','+r.new_name);
+				} else {
+					alert( r.message );
+				}
+			}, 'json');
+		}
+	}
+};
+
+
+var delete_file = {
+	src: null,
+	show: function(li) {
+		$(".confirm").remove();
+		delete_file.hide();
+		delete_file.src = li;
+		$(li).after('<li id="active_delete_page" class="confirm remove" style="display: none;"></li>');
+		$("#active_delete_page").html( $("#delete_page_template").html() ).slideDown();
+		// Cancel delete
+		$("#active_delete_page .cancel").click( function() {
+			delete_file.hide('normal');
+			return false;
+		});
+		// Perform delete
+		$("#active_delete_page .accept").click( function() {
+			delete_file.remove();
+			return false;
+		});
+	},
+	
+	hide: function(speed, callback) {
+		if( !speed ) speed = 0;
+		delete_file.src = null;
+		$("#active_delete_page").slideUp(speed, function() {
+			$(this).remove();
+			if( callback ) callback.call();
+		});
+	},
+	
+	remove: function() {
+		var li = delete_file.src;
+		// Get params
+		var elem = $(li).find('A.title');
+		var file_type = $("INPUT[name=file_type]").val();
+		var params = {
+			dir: elem.attr('rel') + elem.attr('fid') + ',' + elem.html(),
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		delete_file.hide('normal');
+		$(li).addClass('wait');
+		$.post('{% url fm_delete_file %}', params, function(r) {
+			$(li).removeClass('wait');
+			if( r.status == 'success' ) {
+				$(li).slideUp( function() {
+					$(this).remove();
+					// Show "no webpages" notice?
+					if( $("#manage_webpages .h-list LI.webpage").size() == 0 ) {
+						$("#manage_webpages .h-list LI.no_webpages").slideDown();
+					}
+				});
+			} else {
+				alert( r.message );
+			}
+		}, 'json');
+	}
+};
+
+
+function showStatus(msg,msgClass,duration){
+	$("#status").removeClass('error').removeClass('success');
+	if(msgClass)
+		$("#status").addClass(msgClass);
+	$("#status").html(msg).fadeIn();
+	if(duration){
+		setTimeout(function(){$("#status").fadeOut(function(){$(this).html('').removeClass(msgClass)});},duration);
+	}
+}
+
+function showResponse(responseText, statusText, xhr, $form) {
+	showStatus('<p>' + responseText.message + '</p>', responseText.status, 5000);
+	console.log('mesage='+responseText.message);
+	$("#rp-content").html(responseText.data);
+}
+
+function showWebPageWait() {
+	$("#rp-content").html("");
+	$("#fm-wait").show();
+}
+
+function hideWebPageWait() {
+	$("#fm-wait").hide();
+}
+
+function dirlistHandler(params, url) {
+	URL = url;
+	showWebPageWait();
+	params = $.extend({}, params);
+	params.search_text = $("#search-file").val();
+
+	$.get(url, params, function(data) {
+		hideWebPageWait();
+		$("#rp-content").html(data);
+		// Show "no webpages" notice?
+		if( $("#manage_webpages .h-list LI.webpage").size() == 0 ) {
+			$("#manage_webpages .h-list LI.no_webpages").slideDown();
+		}
+		$("#fm-wrapper-bloc h1 a").click(function(event){
+			dirlistHandler({'dir':$(this).attr('rel')}, url);
+		});		
+
+		$("#manage_webpages .fm-tags a").click(function(event){
+			var tag = $(this).html();
+			dirlistHandler({'dir':$("INPUT[name=path_rel]").val(), 'search_tag': tag}, url);
+		});	
+
+		$("#search-tag").click(function(event){
+			dirlistHandler({'dir':$("INPUT[name=path_rel]").val(), 'search_tag': ''}, url);
+		});
+	});
+}
+
+function communitiesFolderHandler(dir) {
+	var params = {'dir': dir};
+	return dirlistHandler(params, '{% url communities_folder_content %}');
+}
+
+function personalFolderHandler(dir) {
+	var params = {'dir': dir};
+	return dirlistHandler(params, '{% url personal_folder_content %}');
+}
+
+function sharedFolderHandler(dir) {
+	var params = {'dir': dir};
+	return dirlistHandler(params, '{% url shared_folder_content %}');
+}
+
+function viewUploadForm() {
+	var params = {'dir': $("INPUT[name=path_rel]").val()};
+	var url = $("INPUT[name=upload_url]").val();
+	showWebPageWait();
+	$.get(url, params, function(r) {
+		hideWebPageWait();
+		if(r.status == 'success') {
+			$("#rp-content").html(r.data);
+		} else {
+			showStatus('<p>' + r.message + '</p>', r.status, 5000);
+		}
+	}, 'json');
+}
+
+function viewPropertiesForm(li) {
+	var src = $(li).find('.title')
+	var params = {dir: $(src).attr('rel'), file_name: $(src).html(), file_id: $(src).attr('fid')};
+	showWebPageWait();
+	$.get('{% url fm_properties_view %}', params, function(r) {
+		hideWebPageWait();
+		if(r.status == 'success') {
+			$("#rp-content").html(r.data);
+		} else {
+			showStatus('<p>' + r.message + '</p>', r.status, 5000);
+		}
+	}, 'json');
+}
+
+
+jQuery(document).ready(function() {
+	$('#fm-wrapper').layout({ applyDefaultStyles: true });
+	{% if bpersonal_folder %}
+	$('#fm-mydoc').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_personal_folders %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1, 
+		folderHandler: personalFolderHandler
+		}
+		);
+	{% endif %}	
+	{% if bcommunities_folder %}
+	$('#fm-com').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_communities_folders %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1,
+		folderHandler: communitiesFolderHandler 
+		} 
+		);
+	{% endif %}	
+	{% if bshared_folder %}
+	$('#fm-shared').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_shared_folders %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1,
+		folderHandler: sharedFolderHandler 
+		} 
+		);
+	{% endif %}	
+		
+	$("a.foption").livequery('click', function() {
+		manage_folder.show($(this));
+		return false;
+	});
+	
+	$("a.fupload").livequery('click', function() {
+		viewUploadForm();
+		return false;
+	});
+
+	// Change file label
+	$("a.edit_label").livequery('click', function() {
+		labelEditor.show( $(this).parents('LI.webpage') );
+		return false;
+	});
+	
+	$("li.webpage A.delete").livequery('click', function() {
+		delete_file.show( $(this).parents('LI.webpage') );
+		return false;
+	});	
+
+	$("li.webpage A.properties").livequery('click', function() {
+		viewPropertiesForm($(this).parents('LI.webpage'));
+		return false;
+	});	
+
+	{% if dir %}
+		var dir = '{{dir}}';
+		dirlistHandler({'dir': dir}, '{{dir_url}}');
+	{% else %}
+		{% if bpersonal_folder %}
+			personalFolderHandler('{{bpersonal_dir}}');
+		{% else %}
+			{% if bcommunities_folder %}
+				communitiesFolderHandler('{{bcommunities_dir}}');
+			{% else %}
+				{% if bshared_folder %}
+					sharedFolderHandler('{{bshared_dir}}');
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+
+	$('#form-search-file').submit(function(){
+		dirlistHandler({'dir':$("INPUT[name=path_rel]").val()}, URL);
+		return false;
+	});
+});
+-->
+</script>
+<div class="fm-wrapper" id="fm-wrapper">
+	<div id="left-panel" class="ui-layout-west">
+		<div class="file-search-box">
+			<form action="" id="form-search-file" method="post">
+			{% csrf_token %}
+			<button class="flatbutton grey" name="op" type="submit">
+			<span>{% trans "Search" %}</span>
+			</button>
+			<input name="search-text" id="search-file" type="text" value="{{search_text}}" />
+			</form>
+		</div>
+	{% if bpersonal_folder %}
+			<div class="fm-personal fm-header"><a href="#">{% trans "My documents" %}</a></div>
+			<div id="fm-mydoc">
+			</div>
+	{% endif %}
+
+	{% if bcommunities_folder %}
+			<div class="fm-communities fm-header"><a href="#">{% trans "My communities" %}</a></div>
+			<div id="fm-com">
+			</div>
+	{% endif %}
+
+	{% if bshared_folder %}
+			<div class="fm-shareddoc fm-header"><a href="#">{% trans "Shared folders" %}</a></div>
+			<div id="fm-shared">
+			</div>
+	{% endif %}
+	</div>
+	<div id="right-panel"  class="ui-layout-center">
+		<div id="fm-wait"><p>{% trans "Loading..."%}</p></div>
+		<div id="fm_main_content">
+			<div id="rp-content"></div>
+		</div>
+	</div>
+</div>	
+<div id="status" class="hidden"></div>
+
+{% endblock %}

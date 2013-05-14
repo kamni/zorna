@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if curalert %}
+<h3>{% trans "Alert" %}</h3>
+<ul>
+  <li><a href="{% url admin_edit_alert curalert.pk %}" title="{% trans "Click to edit alert" %}">{% trans "Edit alert" %}</a></li>
+  <li><a href="{% acl_groups_object_url curalert %}?next={% url admin_list_alerts %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+  <li><a href="{% acl_users_object_url curalert %}?next={% url admin_list_alerts %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Site configuration" %}</h3>
+<ul>
+  <li>
+  	<a href="{% url admin_site_version %}" title="{% trans "Version" %}">{% trans "Version" %}</a>
+  </li>
+  <li>
+  	<a href="{% url admin_list_options %}" title="{% trans "List of options" %}">{% trans "Options" %}</a>
+  </li>
+  <li>
+  	<a href="{% url admin_site_registration %}" title="{% trans "Site registration" %}">{% trans "Site registration" %}</a>
+  </li>
+  <li>
+  	<a href="{% url admin_list_alerts %}" title="{% trans "List of alerts" %}">{% trans "Alerts" %}</a>
+  	 [ <a href="{% url admin_add_alert%}" title="{% trans "Click to add new alert"%}">{% trans "New" %}</a> ]
+  </li>
+  <li>
+  	<a href="{% url admin_list_calendar_categories %}" title="{% trans "List of calendar categories" %}">{% trans "Calendar categories" %}</a>
+  	 [ <a href="{% url admin_add_calendar_category%}" title="{% trans "Click to add new category"%}">{% trans "New" %}</a> ]
+  </li>
+</ul>

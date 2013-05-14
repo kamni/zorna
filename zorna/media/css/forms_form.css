@@ -1,0 +1,152 @@
+.forms-form-row label {width:auto;}
+#form-container .f-form {
+    border: medium none;
+    clear: both;
+}
+
+#form-header {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+
+#form-container .f-panel {
+    float: left;
+}
+
+#form-container .f-panel-border {
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+#form-container .h-panel {
+    float: left;
+    background-color:#F0F0F0;
+    border-bottom: 1px solid #DFDFDF;
+    width: 100%;
+    padding: 2px 0px !important;
+}
+
+#form-container .h-panel .h-panel-title {
+    float: left;
+    color: #666666;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#form-container .h-panel-header,  #form-container .h-panel-footer {
+	width: 95%;
+	padding-left: 10px;
+}
+
+#form-container .f-control {
+    clear: left;
+    float: left;
+    padding: 2px 0px 2px 10px !important;
+    width: 99%;
+}
+
+#form-container table {
+	width: 95%;
+}
+
+#form-container table .f-row-left {
+	width: 25%;
+	vertical-align:middle;
+}
+#form-container table .f-row-full {
+	width: 100%;
+}
+
+#form-container input[type=text] { width: 100%; }
+#form-container textarea { width: 100%; height: 70px;}
+
+#form-container .f-control .f-label {
+    float: left;
+    text-align: left;
+    width: auto;
+    font-weight: bold;
+}
+
+#form-container .f-control .f-field {
+    clear: left;
+    float: left;
+    margin-top: 4px;
+    width: 80%;	
+}
+
+
+#form-container .f-control span.f-field ul {
+    list-style: none outside none;
+    margin: 0;
+    padding-left: 0;
+    text-align: left;	
+}
+
+#form-container .inline span.f-field ul li {
+	display: inline;
+}
+
+
+#form-container .f-control .f-errors {
+    clear: left;
+    float: left;
+}
+
+#form-container .f-control .f-help {
+    font-size: 10px !important;
+    margin-left: 10px;
+    float: left;
+}
+
+#form-container .f-errorlist li {
+    border: 1px solid red;
+    display: block;
+    font-size: 10px !important;
+    margin: 0 0 3px;
+}
+#form-container ul.f-errorlist {
+    float: left;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#fs-data {
+    line-height: 1.2em;
+}
+
+#fs-data {
+    border-width: 2px;
+    overflow: auto;
+    padding: 10px;
+}
+
+#fs-data .fs-data table {
+    border: 1px solid #DADADA;
+    width: 95%;
+}
+
+#fs-data tbody td {
+    border: 1px solid #DADADA;
+    padding: 5px 5px;
+}
+
+#fs-data tbody td.data-label {
+    color: #666666;
+    font-size: 12px;
+    font-weight:bold;
+    width: 10%;
+}
+
+
+#fs-data table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+pre.input,pre.textarea,pre.select{overflow:hidden;font-family:"Lucida Grande",Tahoma,Arial,sans-serif;border-width:1px; margin: 0px;}
+.wrap {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

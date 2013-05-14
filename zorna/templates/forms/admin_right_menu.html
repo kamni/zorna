@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if curworkspace %}
+<h3>{{ curworkspace.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_workspace curworkspace.pk %}" title="{% trans "Click to edit workspace details" %}">{% trans "Edit workspace" %}</a></li>
+  <li><a href="{% acl_users_object_url curworkspace %}?next={% url list_workspaces %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+  <li><a href="{% acl_groups_object_url curworkspace %}?next={% url list_workspaces %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Forms workspaces" %}</h3>
+<ul>
+  <li><a href="{% url list_workspaces %}" title="{% trans "List of workspaces" %}">{% trans "Workspaces" %}</a></li>
+  <li><a href="{% url admin_add_workspace %}" title="{% trans "Click to add new workspace" %}">{% trans "Add new workspace" %}</a></li>
+</ul>

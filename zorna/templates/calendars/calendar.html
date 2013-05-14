@@ -1,0 +1,255 @@
+{% extends "full.html" %}
+{% load i18n %}
+{% load calendars_tags %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/calendars.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/fullcalendar/fullcalendar.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/fullcalendar/fullcalendar.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.qtip-1.0.0-rc3.min.js"></script>
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<script type="text/javascript">
+var eventsSources = new Object;
+var fcoptions = {
+        timeFormat: 'HH:mm{ - HH:mm}',
+        axisFormat: 'HH:mm',
+        allDayText: '{% trans 'all-day'%}',
+        defaultView: '{{custom_view}}',
+        firstDay: '{{week_start_on}}',
+        viewDisplay: function(view){
+		  param = "start="+view.start.getTime()/1000+"&end="+view.end.getTime()/1000;
+	      jQuery.each(eventsSources, function(i,item){
+	      	$('#calendar').fullCalendar( 'removeEventSource', eventsSources[i] );
+	      });	
+		  jQuery.ajax({
+		    url: '/calendars/jsonevents/',
+		    cache: false,
+		    data: param,
+		    dataType: "json",
+		    success: function(data) {
+		      eventsSources = data;
+		      jQuery.each(eventsSources, function(i,item){
+		      	if( $("span[slug="+i+"]").parent().hasClass('calshow')) {
+		      		$('#calendar').fullCalendar( 'addEventSource', eventsSources[i] );
+		      	}
+		      	});	
+		  	}
+		    });
+        },         
+        events: "",
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        columnFormat: {
+          'week': 'ddd d/M',
+          'day': 'dddd d/M'
+        },
+        buttonText: {
+          {% comment %}Translators: This text is used in javascript {% endcomment %}
+          today: "{% trans 'Today'%}",
+          month: '{% trans 'Month'%}',
+          week: '{% trans 'Week'%}',
+          day: '{% trans 'Day'%}'
+        },
+        monthNames:[
+          '{% trans 'January'%}', 
+          '{% trans 'February'%}', 
+          '{% trans 'March'%}', 
+          '{% trans 'April'%}', 
+          '{% trans 'May'%}', 
+          '{% trans 'June'%}', 
+          '{% trans 'July'%}', 
+          '{% trans 'August'%}', 
+          '{% trans 'September'%}', 
+          '{% trans 'October'%}', 
+          '{% trans 'November'%}', 
+          '{% trans 'December'%}'],
+        monthNamesShort:[
+          '{% trans 'Jan'%}', 
+          '{% trans 'Feb'%}', 
+          '{% trans 'Mar'%}', 
+          '{% trans 'Apr'%}', 
+          '{% trans 'May'%}', 
+          '{% trans 'Jun'%}', 
+          '{% trans 'Jul'%}', 
+          '{% trans 'Aug'%}', 
+          '{% trans 'Sep'%}', 
+          '{% trans 'Oct'%}', 
+          '{% trans 'Nov'%}', 
+          '{% trans 'Dec'%}'],
+        dayNamesShort:['{% trans 'Sun'%}', '{% trans 'Mon'%}', '{% trans 'Tue'%}', 
+          '{% trans 'Mer'%}', '{% trans 'Thu'%}', '{% trans 'Fri'%}', '{% trans 'Sat'%}'],
+        dayNames: [
+          '{% trans 'Sunday'%}', '{% trans 'Monday'%}', '{% trans 'Tuesday'%}', '{% trans 'Wednesday'%}',
+          '{% trans 'Thursday'%}', '{% trans 'Friday'%}', '{% trans 'Saturday'%}'],         
+        selectable: true,
+        {% if bcreate %}
+        select: function(start, end, allDay) {
+          var title = prompt('{% trans "Event Title:"%}');
+          if (title) {
+            window.location.href = "{% url create_calendar_event %}"+"?start="+start.getTime()/1000+"&end="+end.getTime()/1000+'&title='+encodeURIComponent(title);
+          }
+        },
+        {% endif %}
+		eventRender: function (event, element) {
+		        element.qtip({    
+		            content: {    
+		                title: { text: event.title },
+		                text: formatEvent(event, element)
+		            },
+		            position: { adjust: { screen: true } },
+		            show: { solo: true },
+		            //hide: { when: 'inactive', delay: 3000 }, 
+		            style: { 
+		                width: 350,
+		                padding: 5,
+		                color: 'black',
+		                textAlign: 'left',
+		                border: {
+		                	width: 1,
+		                	radius: 3
+		             	},
+		                tip: { 
+					         corner: 'topLeft' // We declare our corner within the object using the corner sub-option
+		                } 
+		            } 
+		        });
+		    },
+        eventDrop : function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
+            updater(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view);
+        },
+        eventResize: function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ) {
+            updater(event, dayDelta, minuteDelta, null, revertFunc, jsEvent, ui, view);
+        }
+		              
+
+   };
+function formatEvent(event) {
+	if(event.end ) {
+		text = $.fullCalendar.formatDates(event.start, event.end, 'ddd dd/MM/yyyy HH:mm {- ddd dd/MM/yyyy HH:mm}', fcoptions);
+	} else {
+		text = $.fullCalendar.formatDate(event.start, 'ddd dd/MM/yyyy HH:mm', fcoptions);
+	}
+	text = text + '<br />';
+	text = text 
+	+ '<span class="event-item">{% trans "Category" %}: </span>'
+	+ event.category
+	+ '<br /><span class="event-item">{% trans "Author" %}: </span>'
+	+ event.author
+	+ '<br /><span class="event-item">{% trans "Location" %}: </span>'
+	+ event.location
+	+ '<br /><span class="event-item">Description: </span> <br />' + event.description;
+	return text;     	
+}
+
+function updater(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
+    $.ajax({
+      type: "POST",
+      url: "{% url calendar_update_event_dates %}",
+      data: {start:event.start.getTime(), end : event.end.getTime(),id:event.id, allDay: allDay},
+      error : function(request, textStatus, errorThrown){
+          if(request.status == 403){
+            alert("{% trans "You are not allowed to update this event" %}");
+            revertFunc();
+          }
+          else {
+              alert("{% trans "Error, reload page an try agin" %}");
+              revertFunc();
+          }
+      }
+    });
+}
+
+
+$(document).ready(function() {
+	
+	$(".my_calendar").toggle(
+		function(){
+			$(this).parent().removeClass('calshow');
+			slug = $(this).attr('slug');
+			if( slug in eventsSources ) {
+				$('#calendar').fullCalendar('removeEventSource', eventsSources[slug] );
+			}
+		},
+		function(){
+			$(this).parent().addClass('calshow');
+			slug = $(this).attr('slug');
+			if( slug in eventsSources ) {
+				$('#calendar').fullCalendar('addEventSource', eventsSources[slug]);
+			}
+		}
+	);
+	
+    $( "#smallmonth" ).datepicker({
+      onSelect: function(date, inst){
+        ar = date.split('/');
+        d = new Date(ar[2], ar[1]-1, ar[0]);
+        $('#calendar').fullCalendar('gotoDate', d);
+      }
+    });
+    // page is now ready, initialize the calendar...
+	  var cals = new Array();
+	  $(".my_calendar").each( function(i) {
+	  	if( $(this).parent().hasClass('calshow')) {
+	  		cals.push($(this).attr('calid'));
+	  	}
+	  });
+	param = "&calendars="+cals.join(',');
+    $('#calendar').fullCalendar(fcoptions);
+});
+</script>
+ 
+<div class="bloc-calendars">
+  <div class="cal-settings"><a href="{% url calendar_user_settings %}">{% trans "Calendar settings" %}</a></div>	
+  <h1>{% trans "Calendar" %}</h1>
+<div class="calendars" id="calendars">
+<table>
+    <tr>
+    <td class="calendars-left">
+      <div id="calendars-left">
+        <div class="calendars-left-header" id="calendars-left-header">
+          <div> 
+              {% if bcreate %}<a href="{% url create_calendar_event %}?start={{start_date}}&end={{end_date}}"><span>{% trans "Create event" %}...</span></a>{% endif %}
+              {% if calendar.bshare %}| <a href="{% url calendar_share %}"><span>{% trans "Share" %}</span></a>{% endif %}
+          </div>          
+        </div>
+        <div id="smallmonth">
+        </div>
+        <div class="lcaltitle"><span>{% trans "My calendars"%}</span></div>
+        <div id="my_calendars">
+        	{% for cal in my_calendars %}
+	        	<div class="my_calendars  calshow">
+        			<a href="{% url remove_from_view_calendar cal.pk %}" class="util-button delete"></a>
+	        		<span  id="cal-{{cal.pk}}" calid="{{cal.pk}}" slug="{{cal.calendar.slug}}" class="my_calendar">{{cal.calendar.name}}</span>
+	        	</div>
+        	{% endfor %}
+        </div>
+        <div class="lcaltitle"><span>{% trans "Other calendars"%}</span></div>
+        <div id="shared_calendars">
+        	{% for cal in calendars_viewer %}
+        	<div id="cal-{{cal.pk}}" calid="{{cal.pk}}" slug="{{cal.calendar.slug}}" class="shared_calendars">
+        		<span><a href="{% url add_to_view_calendar cal.pk %}">{{cal.calendar.name}}</a></span>
+        	</div>
+        	{% endfor %}
+        </div>
+      </div>
+    </td>
+    <td class="calendars-right">
+      <div id='calendar'></div>
+    </td>
+    </tr>
+</table>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% endblock %}
+

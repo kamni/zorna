@@ -1,0 +1,15 @@
+{% extends "print_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms_form.css" />
+{% include "forms/form_for_form_header.html" %}
+{% endblock %}
+
+{% block zorna_title_page %}
+{{form.name}}
+{% endblock %}
+
+{% block print_content %}
+	{% include "forms/form_body.html"%}
+{% endblock %}

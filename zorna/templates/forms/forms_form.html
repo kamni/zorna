@@ -1,0 +1,58 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms_form.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.timeentry.min.js"></script>
+  <style type="text/css"> 
+    .charfield { width: 250px; } 
+    .forms-form-row ul li {display:inline;white-space: no-wrap;}
+    .forms-form-row label {width:auto;}
+  </style>
+  
+{% endblock %}
+
+{% block iframe_content %}
+<script type="text/javascript">
+{% json_list_users %}
+$(document).ready(function() {
+	$(".zorna_user").autocomplete(users_list,
+			{ 
+			dataType: "json",
+            parse: function(data) {
+                return $.map(data, function(row) {
+                    return { data:row, value:row[1], result:row[0] };
+                });
+			}
+			}).result(
+	                function(e, data, value) {
+	                	var el = $(this).attr('id')+'-id';
+	                    $("#"+el).val(data[1]);
+	                }
+	            );
+
+	$(".datetimefield").each(function(i){
+  		var id = $(this).attr('id');
+ 		if(id.charAt(id.length-1) == '0')
+  	    	$(this).datepicker();
+  	    else
+	    	$(this).timeEntry(tmOptions);
+	});
+	$(".datefield").each(function(i){
+    	$(this).datepicker();
+	});
+	{% if load_navigation %}
+	parent.loadForms();
+	{% endif %}
+	parent.updatePathForms("{{forms_path|escapejs}}");
+});
+</script>
+{% include "forms/form_menu.html"%}
+<div class="zbloc">
+	{{form_details}}
+</div>
+{% endblock %}

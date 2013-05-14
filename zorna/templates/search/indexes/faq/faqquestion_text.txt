@@ -1,0 +1,3 @@
+{{ object.category.name }}
+{{ object.question }}
+{{ object.answer }}

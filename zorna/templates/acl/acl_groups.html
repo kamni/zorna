@@ -1,0 +1,102 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Permissions by groups" %}</h1>
+<form name="fpermgroups" method="post" action="." autocomplete="off">{% csrf_token %}
+<input type="hidden" name="next" value="{{ next }}" />  
+<table>
+	<tr>
+		<td><input type="submit" value="Update permissions for " name="bupdate"/>&nbsp;&nbsp;<span class="objectname">{{ object_name }}</span></td>
+		<td>
+		  {% if perm_objects|length > 1 %}
+		  {% trans "Load permissions from" %}:
+      <select name="proto_perm" onchange="document.forms['fpermgroups'].submit()">
+        <option value=""></option>
+		  {%  for k,v in perm_objects.iteritems %}
+		  	<option value="{{ v.pk }}" {%if proto_perm == v.pk %}selected="selected"{%endif%}>{{ v }}</option>
+		  {% endfor %}
+		  </select>
+      {% endif %}
+		</td>
+	</tr>
+</table> 
+<table id="group-table-dnd">
+	<thead>
+		<tr>
+		<th></th>
+		<th>Groups</th>
+		{%  for k,v in verbs.items %}
+		<th>{{ k|capfirst }}</th>
+		{% endfor %}
+		</tr>
+	</thead>
+	
+	<tbody>
+		{% for group in object_list %}
+		<tr id="node-{{ group.id }}" {% if group.parent_id %}class="child-of-node-{{group.parent_id}}"{% endif %}>
+		<td width="1%">
+			{% if group.show_members %}
+			<a href="{% url users_group group.id %}" title="{% trans "Group members" %}"><img src="{{ MEDIA_URL }}images/group.gif"></img></a>
+			{% endif %}
+		</td>
+		<td>
+			{% if group.show_members %}
+				{{group.name}}
+			{% else %}
+				{% trans group.name %}
+			{% endif %}
+		</td>
+    {%  for k,v in group.verbs.items %}
+    <td>
+      <select name="perm_{{ k }}_{{ group.id }}">
+        <option value=""></option>
+        <option value="0" {% if v == 0 %} selected="selected" {% endif %}>Deny</option>
+        <option value="2" {% if v == 2 %} selected="selected" {% endif %}>Allow</option>
+        <option value="3" {% if v == 3 %} selected="selected" {% endif %}>Allow++</option>
+        <option value="1" {% if v == 1 %} selected="selected" {% endif %}>Deny++</option>
+      </select>
+    </td>
+    {% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</form>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#group-table-dnd").treeTable(
+		  { treeColumn : 1, initialState: 'expanded'  }
+	);
+});
+</script>
+
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+<ul>
+  <li><a href="{{ next }}">{% trans "Cancel" %}</a></li>
+  <li><a href="{% acl_users_object_url object %}?next={{next}}">{% trans "Permissions by users" %}</a></li>
+</ul>
+<h3>{% trans "Help on permissions" %}</h3>
+{%  for k,v in verbs.items %}
+<h4>{{ k|capfirst }}</h4>
+<p>{% trans v.text %}</p>
+{% endfor %}
+<p>{% trans "Allow++ and Deny++ allow you to grant or deny rights to the group and its descendants" %}</p>
+{% endblock %}
+

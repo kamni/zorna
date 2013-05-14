@@ -1,0 +1,73 @@
+{% extends "communities/home_base.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+{% if css_file %}
+<link rel="stylesheet" type="text/css" href="{{css_file}}" />
+{% endif %}
+<script type="text/javascript">
+$(document).ready(function() {
+});
+</script>
+{% endblock %}
+
+
+{% block main_content %}
+<div id="community_title" class="community_title">
+	{% if search_string != ""  or from_id %}
+	  <span class="raction">
+		 {%if from_id %}
+			<a  id="close-from" class="util-button delete" href="#">{% trans "From"%} {{msg_sender.get_full_name}}</a>
+		 {%endif%}
+		{% if search_string != "" %}
+			<a id="close-search" class="util-button delete" href="#">{{ search_string }}</a>
+		{% endif %}
+	  </span>
+	{% endif %}
+	<h1>{{community_title}}</h1>
+</div>
+<div id="msg_wrapper">
+	  {% for entry in plugin_list.object_list %}
+    <div id="msg_container-{{entry.message.id}}" msgid="{{entry.message.id}}" class="msg_container">
+    {% if entry.avatar_user %}
+      <img src="/{{ entry.avatar_user.avatar|thumbnail:"42x42" }}" class="avatar"/>
+    {% else %}
+      <img src="{{ MEDIA_URL }}images/unknown.jpg" class="avatar"/>
+    {% endif %}
+    <div id="msg_entry-{{entry.message.id}}" class="msg_entry">
+		<div id="msg_entry_header-{{att.message.id}}" msgid="{{entry.message.id}}" class="msg_header">
+	    	<a href="?{{current_query_string}}&from_id={{entry.message.owner.pk}}">{{ entry.message.get_owner_full_name }}</a>&nbsp;{% trans "to"%}&nbsp;
+        {% for com in entry.message.communities.all %}
+          <span style="color: #{{com.bgcolor}};">{{ com.name }}</span>
+        {% endfor %}
+        {% for user in entry.message.users.all %}
+          <a href="">{{ user.get_full_name }}</a>
+        {% endfor %}
+	    </div>
+		<div class="msg_entry_body">
+      		<span class="raction">
+      			<a class=" util-button edit " rel="facebox" href="{% url communities_edit_plugin plugin_id entry.id %}">{% trans "Edit"%}</a>
+      			<a class="util-button message" href="{% url communities_home_page %}?all_msg=message&message_id={{entry.message.id}}">View message</a>
+      		</span>
+			{{entry.html}}
+		</div>
+	</div>
+	</div>
+  {% endfor %}
+	{% if paginator.num_pages > 1 %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+             {% trans "Total" %}:{{ com_members.paginator.count }}
+        </span>	
+</p>
+{% endif %}
+</div>
+{% endblock %}

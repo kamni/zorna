@@ -1,0 +1,49 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+{% block iframe_content %}
+{% include "forms/form_menu.html"%}
+<div class="zbloc">
+<form id="form_edit_field" action="" method="post">{% csrf_token %}
+  <input type="hidden" name="tempfile" value="{{tempfile}}"/>
+  <input type="hidden" name="separator" value="{{separator}}"/>
+  <input type="hidden" name="encoding" value="{{encoding}}"/>
+  <fieldset class="module aligned">
+  {% for row in csv_header %}
+  <div class="form-row">
+    <div>
+  		<table>
+  			<tr>
+  				<td>
+			      <label>{{ row.label }}</label>
+  				</td>
+  				<td>
+  					<select name="field_type_{{row.id}}">
+  						<option value="0">-----------</option>
+						<optgroup label="{% trans "Existing field" %}">
+  						{% for field in field_choices %}
+  							<option value="{{field.id}}">{{field.label}}</option>
+  						{% endfor %}
+  						</optgroup>
+						<optgroup label="{% trans "New type" %}">
+  						{% for field in type_choices %}
+  							<option value="{{field.id}}">{{field.label}}</option>
+  						{% endfor %}
+  						</optgroup>
+  					</select>
+  					<input type="checkbox" name="field_unique_{{row.id}}" value="1" />{% trans "Unique" %}
+  				</td>
+  			</tr>
+  		</table>       	
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="{% trans "Import" %}" />
+</form>
+</div>
+{% endblock %}

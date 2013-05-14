@@ -1,0 +1,54 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/login.css" />
+{% endblock %}
+
+
+{% block zorna_page_content %}
+<div class="bloc" style="margin:0;">
+{% if form.errors %}
+<strong>{{ form.non_field_errors }}</strong>
+{% endif %}
+    <div class="login">
+        <img src="{{ MEDIA_URL }}/images/login_icon.png" />
+    <h1>{{site.name}}</h1><br clear="right" />
+    <h2>Veuillez vous identifier</h2><br clear="right" />
+    <form method="post" action="{% url user_login %}" class="loginform">
+    {% csrf_token %}
+            <div class="row">
+            {% if form.username.errors %}
+            <ul class="errorlist">
+            {% for error in form.username.errors %}
+             <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+                <label>{{ form.username.label }}:</label>
+            	{{ form.username }}
+        </div>
+            <div class="row">
+            {% if form.password.errors %}
+            <ul class="errorlist">
+            {% for error in form.password.errors %}
+             <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            <label>{{ form.password.label }}:</label>
+            {{ form.password }}
+        </div><br />
+            <div class="row">
+            
+            <input type="submit" value="{% trans "Login" %}" />
+            <input type="hidden" name="next" value="{{ next }}" />
+            </div>
+            
+    </form>
+        <br clear="right" />
+        <a href="{% url forgot_password %}" style="float: left;">{% trans "Forgot your password?"%}</a>
+        <br clear="all" />
+    </div>
+</div>
+{% endblock %}

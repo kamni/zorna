@@ -1,0 +1,4365 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-07 16:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: models.py:40
+msgid "Date created"
+msgstr "Date de création"
+
+#: models.py:41
+msgid "Date updated"
+msgstr "Date de mise à jour"
+
+#: models.py:42
+msgid "Enabled"
+msgstr "Activé"
+
+#: utils.py:129 utils.py:135 templates/skins/default/full.html:5
+#: templates/skins/default/left_middle_right.html:5
+#: templates/skins/default/left_right.html:5
+msgid "Intranet"
+msgstr "Intranet"
+
+#: account/forms.py:20 account/forms.py:75 account/forms.py:224
+#: account/views.py:600
+msgid "Password"
+msgstr "Mot de passe"
+
+#: account/forms.py:22 account/forms.py:77 account/forms.py:226
+msgid "Password (again)"
+msgstr "Mot de passe (encore)"
+
+#: account/forms.py:29 account/forms.py:103 account/forms.py:233
+msgid "You must type the same password each time"
+msgstr "Vous devez saisir le même mot de passe"
+
+#: account/forms.py:31
+msgid "You must type password"
+msgstr "Vous devez saisir le mot de passe"
+
+#: account/forms.py:37 account/forms.py:208
+msgid "Username"
+msgstr "Identifiant"
+
+#: account/forms.py:38 account/forms.py:80
+msgid "Email address"
+msgstr "Adresse de messagerie"
+
+#: account/forms.py:39 account/forms.py:78
+#: templates/account/users_administrators.html:24
+#: templates/account/users_group.html:22 templates/account/users_list.html:15
+msgid "Firstname"
+msgstr "Prénom"
+
+#: account/forms.py:40 account/forms.py:79
+#: templates/account/users_administrators.html:25
+#: templates/account/users_group.html:23 templates/account/users_list.html:16
+msgid "Lastname"
+msgstr "Nom"
+
+#: account/forms.py:41
+msgid "is active"
+msgstr "est actif"
+
+#: account/forms.py:41
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Indique si l'utilisateur doit être considéré comme actif ou non."
+"Déselectionner cette option au lieur de supprimer l'utilisateur."
+
+#: account/forms.py:60 account/forms.py:90
+msgid ""
+"That username has invalid characters. The valid values are letters, numbers "
+"and underscore."
+msgstr ""
+"L'identifiant contient des caractères invalides. Les caractères autorisés "
+"sont les caractères alphanumériques et le caractère souligné"
+
+#: account/forms.py:67 account/forms.py:95
+msgid "This username is already taken. Please choose another."
+msgstr "Cet identifiant est déjà utulilisé. Choisissez un autre svp."
+
+#: account/forms.py:73
+msgid "Login ID"
+msgstr "Identifiant"
+
+#: account/forms.py:143
+msgid "Account activation on"
+msgstr "Activation du compte sur"
+
+#: account/forms.py:154
+msgid "Your site has recorded a new registration"
+msgstr "Votre site a enregistré un nouvel utilisateur"
+
+#: account/forms.py:185 articles/forms.py:56
+#, python-format
+msgid ""
+"%(ext)s is an invalid file extension. Authorized extensions are : "
+"%(valid_exts_list)s"
+msgstr ""
+"%(ext)s est une extension invalide. Les extensions autorisées sont :"
+"%(valid_exts_list)s"
+
+#: account/forms.py:188
+msgid "Please, choose a valid image file"
+msgstr "Choisissez une fichier image valide"
+
+#: account/forms.py:192 forms/forms.py:126 templates/forms/export_form.html:53
+msgid "Semicolon"
+msgstr "point virgule"
+
+#: account/forms.py:193 forms/forms.py:127 templates/forms/export_form.html:54
+msgid "Comma"
+msgstr "Virgule"
+
+#: account/forms.py:194 forms/forms.py:128
+msgid "Tabulation"
+msgstr "Tabulation"
+
+#: account/forms.py:197 forms/forms.py:131
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: account/forms.py:198 forms/forms.py:132
+msgid "ISO-8859-1"
+msgstr "ISO-8859-1"
+
+#: account/forms.py:201 fileman/forms.py:31 fileman/forms.py:37
+#: fileman/forms.py:45 forms/forms.py:135 templates/fileman/log_files.html:16
+msgid "File"
+msgstr "Fichier"
+
+#: account/forms.py:202 forms/forms.py:136
+msgid "Separator"
+msgstr "avec le séparateur"
+
+#: account/forms.py:203 forms/forms.py:137
+msgid "Other"
+msgstr "Autres"
+
+#: account/forms.py:204 forms/forms.py:138
+msgid "Encoding"
+msgstr "Encodage"
+
+#: account/forms.py:208
+msgid "Username or email address"
+msgstr "Identifiant ou adresse de messagerie"
+
+#: account/forms.py:217
+msgid "Unkown username or email"
+msgstr "Identifiant ou adresse email non connu"
+
+#: account/forms.py:219
+msgid "Invlaid username or email"
+msgstr "Identifiant ou adresse email non valide"
+
+#: account/management.py:9 calendars/models.py:15
+#: templates/communities/list_communities.html:45
+msgid "Public"
+msgstr "Publique"
+
+#: account/management.py:11
+msgid "Anonymous"
+msgstr "Anonymes"
+
+#: account/management.py:12
+msgid "Registered"
+msgstr "Utilisateurs enregistrés"
+
+#: account/models.py:19 acl/models.py:93 articles/models.py:28
+#: calendars/models.py:146 communities/models.py:22 fileman/models.py:23
+#: menus/models.py:15 notes/models.py:19 workflow/forms.py:38
+msgid "name"
+msgstr "nom"
+
+#: account/models.py:74 account/models.py:75
+msgid "activation key"
+msgstr "Clé d'activation"
+
+#: account/models.py:77
+msgid "last activity"
+msgstr "Dernière activité"
+
+#: account/models.py:78 site/models.py:44
+msgid "groups"
+msgstr "Groupes"
+
+#: account/models.py:79
+msgid ""
+"In addition to the permissions manually assigned, this user will also get "
+"all permissions granted to each group he/she is in."
+msgstr ""
+"En plus des permissions assignées manuellement, cet utilisateur aura toutes "
+"les permissions accordées à chauqe groupe auquel il appartient."
+
+#: account/models.py:84
+msgid "User profile"
+msgstr "Profile utilisateur"
+
+#: account/models.py:162
+msgid "User avatar"
+msgstr "Photo utilisateur"
+
+#: account/models.py:166
+#, python-format
+msgid "Avatar for %s"
+msgstr "Avatar pour %s"
+
+#: account/views.py:57
+msgid "Password reset request"
+msgstr "Demande d'initialisation de mot de passe"
+
+#: account/views.py:283 templates/account/admin_right_menu.html:18
+msgid "Add new group"
+msgstr "Ajouter un groupe"
+
+#: account/views.py:303
+msgid "Update group"
+msgstr "Mettre à jour le groupe"
+
+#: account/views.py:530
+msgid "You must provide required fields"
+msgstr "Vous devez renseigner les champs obligatoires"
+
+#: account/views.py:563
+msgid "One more fields are empty"
+msgstr "Un ou plusieurs champs sont vides"
+
+#: account/views.py:572 fileman/views.py:607
+msgid "Invalid file name"
+msgstr "Nom de fichier invalide"
+
+#: account/views.py:596 forms/forms.py:576 forms/forms.py:614
+#: forms/views.py:1001
+msgid "Nickname"
+msgstr "Identifiant"
+
+#: account/views.py:597
+msgid "First name"
+msgstr "Prénom"
+
+#: account/views.py:598
+msgid "Last name"
+msgstr "Nom"
+
+#: account/views.py:599
+msgid "E-mail address"
+msgstr "Adresse de messagerie"
+
+#: account/views.py:605 forms/api.py:200 forms/views.py:134 forms/views.py:171
+#: forms/views.py:192 forms/views.py:216 forms/views.py:281 forms/views.py:337
+#: forms/views.py:400 forms/views.py:464 forms/views.py:480 forms/views.py:528
+#: forms/views.py:569 forms/views.py:1011 forms/views.py:1048
+#: forms/views.py:1085 forms/views.py:1133 forms/views.py:1164
+#: forms/views.py:1205 forms/views.py:1245 forms/views.py:1329
+#: forms/views.py:1409 forms/views.py:1452 forms/views.py:1495
+#: forms/views.py:1526 forms/views.py:1554 forms/views.py:1582
+#: templates/forms/home.html:59 templatetags/zorna_tags.py:120
+#: templatetags/zorna_tags.py:157
+msgid "Forms"
+msgstr "Formulaires"
+
+#: account/views.py:637
+msgid "Users import"
+msgstr "Import des utilisateurs"
+
+#: acl/models.py:95
+msgid "codename"
+msgstr "codename"
+
+#: acl/models.py:99
+msgid "permission"
+msgstr "Permission"
+
+#: acl/models.py:100
+msgid "permissions"
+msgstr "Permissions"
+
+#: acl/models.py:350
+msgid "Acl permission"
+msgstr "Permission"
+
+#: acl/models.py:351
+msgid "Acl permissions"
+msgstr "Permissions"
+
+#: acl/models.py:406
+#, python-format
+msgid "Can %(check)s this %(object_name)s"
+msgstr "Peut %(check)s cet %(object_name)s"
+
+#: articles/feeds.py:10
+msgid "Updates on changes and additions to "
+msgstr "Mises à jour et ajouts à"
+
+#: articles/feeds.py:17
+#, python-format
+msgid "Articles for category %s"
+msgstr "Articles de la catégorie %s"
+
+#: articles/feeds.py:23
+#, python-format
+msgid "Articles recently published in category %s"
+msgstr "Articles récemment publiés dans la catégorie %s"
+
+#: articles/forms.py:30 faq/forms.py:26 faq/forms.py:48
+msgid "You must provide a slug or a category name"
+msgstr "Vous devez fournir un slug ou un nom de catégorie"
+
+#: articles/forms.py:33 notes/forms.py:32
+#: templates/articles/edit_article.html:157
+msgid "Attachment"
+msgstr "Fichier joint"
+
+#: articles/forms.py:34 articles/models.py:119 fileman/forms.py:32
+#: fileman/forms.py:38 forms/forms.py:54 forms/forms.py:68 forms/models.py:38
+#: forms/models.py:74 notes/forms.py:33
+#: templates/communities/admin_list_communities.html:19
+#: templates/forms/list_lists.html:37
+#: templates/workflow/list_workflows.html:18 workflow/forms.py:11
+msgid "Description"
+msgstr "Description"
+
+#: articles/forms.py:41 communities/models.py:122 pages/forms.py:20
+#: templates/admin/account/usergroup/change_list_table.html:10
+#: templates/admin/pages/page/change_list_table.html:9
+msgid "title"
+msgstr "Titre"
+
+#: articles/forms.py:42 articles/models.py:29 articles/models.py:83
+#: fileman/models.py:24 menus/models.py:16 notes/models.py:20
+msgid "slug"
+msgstr "slug"
+
+#: articles/forms.py:43
+msgid "head"
+msgstr "Entête"
+
+#: articles/forms.py:44 notes/forms.py:11
+msgid "body"
+msgstr "Corps"
+
+#: articles/forms.py:69
+msgid "You must provide a slug or a story title"
+msgstr "Vous devez fournir un slug ou un titre"
+
+#: articles/models.py:17 fileman/models.py:16
+msgid "No email notification"
+msgstr "Pas de notification par email"
+
+#: articles/models.py:18 fileman/models.py:17
+msgid "Send email notification"
+msgstr "Envoyer une notification par email"
+
+#: articles/models.py:19 fileman/models.py:18
+msgid "Let the author decide"
+msgstr "Laisser le choix à l'auteur"
+
+#: articles/models.py:30 forms/models.py:80
+msgid "Template"
+msgstr "Template"
+
+#: articles/models.py:31 articles/models.py:89
+msgid "Allow comment"
+msgstr "Autoriser les commentaires"
+
+#: articles/models.py:32
+msgid ""
+"Users will receive email notification when an article is published or updated"
+msgstr ""
+"Les utilisateurs seront informés par email quan un article est publié ou mis "
+"à jour"
+
+#: articles/models.py:36
+msgid "articles category"
+msgstr "catégorie d'article"
+
+#: articles/models.py:37
+msgid "articles categories"
+msgstr "catégorie d'articles"
+
+#: articles/models.py:60
+msgid "Who can browse this category"
+msgstr "Qui peut visualiser cette catégorie"
+
+#: articles/models.py:61
+msgid "Who can submit articles to this category"
+msgstr "Qui peut soumettre des articles dans cette catégorie"
+
+#: articles/models.py:62
+msgid "Who can manage this category"
+msgstr "Qui peut gérer cette catgéorie"
+
+#: articles/models.py:81
+msgid "categories"
+msgstr "catégories"
+
+#: articles/models.py:82 articles/models.py:129 forms/models.py:148
+#: notes/forms.py:10 templates/articles/story_default.html:91
+#: templates/articles/writer_stories_list.html:17
+msgid "Title"
+msgstr "Titre"
+
+#: articles/models.py:84
+msgid "Head"
+msgstr "Entête"
+
+#: articles/models.py:85
+msgid "Body"
+msgstr "Corps"
+
+#: articles/models.py:92
+msgid "story"
+msgstr "Article"
+
+#: articles/models.py:93
+msgid "stories"
+msgstr "Articles"
+
+#: articles/models.py:121 articles/models.py:131
+msgid "article"
+msgstr "article"
+
+#: articles/models.py:124 articles/models.py:125
+msgid "article attachments"
+msgstr "Fichiers joints à l'article"
+
+#: articles/models.py:130 workflow/models.py:221
+msgid "Comment"
+msgstr "Commentaire"
+
+#: articles/models.py:134
+msgid "article comment"
+msgstr "Commentaire de l'article"
+
+#: articles/models.py:135
+msgid "article comments"
+msgstr "Commentaires de l'article"
+
+#: articles/views.py:187 templates/articles/email_notification_html.html:9
+#: templates/articles/email_notification_text.html:3
+msgid "A new article has been published"
+msgstr "Un nouvel article a été publié"
+
+#: articles/views.py:189 templates/articles/email_notification_html.html:9
+#: templates/articles/email_notification_text.html:3
+msgid "An article has been updated"
+msgstr "Un article a été mis à jour"
+
+#: calendars/forms.py:10
+msgid "-----"
+msgstr ""
+
+#: calendars/forms.py:11
+msgid "Weekly"
+msgstr "Hebdomadaire"
+
+#: calendars/forms.py:12
+msgid "Daily"
+msgstr "Journalier"
+
+#: calendars/forms.py:13
+msgid "Monthly"
+msgstr "Mensuel"
+
+#: calendars/forms.py:14
+msgid "Yearly"
+msgstr "Annuel"
+
+#: calendars/forms.py:17 templates/calendars/calendar.html:87
+msgid "Sun"
+msgstr "Dim"
+
+#: calendars/forms.py:18 templates/calendars/calendar.html:87
+msgid "Mon"
+msgstr "Lun"
+
+#: calendars/forms.py:19 templates/calendars/calendar.html:87
+msgid "Tue"
+msgstr "Mar"
+
+#: calendars/forms.py:20
+msgid "Wed"
+msgstr ""
+
+#: calendars/forms.py:21 templates/calendars/calendar.html:88
+msgid "Thu"
+msgstr "Jeu"
+
+#: calendars/forms.py:22 templates/calendars/calendar.html:88
+msgid "Fri"
+msgstr "Ven"
+
+#: calendars/forms.py:23 templates/calendars/calendar.html:88
+msgid "Sat"
+msgstr "Sam"
+
+#: calendars/forms.py:31 communities/forms.py:139 forms/forms.py:564
+#: site/models.py:14
+msgid "Start date"
+msgstr "Date de début"
+
+#: calendars/forms.py:32 communities/forms.py:140 forms/forms.py:565
+#: site/models.py:15
+msgid "End date"
+msgstr "Date de fin"
+
+#: calendars/forms.py:32 calendars/forms.py:45 communities/forms.py:140
+#: communities/forms.py:151 site/forms.py:26
+msgid "The end time must be later than start time."
+msgstr "La date de fin doit être plus tard que la date de début"
+
+#: calendars/forms.py:33
+msgid "Until date"
+msgstr "Jusqu'à la date"
+
+#: calendars/forms.py:33
+msgid "This date is ignored for one time only events."
+msgstr "Cette date est ignorée pour les événements non réccurrents"
+
+#: calendars/forms.py:34
+msgid "Rule"
+msgstr "Rège de récurrence"
+
+#: calendars/forms.py:34
+msgid "Select '----' for a one time only event."
+msgstr "Choisissez '----' pour les événements non répétitifs"
+
+#: calendars/forms.py:35
+msgid "Repeat on"
+msgstr "Répétez à chaque"
+
+#: calendars/forms.py:36
+msgid "Repeat every"
+msgstr "Répétez à chaque"
+
+#: calendars/models.py:14
+msgid "Default"
+msgstr "Par défaut"
+
+#: calendars/models.py:16 templates/communities/list_communities.html:47
+msgid "Private"
+msgstr "Privée"
+
+#: calendars/models.py:21 calendars/models.py:58 communities/models.py:32
+msgid "background color"
+msgstr "Couleur de fond"
+
+#: calendars/models.py:24
+msgid "calendar category"
+msgstr "Catégorie d'événement"
+
+#: calendars/models.py:25
+msgid "calendar categories"
+msgstr "Catégories d'événement"
+
+#: calendars/models.py:58
+msgid "If used, calendar category is ignored."
+msgstr "Si utilisé, la catégorie d'événement est ignoré"
+
+#: calendars/models.py:59
+msgid "location"
+msgstr "Lieu"
+
+#: calendars/models.py:60
+msgid "Busy"
+msgstr "Occupé"
+
+#: calendars/models.py:61
+msgid "privacy"
+msgstr "privé"
+
+#: calendars/models.py:66 calendars/models.py:67
+msgid "Event details"
+msgstr "Détails de l'événement"
+
+#: calendars/models.py:92 templates/calendars/calendar.html:90
+msgid "Sunday"
+msgstr "Dimanche"
+
+#: calendars/models.py:93 templates/calendars/calendar.html:90
+msgid "Monday"
+msgstr "Lundi"
+
+#: calendars/models.py:94 templates/calendars/calendar.html:91
+msgid "Saturday"
+msgstr "Samedi"
+
+#: calendars/models.py:98 templates/calendars/calendar.html:59
+msgid "Day"
+msgstr "Journalier"
+
+#: calendars/models.py:99 templates/calendars/calendar.html:58
+msgid "Week"
+msgstr "Semaine"
+
+#: calendars/models.py:100 templates/calendars/calendar.html:57
+msgid "Month"
+msgstr "Mois"
+
+#: calendars/models.py:106
+msgid "secret key"
+msgstr "clé secrète"
+
+#: calendars/models.py:110
+msgid "custom view"
+msgstr "vue personnalisée"
+
+#: calendars/models.py:111
+msgid "week start on"
+msgstr "la semaine commence le"
+
+#: calendars/models.py:112
+msgid "default meeting length"
+msgstr "durée de la réunion par défaut"
+
+#: calendars/models.py:114
+msgid "Default meeting length in minutes"
+msgstr "Durée, par défaut, de la réunion en minutes "
+
+#: calendars/models.py:115
+msgid "default time scale"
+msgstr "échelle de temps par défaut"
+
+#: calendars/models.py:117
+msgid "Default time scale"
+msgstr "Echelle de temps par défaut"
+
+#: calendars/models.py:122
+msgid "zorna calendar"
+msgstr "agenda zorna"
+
+#: calendars/models.py:123
+msgid "zorna calendars"
+msgstr "agendas zorna"
+
+#: calendars/models.py:139
+msgid "Can view event details"
+msgstr "Peut visualiser les détails de l'événement"
+
+#: calendars/models.py:140
+msgid "Can make change to events"
+msgstr "Peut modifier les événements"
+
+#: calendars/models.py:141
+msgid "Can add new event"
+msgstr "Peut ajouter un nouveau événement"
+
+#: calendars/models.py:147 communities/forms.py:30 communities/models.py:23
+#: pages/forms.py:22 workflow/models.py:15
+msgid "description"
+msgstr "Description"
+
+#: calendars/models.py:150
+msgid "zorna resource calendar"
+msgstr "agenda de ressource"
+
+#: calendars/models.py:151
+msgid "zorna resource calendars"
+msgstr "agendas de ressources"
+
+#: communities/api.py:156 communities/views.py:797
+#: templates/communities/home_base.html:79
+msgid "Followed posts"
+msgstr "Messages suivis"
+
+#: communities/api.py:158 communities/views.py:803
+#: templates/communities/home_base.html:85
+msgid "Recent messages"
+msgstr "Messages récents"
+
+#: communities/api.py:160 communities/views.py:800
+#: templates/communities/home_base.html:82
+msgid "Direct to me"
+msgstr "Envoyés à moi"
+
+#: communities/api.py:165
+msgid "Content type"
+msgstr "Content type"
+
+#: communities/api.py:167 communities/views.py:1024 forms/forms.py:79
+#: forms/forms.py:83 forms/models.py:79 forms/models.py:122
+#: templates/articles/story_default.html:95 workflow/models.py:90
+msgid "Message"
+msgstr "Message"
+
+#: communities/api.py:169 templates/communities/home_base.html:105
+msgid "All"
+msgstr "Tous"
+
+#: communities/forms.py:29 fileman/forms.py:13 forms/forms.py:53
+#: forms/forms.py:63 forms/models.py:37 forms/models.py:68 forms/models.py:147
+#: templates/fileman/file_properties_popup.html:3
+#: templates/forms/list_lists.html:36 workflow/forms.py:10
+#: workflow/models.py:14 workflow/models.py:51 workflow/models.py:66
+msgid "Name"
+msgstr "Nom"
+
+#: communities/forms.py:37
+msgid "Recipients"
+msgstr "Destinataires"
+
+#: communities/forms.py:38 communities/views.py:816
+msgid "Attachments"
+msgstr "Fichiers joints"
+
+#: communities/forms.py:120
+#: templates/communities/email_notification_html.html:9
+#: templates/communities/email_notification_text.html:3
+msgid "A new message has been posted in communities"
+msgstr "Un nouveau message a été publié dans les communautés"
+
+#: communities/forms.py:131
+msgid "Choose"
+msgstr "Choisissez"
+
+#: communities/forms.py:131
+msgid "Enter names"
+msgstr "Saisissez les noms"
+
+#: communities/forms.py:132
+msgid "Manager"
+msgstr "Gestionnaire"
+
+#: communities/forms.py:132
+msgid "Check this if you want to invite these people as managers"
+msgstr ""
+"Cochez cette case si vous souhaitez les inviter en tant que gestionnaires"
+
+#: communities/forms.py:133
+msgid "Tell them why you're adding them"
+msgstr "Dites leurs pourquoi vous les avez ajouté"
+
+#: communities/forms.py:149
+msgid "You must specify start and end dates"
+msgstr "Vous devez spécifier des dates de début et de fin"
+
+#: communities/forms.py:205 communities/forms.py:209
+msgid "You must specify at least two choices"
+msgstr "Vous devez spécifier au moins deux choix"
+
+#: communities/forms.py:234
+msgid "Invalid url"
+msgstr "URL invalide"
+
+#: communities/forms.py:236
+msgid "Invalid url or script embed codes are not supported"
+msgstr "URL invalid ou les codes saisis ne sont pas autorisés"
+
+#: communities/models.py:25
+msgid "Option of making your community Public, Private, or Hidden"
+msgstr "Option pour désigner votre commuanuté comme Public, Privée ou Cachée"
+
+#: communities/models.py:26
+msgid "enable calendar"
+msgstr "activer l'agenda"
+
+#: communities/models.py:27
+msgid "Enable this option to let members access calendar community"
+msgstr ""
+"Activer cette option pour permettre aux membres de la communauté d'accéder à "
+"l'agenda"
+
+#: communities/models.py:28
+msgid "enable documents"
+msgstr "Activer les documents"
+
+#: communities/models.py:29
+msgid ""
+"Enable this option to allow members to access files in the Document Manager"
+msgstr ""
+"Activer cette option pour permettre aux membres de la communauté d'accéder "
+"aux fichiers dans le gestionnaire de fichiers"
+
+#: communities/models.py:30
+msgid "email notification"
+msgstr "notification par email"
+
+#: communities/models.py:31
+msgid "Users will receive email notification when a new message is posted"
+msgstr "Les utilisateurs seront informés quand un nouveau message est envoyé"
+
+#: communities/models.py:35
+msgid "community"
+msgstr "Communauté"
+
+#: communities/models.py:36 communities/models.py:51
+msgid "communities"
+msgstr "Communautés"
+
+#: communities/models.py:44
+msgid "Who can join this community"
+msgstr "Qui peut être membre de cette communauté"
+
+#: communities/models.py:45
+msgid "Who can manage this community"
+msgstr "Qui peut gérer cette communauté"
+
+#: communities/models.py:50
+msgid "message"
+msgstr "Message"
+
+#: communities/models.py:52 communities/models.py:110
+msgid "users"
+msgstr "utilisateurs"
+
+#: communities/models.py:54
+msgid "followers"
+msgstr "Suiveurs"
+
+#: communities/models.py:57
+msgid "community message"
+msgstr "message"
+
+#: communities/models.py:58
+msgid "community messages"
+msgstr "messages"
+
+#: communities/models.py:71
+msgid "community message extra info"
+msgstr "Informations supplémentaires"
+
+#: communities/models.py:72
+msgid "community messages extra info"
+msgstr "messages"
+
+#: communities/models.py:79
+msgid "event"
+msgstr "événement"
+
+#: communities/models.py:82
+msgid "community event"
+msgstr "Evénement pour la communauté"
+
+#: communities/models.py:83
+msgid "community events"
+msgstr "Evénements pour la communauté"
+
+#: communities/models.py:97 faq/forms.py:51 faq/models.py:63
+msgid "question"
+msgstr "question"
+
+#: communities/models.py:100
+msgid "poll"
+msgstr "sondage"
+
+#: communities/models.py:101
+msgid "polls"
+msgstr "sondages"
+
+#: communities/models.py:108
+msgid "choice"
+msgstr "choix"
+
+#: communities/models.py:113
+msgid "poll choice"
+msgstr "choix du sondage"
+
+#: communities/models.py:114
+msgid "poll choices"
+msgstr "choix du sondages"
+
+#: communities/models.py:121 communities/models.py:126 menus/models.py:17
+msgid "url"
+msgstr "url"
+
+#: communities/models.py:123
+msgid "excerpt"
+msgstr "résumé"
+
+#: communities/models.py:127
+msgid "urls"
+msgstr "urls"
+
+#: communities/views.py:38
+msgid "Error"
+msgstr "Erreur"
+
+#: communities/views.py:47
+msgid "Poll"
+msgstr "Sondage"
+
+#: communities/views.py:83 communities/views.py:86
+msgid "Polls"
+msgstr "Sondages"
+
+#: communities/views.py:208
+msgid "Event"
+msgstr "Evénement"
+
+#: communities/views.py:244 communities/views.py:247 communities/views.py:309
+msgid "Events"
+msgstr "Evénements"
+
+#: communities/views.py:339
+msgid "Link"
+msgstr "Lien"
+
+#: communities/views.py:375 communities/views.py:378
+msgid "Links"
+msgstr "Liens"
+
+#: communities/views.py:702 communities/views.py:870
+#: templates/communities/home_base.html:88
+#: templates/communities/manager_right_menu.html:4
+msgid "Members"
+msgstr "Membres"
+
+#: communities/views.py:716 templates/communities/manager_right_menu.html:5
+msgid "Managers"
+msgstr "Gestionnaires"
+
+#: communities/views.py:731
+msgid "Members of "
+msgstr "Les Membres de "
+
+#: communities/views.py:759
+msgid "Managers of "
+msgstr "Les gestionnaires de "
+
+#: communities/views.py:806 templates/communities/home_base.html:76
+msgid "Messages"
+msgstr "Messages"
+
+#: communities/views.py:1012 communities/views.py:1511
+msgid "Access Denied"
+msgstr "Accès non autorisé"
+
+#: communities/views.py:1035 templates/communities/message_entry.html:57
+msgid "Follow"
+msgstr "Suivre"
+
+#: communities/views.py:1036 templates/communities/message_entry.html:54
+msgid "Unfollow"
+msgstr "Ne pas suivre"
+
+#: communities/views.py:1163
+#, python-format
+msgid "New reply from %s"
+msgstr "Nouvelle réponse de %s"
+
+#: communities/views.py:1484
+#, fuzzy, python-format
+msgid "%(user)s added you to %(community)s"
+msgstr "%(user) vous a inscrit à la communauté  %(community)"
+
+#: communities/views.py:1487 templates/communities/list_communities.html:53
+msgid "manager"
+msgstr "gestionnaire"
+
+#: communities/views.py:1489 templates/communities/list_communities.html:52
+msgid "member"
+msgstr "membre"
+
+#: faq/forms.py:52 faq/models.py:64
+msgid "answer"
+msgstr "réponse"
+
+#: faq/models.py:25
+msgid "Who can browse this faq"
+msgstr "Qui peut consulter cette faq"
+
+#: faq/models.py:26
+msgid "Who can manage this faq"
+msgstr "Qui peut gérer cette faq"
+
+#: faq/models.py:37 faq/models.py:66 forms/models.py:154 forms/models.py:212
+msgid "sort order"
+msgstr "Ordre de tri"
+
+#: fileman/api.py:66
+msgid "Recent files"
+msgstr "Documents récents"
+
+#: fileman/forms.py:14 templates/menus/menus_home.html:20
+msgid "Slug"
+msgstr "Slug"
+
+#: fileman/forms.py:28
+msgid "You must provide a slug or a folder name"
+msgstr "Vous devez fournir un slug ou un nom de répertoire"
+
+#: fileman/models.py:25
+msgid "Inherit permissions"
+msgstr "Hérite les permissions"
+
+#: fileman/models.py:26
+msgid ""
+"Users will receive email notification when a file is uploaded or updated"
+msgstr ""
+"Les utilisateurs seront informés quand un fichier est chargé ou mis à jour"
+
+#: fileman/models.py:30
+msgid "folder"
+msgstr "Répertoire"
+
+#: fileman/models.py:31
+msgid "folders"
+msgstr "Répertoires"
+
+#: fileman/models.py:46
+msgid "Who can browse this folder"
+msgstr "Qui peut télécharger des fichiers de ce répertoire"
+
+#: fileman/models.py:47
+msgid "Who can upload files to this folder"
+msgstr "Qui peut déposer des fichiers dans ce répertoire"
+
+#: fileman/models.py:48
+msgid "Who can manage this folder"
+msgstr "Qui peut gérer ce répertoire"
+
+#: fileman/models.py:55
+msgid "root_folder"
+msgstr "Répertoire racine"
+
+#: fileman/models.py:59
+msgid "file"
+msgstr "fichier"
+
+#: fileman/models.py:63
+#, python-format
+msgid "file %s"
+msgstr "fichier %s"
+
+#: fileman/views.py:134
+msgid "A new file has been uploaded"
+msgstr "Un nouveau fichier a été téléchargé"
+
+#: fileman/views.py:136
+msgid "A file has been updated"
+msgstr "Un fichier a été mis à jour"
+
+#: fileman/views.py:455
+msgid "Folder deleted successfully"
+msgstr "Fichier supprimé avec succès"
+
+#: fileman/views.py:462 fileman/views.py:517 fileman/views.py:556
+#: fileman/views.py:596 fileman/views.py:629 fileman/views.py:713
+#: fileman/views.py:780 fileman/views.py:787 notes/views.py:170
+#: notes/views.py:194 notes/views.py:258 notes/views.py:342
+msgid "Access denied"
+msgstr "Accès non autorisé"
+
+#: fileman/views.py:489
+msgid "Folder renamed successfully"
+msgstr "Répertoire renommé avec succès"
+
+#: fileman/views.py:496 fileman/views.py:514
+msgid "Invalid folder name"
+msgstr "Nom du répertoire invalide"
+
+#: fileman/views.py:507
+msgid "Folder created successfully"
+msgstr "Répertoire créé avec succès"
+
+#: fileman/views.py:551 fileman/views.py:591 fileman/views.py:623
+#: fileman/views.py:707 fileman/views.py:775
+msgid "Incorrect path"
+msgstr "Chemin invalide"
+
+#: fileman/views.py:572
+msgid "File renamed successfully"
+msgstr "Fichier renommée avec succès"
+
+#: fileman/views.py:575 fileman/views.py:610 fileman/views.py:693
+#: fileman/views.py:759 fileman/views.py:830
+msgid "Invalid file path"
+msgstr "Chemin de fichier invalide"
+
+#: fileman/views.py:604
+msgid "File deleted successfully"
+msgstr "Fichier supprimé avec succès"
+
+#: fileman/views.py:661
+msgid "Files uploaded successfully"
+msgstr "Fichiers chargés avec succès"
+
+#: fileman/views.py:667
+msgid "No file uploaded"
+msgstr "Aucun fichier chargé"
+
+#: fileman/views.py:672 fileman/views.py:817 notes/views.py:234
+msgid "Invalid form"
+msgstr "Formulaire invalide"
+
+#: fileman/views.py:812
+msgid "File updated successfully"
+msgstr "Fichier mis à jour avec succès"
+
+#: forms/fields.py:29 forms/views.py:989
+msgid "Single line text"
+msgstr "Champ text"
+
+#: forms/fields.py:30 forms/views.py:990
+msgid "Multi line text"
+msgstr "Champ multi lignes"
+
+#: forms/fields.py:31 forms/views.py:991
+msgid "Email"
+msgstr "Adresse email"
+
+#: forms/fields.py:32
+msgid "Check box"
+msgstr "Case à cocher"
+
+#: forms/fields.py:33
+msgid "Check boxes"
+msgstr "Cases à cocher"
+
+#: forms/fields.py:34
+msgid "Drop down"
+msgstr "List déroulante"
+
+#: forms/fields.py:35
+msgid "Multi select"
+msgstr "Sélection multiple"
+
+#: forms/fields.py:36
+msgid "Radio buttons"
+msgstr "Boutons radio"
+
+#: forms/fields.py:37
+msgid "File upload"
+msgstr "Fichier joint"
+
+#: forms/fields.py:38 forms/views.py:992
+msgid "Date"
+msgstr "Date"
+
+#: forms/fields.py:39 forms/views.py:993
+msgid "Date/time"
+msgstr "Date/heure"
+
+#: forms/fields.py:40
+msgid "Hidden"
+msgstr "Champ caché"
+
+#: forms/fields.py:41
+msgid "Captcha"
+msgstr "Captcha"
+
+#: forms/fields.py:42
+msgid "Registered user"
+msgstr "Utilisateur enregistré"
+
+#: forms/fields.py:43
+msgid "Decimal"
+msgstr "Décimal"
+
+#: forms/fields.py:44
+msgid "Integer"
+msgstr "Entier"
+
+#: forms/fields.py:45 forms/models.py:215
+msgid "Reference"
+msgstr "Référence"
+
+#: forms/forms.py:50
+msgid "You must provide a slug or a workspace name"
+msgstr "Vous devez fournir un slug ou un nom d'espace de travail"
+
+#: forms/forms.py:60 forms/models.py:54
+msgid "Value"
+msgstr "Valeur"
+
+#: forms/forms.py:66 forms/models.py:73
+msgid "Button text"
+msgstr "Text du bouton"
+
+#: forms/forms.py:66 forms/models.py:73
+#: templates/fileman/upload_documents.html:68
+msgid "Submit"
+msgstr "Soumettre"
+
+#: forms/forms.py:67 forms/models.py:71
+msgid "Bind to entry"
+msgstr "Associer à un enregistrement"
+
+#: forms/forms.py:67 forms/models.py:71
+msgid "If filled, each record will be linked to target form entry"
+msgstr ""
+"Si coché, chaque enregistrement sera lié à un enregistrement du formualire "
+"cible"
+
+#: forms/forms.py:75 forms/models.py:75
+#: templates/communities/home_members.html:31
+msgid "Send email"
+msgstr "Envoyer un email"
+
+#: forms/forms.py:75 forms/models.py:75
+msgid "If checked, an email will be sent"
+msgstr "Si coché, un email sera envoyé"
+
+#: forms/forms.py:76 forms/models.py:76
+msgid "From address"
+msgstr "Adresse d'expédition"
+
+#: forms/forms.py:76 forms/models.py:76
+msgid "The address the email will be sent from"
+msgstr "Adresse qui sera utilisé comme expéditrice"
+
+#: forms/forms.py:77 forms/models.py:77
+msgid "Send copies to"
+msgstr "Envoyé des copies à"
+
+#: forms/forms.py:77 forms/models.py:77
+msgid "One or more email addresses, separated by commas"
+msgstr "Une ou plusieurs adresses séparées par des virgules"
+
+#: forms/forms.py:78 forms/models.py:78
+msgid "Subject"
+msgstr "Sujet"
+
+#: forms/forms.py:107
+msgid "Panel"
+msgstr "Panel"
+
+#: forms/forms.py:113 forms/models.py:147
+msgid "Control name"
+msgstr "Nom du contôle"
+
+#: forms/forms.py:114 forms/models.py:148 templates/forms/form_panels.html:38
+msgid "Panel title"
+msgstr "Titre du panel"
+
+#: forms/forms.py:115 forms/models.py:149 forms/models.py:221
+msgid "Width including units (px, %, ...)"
+msgstr "Largeur avec les unités ( px, %, ...)"
+
+#: forms/forms.py:116 forms/models.py:150
+msgid "Height including units (px, %, ...)"
+msgstr "Hauteur avec les unités (px, %, ...)"
+
+#: forms/forms.py:117 forms/models.py:151 forms/models.py:222
+msgid "Margin including units (px, %, ...)"
+msgstr "Marge avec les unités (px, %, ...)"
+
+#: forms/forms.py:118 forms/models.py:152 forms/models.py:224
+msgid "Css classes"
+msgstr "Classes CSS"
+
+#: forms/forms.py:119 forms/models.py:155
+msgid "Panel header"
+msgstr "En-tête du panel"
+
+#: forms/forms.py:120 forms/models.py:156
+msgid "Panel footer"
+msgstr "Pied du panel"
+
+#: forms/forms.py:182 forms/forms.py:185 forms/forms.py:209
+#: forms/models.py:559 forms/models.py:584 forms/views.py:228
+#: forms/views.py:269 forms/views.py:319
+#: forms/migrations/0010_added_panels_fieldstyle.py:92
+#: forms/migrations/0010_added_panels_fieldstyle.py:98
+#: templates/skins/default/header.html:15
+msgid "User"
+msgstr "Utilisateur"
+
+#: forms/forms.py:395 forms/forms.py:410
+msgid "You must provide a registered user"
+msgstr "Vous devez fournir un utilisateur enregistré"
+
+#: forms/forms.py:405
+msgid "A record with this user already exist"
+msgstr "Un enregsitrement avec cet utilisateur existe déjà"
+
+#: forms/forms.py:418
+msgid "You must provide a valid form entry"
+msgstr "Vous devez fournir un slug ou un titre"
+
+#: forms/forms.py:580 forms/forms.py:617
+msgid "Creation date"
+msgstr "Date de création"
+
+#: forms/forms.py:581 forms/forms.py:619
+msgid "Row ID"
+msgstr "N° enregistrement"
+
+#: forms/models.py:29
+msgid "Who can use this workspace"
+msgstr "Qui peut utiliser cet espace de travail"
+
+#: forms/models.py:42 forms/models.py:58
+msgid "list"
+msgstr "liste"
+
+#: forms/models.py:43 forms/models.py:59
+msgid "lists"
+msgstr "listes"
+
+#: forms/models.py:70
+msgid "Bind to account"
+msgstr "Associer à un compte"
+
+#: forms/models.py:70
+msgid "If checked, each record will be linked to user account"
+msgstr "Si coché, chaque enregistrement sera lié à un compte utilisateur"
+
+#: forms/models.py:72
+msgid "Bind display"
+msgstr "Affichage de la référence"
+
+#: forms/models.py:85 forms/models.py:86
+msgid "forms form"
+msgstr "formulaire"
+
+#: forms/models.py:100
+msgid "Who can see the list of recordings of this form"
+msgstr "Qui peut consulter les enregistrements de ce formulaire"
+
+#: forms/models.py:101
+msgid "Who can create new records"
+msgstr "Qui peut ajouter de nouveaux enregistrements"
+
+#: forms/models.py:102
+msgid "Who can modify records"
+msgstr "Qui peut modifier les enregistrements"
+
+#: forms/models.py:113
+msgid "form action"
+msgstr "Action du formulaire"
+
+#: forms/models.py:114
+msgid "form actions"
+msgstr "actions de formulaires"
+
+#: forms/models.py:125
+msgid "message form action"
+msgstr "Action de type message"
+
+#: forms/models.py:126
+msgid "message form actions"
+msgstr "actions de type message"
+
+#: forms/models.py:135 menus/forms.py:36
+msgid "Url"
+msgstr "Url"
+
+#: forms/models.py:138
+msgid "url form action"
+msgstr "Action de type url"
+
+#: forms/models.py:139
+msgid "url form actions"
+msgstr "Actions de type url"
+
+#: forms/models.py:149 forms/models.py:221
+msgid "Width"
+msgstr "Largeur"
+
+#: forms/models.py:150 forms/models.py:223
+msgid "Height"
+msgstr "Hauteur"
+
+#: forms/models.py:151 forms/models.py:222
+msgid "Margin"
+msgstr "Marge"
+
+#: forms/models.py:152 forms/models.py:224
+msgid "Css Class"
+msgstr "Classes Css"
+
+#: forms/models.py:153
+msgid "Stacked"
+msgstr "Empilé"
+
+#: forms/models.py:153
+msgid "Label and control are stacked"
+msgstr "Etiquette et champ sont empilé"
+
+#: forms/models.py:159
+msgid "form panel"
+msgstr "panel du formulaire"
+
+#: forms/models.py:160
+msgid "form panels"
+msgstr "panels du formulaire"
+
+#: forms/models.py:206
+msgid "Label"
+msgstr "Etiquette"
+
+#: forms/models.py:208
+msgid "Help text"
+msgstr "Texte d'aide"
+
+#: forms/models.py:209
+msgid "Required"
+msgstr "Obligatoire"
+
+#: forms/models.py:210
+msgid "Visible"
+msgstr "Visible"
+
+#: forms/models.py:211
+msgid "Default value"
+msgstr "Valeur par défaut"
+
+#: forms/models.py:213
+msgid "Type"
+msgstr "Type"
+
+#: forms/models.py:216
+msgid "Reference display"
+msgstr "Affichage de la référence"
+
+#: forms/models.py:218
+msgid "Visible in list"
+msgstr "Visible dans la liste"
+
+#: forms/models.py:219
+msgid "sort order list"
+msgstr "Ordre de tri en liste"
+
+#: forms/models.py:220
+msgid "Use this field to sort"
+msgstr "Utiliser ce champ pour ordonner"
+
+#: forms/models.py:223
+msgid "Padding including units (px, %, ...)"
+msgstr ""
+
+#: forms/models.py:225
+msgid "Background color"
+msgstr "Couleur de fond"
+
+#: forms/models.py:225 forms/models.py:228
+msgid "Background color ( string or hex )"
+msgstr "Couleur de fond ( chaîne de caractères ou sous forme héxa"
+
+#: forms/models.py:226
+msgid "Border width"
+msgstr "Largeur du bord"
+
+#: forms/models.py:226
+msgid "Border width including units (px, %, ...)"
+msgstr "Largeur du bord en unités (px, %, ...)"
+
+#: forms/models.py:227
+msgid "Border style"
+msgstr "Style du bord"
+
+#: forms/models.py:228
+msgid "Border color"
+msgstr "Couleur du bord"
+
+#: forms/models.py:229
+msgid "Label color"
+msgstr "Couleur de l'étiquette"
+
+#: forms/models.py:229
+msgid "Label color ( string or hex )"
+msgstr "Couleur de l'étiquette ( chaînes de caractères ou fous forme héxa )"
+
+#: forms/models.py:230
+msgid "Label size"
+msgstr "Taille de l'étiquette"
+
+#: forms/models.py:231
+msgid "Bold"
+msgstr "Gras"
+
+#: forms/models.py:231
+msgid "Check this checkbox to make the control's label bold"
+msgstr "Cochez cette case pour rendre gras l'étiquette du champ"
+
+#: forms/models.py:232
+msgid "Italic"
+msgstr "Italique"
+
+#: forms/models.py:232
+msgid "Check this checkbox to italicize the control's label"
+msgstr "Cochez cette case pour rendre italique l'étiquette du champ"
+
+#: forms/models.py:237
+msgid "forms field"
+msgstr "champ du formulaire"
+
+#: forms/models.py:238
+msgid "forms fields"
+msgstr "champs du formulaire"
+
+#: forms/models.py:287 forms/models.py:451
+msgid "form entry"
+msgstr "enregistrement"
+
+#: forms/models.py:288 forms/models.py:452
+msgid "form entries"
+msgstr "enregistrements du formulaire"
+
+#: forms/views.py:475 forms/views.py:522 forms/views.py:565
+#: templates/forms/fields_menu.html:8 templates/forms/forms_navigation.html:26
+msgid "Lists"
+msgstr "Listes"
+
+#: forms/views.py:994
+msgid "List"
+msgstr "Liste"
+
+#: forms/views.py:1243
+msgid "Export Entries"
+msgstr "Exporter les enregistrements"
+
+#: menus/forms.py:30
+msgid "You must provide a slug or a menu item name"
+msgstr "Vous devez fournir un slug ou un nom pour le menu"
+
+#: menus/models.py:18
+msgid "Open in new window"
+msgstr "Ouvrir dans une nouvelle fenêtre"
+
+#: menus/models.py:22
+msgid "extra"
+msgstr "extra"
+
+#: menus/models.py:25
+msgid "menu item"
+msgstr "menu"
+
+#: menus/models.py:26 templates/menus/menus_home.html:19
+msgid "menu items"
+msgstr "menus"
+
+#: menus/views.py:46
+msgid "Add a link"
+msgstr "Ajouter un lien"
+
+#: menus/views.py:85
+msgid "Add a link to an articles category"
+msgstr "Ajouter un lien vers une catégorie d'articles"
+
+#: menus/views.py:125
+msgid "Add a link to faq"
+msgstr "Ajouter un lien vers une faq"
+
+#: menus/views.py:166
+msgid "Add a link to form submission"
+msgstr "Ajouter un lien vers la soumission d'un formulaire"
+
+#: menus/views.py:188
+msgid "Add a link to form list"
+msgstr "Ajouter un lien vers la liste d'un formulaire"
+
+#: menus/views.py:208 templates/menus/right_menu.html:12
+msgid "Form submission"
+msgstr "Formulaire soumission"
+
+#: menus/views.py:210 templates/menus/right_menu.html:13
+msgid "Form browse"
+msgstr "Formulaire liste"
+
+#: menus/views.py:227
+msgid "Add a link to page content"
+msgstr "Ajouter un lien vers une page"
+
+#: notes/models.py:23
+msgid "note category"
+msgstr "Catégorie de la note"
+
+#: notes/models.py:24
+msgid "note categories"
+msgstr "Catégories des notes"
+
+#: notes/models.py:33
+msgid "Who can browse notes in this category"
+msgstr "Qui peut consulter les notes de cette catégorie"
+
+#: notes/models.py:42
+msgid "content"
+msgstr "Contenu"
+
+#: notes/models.py:45
+msgid "note"
+msgstr "note"
+
+#: notes/models.py:46
+msgid "notes"
+msgstr "Notes"
+
+#: notes/models.py:76
+msgid "Note attachment"
+msgstr "Fichiers joints à la note"
+
+#: notes/models.py:80
+#, python-format
+msgid "Attachment for %s"
+msgstr "Fichiers joints pour %s"
+
+#: notes/views.py:161
+msgid "Category created successfully"
+msgstr "Catégorie créée avec succès"
+
+#: notes/views.py:167 notes/views.py:191
+msgid "You must give a valid name"
+msgstr "Vous devez fournir nom valide"
+
+#: notes/views.py:188
+msgid "Category renamed successfully"
+msgstr "Catégorie renommée avec succès"
+
+#: notes/views.py:205
+msgid "Invalid category note"
+msgstr "Catégorie de note invalide"
+
+#: notes/views.py:229
+msgid "Note created successfully"
+msgstr "Note créée avec succès"
+
+#: notes/views.py:269
+msgid "Invalid note"
+msgstr "Note invalide"
+
+#: notes/views.py:285
+msgid "Note deleted successfully"
+msgstr "La note a été supprimée avec succès"
+
+#: notes/views.py:314
+msgid "Note updated successfully"
+msgstr "Note mise à jour avec succès"
+
+#: pages/forms.py:21
+msgid "keywords"
+msgstr "mots clés"
+
+#: pages/views.py:78
+msgid "Double click to open or close folder"
+msgstr "Double cliquez pour ouvrit ou fermer le répertoire"
+
+#: pages/views.py:84
+msgid "Double click to edit file"
+msgstr "Double cliquez pour éditer le fichier"
+
+#: search/form.py:5 templates/account/users_list.html:9
+#: templates/communities/home_base.html:130
+#: templates/communities/home_base.html:138 templates/fileman/fm_home.html:458
+#: templates/forms/browse_entries.html:21 templates/search/search_form.html:14
+msgid "Search"
+msgstr "Recherche"
+
+#: site/models.py:13
+msgid "alert"
+msgstr "alerte"
+
+#: site/models.py:26
+msgid "Who can view this alert"
+msgstr "Qui peut lire cette alerte"
+
+#: site/models.py:35
+msgid "Confirm account by validating address email"
+msgstr "Confirmation du compte par validation de l'adresse email"
+
+#: site/models.py:36
+msgid "Manual confirmation by administrators"
+msgstr "Confirmation manuelle par les administrateurs"
+
+#: site/models.py:37
+msgid "Confirm account without address email validation"
+msgstr "Confirmation du compte sans validation"
+
+#: site/models.py:41
+msgid "allow registration"
+msgstr "permettre l'inscription"
+
+#: site/models.py:42
+msgid "Enable this option to let users register on your site"
+msgstr ""
+"Activer cette option pour permettre aux utilisateurs de s'enregsitrer sur "
+"votre site"
+
+#: site/models.py:43
+msgid "validation type"
+msgstr "type de validation"
+
+#: site/models.py:76
+msgid "option"
+msgstr "option"
+
+#: site/models.py:77
+msgid "key"
+msgstr "Clé"
+
+#: site/models.py:89
+msgid "Who can access this option"
+msgstr "Qui peut accéder à cette option"
+
+#: site/models.py:94
+msgid "Who can have personal calendar"
+msgstr "Qui peut avoir un agenda personnel"
+
+#: site/models.py:95
+msgid "Who can store personal documents on the server"
+msgstr "Qui peut avoir un espace de stockage de fichiers privé"
+
+#: site/models.py:96
+msgid "Who can manage static pages"
+msgstr "Qui peut gérer les pages statiques"
+
+#: site/models.py:97
+msgid "Who can manage pages templates"
+msgstr "Qui peut gérer les templates des pages statiques"
+
+#: site/models.py:98
+msgid "Who can have personal notes"
+msgstr "Qui peut utiliser les notes personnelles"
+
+#: site/models.py:99
+msgid "Who can validate registration"
+msgstr "Qui peut valider les inscriptions"
+
+#: site/models.py:100
+msgid "Who can manage menus"
+msgstr "Qui peut gérer les menus"
+
+#: templates/account/activate.html:8
+msgid "Account successfully activated"
+msgstr "Le compte a été activé avec succès"
+
+#: templates/account/activate.html:10 templates/skins/default/header.html:36
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/account/activate.html:14
+msgid "Account activation failed"
+msgstr "L'activation du compte a échoué"
+
+#: templates/account/activation_email.html:4
+#: templates/account/activation_email.html:21
+msgid "Dear"
+msgstr "Cher"
+
+#: templates/account/activation_email.html:10
+#, python-format
+msgid ""
+"Thank you for signing up on %(domain)s. Please click on the Button below to "
+"activate your account"
+msgstr ""
+"Merci de s'être enregsitré sur %(domain)s. Cliquez sur le boutton ci-dessous "
+"pour activer votre compte"
+
+#: templates/account/activation_email.html:11
+#: templates/account/activation_email.html:25
+#, python-format
+msgid "Link is valid for %(expiration_days)s days."
+msgstr "Le lien est valide pour %(expiration_days)s jours."
+
+#: templates/account/activation_email.html:14
+#: templates/account/registration_email.html:15
+msgid "Activate Account"
+msgstr "Activer le compte"
+
+#: templates/account/activation_email.html:23
+#, python-format
+msgid ""
+"Thank you for signing up on %(domain)s. Please click on the link below to "
+"activate your account"
+msgstr ""
+"Merci de s'être enregsitré sur %(domain)s. Cliquez sur le lien ci-dessous "
+"pour activer votre compte"
+
+#: templates/account/add_avatar.html:4
+#: templates/account/user_profile_avatar.html:40
+msgid "Upload New Image"
+msgstr "Charger une nouvelle image"
+
+#: templates/account/admin_right_menu.html:5
+#: templates/account/users_administrators.html:34
+#: templates/account/users_list.html:31 templates/account/users_list.html:32
+msgid "Click to edit user profile"
+msgstr "Cliquez pour éditer le profile de l'utilisateur"
+
+#: templates/account/admin_right_menu.html:5
+msgid "Edit profile"
+msgstr "Editez le profile"
+
+#: templates/account/admin_right_menu.html:6
+msgid "Click to change user password"
+msgstr "Cliquez pour changer le mot de passe"
+
+#: templates/account/admin_right_menu.html:6
+msgid "Change user password"
+msgstr "Changer le mot de passe"
+
+#: templates/account/admin_right_menu.html:8
+#: templates/account/users_administrators.html:36
+msgid "Click to list user groups"
+msgstr "Cliquez pour afficher les groupes de l'utilisateur"
+
+#: templates/account/admin_right_menu.html:8
+#: templates/account/groups_user.html:14
+msgid "User groups"
+msgstr "Groupes de l'utilisateur"
+
+#: templates/account/admin_right_menu.html:12
+msgid "Users/Groups"
+msgstr "Utilisateurs/Groupes"
+
+#: templates/account/admin_right_menu.html:14
+msgid "Users list"
+msgstr "Liste des utilisateurs"
+
+#: templates/account/admin_right_menu.html:14 templates/acl/acl_users.html:68
+#: templatetags/zorna_tags.py:162
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: templates/account/admin_right_menu.html:16
+#: templates/account/groups_list.html:14
+msgid "Groups list"
+msgstr "Liste des groupes"
+
+#: templates/account/admin_right_menu.html:16
+#: templates/account/groups_list.html:18 templatetags/zorna_tags.py:160
+msgid "Groups"
+msgstr "Les Groupes"
+
+#: templates/account/admin_right_menu.html:17
+msgid "Administrators list"
+msgstr "Liste des administrateurs"
+
+#: templates/account/admin_right_menu.html:17
+msgid "Administrators"
+msgstr "Les administrateurs"
+
+#: templates/account/admin_right_menu.html:18
+msgid "Click to add new group"
+msgstr "Cliquez pour ajouter un groupe"
+
+#: templates/account/admin_right_menu.html:19
+msgid "Click to add new user"
+msgstr "Cliquez pour ajouter une utilisateur"
+
+#: templates/account/admin_right_menu.html:19
+msgid "Add new user"
+msgstr "Ajouter un utilisateur"
+
+#: templates/account/admin_right_menu.html:20
+msgid "Click to import users from CSV file"
+msgstr "Cliquez pour importer des utilisateurs à partir d'un fichier CSV"
+
+#: templates/account/admin_right_menu.html:20
+msgid "Import users"
+msgstr "Importer des utilisateurs"
+
+#: templates/account/change_my_password.html:9
+#: templates/account/change_my_password.html:23
+#: templates/account/edit_password_user.html:23
+#: templates/account/reset_password.html:23
+#: templates/account/user_settings.html:30
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+#: templates/account/edit_group.html:29
+#: templates/account/users_administrators.html:41
+#: templates/articles/edit_article.html:197
+#: templates/communities/edit_plugin.html:16
+#: templates/communities/edit_plugin.html:21
+#: templates/communities/manage_community_users.html:40
+#: templates/fileman/file_properties.html:144
+#: templates/notes/notes_edit_note.html:149
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: templates/account/edit_password_user.html:6
+msgid "Change password for"
+msgstr "Changer le mot de passe pour"
+
+#: templates/account/edit_user.html:6
+msgid "User profile for"
+msgstr "Profile utilisateur de"
+
+#: templates/account/email_reset_password_html.html:3
+#: templates/account/email_reset_password_text.html:2
+#: templates/articles/email_notification_html.html:3
+#: templates/articles/email_notification_text.html:2
+#: templates/communities/email_follower_html.html:3
+#: templates/communities/email_follower_text.html:2
+#: templates/communities/email_invite_html.html:3
+#: templates/communities/email_invite_text.html:2
+#: templates/communities/email_notification_html.html:3
+#: templates/communities/email_notification_text.html:2
+#: templates/fileman/email_notification_html.html:3
+#: templates/fileman/email_notification_text.html:2
+msgid "Hi"
+msgstr "Bonjour"
+
+#: templates/account/email_reset_password_html.html:9
+#: templates/account/email_reset_password_text.html:3
+msgid ""
+"Someone (presumably you) has requested your password to be reset for your "
+"account at"
+msgstr ""
+"Quelqu'un (probablement vous) a demandé l'initialisation de mot de passe de "
+"votre compte de"
+
+#: templates/account/email_reset_password_html.html:10
+#: templates/account/email_reset_password_text.html:7
+msgid "Please use the following link to reset your password"
+msgstr "Cliquez sur le lien suivant pour initialiser votre mot de passe"
+
+#: templates/account/email_reset_password_html.html:13
+#: templates/account/forgot_password.html:40
+msgid "Reset my password"
+msgstr "Initialiser mon mot de passe"
+
+#: templates/account/forgot_password.html:6
+msgid "Reset password"
+msgstr "Initialiser le mot de passe"
+
+#: templates/account/groups_list.html:26
+msgid "Click to edit group"
+msgstr "Cliquez pour éditer le groupe"
+
+#: templates/account/groups_list.html:27 templates/acl/acl_groups.html:50
+msgid "Group members"
+msgstr "Les Membres"
+
+#: templates/account/groups_user.html:16
+msgid "Update groups for"
+msgstr "Mettre à jour les groupes pour"
+
+#: templates/account/groups_user.html:21
+#: templates/site/site_registration.html:62
+msgid "Group"
+msgstr "Groupe"
+
+#: templates/account/groups_user.html:30
+msgid "Click to edit this group"
+msgstr "Cliquez pour éditer ce groupe"
+
+#: templates/account/groups_user.html:31
+msgid "Click to see members of this group"
+msgstr "Cliquez pour voir les membres de ce groupes"
+
+#: templates/account/import_results.html:11
+msgid "Import results"
+msgstr "Résultats de l'import"
+
+#: templates/account/import_results.html:15
+msgid "Result"
+msgstr "Résultat"
+
+#: templates/account/import_results.html:16
+msgid "Lines"
+msgstr "Lignes"
+
+#: templates/account/import_results.html:22
+#, python-format
+msgid ""
+"\n"
+"\t\t\tOne user added\n"
+"\t\t\t"
+msgid_plural ""
+"\n"
+"\t\t\t%(counter)s users added.\n"
+"\t\t\t"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/account/import_results.html:33
+#, python-format
+msgid ""
+"\n"
+"\t\t\tOne user updated\n"
+"\t\t\t"
+msgid_plural ""
+"\n"
+"\t\t\t%(counter)s users updated.\n"
+"\t\t\t"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/account/import_results.html:42
+#, python-format
+msgid ""
+"\n"
+"\t\t\tOne line missed\n"
+"\t\t\t"
+msgid_plural ""
+"\n"
+"\t\t\t%(counter)s lines missed.\n"
+"\t\t\t"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/account/import_users_form.html:42
+#: templates/forms/import_file_csv.html:41
+msgid "Next"
+msgstr "Suivant"
+
+#: templates/account/import_users_map_form.html:47
+#: templates/forms/form_menu.html:18
+#: templates/forms/import_process_file_csv.html:46
+msgid "Import"
+msgstr "Import"
+
+#: templates/account/login.html:44
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/account/login.html:50
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié"
+
+#: templates/account/password_changed.html:6
+msgid "Password changed! You can login with your new password now."
+msgstr ""
+"Le mot de passe a été changé! Vous pouvez, maintenant, vous connecter avec "
+"votre nouveau mot de passe."
+
+#: templates/account/registration_complete_email.html:6
+msgid "You are now registered. Activation email sent."
+msgstr ""
+"Vous êtes maintenant enregistré. Un email d'activation vous a été envoyé"
+
+#: templates/account/registration_complete_noemail.html:6
+msgid ""
+"You are now registered. Yout must wait the administrator to activate your "
+"account."
+msgstr ""
+"Vous êtes maintenant enregistré. Vous devez attendre qu'un administareur "
+"active votre compte."
+
+#: templates/account/registration_complete_novalidation.html:6
+msgid "You are now registered. You can now log on our site"
+msgstr ""
+"Vous êtes maintenant enregistré. Vous pouvez vous connecter sur notre site"
+
+#: templates/account/registration_email.html:4
+#: templates/account/registration_email.html:22
+msgid "Dear Administrator"
+msgstr "Cher Administrateur"
+
+#: templates/account/registration_email.html:10
+#: templates/account/registration_email.html:24
+msgid "Your site has recorded an new registration from"
+msgstr "Votre site a enregistré une nouvelle inscription de la part de"
+
+#: templates/account/registration_email.html:12
+#: templates/account/registration_email.html:28
+msgid "To let user log on your site, you must confirm his registration"
+msgstr ""
+"Pour permettre à cet utilisateur de se connecter, il faut confirmer son "
+"inscription"
+
+#: templates/account/reset_password.html:6
+msgid "Reset you password"
+msgstr "Initialiser votre mot de passe"
+
+#: templates/account/reset_password_link_sent.html:6
+msgid ""
+"Instructions on how to reset your password have been sent to your email "
+"address. (Check your inbox and spam folder!)"
+msgstr ""
+"Des instructions pour initialiser votre mot de passe vous ont été envoyé par "
+"email. (Vérfiez votre boîte de messagerie et le répertoire de spam)"
+
+#: templates/account/user_profile.html:11
+#: templates/account/user_settings_home.html:10
+msgid "Personnal informations"
+msgstr "Informations personnelles"
+
+#: templates/account/user_profile_avatar.html:10
+#: templates/account/user_settings.html:27
+msgid "Change your photo"
+msgstr "Changer votre photo"
+
+#: templates/account/user_profile_avatar.html:41
+msgid "Delete current image"
+msgstr "Supprimer l'image courante"
+
+#: templates/account/user_settings.html:24
+msgid "Change your profile"
+msgstr "Changer votre profile"
+
+#: templates/account/users_administrators.html:19
+#: templates/communities/manage_community_users.html:21
+msgid "Enter the name of the user you want to add"
+msgstr "Saisisez le nom de l'utilisateur que vous souhaitez ajouter"
+
+#: templates/account/users_group.html:13
+msgid "Members of group"
+msgstr "Les Membres de "
+
+#: templates/account/users_group.html:17
+msgid "Add user to"
+msgstr "Ajouter un utilisateur à"
+
+#: templates/account/users_list.html:6
+msgid "Users  list"
+msgstr "Liste des utilisateurs"
+
+#: templates/account/users_list.html:26
+msgid "Account active"
+msgstr "Compte actif"
+
+#: templates/account/users_list.html:28
+msgid "Account disabled"
+msgstr "Compte déscativé"
+
+#: templates/account/users_list.html:36
+msgid "User's groups"
+msgstr "Les groupes de l'utilisateur"
+
+#: templates/acl/acl_groups.html:15 templates/acl/admin_acl_users.html:24
+#: templates/articles/publication_right_menu.html:8
+#: templates/articles/right_menu.html:9
+#: templates/calendars/admin_right_menu.html:8
+#: templates/communities/admin_right_menu.html:7
+#: templates/faq/admin_right_menu.html:8 templates/fileman/right_menu.html:8
+#: templates/forms/admin_right_menu.html:8
+#: templates/site/admin_right_menu.html:7
+msgid "Permissions by groups"
+msgstr "Permissions par groupe"
+
+#: templates/acl/acl_groups.html:23
+msgid "Load permissions from"
+msgstr "Charger les permissions à partir de"
+
+#: templates/acl/acl_groups.html:92 templates/acl/admin_acl_users.html:23
+#: templates/acl/user_acl_users.html:23
+#: templates/calendars/calendar_edit.html:71
+#: templates/calendars/calendar_edit.html:99
+#: templates/fileman/fm_folder_content.html:46
+#: templates/fileman/fm_folder_content.html:53
+#: templates/fileman/fm_folder_content.html:70
+#: templates/notes/notes_view_notes.html:57
+#: templates/pages/fm_edit_template.html:33
+#: templates/pages/fm_manage_folder.html:43
+#: templates/pages/fm_manage_folder.html:58
+#: templates/pages/fm_manage_folder.html:67
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/acl/acl_groups.html:93 templates/acl/admin_acl_users.html:16
+#: templates/acl/user_acl_users.html:15
+#: templates/articles/publication_right_menu.html:7
+#: templates/articles/right_menu.html:8
+#: templates/calendars/admin_right_menu.html:7
+#: templates/communities/admin_right_menu.html:8
+#: templates/faq/admin_right_menu.html:7 templates/fileman/right_menu.html:7
+#: templates/forms/admin_right_menu.html:7
+#: templates/site/admin_right_menu.html:8
+msgid "Permissions by users"
+msgstr "Permissions par utilisateur"
+
+#: templates/acl/acl_groups.html:95 templates/acl/admin_acl_users.html:26
+#: templates/acl/user_acl_users.html:27
+#: templates/calendars/calendar_share.html:51
+msgid "Help on permissions"
+msgstr "Aide sur les permissions"
+
+#: templates/acl/acl_groups.html:100
+msgid ""
+"Allow++ and Deny++ allow you to grant or deny rights to the group and its "
+"descendants"
+msgstr ""
+"Allow++ et Deny++ vous permettent d'autoriser ou de refuser les droits au "
+"groupe et à ses descendants"
+
+#: templates/acl/acl_users.html:11
+msgid "Update permissions for"
+msgstr "Mettre à jour les permissions pour"
+
+#: templates/acl/acl_users.html:14
+msgid "Add user"
+msgstr "Ajouter un utilisateur"
+
+#: templates/admin/account/usergroup/change_list.html:4
+msgid "List of groups"
+msgstr "Liste des groupes"
+
+#: templates/admin/account/usergroup/change_list.html:10
+#: templates/admin/pages/page/change_list.html:10
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/admin/pages/page/change_list.html:4
+msgid "List of pages"
+msgstr "Liste des pages"
+
+#: templates/articles/category_default.html:19
+msgid "archive"
+msgstr "archive"
+
+#: templates/articles/category_default.html:71
+msgid "Archives"
+msgstr "Archives"
+
+#: templates/articles/category_default.html:83
+msgid "RSS feed"
+msgstr "Flux RSS"
+
+#: templates/articles/category_default.html:86
+msgid "Last entries"
+msgstr "Dernières publications"
+
+#: templates/articles/edit_article.html:34
+msgid "Are you sur you want to delete this article"
+msgstr "Etes-vous sûr de vouloir supprimer cet article"
+
+#: templates/articles/edit_article.html:43
+msgid "Edit story"
+msgstr "Editer l'article"
+
+#: templates/articles/edit_article.html:51
+#: templates/articles/list_categories.html:24
+#: templates/articles/new_article.html:41
+#: templates/articles/right_menu.html:12
+#: templates/faq/manager_right_menu.html:6
+msgid "Categories"
+msgstr "Catégories"
+
+#: templates/articles/edit_article.html:54
+#: templates/articles/new_article.html:44
+msgid "Collapse All"
+msgstr "Réduire tout"
+
+#: templates/articles/edit_article.html:54
+#: templates/articles/new_article.html:44
+msgid "Expand All"
+msgstr "Développer tout"
+
+#: templates/articles/edit_article.html:84
+#: templates/articles/edit_article.html:160
+msgid "Delete this attachment"
+msgstr "Supprimer ce fichier joint"
+
+#: templates/articles/edit_article.html:189
+#: templates/articles/new_article.html:99
+#: templates/fileman/file_properties.html:128
+#: templates/fileman/upload_documents.html:53
+msgid "Notify users"
+msgstr "Notifiez les utilisateurs"
+
+#: templates/articles/edit_article.html:190
+#: templates/articles/new_article.html:100
+msgid "If allowed, send an email to notify users"
+msgstr "Si autorisé, envoyez un e-mail pour informer les utilisateurs"
+
+#: templates/articles/edit_article.html:198
+#: templates/calendars/calendar_edit.html:167
+#: templates/communities/message_entry.html:63
+#: templates/communities/message_reply.html:17
+#: templates/faq/edit_question.html:48 templates/fileman/edit_folder.html:57
+#: templates/fileman/fm_folder_content.html:14
+#: templates/fileman/fm_folder_content.html:45
+#: templates/fileman/fm_folder_content.html:52
+#: templates/forms/edit_form_panel.html:147 templates/forms/form_body.html:56
+#: templates/forms/new_field.html:134 templates/forms/new_form.html:68
+#: templates/menus/edit_menu_item.html:85
+#: templates/notes/notes_edit_note.html:150
+#: templates/pages/fm_folder_item.html:6
+#: templates/pages/fm_manage_folder.html:42 templates/site/edit_alert.html:46
+msgid "Delete"
+msgstr "Supprimer"
+
+#: templates/articles/edit_category.html:45
+#: templates/faq/edit_category.html:22
+#: templates/site/edit_calendar_category.html:26
+msgid "Update category"
+msgstr "Mettre à jour la catégorie"
+
+#: templates/articles/edit_category.html:47
+#: templates/articles/list_categories.html:15
+#: templates/articles/right_menu.html:15 templates/faq/edit_category.html:24
+#: templates/site/edit_calendar_category.html:28
+msgid "Add new category"
+msgstr "Ajouter une catégorie"
+
+#: templates/articles/edit_category.html:67
+msgid "Drag and drop  to reorder rows "
+msgstr "Cliquez et glissez les lignes pour les réordonner"
+
+#: templates/articles/edit_category.html:73
+#: templates/menus/edit_menu_item.html:72
+msgid "Childs"
+msgstr "Enfants"
+
+#: templates/articles/email_notification_html.html:9
+#: templates/articles/email_notification_text.html:3
+#: templates/communities/email_notification_html.html:9
+#: templates/communities/email_notification_text.html:3
+#: templates/fileman/email_notification_html.html:9
+#: templates/fileman/email_notification_text.html:3
+#: templates/fileman/file_properties_popup.html:6
+#: templates/fileman/file_properties_popup.html:8
+msgid "by"
+msgstr "par"
+
+#: templates/articles/email_notification_html.html:11
+msgid "To read this article, click on the button below "
+msgstr "Pour lire cet article, cliquez sur le bouton ci-dessous"
+
+#: templates/articles/email_notification_html.html:14
+msgid "Read"
+msgstr "Lire"
+
+#: templates/articles/email_notification_text.html:8
+msgid "To read this article, click on the link below "
+msgstr "Pour lire cet article, cliquez sur le lien ci-dessous"
+
+#: templates/articles/list_categories.html:15
+msgid "You don't have any category. Create one by clicking on the link"
+msgstr ""
+
+#: templates/articles/list_categories.html:19
+#: templates/articles/right_menu.html:14
+msgid "Articles categories"
+msgstr "Catégories d'articles"
+
+#: templates/articles/list_categories.html:30
+#: templates/calendars/list_calendars.html:24
+#: templates/communities/admin_list_communities.html:25
+#: templates/faq/list_faqs.html:24 templates/fileman/list_folders.html:26
+#: templates/forms/form_menu.html:25 templates/forms/list_workspaces.html:24
+#: templates/site/list_alerts.html:25 templates/site/list_options.html:26
+msgid "Click to edit rights"
+msgstr "Cliquez pour éditer droits"
+
+#: templates/articles/list_categories.html:31
+#: templates/articles/order_categories.html:20
+msgid "Click to edit articles category"
+msgstr "Cliquez pour éditer la catégorie"
+
+#: templates/articles/new_article.html:33
+msgid "New story"
+msgstr "Nouvel article"
+
+#: templates/articles/order_categories.html:13
+#: templates/articles/right_menu.html:17
+msgid "Order categories"
+msgstr "Ordonner les catégories"
+
+#: templates/articles/order_categories.html:25
+#: templates/faq/list_categories.html:52 templates/faq/list_questions.html:50
+#: templates/forms/form_panels.html:51 templates/forms/order_fields.html:50
+#: templates/forms/table_fields.html:56
+msgid "Update Order"
+msgstr "Mettre à jour l'ordre"
+
+#: templates/articles/publication_right_menu.html:6
+#: templates/articles/right_menu.html:7 templates/fileman/right_menu.html:6
+msgid "Click to edit category"
+msgstr "Cliquez pour éditer la catégorie"
+
+#: templates/articles/publication_right_menu.html:6
+#: templates/articles/right_menu.html:7
+msgid "Edit category"
+msgstr "Editer la catégorie"
+
+#: templates/articles/publication_right_menu.html:7
+#: templates/articles/right_menu.html:8
+#: templates/calendars/admin_right_menu.html:7
+#: templates/communities/admin_right_menu.html:8
+#: templates/faq/admin_right_menu.html:7 templates/fileman/right_menu.html:7
+#: templates/forms/admin_right_menu.html:7
+#: templates/site/admin_right_menu.html:8
+msgid "Click to edit permissions by users"
+msgstr "Cliquez pour éditer les permissions par utilisateur"
+
+#: templates/articles/publication_right_menu.html:8
+#: templates/articles/right_menu.html:9
+#: templates/calendars/admin_right_menu.html:8
+#: templates/communities/admin_right_menu.html:7
+#: templates/faq/admin_right_menu.html:8 templates/fileman/right_menu.html:8
+#: templates/forms/admin_right_menu.html:8
+#: templates/site/admin_right_menu.html:7
+msgid "Click to edit permissions by groups"
+msgstr "Cliquez pour éditer les permissions par groupe"
+
+#: templates/articles/publication_right_menu.html:11
+msgid "Stories"
+msgstr "Articles"
+
+#: templates/articles/publication_right_menu.html:13
+msgid "List of my stories"
+msgstr "Liste de mes articles"
+
+#: templates/articles/publication_right_menu.html:13
+#: templates/articles/writer_stories_list.html:12
+msgid "My stories"
+msgstr "Mes articles"
+
+#: templates/articles/publication_right_menu.html:14
+msgid "Click to begin writing a new story"
+msgstr "Cliquez pour commencer à rédiger un article"
+
+#: templates/articles/publication_right_menu.html:14
+msgid "Write new story"
+msgstr "Rédiger un article"
+
+#: templates/articles/right_menu.html:14
+msgid "List of articles categories"
+msgstr "Liste des catégories d'articles"
+
+#: templates/articles/right_menu.html:15
+#: templates/site/admin_right_menu.html:28
+msgid "Click to add new category"
+msgstr "Cliquez pour ajouter une nouvelle catégorie"
+
+#: templates/articles/right_menu.html:17
+msgid "Click to order categories"
+msgstr "Cliquez pour ordonner les catégories"
+
+#: templates/articles/story_default.html:32
+#: templates/articles/story_default.html:47
+msgid "comment"
+msgstr "commentaire"
+
+#: templates/articles/story_default.html:87
+msgid "Leave a Comment"
+msgstr "Ecrire un commentaire"
+
+#: templates/articles/story_default.html:99
+msgid "Post Comment"
+msgstr "Envoyer le commentaire"
+
+#: templates/articles/story_default.html:136
+msgid "His recent posts"
+msgstr "Ses dernières publications"
+
+#: templates/articles/writer_stories_list.html:18
+msgid "Updated on"
+msgstr "Mis à jour le"
+
+#: templates/articles/writer_stories_list.html:19
+msgid "Created on"
+msgstr "Créé le"
+
+#: templates/articles/writer_stories_list.html:27
+#, fuzzy, python-format
+msgid "Published on one category"
+msgid_plural "Published on %(counter)s categories"
+msgstr[0] "Ajouter une catégorie de note"
+msgstr[1] "Ajouter une catégorie de note"
+
+#: templates/articles/writer_stories_list.html:29
+#: templates/communities/admin_list_communities.html:26
+#: templates/site/list_alerts.html:27
+#: templates/site/list_calendar_categories.html:24
+msgid "Click to edit item"
+msgstr "Cliquez pour modifier l'élément"
+
+#: templates/calendars/admin_right_menu.html:6
+msgid "Click to edit calendar details"
+msgstr "Cliquez pour éditer les détails de l'agenda"
+
+#: templates/calendars/admin_right_menu.html:6
+msgid "Edit calendar"
+msgstr "Editer l'agenda"
+
+#: templates/calendars/admin_right_menu.html:11
+#: templates/calendars/admin_right_menu.html:13
+#: templates/calendars/list_calendars.html:18 templatetags/zorna_tags.py:154
+msgid "Calendars"
+msgstr "Agendas"
+
+#: templates/calendars/admin_right_menu.html:13
+msgid "List of calendars"
+msgstr "Liste des agendas de ressources"
+
+#: templates/calendars/admin_right_menu.html:14
+msgid "Click to add new calendar"
+msgstr "Cliquez pour ajouter un nouvel agenda"
+
+#: templates/calendars/admin_right_menu.html:14
+#: templates/calendars/edit_calendar.html:15
+msgid "Add new calendar"
+msgstr "Ajouter un nouvel agenda"
+
+#: templates/calendars/calendar.html:21
+msgid "all-day"
+msgstr "Toute la journée"
+
+#. Translators: This text is used in javascript
+#: templates/calendars/calendar.html:56
+msgid "Today"
+msgstr "Aujourd\\'hui"
+
+#: templates/calendars/calendar.html:62
+msgid "January"
+msgstr "Janvier"
+
+#: templates/calendars/calendar.html:63
+msgid "February"
+msgstr "Février"
+
+#: templates/calendars/calendar.html:64
+msgid "March"
+msgstr "Mars"
+
+#: templates/calendars/calendar.html:65
+msgid "April"
+msgstr "Avril"
+
+#: templates/calendars/calendar.html:66 templates/calendars/calendar.html:79
+msgid "May"
+msgstr "Mai"
+
+#: templates/calendars/calendar.html:67
+msgid "June"
+msgstr "Juin"
+
+#: templates/calendars/calendar.html:68
+msgid "July"
+msgstr "Juillet"
+
+#: templates/calendars/calendar.html:69
+msgid "August"
+msgstr "Août"
+
+#: templates/calendars/calendar.html:70
+msgid "September"
+msgstr "Septembre"
+
+#: templates/calendars/calendar.html:71
+msgid "October"
+msgstr "Octobre"
+
+#: templates/calendars/calendar.html:72
+msgid "November"
+msgstr "Novembre"
+
+#: templates/calendars/calendar.html:73
+msgid "December"
+msgstr "Décembre"
+
+#: templates/calendars/calendar.html:75
+msgid "Jan"
+msgstr "Jan"
+
+#: templates/calendars/calendar.html:76
+msgid "Feb"
+msgstr "Fév"
+
+#: templates/calendars/calendar.html:77
+msgid "Mar"
+msgstr "Mar"
+
+#: templates/calendars/calendar.html:78
+msgid "Apr"
+msgstr "Avr"
+
+#: templates/calendars/calendar.html:80
+msgid "Jun"
+msgstr "Jui"
+
+#: templates/calendars/calendar.html:81
+msgid "Jul"
+msgstr "Juil"
+
+#: templates/calendars/calendar.html:82
+msgid "Aug"
+msgstr "Aoû"
+
+#: templates/calendars/calendar.html:83
+msgid "Sep"
+msgstr "Sep"
+
+#: templates/calendars/calendar.html:84
+msgid "Oct"
+msgstr "Oct"
+
+#: templates/calendars/calendar.html:85
+msgid "Nov"
+msgstr "Nov"
+
+#: templates/calendars/calendar.html:86
+msgid "Dec"
+msgstr "Déc"
+
+#: templates/calendars/calendar.html:88
+msgid "Mer"
+msgstr "Mer"
+
+#: templates/calendars/calendar.html:90
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: templates/calendars/calendar.html:90
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: templates/calendars/calendar.html:91
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: templates/calendars/calendar.html:91
+msgid "Friday"
+msgstr "Vendredi"
+
+#: templates/calendars/calendar.html:95
+msgid "Event Title:"
+msgstr "Titre de l\\'événement"
+
+#: templates/calendars/calendar.html:142
+#: templates/notes/notes_view_notes.html:51
+#: templates/site/list_calendar_categories.html:17
+msgid "Category"
+msgstr "Catégorie"
+
+#: templates/calendars/calendar.html:144
+msgid "Author"
+msgstr "Auteur"
+
+#: templates/calendars/calendar.html:146
+msgid "Location"
+msgstr "Lieu"
+
+#: templates/calendars/calendar.html:159
+msgid "You are not allowed to update this event"
+msgstr "Vous n'avez pas le droit de mettre à jour cet événement"
+
+#: templates/calendars/calendar.html:163
+msgid "Error, reload page an try agin"
+msgstr "Erreur, recharger la page et essayer encore une fois"
+
+#: templates/calendars/calendar.html:210
+msgid "Calendar settings"
+msgstr "Options des agendas"
+
+#: templates/calendars/calendar.html:211
+#: templates/calendars/calendar_edit.html:147
+#: templates/calendars/calendar_edit.html:183
+#: templates/calendars/calendar_settings_url.html:31
+#: templates/calendars/calendar_share.html:20 templatetags/zorna_tags.py:111
+msgid "Calendar"
+msgstr "Agenda"
+
+#: templates/calendars/calendar.html:219
+msgid "Create event"
+msgstr "Créer un événement"
+
+#: templates/calendars/calendar.html:220
+#: templates/notes/notes_view_notes.html:9
+msgid "Share"
+msgstr "Partager"
+
+#: templates/calendars/calendar.html:225
+msgid "My calendars"
+msgstr "Mes agendas"
+
+#: templates/calendars/calendar.html:234
+msgid "Other calendars"
+msgstr "Les autres agendas"
+
+#: templates/calendars/calendar_edit.html:63
+#: templates/calendars/calendar_edit.html:91
+msgid "Only this instance"
+msgstr "Seulement cette occurrence"
+
+#: templates/calendars/calendar_edit.html:67
+#: templates/calendars/calendar_edit.html:95
+msgid "All events in the series"
+msgstr "Tous les événements de la série"
+
+#: templates/calendars/calendar_edit.html:129
+#: templates/calendars/calendar_edit.html:137
+msgid "Reccurrent event"
+msgstr "Evénément répétitif"
+
+#: templates/calendars/calendar_edit.html:133
+msgid "Would you like to change only this event or all events in the series"
+msgstr ""
+"Voulez-vous modifier uniquement cet événement ou tous les événements de la "
+"série"
+
+#: templates/calendars/calendar_edit.html:141
+msgid "Would you like to delete only this event or all events in the series"
+msgstr ""
+"Voulez-vous supprimer uniquement cet événement ou tous les événements de la "
+"série"
+
+#: templates/calendars/calendar_edit.html:160
+#: templates/calendars/calendar_share.html:33
+#: templates/calendars/settings_right_menu.html:3
+msgid "Back to calendars"
+msgstr "Retour à l'agenda"
+
+#: templates/calendars/calendar_edit.html:165
+#: templates/calendars/calendar_settings.html:40
+#: templates/fileman/edit_folder.html:57
+#: templates/forms/edit_form_action_message.html:57
+#: templates/forms/edit_form_action_url.html:56
+#: templates/forms/edit_form_email.html:53
+#: templates/forms/edit_form_panel.html:145
+#: templates/forms/edit_form_template.html:38
+#: templates/forms/new_field.html:131 templates/forms/new_form.html:67
+#: templates/forms/new_list.html:70 templates/forms/new_master_field.html:42
+#: templates/menus/edit_menu_item.html:85 templates/pages/fm_edit_file.html:57
+#: templates/pages/fm_edit_template.html:31 templates/site/edit_alert.html:44
+msgid "Save"
+msgstr "Enregistrer"
+
+#: templates/calendars/calendar_settings.html:7
+msgid "Update calendar settings"
+msgstr "Mettre à jour les options de l'agenda"
+
+#: templates/calendars/calendar_settings_url.html:11
+msgid ""
+"This will invalidate any existing private feeds. Are you sure you want to "
+"reset the private URL feed"
+msgstr ""
+"Les flux privés existants ne seront plus valides. Voulez-vous vraiment "
+"réinitialiser l'URL des flux privés"
+
+#: templates/calendars/calendar_settings_url.html:21
+msgid "Private address URLs"
+msgstr "Adresses URL privées"
+
+#: templates/calendars/calendar_settings_url.html:27
+msgid ""
+"This is the private address for calendar. Don't share this address with "
+"others unless you want them to see all the events on calendar."
+msgstr ""
+"Il s'agit de l'adresse URL privée de cet agenda. Ne communiquez pas cette "
+"adresse à d'autres personnes à moins  que vous ne souhaitiez qu'elles voient "
+"tous les événements de cet agenda."
+
+#: templates/calendars/calendar_settings_url.html:32
+msgid "Address url"
+msgstr "Adresse URL"
+
+#: templates/calendars/calendar_settings_url.html:43
+msgid ""
+"Copy and paste this into any calendar product that supports the iCal format"
+msgstr ""
+"Copiez l'adresse et collez-la dans n'importe quelle application de type "
+"agenda prenant en charge le format iCal"
+
+#: templates/calendars/calendar_settings_url.html:44
+msgid "Reset Private URL"
+msgstr "Réinitialiser les URL privées"
+
+#: templates/calendars/calendar_settings_url.html:44
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: templates/calendars/edit_calendar.html:13
+msgid "Update calendar"
+msgstr "Mettre à jour l'agenda"
+
+#: templates/calendars/list_calendars.html:13
+msgid "Resources calendars"
+msgstr "Les agendas de ressources"
+
+#: templates/calendars/list_calendars.html:25
+msgid "Click to edit calendar"
+msgstr "Cliquez pour éditer l'agenda"
+
+#: templates/calendars/settings_right_menu.html:5
+#: templates/calendars/settings_right_menu.html:7
+#: templates/forms/edit_form_panel.html:33 templates/forms/new_field.html:50
+#: templatetags/zorna_tags.py:126
+msgid "Settings"
+msgstr "Options"
+
+#: templates/calendars/settings_right_menu.html:8
+msgid "Private address"
+msgstr "Adresse URL privée"
+
+#: templates/communities/admin_list_communities.html:13
+#: templates/communities/admin_list_communities.html:18
+#: templates/communities/admin_right_menu.html:11
+#: templates/communities/admin_right_menu.html:13
+#: templates/communities/list_communities.html:13
+#: templates/communities/list_communities.html:26
+#: templates/communities/list_communities.html:108
+#: templatetags/zorna_tags.py:79 templatetags/zorna_tags.py:153
+msgid "Communities"
+msgstr "Communautés"
+
+#: templates/communities/admin_right_menu.html:6
+msgid "Click to edit community"
+msgstr "Cliquez pour modifier une communaute"
+
+#: templates/communities/admin_right_menu.html:6
+msgid "Edit community"
+msgstr "Editez la communauté"
+
+#: templates/communities/admin_right_menu.html:13
+msgid "List of communities"
+msgstr "Communautés"
+
+#: templates/communities/admin_right_menu.html:14
+msgid "Click to edit add new community"
+msgstr "Cliquez pour ajouter une communaute"
+
+#: templates/communities/admin_right_menu.html:14
+#: templates/communities/edit_community.html:28
+msgid "Add new community"
+msgstr "Ajouter une communaute"
+
+#: templates/communities/community_invite_member.html:33
+msgid "Invite user to join community:"
+msgstr "Inviter un utilisateur à rejoindre la communaute"
+
+#: templates/communities/community_invite_member.html:52
+#: templates/forms/form_panels_menu.html:14
+msgid "Add"
+msgstr "Ajouter"
+
+#: templates/communities/edit_community.html:26
+msgid "Update community"
+msgstr "Mettre à jour la communaute"
+
+#: templates/communities/email_follower_html.html:9
+#: templates/communities/email_follower_text.html:3
+msgid "Someone"
+msgstr "Quelqu'un"
+
+#: templates/communities/email_follower_html.html:9
+#: templates/communities/email_follower_text.html:3
+msgid "replied to a message that you follow"
+msgstr "a répondu au message que vous suivez"
+
+#: templates/communities/email_follower_html.html:12
+msgid "To read the message, click on the button below"
+msgstr "Pour lire cette réponse, cliquez sur le bouton ci-dessous"
+
+#: templates/communities/email_follower_html.html:15
+#: templates/communities/email_notification_html.html:14
+msgid "Read message"
+msgstr "Lire la réponse"
+
+#: templates/communities/email_follower_text.html:9
+msgid "To read the message, click on the link below"
+msgstr "Pour lire la réponse, cliquez sur le lien ci-dessous"
+
+#: templates/communities/email_invite_html.html:9
+#: templates/communities/email_invite_text.html:3
+msgid "added you to community"
+msgstr "vous a ajouté à la communauté"
+
+#: templates/communities/email_invite_html.html:9
+#: templates/communities/email_invite_text.html:3
+msgid "as"
+msgstr "en tant que"
+
+#: templates/communities/email_invite_html.html:12
+msgid "Let's work togheter, click on the button below"
+msgstr "Travaillons ensemble, cliquez sur le bouton ci-dessous"
+
+#: templates/communities/email_invite_html.html:15
+msgid "Let's go"
+msgstr "Allons-y"
+
+#: templates/communities/email_invite_text.html:8
+msgid "Let's work togheter, click on the link below"
+msgstr "Travaillons ensemble, cliquez sur le lien ci-dessous"
+
+#: templates/communities/email_notification_html.html:11
+msgid "To read this message, click on the button below "
+msgstr "Pour lire cette réponse, cliquez sur le bouton ci-dessous"
+
+#: templates/communities/email_notification_text.html:7
+msgid "To read this message, click on the link below "
+msgstr "Pour lire ce message, cliquez sur le lien ci-dessous"
+
+#: templates/communities/forms_form.html:73
+#: templates/forms/form_for_form_header.html:36
+msgid "Are you sur you want to delete this entry"
+msgstr "Etes-vous sûr de vouloir supprimer cette entrée"
+
+#: templates/communities/home.html:137
+#: templates/communities/home_files.html:18
+#: templates/communities/home_plugin.html:21
+msgid "From"
+msgstr "De"
+
+#: templates/communities/home.html:154
+msgid "More"
+msgstr "Plus"
+
+#: templates/communities/home_base.html:23
+msgid "New messages"
+msgstr "Nouveaux messages"
+
+#: templates/communities/home_base.html:91
+msgid "Files"
+msgstr "Fichiers"
+
+#: templates/communities/home_base.html:114
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/communities/home_base.html:116
+msgid "Show members"
+msgstr "Afficher les membres"
+
+#: templates/communities/home_base.html:117
+msgid "Show managers"
+msgstr "Afficher les gestionnaires"
+
+#: templates/communities/home_base.html:118
+msgid "Invite..."
+msgstr "Inviter..."
+
+#: templates/communities/home_base.html:144
+msgid "Last files"
+msgstr "Derniers fichiers"
+
+#: templates/communities/home_files.html:37
+#: templates/communities/home_plugin.html:40
+#: templates/communities/message_entry.html:12
+msgid "to"
+msgstr "pour"
+
+#: templates/communities/home_files.html:73
+#: templates/communities/home_members.html:52
+#: templates/communities/home_plugin.html:68
+#: templates/forms/browse_entries.html:120
+msgid "Total"
+msgstr "Total"
+
+#: templates/communities/home_plugin.html:50
+#: templates/communities/message_entry.html:41
+#: templates/communities/message_entry.html:62
+#: templates/communities/message_reply.html:16
+#: templates/forms/form_menu.html:10 templates/notes/note_item.html:9
+msgid "Edit"
+msgstr "Editer"
+
+#: templates/communities/list_communities.html:27
+#: templates/fileman/fm_home.html:470
+msgid "My communities"
+msgstr "Mes communautés"
+
+#: templates/communities/list_communities.html:28
+msgid "Last activity"
+msgstr "Dernière activité"
+
+#: templates/communities/list_communities.html:41
+msgid "Join community"
+msgstr "Rejoindre la communauté"
+
+#: templates/communities/list_communities.html:41
+msgid "Join"
+msgstr "Participer"
+
+#: templates/communities/list_communities.html:43
+msgid "Leave community"
+msgstr "Quitter la communaute"
+
+#: templates/communities/list_communities.html:43
+msgid "Leave"
+msgstr "Quitter"
+
+#: templates/communities/list_communities.html:78
+msgid " for "
+msgstr " pour "
+
+#: templates/communities/list_communities.html:88
+msgid "posted a message"
+msgstr "a publié un message"
+
+#: templates/communities/list_communities.html:90
+msgid "updated the message"
+msgstr "a mis à jour le message"
+
+#: templates/communities/manager_right_menu.html:6
+msgid "Add/Remove members"
+msgstr "Ajouter/Enlevre des membres"
+
+#: templates/communities/manager_right_menu.html:7
+msgid "Add/Remove managers"
+msgstr "Ajouter/Enlever des gestionnaires"
+
+#: templates/communities/members_widget.html:3
+msgid "Major contributors"
+msgstr "Les personnes qui contribuent le plus"
+
+#: templates/communities/message_entry.html:20
+msgid "Followers"
+msgstr "Suiveurs"
+
+#: templates/communities/message_entry.html:50
+msgid "Reply"
+msgstr "Répondre"
+
+#: templates/communities/poll_form.html:59
+#: templates/forms/formset_details.html:11 templates/forms/new_list.html:14
+msgid "Add another"
+msgstr "Ajouter un autre"
+
+#: templates/communities/poll_form.html:60
+#: templates/forms/formset_details.html:12 templates/forms/new_list.html:15
+msgid "Remove"
+msgstr "Supprimer"
+
+#: templates/communities/poll_results.html:29
+msgid "votes"
+msgstr "votes"
+
+#: templates/communities/poll_results.html:36
+msgid "total votes"
+msgstr "Total des votes"
+
+#: templates/faq/admin_right_menu.html:6
+msgid "Click to edit faq details"
+msgstr "Cliquez pour éditer les détails de la faq"
+
+#: templates/faq/admin_right_menu.html:6
+msgid "Edit faq"
+msgstr "Editer la faq"
+
+#: templates/faq/admin_right_menu.html:11
+#: templates/faq/admin_right_menu.html:13 templates/faq/list_faqs.html:13
+#: templates/faq/list_faqs.html.py:18 templates/faq/manager_list_faqs.html:12
+#: templates/faq/manager_list_faqs.html:16
+#: templates/faq/manager_right_menu.html:12
+#: templates/faq/manager_right_menu.html:14 templates/search/search.html:14
+#: templatetags/zorna_tags.py:115 templatetags/zorna_tags.py:155
+msgid "Faqs"
+msgstr "Faqs"
+
+#: templates/faq/admin_right_menu.html:13
+#: templates/faq/manager_right_menu.html:14
+msgid "List of faqs"
+msgstr "Liste des faqs"
+
+#: templates/faq/admin_right_menu.html:14
+msgid "Click to add new faq"
+msgstr "Cliquez pour ajouter une faq"
+
+#: templates/faq/admin_right_menu.html:14 templates/faq/edit_faq.html:24
+msgid "Add new faq"
+msgstr "Ajouter une nouvelle faq"
+
+#: templates/faq/edit_faq.html:22
+msgid "Update faq"
+msgstr "Mettre à jour la faq"
+
+#: templates/faq/edit_question.html:18
+msgid "Are you sur you want to delete this question"
+msgstr "Etes-vous sûr de vouloir supprimer cette question"
+
+#: templates/faq/edit_question.html:27
+msgid "Update question"
+msgstr "Mettre à jour la question"
+
+#: templates/faq/edit_question.html:29
+msgid "Add new question"
+msgstr "Ajouter une nouvelle question"
+
+#: templates/faq/list_categories.html:33 templates/faq/list_questions.html:33
+#: templates/faq/manager_edit_faq.html:13 templates/menus/right_menu.html:11
+#: templates/search/search.html:33
+msgid "Faq"
+msgstr "Faq"
+
+#: templates/faq/list_categories.html:38
+msgid "Faq categories"
+msgstr "Catégoriesd de faq"
+
+#: templates/faq/list_categories.html:46
+msgid "Click to edit faq category"
+msgstr "Cliquez pour éditer la catégorie"
+
+#: templates/faq/list_categories.html:47
+#: templates/faq/manager_right_menu.html:8
+msgid "Click to list questions"
+msgstr "Cliquez pour afficher la liste les questions"
+
+#: templates/faq/list_categories.html:47
+#: templates/faq/manager_right_menu.html:8
+msgid "Questions"
+msgstr "Questions"
+
+#: templates/faq/list_faqs.html:25 templates/faq/manager_list_faqs.html:25
+#: templates/faq/manager_list_faqs.html:31
+msgid "Click to edit faq"
+msgstr "Cliquez pour éditer la faq"
+
+#: templates/faq/list_questions.html:38
+msgid "Faq questions"
+msgstr "Questions de la faq"
+
+#: templates/faq/list_questions.html:45
+msgid "Click to edit question"
+msgstr "Cliquez pour éditez la question"
+
+#: templates/faq/manager_list_faqs.html:31 templates/forms/form_menu.html:42
+msgid "Browse"
+msgstr "Consulter"
+
+#: templates/faq/manager_right_menu.html:5
+msgid "Click to manage faq"
+msgstr "Cliquez pour gérer la faq"
+
+#: templates/faq/manager_right_menu.html:5
+msgid "Manage faq"
+msgstr "Gérer la faq"
+
+#: templates/faq/manager_right_menu.html:6
+msgid "Click to list faq category"
+msgstr "Cliquez pour afficher la liste des catégorie de la faq"
+
+#: templates/faq/manager_right_menu.html:7
+msgid "Click to add faq category"
+msgstr "Cliquez pour ajouter une nouvelle catégorie"
+
+#: templates/faq/manager_right_menu.html:7
+msgid "Add category"
+msgstr "Ajouter une catégorie"
+
+#: templates/faq/manager_right_menu.html:9
+msgid "Click to add question"
+msgstr "Cliquez pour ajouter une question"
+
+#: templates/faq/manager_right_menu.html:9
+msgid "Add question"
+msgstr "Ajouter une question"
+
+#: templates/faq/user_right_menu.html:2
+msgid "Faq content"
+msgstr "Contenu de la faq"
+
+#: templates/fileman/edit_folder.html:21
+msgid "Update folder"
+msgstr "Mettre à jour le répertoire"
+
+#: templates/fileman/edit_folder.html:23 templates/fileman/right_menu.html:14
+msgid "Add new folder"
+msgstr "Ajouter un nouveau répertoire"
+
+#: templates/fileman/email_notification_html.html:9
+#: templates/fileman/email_notification_text.html:3
+msgid "A new file(s) has been uploaded in folder"
+msgstr "Un nouveau(x) fichiers(s) a été chargé dans le répertoire"
+
+#: templates/fileman/email_notification_html.html:9
+#: templates/fileman/email_notification_text.html:3
+msgid "File has been updated in folder"
+msgstr "Un fichier a été mis à jour dans le répertoire"
+
+#: templates/fileman/email_notification_html.html:13
+#: templates/fileman/email_notification_text.html:12
+msgid "To access folder content, click on the button below "
+msgstr ""
+"Pour accéder au contenu de ce répertoire, cliquez sur le bouton ci-dessous"
+
+#: templates/fileman/email_notification_html.html:16
+msgid "Go to folder"
+msgstr "Aller au répertoire"
+
+#: templates/fileman/file_properties.html:22
+#: templates/fileman/file_properties_popup.html:5
+#: templates/notes/note_item.html:11
+msgid "Created"
+msgstr "Créé le"
+
+#: templates/fileman/file_properties.html:34
+#: templates/fileman/file_properties.html:58 templates/search/search.html:30
+msgid "By"
+msgstr "Par"
+
+#: templates/fileman/file_properties.html:46
+#: templates/fileman/file_properties_popup.html:7
+#: templates/notes/note_item.html:11
+msgid "Updated"
+msgstr "Mis à jour le"
+
+#: templates/fileman/file_properties.html:131
+#: templates/fileman/upload_documents.html:56
+msgid "Send an email to notify users"
+msgstr "Envoyer un email pour informer les utilisateurs"
+
+#: templates/fileman/file_properties_popup.html:4
+msgid "Size"
+msgstr "Taille"
+
+#: templates/fileman/fm_folder_content.html:7
+msgid "Upload file"
+msgstr "Charger des fichiers"
+
+#: templates/fileman/fm_folder_content.html:10
+#: templates/pages/fm_manage_folder.html:8
+msgid "Rename this folder"
+msgstr "Renommer ce répertoire"
+
+#: templates/fileman/fm_folder_content.html:10
+#: templates/fileman/fm_folder_item.html:46
+#: templates/notes/notes_view_notes.html:10
+#: templates/pages/fm_folder_item.html:4
+#: templates/pages/fm_manage_folder.html:8
+msgid "Rename"
+msgstr "Renommer"
+
+#: templates/fileman/fm_folder_content.html:12
+#: templates/fileman/fm_folder_content.html:69
+#: templates/fileman/fm_home.html:22 templates/notes/notes_view_notes.html:56
+#: templates/pages/fm_manage_folder.html:11
+#: templates/pages/fm_manage_folder.html:66
+#: templates/pages/fmbrowser_home.html:31
+msgid "Create new folder"
+msgstr "Créer un répertoire"
+
+#: templates/fileman/fm_folder_content.html:12
+#: templates/pages/fm_manage_folder.html:11
+msgid "New folder"
+msgstr "Nouveau répertoire"
+
+#: templates/fileman/fm_folder_content.html:14
+msgid "Delete this folder"
+msgstr "Supprimer ce répertoire"
+
+#: templates/fileman/fm_folder_content.html:22
+msgid "Click to display recent files"
+msgstr "Cliquez pour visualiser la liste des fichiers récents"
+
+#: templates/fileman/fm_folder_content.html:36
+msgid "There are currently no files in this folder"
+msgstr "Actuellement, il n'y a pas de fichiers dans ce répertoire"
+
+#: templates/fileman/fm_folder_content.html:43
+#: templates/pages/fm_manage_folder.html:40
+msgid ""
+"Permanently delete this file from the server? This will remove the file from "
+"the server completely!"
+msgstr ""
+"Supprimer définitivement ce fichier du serveur. Cette action supprimera le "
+"fichier définitivement!"
+
+#: templates/fileman/fm_folder_content.html:50
+msgid ""
+"Permanently delete this folder from the server? This will remove the folder "
+"from the server completely!"
+msgstr ""
+"Supprimer définitivement ce fichier du serveur. Cette action supprimera le "
+"fichier définitivement!"
+
+#: templates/fileman/fm_folder_content.html:66
+#: templates/pages/fm_manage_folder.html:63
+msgid "Folder"
+msgstr "Répertoire"
+
+#: templates/fileman/fm_folder_item.html:34
+#: templates/fileman/fm_folder_item.html:38
+#: templates/fileman/fm_folder_item_home.html:33
+#: templates/fileman/fm_folder_item_home.html:39
+msgid "on"
+msgstr "le"
+
+#: templates/fileman/fm_folder_item.html:45
+#: templates/fileman/fm_folder_item.html:47
+#: templates/fileman/fm_folder_item_home.html:18
+#: templates/pages/fm_edit_file.html:25
+msgid "Properties"
+msgstr "Propriétés"
+
+#: templates/fileman/fm_folder_item.html:46
+msgid "Rename file"
+msgstr "Renommer le fichier"
+
+#: templates/fileman/fm_folder_item.html:47
+msgid "Delete this file from the server"
+msgstr "Supprimer ce fichier du serveur"
+
+#: templates/fileman/fm_home.html:23 templates/pages/fmbrowser_home.html:32
+msgid "Rename folder"
+msgstr "Renommer le répertoire"
+
+#: templates/fileman/fm_home.html:24
+msgid "Delete folder"
+msgstr "Supprimer le répertoire"
+
+#: templates/fileman/fm_home.html:464
+msgid "My documents"
+msgstr "Mes documents"
+
+#: templates/fileman/fm_home.html:476
+msgid "Shared folders"
+msgstr "Répertoires partagés"
+
+#: templates/fileman/fm_home.html:482 templates/notes/notes_home.html:290
+#: templates/pages/fmbrowser_home.html:731
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: templates/fileman/list_folders.html:15
+#: templates/fileman/list_folders.html:20 templates/fileman/right_menu.html:11
+#: templates/fileman/right_menu.html:13 templatetags/zorna_tags.py:156
+msgid "Folders"
+msgstr "Répertoires"
+
+#: templates/fileman/list_folders.html:27
+msgid "Click to edit folder"
+msgstr "Cliquez pour éditer le répertoire"
+
+#: templates/fileman/log_files.html:11
+msgid "Files added"
+msgstr "Fichiers ajoutés"
+
+#: templates/fileman/right_menu.html:6
+msgid "Edit folder"
+msgstr "Editer le répertoire"
+
+#: templates/fileman/right_menu.html:13
+msgid "List of folders"
+msgstr "Liste des répertoires"
+
+#: templates/fileman/right_menu.html:14
+msgid "Click to add new folder"
+msgstr "Cliquez pour ajouter un nouveau répertoire"
+
+#: templates/fileman/upload_documents.html:6
+msgid "Multiple uploading"
+msgstr "Chargement multiple"
+
+#: templates/fileman/upload_multiple_documents.html:57
+msgid "You must queue at least one file"
+msgstr "Vous devez charger au moins un fichier"
+
+#: templates/forms/admin_right_menu.html:6
+msgid "Click to edit workspace details"
+msgstr "Cliquez pour éditer les détails de l'espace de travail"
+
+#: templates/forms/admin_right_menu.html:6
+msgid "Edit workspace"
+msgstr "Editez l'espace de travail"
+
+#: templates/forms/admin_right_menu.html:11
+#: templates/forms/list_workspaces.html:13
+msgid "Forms workspaces"
+msgstr "Espaces de travail"
+
+#: templates/forms/admin_right_menu.html:13
+msgid "List of workspaces"
+msgstr "Liste des espaces de travail"
+
+#: templates/forms/admin_right_menu.html:13
+#: templates/forms/list_workspaces.html:18
+msgid "Workspaces"
+msgstr "Espaces de travail"
+
+#: templates/forms/admin_right_menu.html:14
+msgid "Click to add new workspace"
+msgstr "Cliquez pour ajouter un nouvel espace"
+
+#: templates/forms/admin_right_menu.html:14
+#: templates/forms/edit_workspace.html:23
+msgid "Add new workspace"
+msgstr "Ajouter un espace de travail"
+
+#: templates/forms/browse_entries.html:55
+msgid "Click to view this entry"
+msgstr "Cliquez pour visualiser cette entrée"
+
+#: templates/forms/browse_entries.html:58
+msgid "Click to edit this entry"
+msgstr "Cliquez pour éditer cette entrée"
+
+#: templates/forms/edit_form_action_message.html:25
+msgid ""
+"Enter a custom message. When the form is submitted, your users will see this "
+"message in the browser."
+msgstr ""
+"Saisissez un message pesonnalié. Quand le formulaire est soumis, vos "
+"utilisateurs verront ce message dans le navigateur"
+
+#: templates/forms/edit_form_action_message.html:46
+#: templates/forms/edit_form_action_url.html:45
+#: templates/forms/edit_form_email.html:44
+msgid "Variables"
+msgstr "Variables"
+
+#: templates/forms/edit_form_action_message.html:49
+msgid ""
+"Click on this link to customize message with values the user enters into the "
+"form"
+msgstr ""
+"Cliquez sur ce lien pour personnaliser le message avec les valeurs saisies "
+"par l'utilisateur dans le formulaire"
+
+#: templates/forms/edit_form_action_url.html:24
+msgid ""
+"Enter a web page URL. When the form is submitted, users will be forwarded to "
+"this web page."
+msgstr ""
+"Saisissez l'URL de la page. Quand le formulaire est soumis, les utilisateurs "
+"seront redirigés vers cette page"
+
+#: templates/forms/edit_form_action_url.html:48
+msgid ""
+"Click on this link to customize url with values the user enters into the form"
+msgstr ""
+"Cliquez sur ce lien pour personnaliser l'url avec les valeurs saisies par "
+"l'utilisateur dans le formulaire"
+
+#: templates/forms/edit_form_panel.html:36
+msgid "Header message"
+msgstr "En-tête du message"
+
+#: templates/forms/edit_form_panel.html:39
+msgid "Footer message"
+msgstr "Pied du message"
+
+#: templates/forms/edit_workspace.html:21
+msgid "Update workspace"
+msgstr "Mettre à jour l'espace de travail"
+
+#: templates/forms/export_form.html:50
+msgid "Export CSV"
+msgstr "Export CSV"
+
+#: templates/forms/export_form.html:51
+msgid "with separator"
+msgstr "avec le séparateur"
+
+#: templates/forms/export_form.html:55
+msgid "Tab"
+msgstr "Tabulation"
+
+#: templates/forms/export_form.html:57
+msgid "or type another caracter"
+msgstr "ou saisissez un autre caractère"
+
+#: templates/forms/export_form.html:65
+msgid "View entries"
+msgstr "Dernièrs enregistrements"
+
+#: templates/forms/fields_home.html:31
+msgid "Fields"
+msgstr "Champs"
+
+#: templates/forms/fields_home.html:31 templates/forms/home.html:59
+#: templates/site/admin_right_menu.html:24
+#: templates/site/admin_right_menu.html:28
+msgid "New"
+msgstr "Nouveau"
+
+#: templates/forms/fields_menu.html:8
+msgid "Click to display lists"
+msgstr "Cliquez pour visualiser les listes"
+
+#: templates/forms/fields_menu.html:11 templates/forms/list_lists.html:23
+msgid "Click to add new list"
+msgstr "Cliquez pour ajouter une liste"
+
+#: templates/forms/fields_menu.html:11 templates/forms/list_lists.html:23
+msgid "New list"
+msgstr "Nouvelle liste"
+
+#: templates/forms/form_action_home.html:14
+msgid "Configure what users will see when they submit form"
+msgstr ""
+"Configurer ce que les utilisateurs verront une fois qu'ils ont soumis le "
+"formulaire"
+
+#: templates/forms/form_action_home.html:19
+#: templates/forms/form_action_home.html:25
+msgid "Click to edit this action"
+msgstr "Cliquez pour éditer cette action"
+
+#: templates/forms/form_action_home.html:21
+msgid "Display message when user submit form"
+msgstr "Afficher un message quand l'utilisateur soumet le formulaire"
+
+#: templates/forms/form_action_home.html:27
+msgid "Forward user to a web page"
+msgstr "Rediriger l'utilisateur vers une page WEB"
+
+#: templates/forms/form_details.html:17 templates/forms/view_entry.html:15
+msgid "Print this entry"
+msgstr "Imprimer cet enregistrement"
+
+#: templates/forms/form_details.html:19
+msgid "Print this form"
+msgstr "Imprimer ce formulaire"
+
+#: templates/forms/form_menu.html:9
+msgid "Click to edit form"
+msgstr "Cliquez pour éditer le formulaire"
+
+#: templates/forms/form_menu.html:13
+msgid "Click to add new field"
+msgstr "Cliquez pour ajouter un nouveau champ"
+
+#: templates/forms/form_menu.html:14
+msgid "New field"
+msgstr "Nouveau champ"
+
+#: templates/forms/form_menu.html:17
+msgid "Click to import form fields"
+msgstr "Cliquez pour importer les champs"
+
+#: templates/forms/form_menu.html:21
+msgid "Click to order fields"
+msgstr "Cliquez pour ordonner les champs"
+
+#: templates/forms/form_menu.html:22
+msgid "Order fields"
+msgstr "Ordonner les champs"
+
+#: templates/forms/form_menu.html:26
+msgid "Permissions"
+msgstr "Permissions"
+
+#: templates/forms/form_menu.html:29
+msgid "Click to edit email submission"
+msgstr ""
+"Cliquez pour éditer l'email à envoyer après la soumission du formulaire"
+
+#: templates/forms/form_menu.html:30
+msgid "Email submission"
+msgstr "Email"
+
+#: templates/forms/form_menu.html:33
+msgid "Click to set form action"
+msgstr "Cliquez pour mettre en place l'action"
+
+#: templates/forms/form_menu.html:34
+msgid "Form action"
+msgstr "Action du formulaire"
+
+#: templates/forms/form_menu.html:37
+msgid "Click to export entries"
+msgstr "Cliquez pour exporter les enregistrements"
+
+#: templates/forms/form_menu.html:38
+msgid "Export"
+msgstr "Exporter"
+
+#: templates/forms/form_menu.html:41
+msgid "Click to browse entries"
+msgstr "Cliquez pour consulter les enregistrements"
+
+#: templates/forms/form_menu.html:45 templates/forms/form_panels_menu.html:9
+msgid "Click to set form panels"
+msgstr "Cliquez pour éditer les panels"
+
+#: templates/forms/form_menu.html:46 templates/forms/form_panels_menu.html:10
+msgid "Panels"
+msgstr "Panels"
+
+#: templates/forms/form_order_menu.html:9
+msgid "Click to set form fields order"
+msgstr "Cliquez pour ordonner les champs du formulaire"
+
+#: templates/forms/form_order_menu.html:10
+#: templates/forms/order_fields.html:38 templates/forms/table_fields.html:40
+msgid "Form fields"
+msgstr "Champs du formulaire"
+
+#: templates/forms/form_order_menu.html:13
+msgid "Click to set columns table order"
+msgstr "Cliquez pour ordonner les champs dans la liste"
+
+#: templates/forms/form_order_menu.html:14
+msgid "Table fields"
+msgstr "Champs de la liste"
+
+#: templates/forms/form_panels.html:37
+msgid "Panel name"
+msgstr "Nom du panel"
+
+#: templates/forms/form_panels_menu.html:13
+msgid "Click to add new panel for this form"
+msgstr "Cliquez pour ajouter un nouveau panel à ce formulaire"
+
+#: templates/forms/forms_navigation.html:20
+msgid "Masters"
+msgstr "Patrons"
+
+#: templates/forms/forms_navigation.html:26
+msgid "Click to list lists"
+msgstr "Cliquez pour afficher la liste des listes"
+
+#: templates/forms/import_process_file_csv.html:27
+msgid "Existing field"
+msgstr "Champ existant"
+
+#: templates/forms/import_process_file_csv.html:32
+msgid "New type"
+msgstr "Nouveau type"
+
+#: templates/forms/import_process_file_csv.html:38
+msgid "Unique"
+msgstr "Unique"
+
+#: templates/forms/list_workspaces.html:25
+msgid "Click to edit workspace"
+msgstr "Cliquez pour éditer l'espace de travail"
+
+#: templates/forms/new_field.html:22
+msgid "Are you sur you want to delete this field"
+msgstr "Etes-vous sûr de vouloir supprimer ce champ"
+
+#: templates/forms/new_field.html:53
+msgid "Style"
+msgstr "Style"
+
+#: templates/forms/new_field.html:137
+msgid "Save and continue"
+msgstr "Enregistrer et continuer"
+
+#: templates/forms/new_form.html:20
+msgid ""
+"Are you sur you want to delete this form. All associated data will be "
+"deleted!"
+msgstr ""
+"Etes-vous sûr de vouloir supprimer ce formulaire. Toutes les données "
+"associées seront perdues!"
+
+#: templates/forms/order_fields.html:33
+msgid "Form order fields"
+msgstr "Ordre des champs du formulaire"
+
+#: templates/forms/reference.html:23
+#: templates/forms/reference_form_fields.html:32
+msgid "Choose a field to reference"
+msgstr "Choisissez le champ à référencer"
+
+#: templates/forms/table_fields.html:35
+msgid "Table order fields"
+msgstr "Ordre des champs de la liste"
+
+#: templates/forms/table_fields.html:41
+msgid "Fields to display"
+msgstr "Champs à afficher"
+
+#: templates/forms/table_fields.html:42
+msgid "Sort by default on"
+msgstr "Trier par défaut sur"
+
+#: templates/menus/edit_menu_item.html:45
+msgid "Update item menu"
+msgstr "Mettre à jour le menu"
+
+#: templates/menus/menus_home.html:14 templates/menus/right_menu.html:4
+#: templates/menus/right_menu.html.py:6 templatetags/zorna_tags.py:106
+msgid "Menus"
+msgstr "Menus"
+
+#: templates/menus/menus_home.html:27
+msgid "Click to edit menu item"
+msgstr "Cliquez pour modifier le menu"
+
+#: templates/menus/right_menu.html:7 templates/menus/right_menu.html.py:10
+#: templates/menus/right_menu.html:11 templates/menus/right_menu.html.py:12
+#: templates/menus/right_menu.html:13 templates/menus/right_menu.html.py:14
+msgid "Click to add new menu item"
+msgstr "Cliquez pour ajouter une nouvelle entrée au menu"
+
+#: templates/menus/right_menu.html:7
+msgid "Add new url"
+msgstr "Ajouter un lien"
+
+#: templates/menus/right_menu.html:8
+msgid "Add new url to"
+msgstr "Ajouter un lien vers"
+
+#: templates/menus/right_menu.html:10
+msgid "Category of articles"
+msgstr "Catégorie d'articles"
+
+#: templates/menus/right_menu.html:14
+msgid "Page"
+msgstr "Page"
+
+#: templates/notes/notes_edit_note.html:8
+#: templates/notes/notes_view_notes.html:25
+#: templates/pages/fm_edit_template.html:14
+#: templates/pages/fm_manage_folder.html:18
+#: templates/pages/fmbrowser_home.html:725
+msgid "Templates"
+msgstr "Templates"
+
+#: templates/notes/notes_edit_note.html:10
+#: templates/notes/notes_view_notes.html:27
+#: templates/pages/fm_edit_file.html:5
+#: templates/pages/fm_edit_template.html:14
+#: templates/pages/fm_manage_folder.html:20
+#: templates/pages/fmbrowser_home.html:720 templatetags/zorna_tags.py:100
+msgid "Pages"
+msgstr "Pages"
+
+#: templates/notes/notes_home.html:23 templates/notes/notes_view_notes.html:11
+#: templates/notes/notes_view_notes.html:17
+msgid "Create new category"
+msgstr "Créer une catégorie"
+
+#: templates/notes/notes_home.html:24
+msgid "Rename category"
+msgstr "Renommer la catégorie"
+
+#: templates/notes/notes_home.html:280 templatetags/zorna_tags.py:124
+msgid "Notes"
+msgstr "Notes"
+
+#: templates/notes/notes_home.html:284
+msgid "Shared notes"
+msgstr "Notes partagées"
+
+#: templates/notes/notes_view_notes.html:8
+msgid "Add note"
+msgstr "Ajouter une note"
+
+#: templates/notes/notes_view_notes.html:9
+msgid "Share this category"
+msgstr "Partager cette catégorie"
+
+#: templates/notes/notes_view_notes.html:10
+msgid "Rename this category"
+msgstr "Renommer cette catégorie"
+
+#: templates/notes/notes_view_notes.html:11
+#: templates/notes/notes_view_notes.html:17
+msgid "New category"
+msgstr "Nouvelle catégorie"
+
+#: templates/notes/notes_view_notes.html:15
+msgid "Shared by"
+msgstr "Partagée par"
+
+#: templates/notes/notes_view_notes.html:44
+msgid "There are currently no notes in this category"
+msgstr "Pas de notes dans cette catégorie"
+
+#: templates/pages/fm_edit_file.html:22
+msgid "Content"
+msgstr "Contenu"
+
+#: templates/pages/fm_edit_file.html:46
+msgid "Nothing to edit"
+msgstr "Rien à éditer"
+
+#: templates/pages/fm_edit_file.html:58
+msgid "Edit source"
+msgstr "Editer le source"
+
+#: templates/pages/fm_edit_file.html:59
+msgid "Preview"
+msgstr "Prévisualiser"
+
+#: templates/pages/fm_folder_item.html:4
+msgid "Rename page"
+msgstr "Renommer la page"
+
+#: templates/pages/fm_folder_item.html:5
+msgid "Clone this page"
+msgstr "Dupliquer cette page"
+
+#: templates/pages/fm_folder_item.html:5
+msgid "Clone"
+msgstr "Dupliquer"
+
+#: templates/pages/fm_folder_item.html:6
+msgid "Delete this page from the server"
+msgstr "Supprimer cette page du serveur"
+
+#: templates/pages/fm_folder_item.html:7
+msgid "Cut this page"
+msgstr "Couper cette page"
+
+#: templates/pages/fm_folder_item.html:7
+msgid "Cut"
+msgstr "Couper"
+
+#: templates/pages/fm_manage_folder.html:33
+msgid "There are currently no files enabled for editing"
+msgstr "Actuellement, il n'y a pas de fichiers à éditer"
+
+#: templates/pages/fm_manage_folder.html:55
+msgid "New Filename"
+msgstr "Noouveau fichier"
+
+#: templates/pages/fm_manage_folder.html:57
+msgid "Create New Webpage"
+msgstr "Créer une nouvelle page"
+
+#: templates/pages/fmbrowser_home.html:33
+msgid "Paste"
+msgstr "Coller"
+
+#: templates/pages/fmbrowser_home.html:478
+msgid "You will lose the changes made in the editor"
+msgstr "Vous allez perdre les modifications faites dans l\\'éditeur"
+
+#: templates/search/search.html:10
+msgid "Search results"
+msgstr "Résultats de la recherche"
+
+#: templates/search/search.html:17 templatetags/zorna_tags.py:152
+msgid "Articles"
+msgstr "Articles"
+
+#: templates/search/search.html:29
+msgid "Article"
+msgstr "Articles"
+
+#: templates/search/search.html:58
+msgid "No results found"
+msgstr "Aucun résultat trouvé"
+
+#: templates/search/search_form.html:4
+msgid "SEARCH"
+msgstr "RECHERCHE"
+
+#: templates/site/admin_right_menu.html:4
+msgid "Alert"
+msgstr "Alerte"
+
+#: templates/site/admin_right_menu.html:6
+msgid "Click to edit alert"
+msgstr "Cliquez pour éditer l'alerte"
+
+#: templates/site/admin_right_menu.html:6
+msgid "Edit alert"
+msgstr "Editer l'alerte"
+
+#: templates/site/admin_right_menu.html:11
+msgid "Site configuration"
+msgstr "Configuration du site"
+
+#: templates/site/admin_right_menu.html:14 templates/site/version.html:12
+msgid "Version"
+msgstr "Version"
+
+#: templates/site/admin_right_menu.html:17
+msgid "List of options"
+msgstr "Liste des options"
+
+#: templates/site/admin_right_menu.html:17 templates/site/list_options.html:13
+msgid "Options"
+msgstr "Options"
+
+#: templates/site/admin_right_menu.html:20
+#: templates/site/site_registration.html:24
+msgid "Site registration"
+msgstr "Inscription"
+
+#: templates/site/admin_right_menu.html:23
+msgid "List of alerts"
+msgstr "Liste des alertes"
+
+#: templates/site/admin_right_menu.html:23 templates/site/list_alerts.html:13
+#: templates/site/list_alerts.html.py:18
+msgid "Alerts"
+msgstr "Les alertes"
+
+#: templates/site/admin_right_menu.html:24
+msgid "Click to add new alert"
+msgstr "Cliquez pour ajouter une alerte"
+
+#: templates/site/admin_right_menu.html:27
+msgid "List of calendar categories"
+msgstr "Liste des catégories d'événements"
+
+#: templates/site/admin_right_menu.html:27
+#: templates/site/list_calendar_categories.html:13
+msgid "Calendar categories"
+msgstr "Catégories des événements"
+
+#: templates/site/html_email_template.html:36
+msgid "Regards"
+msgstr "Cordialement"
+
+#: templates/site/html_email_template.html:37
+msgid "The ZORNA Portal Team"
+msgstr "L'équipe du portail"
+
+#: templates/site/list_options.html:18
+msgid "Option"
+msgstr "Option"
+
+#: templates/site/list_options.html:19
+msgid "Key"
+msgstr "Clé"
+
+#: templates/site/site_registration.html:57
+msgid "By default, assign registered users to groups"
+msgstr ""
+"Par défaut, assigner les utilisateurs nouvellement enregistrés aux groupes"
+
+#: templates/site/version.html:19
+msgid "ZORNA version"
+msgstr "Version de ZORNA"
+
+#: templates/site/version.html:31
+msgid "DJANGO version"
+msgstr "Versionn de DJANGO"
+
+#: templates/site/version.html:43
+msgid "PYTHON version"
+msgstr "Version de PYTHON"
+
+#: templates/skins/default/header.html:12
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/skins/default/header.html:26
+msgid "Administration"
+msgstr "Administration"
+
+#: templates/skins/default/header.html:38
+msgid "Register"
+msgstr "Inscription"
+
+#: templates/skins/default/page_menu.html:8
+msgid "Accueil"
+msgstr "Accueil"
+
+#: templates/workflow/admin_right_menu.html:6
+msgid "Click to edit workflow details"
+msgstr "Cliquez pour éditer les détails de l'espace de travail"
+
+#: templates/workflow/admin_right_menu.html:6
+#, fuzzy
+msgid "Edit workflow"
+msgstr "Editez l'espace de travail"
+
+#: templates/workflow/admin_right_menu.html:9
+#: templates/workflow/admin_right_menu.html:11
+#: templates/workflow/list_workflows.html:13 templatetags/zorna_tags.py:158
+msgid "Workflows"
+msgstr ""
+
+#: templates/workflow/admin_right_menu.html:11
+#, fuzzy
+msgid "List of workflows"
+msgstr "Liste des espaces de travail"
+
+#: templates/workflow/admin_right_menu.html:12
+#, fuzzy
+msgid "Click to add new workflow"
+msgstr "Cliquez pour ajouter un nouvel espace"
+
+#: templates/workflow/admin_right_menu.html:12
+#, fuzzy
+msgid "Add new workflow"
+msgstr "Ajouter un lien"
+
+#: templates/workflow/list_workflow_instances.html:13
+#, fuzzy
+msgid "Instances of workflow"
+msgstr "Liste des espaces de travail"
+
+#: templates/workflow/list_workflow_instances.html:17
+#, fuzzy
+msgid "Object"
+msgstr "Sujet"
+
+#: templates/workflow/list_workflow_instances.html:18
+#: templates/workflow/new_workflow.html:51
+msgid "Step"
+msgstr ""
+
+#: templates/workflow/list_workflow_instances.html:19 workflow/forms.py:39
+msgid "Approvers"
+msgstr ""
+
+#: templates/workflow/list_workflow_instances.html:32
+#, fuzzy
+msgid "Click to accept"
+msgstr "Cliquez pour éditer l'alerte"
+
+#: templates/workflow/list_workflow_instances.html:33
+#, fuzzy
+msgid "Click to reject"
+msgstr "Cliquez pour éditer l'alerte"
+
+#: templates/workflow/list_workflows.html:17
+msgid "Workflow"
+msgstr ""
+
+#: templates/workflow/list_workflows.html:19
+msgid "Instances"
+msgstr ""
+
+#: templates/workflow/list_workflows.html:25
+#, fuzzy
+msgid "Click to edit workflow"
+msgstr "Cliquez pour éditer l'espace de travail"
+
+#: templates/workflow/new_workflow.html:28
+msgid "New workflow"
+msgstr ""
+
+#: templatetags/zorna_tags.py:83 templatetags/zorna_tags.py:88
+msgid "Documents"
+msgstr "Documents"
+
+#: templatetags/zorna_tags.py:93
+msgid "Publication"
+msgstr "Publication"
+
+#: templatetags/zorna_tags.py:159
+msgid "Site"
+msgstr "Site"
+
+#: workflow/forms.py:40
+#, fuzzy
+msgid "Operator"
+msgstr "avec le séparateur"
+
+#: workflow/models.py:18
+msgid "workflow"
+msgstr ""
+
+#: workflow/models.py:19
+msgid "worflows"
+msgstr ""
+
+#: workflow/models.py:44
+msgid "Au moins un"
+msgstr ""
+
+#: workflow/models.py:45
+msgid "Tous"
+msgstr ""
+
+#: workflow/models.py:46
+msgid "Tous dans le meme ordre"
+msgstr ""
+
+#: workflow/models.py:52 workflow/models.py:67
+msgid "approvers"
+msgstr ""
+
+#: workflow/models.py:60 workflow/models.py:75
+msgid "workflow state"
+msgstr ""
+
+#: workflow/models.py:61 workflow/models.py:76
+msgid "worflow states"
+msgstr ""
+
+#: workflow/models.py:84
+msgid "Unknown"
+msgstr ""
+
+#: workflow/models.py:85
+msgid "Accepted"
+msgstr ""
+
+#: workflow/models.py:86
+msgid "Refused"
+msgstr ""
+
+#: workflow/models.py:96
+msgid "Deadline"
+msgstr ""
+
+#: workflow/models.py:96
+msgid "The expected date limit."
+msgstr ""
+
+#: workflow/models.py:97
+msgid ""
+"Change to True when workflow is closed and author mark this instance as done"
+msgstr ""
+
+#: workflow/models.py:100
+msgid "workflow instance"
+msgstr ""
+
+#: workflow/models.py:101
+msgid "worflow instances"
+msgstr ""
+
+#: workflow/models.py:155
+msgid "State: Invalid approver"
+msgstr ""
+
+#: workflow/models.py:209 workflow/models.py:235
+msgid "Accepter"
+msgstr ""
+
+#: workflow/models.py:211 workflow/models.py:237
+#, fuzzy
+msgid "Refuser"
+msgstr "utilisateurs"
+
+#: workflow/models.py:213
+msgid "En cours de validation"
+msgstr ""
+
+#: workflow/models.py:219
+msgid "Is user started this task"
+msgstr ""
+
+#: workflow/models.py:228
+msgid "workflow response"
+msgstr ""
+
+#: workflow/models.py:229
+msgid "worflow responses"
+msgstr ""
+
+#, fuzzy
+#~ msgid "All in the same order"
+#~ msgstr "Tous les événements de la série"
+
+#, fuzzy
+#~ msgid "Date update"
+#~ msgstr "Date de mise à jour"
+
+#, fuzzy
+#~ msgid "Is user has been notified"
+#~ msgstr "Un fichier a été mis à jour"
+
+#~ msgid "S"
+#~ msgstr "D"
+
+#~ msgid "M"
+#~ msgstr "L"
+
+#~ msgid "T"
+#~ msgstr "M"
+
+#~ msgid "W"
+#~ msgstr "M"
+
+#~ msgid "F"
+#~ msgstr "V"
+
+#~ msgid "Share in"
+#~ msgstr "Partager dans"
+
+#~ msgid "Add new item menu"
+#~ msgstr "Ajouter un menu"
+
+#~ msgid "Response"
+#~ msgstr "Réponse"
+
+#~ msgid "Edit form"
+#~ msgstr "Editer le formulaire"
+
+#~ msgid "Import fields"
+#~ msgstr "Importer des champs"
+
+#~ msgid "Export entries"
+#~ msgstr "Exporter les enregistrements"
+
+#~ msgid "Browse entries"
+#~ msgstr "Consulter les enregsitrements"
+
+#~ msgid "added you to "
+#~ msgstr "vous a ajouté à "
+
+#~ msgid "Folders management"
+#~ msgstr "Gestion des répertoires"
+
+#~ msgid "Update file properties"
+#~ msgstr "Mise à jour des propriétés du fichier"
+
+#~ msgid "Add new note category"
+#~ msgstr "Ajouter une catégorie de note"
+
+#~ msgid "Update note category"
+#~ msgstr "Mettre à jour la catégorie"
+
+#~ msgid "You must specify a destination folder"
+#~ msgstr "Vous devez spécifier un répertoire de destination"
+
+#~ msgid "You must specify a folder you want to rename"
+#~ msgstr "Vous devez spécifier le répertoire que vous souhaitez renommer"
+
+#~ msgid "You must specify a new name for the folder you want to rename"
+#~ msgstr ""
+#~ "Vous devez spécifier un nom pour le répertoire que vous souhaitez renommer"
+
+#~ msgid "You must specify a folder parent"
+#~ msgstr "Vous devez spécifier un répertoire parent"
+
+#~ msgid "You must specify a name for the folder you want to create"
+#~ msgstr ""
+#~ "Vous devez spécifier un nom pour le répertoire que vous souhaitez créer"
+
+#~ msgid "You must specify a folder you want to delete"
+#~ msgstr "Vous devez spécifier l répertoire que vous souhaitez supprimer"
+
+#~ msgid "Back to library"
+#~ msgstr "Retour à la librairie"
+
+#~ msgid "Upload"
+#~ msgstr "Charger"
+
+#~ msgid "Tags"
+#~ msgstr "Mots clés"
+
+#~ msgid "Click to rename file..."
+#~ msgstr "Cliquez pour changer le nom du fichier"
+
+#~ msgid "Click to update description file..."
+#~ msgstr "Cliquez pour mettre à jour la description..."
+
+#~ msgid "Click to view all notes"
+#~ msgstr "Cliquez pour visualiser toutes les notes"
+
+#~ msgid "Click to view category content"
+#~ msgstr "Cliquez pour visualiser le contenu de la catégorie"
+
+#~ msgid "Others"
+#~ msgstr "Autres"
+
+#~ msgid "Are you sur you want to delete this notes"
+#~ msgstr "Etes-vous sûr de vouloir supprimer ces notes"
+
+#~ msgid "Click to edit this note"
+#~ msgstr "Cliquez pour éditer cette note"
+
+#~ msgid "Show notes as icons"
+#~ msgstr "Afficher les notes sous forme d'icônes"
+
+#~ msgid "Search note..."
+#~ msgstr "Recherche des notes ..."
+
+#~ msgid "Creation"
+#~ msgstr "Création"
+
+#~ msgid "Show notes as list"
+#~ msgstr "Afficher les notes sous forme de liste"
+
+#~ msgid "Click to share this category"
+#~ msgstr "Cliquez pour partager cette catégorie"
+
+#~ msgid "Personal info"
+#~ msgstr "Informations personnelles"
+
+#~ msgid "Important dates"
+#~ msgstr "Les dates importantes"
+
+#~ msgid "Go"
+#~ msgstr "Ok"
+
+#~ msgid "Click to customize template"
+#~ msgstr "Cliquez pour pesonnaliser le template"
+
+#~ msgid "Edit template"
+#~ msgstr "Editer le template"
+
+#~ msgid "sondage"
+#~ msgstr "Suivre"
+
+#~ msgid "creation date"
+#~ msgstr "date de création"
+
+#~ msgid "template"
+#~ msgstr "fichier template"
+
+#~ msgid "templates"
+#~ msgstr "templates"
+
+#~ msgid "expiry date"
+#~ msgstr "date d'expiration"
+
+#~ msgid "enabled"
+#~ msgstr "actif"
+
+#~ msgid "User photo"
+#~ msgstr "Photo de l'utilisateur"
+
+#~ msgid "Profile"
+#~ msgstr "Profile"
+
+#~ msgid "Avatar"
+#~ msgstr "Photo"
+
+#~ msgid "Web site"
+#~ msgstr "Site web"
+
+#~ msgid "Business phone"
+#~ msgstr "Téléphone"
+
+#~ msgid "Mobile phone"
+#~ msgstr "Téléphone portable"
+
+#~ msgid "Street"
+#~ msgstr "Rue"
+
+#~ msgid "City"
+#~ msgstr "Ville"
+
+#~ msgid "start date"
+#~ msgstr "Date de début"
+
+#~ msgid "end date"
+#~ msgstr "Date de fin"
+
+#~ msgid "The end time must be later than the start time."
+#~ msgstr "La date de fin doit être plus tard que la date de début"
+
+#~ msgid "Comments"
+#~ msgstr "Commentaires"
+
+#~ msgid "entity"
+#~ msgstr "Entité"
+
+#~ msgid "allow comments"
+#~ msgstr "Autoriser les commentaires"
+
+#~ msgid "forms master field"
+#~ msgstr "Champ patron"
+
+#~ msgid "forms master fields"
+#~ msgstr "champs patron"
+
+#~ msgid "Input upload file"
+#~ msgstr "Champ de chargement de fichier"
+
+#~ msgid "Input field of a date"
+#~ msgstr "Champ de saisie d'une date"
+
+#~ msgid "Input field of a date/time"
+#~ msgstr "Champ de saisie d'une date et heure"
+
+#~ msgid "Captcha field"
+#~ msgstr "Champ Captcha"
+
+#~ msgid "Input field of a registered user"
+#~ msgstr "Champ de saisie d'un utilisateur enregistré"
+
+#~ msgid "h:mm{ - h:mm}"
+#~ msgstr "H:mm{ - H:mm}"
+
+#~ msgid "h(:mm)tt"
+#~ msgstr "H:mm"
+
+#~ msgid "ddd M/d"
+#~ msgstr "ddd d/M"
+
+#~ msgid "dddd M/d"
+#~ msgstr "dddd d/M"
+
+#~ msgid "Type text here ..."
+#~ msgstr "Saisissez le texte ici ..."
+
+#~ msgid "Type title here ..."
+#~ msgstr "Saisissez le texte ici ..."
+
+#~ msgid "Task"
+#~ msgstr "Tâche"
+
+#~ msgid "Click to list fields masters"
+#~ msgstr "Cliquez pour afficher la liste des champs patron"
+
+#~ msgid "Field master"
+#~ msgstr "Champ patron"
+
+#~ msgid "Who can fill this form"
+#~ msgstr "Qui peut soumettre ce formulaire"
+
+#~ msgid "start"
+#~ msgstr "Article"

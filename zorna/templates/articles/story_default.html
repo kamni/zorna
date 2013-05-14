@@ -1,0 +1,155 @@
+{% extends "full.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+{% load articles_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/articles.css" />
+{% endblock %}
+
+{% block zorna_full_content %}
+
+        <div class="inner"> 
+        
+        	<!-- START BLOG -->
+        	<div class="text">
+	            <div class="clear"></div>   
+	            
+	            <div class="date">                                                     
+	                <h3 class="title-blog">{{story.title}}</h3> 
+	                
+	                <div class="mon-year"><span>{{ story.time_created|date:"M" }}</span><br />{{ story.time_created|date:"Y" }}</div>
+	                
+	                <div class="day">{{ story.time_created|date:"d" }}</div>
+	                
+	                <div class="clear"></div>
+	            </div>
+	            
+	            <div class="clear line"></div>
+	            
+	            <p class="meta">
+	                <span class="left">posted by <a href="#" title="Posts by antoscarface">{{story.get_owner_full_name }}</a> | </span> 
+	                <span class="left comment"> <a href="#" title="Comment on {{story.title}}">{{story_comments.count}} {% trans "comment" %}{{ story_comments.count|pluralize }}</a></span>
+				</p>
+	            
+				<div class="clear"></div>
+	                                    
+	            <div class="hentry">
+	            {% if story.image %}    
+	               <img src="{% url get_story_image story.pk %}" class="alignleft" />
+	            {% endif %}		
+					{{story.body|safe}}					
+	           </div>
+	            
+				<div class="clear"></div>
+	            
+				<div id="comments">
+					<h3 id="comments-title">{{story_comments.count}} <span>{% trans "comment" %}{{ story_comments.count|pluralize }}</span></h3>
+
+					<!-- LIST COMMENTS -->
+					{% if story_comments %}
+					<ol class="commentlist">
+						{% for comment in story_comments %}
+						<li class="comment bypostauthor depth-1">
+							<div class="comment-container">
+					    		<div class="comment-author vcard">
+									{% if  comment.get_owner_avatar %}
+								      <img src="/{{ comment.get_owner_avatar }}" class='avatar avatar-75 photo' height='75' width='75'/>
+									{% else %}
+								      <img src="{{ MEDIA_URL }}images/uu-128x128.png" class='avatar avatar-75 photo' height='75' width='75'/>
+								    {% endif %}
+									<cite class="fn">{{comment.get_owner_full_name}}</cite>     		
+								</div><!-- .comment-author .vcard -->
+					    		
+					    		<div class="comment-meta commentmetadata">
+					        		<div class="intro">
+					            		<div class="commentDate">
+					            		  <a href="#">{{comment.time_updated}}</a> 
+										</div>
+					
+					        			<div class="commentNumber">#&nbsp;{{forloop.counter}}</div>
+									</div>
+					        			
+					    			<div class="comment-body">
+										<p>{{comment.comment|linebreaks}}</p>
+									</div>					    			
+					    		</div><!-- .comment-meta .commentmetadata -->
+					    	</div><!-- #comment-##  -->
+						</li>
+						{% endfor %}
+					</ol>
+					{% endif %}
+					<!-- END LIST COMMENTS -->
+
+				    {% if category.allow_comments and story.allow_comments %}
+					<!-- RESPOND -->
+					<div id="respond">
+						<h3 id="reply-title">{% trans "Leave a Comment" %}</h3>
+							<form id="commentform" action="{% url add_story_comment story.pk %}" method="post">
+							  {% csrf_token %}
+							  <p class="comment-form-comment">
+								<label for="story_title">{% trans "Title" %}</label>
+								<input id="story_title" type="text" name="title" />
+							  </p>
+							  <p id="story_comment_message">
+								<label for="story_comment">{% trans "Message" %}</label>
+								<textarea id="story_comment" name="comment" rows="15"></textarea>
+							  </p>
+							<p class="form-submit">
+								<input type="submit" value="{% trans "Post Comment" %}" id="submit" name="submit">
+							</p>          
+							<div class="clear"></div>
+						</form>
+					</div><!-- #respond -->
+					{% endif %}
+						
+				</div><!-- #comments -->
+
+			</div>
+			<!-- END BLOG --> 
+
+			<!-- START SIDEBAR -->
+                <div class="sidebar"> 
+
+                	<div class="widget">			
+						<div class="recent-post">
+							
+							<!-- AUTHOR -->
+							<div class="link">
+								{% if avatar_user %}
+								  <img src="/{{ avatar_user.avatar|thumbnail:"128x120" }}" class="avatar"/>
+								{% else %}
+								  <img src="{{ MEDIA_URL }}images/author.png" class="avatar"/>
+								{% endif %}
+								
+								<a title="{{story.get_owner_full_name }}" href="#">{{story.get_owner_full_name }}</a>
+							
+								<div class="clear"></div>
+							</div>     
+							<!-- END AUTHOR -->
+							                      
+							
+						</div>
+					</div>  
+					<!-- RECENT POSTS -->                 
+					<div class="widget">
+						<h2>{% trans "His recent posts" %}</h2>
+						<div class="recent-post">
+							<!-- POST -->
+							{% for post in recent_stories %}						
+							<div class="link">
+								<a title="{{post.title}}" href="{% url view_story post.category.pk post.pk post.slug %}">{{post.title}}</a>
+								<br/>
+								<small>{{post.time_created}}</small>
+								<div class="clear"></div>
+							</div>     
+							{% endfor %}
+						</div>
+					</div>
+					<!-- END RECENT POSTS -->  
+				</div>                
+                <!-- END SIDEBAR -->                
+    
+    		<div class="clear"></div>
+	</div>
+{% endblock %}

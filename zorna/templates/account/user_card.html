@@ -1,0 +1,68 @@
+{% load i18n %}
+{% if not index %}
+<style>
+.bc-container {
+    position: relative;
+    width: 100%;
+}
+
+.bc-card {
+    background: url("{{ MEDIA_URL }}images/card-texture.gif") repeat scroll 0 0 transparent;
+    border: 1px solid #D6D5BF;
+    border-radius: 3px 3px 3px 3px;
+    padding: 10px !important;
+    margin: 5px;
+}
+
+#visit-card .user_name {
+    color: #327999;
+    font-size: 22px !important;
+    text-align: center;
+    font-family: Georgia,"Times New Roman",sans-serif;;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+}
+
+#visit-card .vcard-item-label {
+    color: #666666;
+    font-size: 14px;
+    font-family: Georgia,"Times New Roman",sans-serif;
+    font-size: 12px;
+    line-height: 1.2;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+#vcard-item-content {
+	padding-left: 20px;
+}
+
+dl {
+ width:100%;
+ overflow:hidden;
+}
+dt {
+ float:left;
+ width:25%; /* adjust the width; make sure the total of both is 100% */
+}
+dd {
+ float:left;
+ width:auto; /* adjust the width; make sure the total of both is 100% */
+}
+</style>
+{% endif %}
+<div id="visit-card" class="bc-container">
+	<div class="bc-card">
+		<span class="user_name">{{account.get_full_name}}</span><br />
+		{% for field in row.fields %}
+		{% if field.slug not in "zorna_owner"%}
+		<dl>
+			<dt>{{field.label}}:</dt>
+			<dd>
+				{{field.value}}
+			</dd>
+		</dl>
+		{% endif %}
+		{% endfor %}
+	</div>
+</div>

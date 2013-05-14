@@ -1,0 +1,68 @@
+{% load forms_tags %}
+<div class="f-control {% if field.field.css_class%}{{field.field.css_class}}{%endif%}" style="{% if field.field.boundary_style%}{{field.field.boundary_style}}{%endif%}">
+	<table>
+		<tr>
+			<td class="f-row-left">
+				<span class="f-label">
+					<span class="{%if field.field.required %}required{% endif%}">
+						<label for="{{ field.auto_id }}"  style="{% if field.field.label_style%}{{field.field.label_style}}{%endif%}">{{ field.label }}</label>
+					</span>
+				</span>
+			{% if not panel.stacked %}	
+			</td>
+			<td>
+			{% endif %}
+				{% if field.errors and not form_print %}
+				<span class="f-errors">
+	  			<ul class="f-errorlist">
+	      		{% for error in field.errors %}
+	        		<li>{{ error }}</li>
+	      		{% endfor %}
+	      		</ul>
+	      		</span>
+	      		{% endif %}
+		      	<span class="f-help">
+		      		{% if field.help_text %}{{ field.help_text }}{% endif %}<br />
+		      	</span>
+		      	<span class="f-field" style="{% if field.field.control_style%}{{field.field.control_style}}{%endif%}">
+		      		{% if not form_print %}
+		      		{{ field }}
+		      		{% else %}
+		      			{% if field.zcontrol_class in controls_multiple %}
+								<ul>
+		      				{% for f in field.field.choices %}
+								<li>
+									{% if field.zcontrol_class == "RadioSelect" %}
+										{% if f.0|zstr in field.value %}
+											<img src="{{ MEDIA_URL }}images/icons/radio_set.png">
+										{% else %}	
+											<img src="{{ MEDIA_URL }}images/icons/radio_unset.png">
+										{% endif %}	
+									{% else %}
+										{% if f.0|zstr in field.value %}
+											<img src="{{ MEDIA_URL }}images/icons/checkbox_set.png">
+										{% else %}	
+											<img src="{{ MEDIA_URL }}images/icons/checkbox_unset.png">
+										{% endif %}	
+									{% endif %}
+									<label style="" for="{{ field.auto_id }}">{{f.1}}</label>
+								</li>
+		      				{% endfor %}
+								</ul>		      				
+			      		{% else %}
+		      			{% if field.zcontrol_class == "Select" %}
+			      		<pre class="input wrap" style="border-style:solid;">{%if field.zcontrol_value%}{{field.zcontrol_value}}{%else%}<br />{% endif %}</pre>
+			      		{% else %}
+			      		{% if field.zcontrol_class == "CheckboxInput" %}
+			      		{% if field.value %}<img src="{{ MEDIA_URL }}images/icons/checkbox_set.png">{% else %}<img src="{{ MEDIA_URL }}images/icons/checkbox_unset.png">{% endif %}
+			      		{% else %}
+			      		<pre class="input wrap" style="border-style:solid;">{% if field.value %}{{field.value}}{% else %}<br />{% endif %}</pre>
+				      	{% endif %}
+				      	{% endif %}
+				      	{% endif %}
+			      	{% endif %}
+		      	</span>
+			</td>
+		</tr>
+	</table>
+</div>

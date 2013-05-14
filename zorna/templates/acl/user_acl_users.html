@@ -1,0 +1,32 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.autocomplete.js"></script>
+{% endblock %}
+
+
+
+{% block zorna_left_content %}
+
+<div class="bloc">
+  <h1>{% trans "Permissions by users" %}</h1>
+  {{acl_form}}
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% if next %}
+<ul>
+  <li><a href="{{ next }}">{% trans "Cancel" %}</a></li>
+</ul>
+{% endif %}
+
+<h3>{% trans "Help on permissions" %}</h3>
+{%  for k,v in verbs.items %}
+<h4>{{ k|capfirst }}</h4>
+<p>{{v.text}}</p>
+{% endfor %}
+{% endblock %}

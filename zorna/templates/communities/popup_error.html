@@ -1,0 +1,16 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+{% endblock %}
+
+
+{% block iframe_content %}
+<h2 id="popuptitle">
+	{{title}}
+</h2>
+<div id="popupform">
+{{error}}
+<div class="clear"></div>
+</div>
+{% endblock %}

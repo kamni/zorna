@@ -1,0 +1,7 @@
+{% load articles_tags %}
+<li>
+<input type="checkbox" name="_selected_action" value="{{category.pk}}"  />{{category.name}}
+{% if children %}
+    <ul>{% for child in children %}{% pages_item_menu child "reader" "articles/category_item_menu.html" %}{% endfor %}</ul>
+{% endif %}
+</li>

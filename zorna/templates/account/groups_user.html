@@ -1,0 +1,53 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "User groups" %}</h1>
+	<form method="post" action=".">{% csrf_token %} 
+	<input type="submit" value="{% trans "Update groups for" %}" />&nbsp;&nbsp;{{ curuser.get_full_name }}
+<table id="group-table-dnd">
+	<thead>
+		<tr>
+		<th></th>
+		<th>{% trans "Group" %}</th>
+		<th></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		{% for group in object_list %}
+		<tr id="node-{{ group.id }}" class="{% if group.parent.id > 3 %}child-of-node-{{group.parent.id}}{% endif %}">
+		<td width="1%"><input type="checkbox" name="_selected_action" value="{{ group.id }}" {% if group.id in users_groups %}checked="checked"{%endif%}/></td>
+		<td><a href="{% url edit_group group.id %}" title="{% trans "Click to edit this group"%}">{{group.name}}</a></td>
+		<td><a href="{% url users_group group.id %}" title="{% trans "Click to see members of this group"%}"><img src="{{ MEDIA_URL }}images/group.gif"></img></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+	</form>	
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#group-table-dnd").treeTable(
+		  { treeColumn : 1, initialState: 'expanded' }
+	);
+});
+</script>
+
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "account/admin_right_menu.html" %}
+{% endblock %}

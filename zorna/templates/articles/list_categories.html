@@ -1,0 +1,54 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+{% if not categories_list %}
+<div class="bloc">
+  <h1>{% trans "You don't have any category. Create one by clicking on the link" %}: "{% trans "Add new category" %}" </h1>
+</div>
+{% else %}
+<div class="bloc">
+  <h1>{% trans "Articles categories" %} </h1>
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Categories" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories_list %}
+    <tr id="node-{{ category.id }}" class="{% if category.parent %}child-of-node-{{category.parent.id}}{% endif %}">
+    <td width="1%"><a href="{% acl_groups_object_url category %}?next={% url admin_list_categories %}" title="{% trans "Click to edit rights" %}"><img src="{{ MEDIA_URL }}images/access.png" /></a></td>
+    <td><a href="{% url admin_edit_category category.id%}" title="{% trans "Click to edit articles category" %}">{{category.name}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#category-table-dnd").treeTable(
+      { treeColumn : 1, initialState: 'expanded' }
+  );
+});
+</script>
+
+</div>
+{% endif %}
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "articles/right_menu.html" %}
+{% endblock %}
+

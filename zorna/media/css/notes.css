@@ -1,0 +1,409 @@
+#notes-wrapper {
+    border: 4px solid #BBDDBB;
+    height: 850px;
+    margin: 0.2em 0.2em;
+    z-index: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.ui-layout-pane {
+    background-color: #EEFFEE  !important;
+    overflow:
+}
+
+#left-panel {
+	background: #efe;
+	overflow: auto;
+}
+
+#right-panel {
+	background: #efe;
+	overflow: hidden;
+}
+
+#notes-wrapper .vsplitbar {
+	width: 6px;
+	background: #BBDDBB url(/zmedia/images/vgrabber.gif) no-repeat center;
+}
+#notes-wrapper .vsplitbar.active {
+	background: #BBDDBB url(/zmedia/images/vgrabber.gif) no-repeat center;
+	opacity: 0.7;
+}
+
+#notes-wait {
+	height:130px;
+	background:url(/zmedia/images/loading.gif) center no-repeat;
+	text-align:center;
+	padding-top:180px;
+	color:#888
+}
+
+#notes-categories, #notes-shared {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#notes-wrapper div.categories {
+    background-image: url("/zmedia/images/icons/note.png") !important;
+}
+
+#notes-wrapper div.shared {
+    background-image: url("/zmedia/images/icons/contact.png") !important;
+}
+
+#notes-wrapper div.categories, #notes-wrapper div.shared {
+    background-repeat: no-repeat !important;
+    background-position: 3px center;
+    padding: 5px 0px 5px 22px;
+    background-color:#BBDDBB;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #BBBBBB;
+    box-shadow: 0 2px 4px #CCCCCC;
+}
+
+
+
+.note-view-content {
+    background-color: #FFFFFF;
+    border: 1px solid #BBDDBB;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 5px 5px 5px #CCCCCC;
+    margin: 3px 10px 10px;
+}
+
+.note-header {
+    background-color: #BBDDBB;
+    margin: 5px 5px 0;
+    padding-bottom: 5px;
+}
+
+.note-view-content table {
+    width: 100%;
+}
+
+.note-view-content table td {
+    vertical-align: top;
+}
+
+.note-header div {
+    margin: 0 10px 1px;
+}
+
+.note-tags {
+    margin: 0;
+    padding: 0;
+}
+
+.note-tags > li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+
+.note-title {
+    font-size: 0.95em;
+    font-weight: bold;
+    line-height: 1.1em;
+    padding-top: 5px;
+}
+
+.note-info {
+    float: right;
+    font-size: 11px;
+    text-align: right;
+}
+
+.note-content {
+    margin: 1px 10px 1px 5px;
+}
+.note-tags li {
+    list-style-type: none;
+}
+
+.note-tags li a {
+    background-color: #EEFFEE;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    color: #000000;
+    cursor: pointer;
+    display: block;
+    font-size: 0.85em;
+    line-height: 1;
+    margin: 5px 3px;
+    padding: 1px 2px;
+    position: relative;
+    text-decoration: none;
+}
+
+#notes-wrapper-bloc H1.file {
+	background-image: url("/zmedia/images/icons/txt.gif") !important;
+}
+
+#notes_main_content .note-content p {
+	margin: 3px;
+}
+#notes-wrapper-bloc H1.template {
+	background-image: url("/zmedia/images/icons/settings16.png") !important;
+}
+
+#notes-wrapper-bloc H1 {
+    background: none no-repeat scroll left center transparent;
+    color: #333333;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 24px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 30px;
+    text-shadow: 0 1px 1px #DDDDDD;
+}
+
+#notes-wrapper-bloc H1 A.npath {
+    text-decoration: none;
+}
+#notes-wrapper-bloc h1 a.npath:hover, a.npath:visited, a.npath:link {
+	color: #112ABB;
+}
+
+#notes-wrapper-bloc h1 a.npath:hover {
+    border-bottom: 1px solid #666666;
+}
+
+#notes_folder_options {
+    float: right;
+}
+
+#notes_folder_options > .options A:hover {
+    color: #333333;
+}	
+
+#notes_folder_options > .options {
+    float: right;
+    margin: 6px 0 0;
+    padding: 0;
+}
+
+#notes_folder_options > .options LI {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+#notes_folder_options > .options A {
+    background: none no-repeat scroll right center transparent;
+    color: #888888;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 16px;
+    margin: 0 0 0 2em;
+    padding: 0 22px 0 0;
+    text-decoration: none;
+}
+
+#manage_webpages .h-list {
+	padding-left: 0;
+}
+
+#manage_webpages .h-list > LI {
+    list-style: none outside none;
+}
+
+#manage_webpages .h-list > LI.notice, #manage_webpages .h-list > LI.confirm {
+    background: none no-repeat scroll 15px center transparent;
+    border-bottom: 1px solid #DDDDDD;
+    border-top: 1px solid #FFFFFF;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    list-style: none outside none;
+    margin: 0;
+    padding: 10px 20px 10px 52px;
+}
+
+#manage_webpages .h-list > LI.notice {
+    background-color: #AFD5FF;
+    border-top: 1px solid #AFD5FF;
+    font-size: 12px;
+    font-weight: normal;
+    text-shadow: -1px 1px 0 #C6E1FE;
+}
+
+#manage_webpages .h-list > LI.notice {
+    background-image: url("/zmedia/images/icons/info.png");
+}
+
+#manage_webpages .h-list > LI.confirm.foption {
+    background-color: #BBDDBB;
+    border-top: 1px solid #BBDDBB;
+    font-size: 12px;
+    font-weight: normal;
+    text-shadow: -1px 1px 0 #BBDDBB;
+}
+
+span.raction {
+	color: #256B91;
+	font-size: 11px;
+	margin-left: 5px;
+}
+
+span.raction a {
+    font-size: 11px;
+}
+
+span.raction a:link {
+    color: #256B91;
+    text-decoration: none;
+}
+
+span.raction a:visited {
+    color: #256B91;
+}
+
+span.raction a:hover {
+    background-color: #256B91;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#notes_folder_options {
+	float: right;
+}
+
+#notes_folder_options  A.create {
+    background-image: url("/zmedia/images/icons/new_folder_icon.png");
+}
+
+#notes_folder_options  A.rename {
+    background-image: url("/zmedia/images/icons/rename.png");
+}
+
+#notes_folder_options  A.add {
+    background-image: url("/zmedia/images/icons/copy.png");
+}
+
+#notes_folder_options  A.share {
+    background-image: url("/zmedia/images/icons/contact.png");
+}
+
+#notes_folder_options  li.shared {
+    background: none no-repeat transparent;
+    background-image: url("/zmedia/images/icons/contact.png");
+	padding-left: 20px;
+}
+
+
+#status {
+    border-radius: 0 0 0 0;
+    box-shadow: none;
+    display: none;
+    left: 50%;
+    margin: 0 0 0 -230px;
+    padding: 0 1em;
+    position: fixed;
+    text-align: center;
+    top: -1px;
+    width: 460px;
+}
+#status.error {
+    background: url("/zmedia/images/red_notice.gif") repeat-x scroll center center #FFAFAF;
+    border: 1px solid #333333;
+}
+#status.error P {
+    background: url("/zmedia/images/remove.png") no-repeat scroll left center transparent;
+    line-height: 24px;
+    padding: 0 32px;
+}
+#status.success {
+    background: url("/zmedia/images/yellow_notice.gif") repeat-x scroll center center #FFF77A;
+    border: 1px solid #B1A928;
+}
+#status.success P {
+    background: url("/zmedia/images/accept.png") no-repeat scroll left center transparent;
+    line-height: 24px;
+    padding: 0 32px;
+}
+
+div.note-files {
+	float: right;
+}
+
+div.note-files ul {
+    display:inline-block;
+    margin:0;
+    padding: 0;
+}
+
+div.note-files li {
+    list-style-type: none;
+}
+
+div.note-files li a {
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: #6CB26C;
+    color: #EEFFEE;
+    cursor: pointer;
+    display: block;
+    font-size: 0.85em;
+    line-height: 1;
+    margin: 5px 3px;
+    padding: 1px 2px 1px;
+    position: relative;
+    text-decoration: none;
+}
+
+.flatbutton {
+    border: 0 none;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 20px;
+    margin-right: 10px;
+    padding: 1px 10px;
+}
+
+#notes-wrapper .notes-search-box {
+    padding: 8px 0;
+    overflow: auto;
+}
+
+#notes-wrapper .notes-search-box button[type="submit"] {
+	background-image: url("/zmedia/images/icons/icons3.png") !important;
+    background-position: 0 -367px;
+    background-repeat: no-repeat !important;
+    background-color: #BBDDBB;
+    border-radius: 3px 0 0 3px;
+    border-color: #BBDDBB;
+    border-radius: 3px 0 0 3px;
+    border-style: solid;
+    border-width: 1px 0px 1px 1px;
+    float: left;
+    margin: 0;
+    text-indent: -5500px;
+    width: 20px;
+    height: 28px;
+    text-transform: uppercase;
+}
+
+#notes-wrapper .notes-search-box input {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #BBDDBB;
+    border-radius: 0 3px 3px 0;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    display: block;
+    float: left;
+    font-size: 1.1em;
+    height: 24px;
+    line-height: 12px;
+    margin: 0;
+    width: 156px;
+}

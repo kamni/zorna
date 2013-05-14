@@ -1,0 +1,32 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+
+{% block iframe_content %}
+{% if current_form %}
+{% include "forms/form_menu.html"%}
+{% endif %}		
+<div class="zbloc">
+<h1>{% trans "Configure what users will see when they submit form"%}</h1>
+<table id="form_actions">
+	<tbody>
+		<tr>
+		<td>
+			<a href="{% url forms_action_edit_message current_form.pk %}" {% if action_selected == 'message'%}class="selected"{% endif%}><img title="{% trans "Click to edit this action" %}" src="{{ MEDIA_URL }}images/icons/message-48x48.png" /></a>
+		</td>
+		<td>{% trans "Display message when user submit form" %}: <b>{{current_form.name}}</b></td>
+		</tr>
+		<tr>
+		<td>
+			<a href="{% url forms_action_edit_url current_form.pk %}" {% if action_selected == 'url'%}class="selected"{% endif%}><img title="{% trans "Click to edit this action" %}" src="{{ MEDIA_URL }}images/icons/web-link-48x48.jpg" /></a>
+		</td>
+		<td>{% trans "Forward user to a web page" %}</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+{% endblock %}

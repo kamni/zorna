@@ -1,0 +1,20 @@
+{% load i18n %}
+<div style= "font: bold 14px Tahoma, Verdana, sans-serif; color:#336699">
+	{% trans "Hi" %} {{follower.first_name}}</div>
+<br>
+<table cellspacing= "0" cellpadding= "0" >
+<tr>
+<td width= "10">&nbsp;</td>
+<td style= "font:11px tahoma,verdana,sans-serif" align= "left">
+<span style= "color:#336699;font-weight:bold;">{% trans "Someone" %}</span> {% trans "replied to a message that you follow"%} <br><br>
+{{reply.message}}
+<br /><br /><br /><br />
+{% trans "To read the message, click on the button below" %}:<br><br>
+<span style= "background:#81b747;height:15px;width:148px;font-size:12px;text-align:center;display:block;padding:4px 0px;border:1px solid white;">
+<a id= "btn" href= "{{url}}?all_msg=message&message_id={{message.pk}}" target= "_blank" style= "display:block;height:100%;width:148px;color:white;text-decoration:none;font-size:12px;min-height:0%;font-family:tahoma;font-weight:bolder;">
+	&nbsp;&nbsp;&nbsp;&nbsp;{% trans "Read message" %}&nbsp;&nbsp;&nbsp;&nbsp;
+</a>
+</span>
+</td>
+</tr>
+</table>

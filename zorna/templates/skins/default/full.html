@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block zorna_title_page %}
+{% if zorna_title_page %}{{zorna_title_page}}{% else %} {% trans "Intranet" %}{% endif %}
+{% endblock %}
+
+{% block zorna_page_content %}
+<div id="full_content">
+{% block zorna_full_content %}{% endblock %}
+</div>
+{% endblock %}
+

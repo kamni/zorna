@@ -1,0 +1,12 @@
+  <ul>
+  {% for msg in assignements %}
+    <li>
+		<time>
+		<span class="com-day">{{msg.event.start|date:"d"}}</span>
+		<span class="com-month">{{msg.event.start|date:"M"}}</span>
+		<span class="com-time">{{msg.event.start|date:"H:i"}}</span>
+		</time>    	
+    	<a href="{% url communities_home_page %}?all_msg=message&message_id={{msg.message.pk}}">{{msg.event.title}}</a>
+    </li>
+  {% endfor %}
+  </ul>

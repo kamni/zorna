@@ -1,0 +1,10 @@
+{% load i18n %}
+{% trans "Hi" %} {{follower.first_name}}
+{% trans "Someone" %} {% trans "replied to a message that you follow"%}
+
+
+{{reply.message}}
+
+
+{% trans "To read the message, click on the link below" %}:
+{{url}}?all_msg=message&message_id={{message.pk}}

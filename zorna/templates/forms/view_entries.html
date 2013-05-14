@@ -1,0 +1,32 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+
+{% block iframe_content %}
+{% include "forms/form_menu.html"%}
+<div class="bloc">			
+<table id="field-table-dnd">
+  <thead>
+    <tr>
+    {% for column in export_form.get_columns %}
+	    <th>{{ column }}</th>
+    {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+        {% for row in export_form.get_entries %}
+        <tr class="{% cycle on,off %}">
+            {% for field in row %}
+            <td>{{ field.value }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+{% endblock %}

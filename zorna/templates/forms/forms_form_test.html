@@ -1,0 +1,17 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms_form.css" />
+{% include "forms/form_for_form_header.html" %}
+{% endblock %}
+
+{% block zorna_title_page %}
+{{form.name}}
+{% endblock %}
+
+{% block zorna_left_content %}
+<div class="zbloc">
+	{% include "forms/form_body.html"%}
+</div>
+{% endblock %}

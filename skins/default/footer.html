@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load articles_tags %}
+
+<div id="footer_top">
+	
+</div>
+<div id="footer_middle">
+	<div id="footer_middle_container">
+		{% category_roots reader as roots %}
+		{% if roots.count %}
+	  	{% for e in roots %}
+		<div class="footer_column">
+			<div class="footer_column_title">{{e.name}}</div>
+			<div class="footer_column_text">
+			    {% category_childs reader e as childs %}
+			    {% for c in childs %}
+				<a href="{{c.url}}">{{c.name}}</a>
+				<br />
+		  		{% endfor %}  
+			</div>			
+		</div>
+  		{% endfor %}
+  		{% endif %}  
+	</div>
+</div>
+<div id="footer_bottom">
+	<ul>
+		<li><a href="mailto:info@zornaproject.com">Contact</a>&nbsp;|&nbsp;</li>
+		<li><a href="/content/about">About</a>&nbsp;|&nbsp;</li>
+		<li><a href="">Siège</a></li>
+	</ul>
+</div>

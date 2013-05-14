@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if resource_calendar %}
+<h3>{{ resource_calendar.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_calendar resource_calendar.pk %}" title="{% trans "Click to edit calendar details" %}">{% trans "Edit calendar" %}</a></li>
+  <li><a href="{% url admin_acl_calendar resource_calendar.pk %}?next={% url admin_list_calendars %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+  <li><a href="{% url admin_acl_calendar resource_calendar.pk %}?next={% url admin_list_calendars %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Calendars" %}</h3>
+<ul>
+  <li><a href="{% url admin_list_calendars %}" title="{% trans "List of calendars" %}">{% trans "Calendars" %}</a></li>
+  <li><a href="{% url admin_add_calendar %}" title="{% trans "Click to add new calendar" %}">{% trans "Add new calendar" %}</a></li>
+</ul>

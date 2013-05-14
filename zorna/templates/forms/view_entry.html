@@ -1,0 +1,47 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+{% block zorna_title_page %}
+{{form.name}}
+{% endblock %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms_form.css" />
+{% endblock %}
+
+{% block zorna_page_content %}
+<div class="zbloc">
+	<h1>
+		<a href="{% url forms_form_print form.pk row.entity.pk %}" target="_blank" title="{% trans "Print this entry" %}"><img src="{{ MEDIA_URL }}images/icons/printer.gif" /></a>
+		<a href="{% url form_browse_entries_view form.slug %}">{{ form.name }}</a>
+		{% for parent in parents %}
+		 / <a href="{% url form_browse_entries_view form.slug %}?where={{parent.entry.form.slug}}.{{parent.row.slug}}:{{parent.entry.id}}">{{ parent.row.value }}</a>
+		{% endfor %}
+	</h1>
+	<div id="fs-data" class="fs-data">
+		<div class="fs-data-content">
+			<table class="data">
+				<tbody class="fs-value-content">
+					{% for field in row.fields %}
+					<tr class="data-row">
+					<td class="data-label" title="Control Name: {{field.slug}}">{{ field.label }}</td>
+					<td class="data-value">
+		            	{% if field.type == "file"%}
+		            	<a href="{{ field.value }}">{{ field.value }}</a>
+						{% else %}
+						{% if field.type == 'checkbox_multiple' or field.type == 'select_multiple' or field.type == 'radio_multiple' %}
+							<span class="value">{{ field.value|join:" , " }}</span>
+						{% else %}
+							<span class="value">{{ field.value|linebreaksbr }}</span>
+						{% endif %}
+		            	{% endif %}
+					</td>
+					</tr>
+					{% endfor%}					
+				</tbody>
+			</table>
+		</div>
+	</div>	
+	<div style="clear:left;">&nbsp;</div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% load i18n %}
+{% load communities_tags %}
+{% load accounts_tags %}
+    <div id="msg_container-{{msg.id}}" msgid="{{msg.id}}" class="msg_container">
+    {% if avatar_user %}
+      <img src="/{{ avatar_user.avatar|thumbnail:"42x42" }}" class="avatar"/>
+    {% else %}
+      <img src="{{ MEDIA_URL }}images/unknown.jpg" class="avatar"/>
+    {% endif %}
+    <div id="msg_entry-{{msg.id}}" class="msg_entry">
+    	<div id="msg_entry_header-{{msg.id}}" msgid="{{msg.id}}" class="msg_header">
+	        <a href="?{{current_query_string}}&from_id={{msg.owner.pk}}">{{ msg.get_owner_full_name }}</a>&nbsp;{% trans "to"%}&nbsp;
+	        {% for com in msg.communities.all %}
+	          <span style="color: #{{com.bgcolor}};">{{ com.name }}</span>
+	        {% endfor %}
+	        {% for user in msg.users.all %}
+	          <span class="msg_receiver">{{ user.get_full_name }}</span>
+	        {% endfor %}
+	        {%if msg.nb_followers %}
+	         <span class="rfollowers"><span>{{msg.nb_followers}}</span>{% trans "Followers" %}</span>
+	        {%endif%}
+    	</div>
+      <div class="msg_entry_body">
+      <p id="msg_entry_text-{{msg.id}}" class="msg_entry_edit" msgid="{{msg.id}}">
+      	{{ msg.message}}
+      </p>
+           {% if attachments %}
+        <div id="msg_entry_attachment_container_{{msg.id}}" class="msg_entry_attachment_container">
+        {% for f in attachments %}
+          <div class="msg_entry_attachment_file">
+            <a href="{% url get_file msg.id f.file %}" class="file_type_{{f.ext}}">{{ f.file }}</a>
+          </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      	{% if msg.extra %}
+      <div class="msg_entry_body msg_extra">
+      		{% if msg.manager and msg.extra %}
+      		<span class="raction">
+      			<a class="util-button edit" rel="facebox" href="{% url communities_edit_plugin msg.extra_id msg.extra_object_id %}">{% trans "Edit"%}</a>
+      		</span>
+      		{% endif %}
+      		{{msg.extra}}
+      </div>
+      	{% endif %}
+      <div id="msg_entry_footer-{{msg.id}}" class="msg_entry_footer">
+        <ul>
+          <li><span class="msg-date">{{ msg.time_created }}</span></li>
+          <li><a href="#" id="a-{{msg.id}}" name="slick-toggle-{{msg.id}}">{% trans "Reply" %}</a></li>
+          <li>
+            {% if msg.follow %}
+            <a href="{% url unfollow_message_ajax %}" id="follow-{{msg.id}}" msgid="{{msg.id}}">
+              {% trans "Unfollow" %}
+            {% else %}
+            <a href="{% url follow_message_ajax %}" id="follow-{{msg.id}}" msgid="{{msg.id}}">
+              {% trans "Follow" %}
+            {% endif %}
+            </a>
+          </li>
+          {% if msg.manager %}
+          <li><a id="a-edit-{{msg.id}}" msgid="{{msg.id}}" href="#">{% trans "Edit" %}</a></li>
+          <li><a id="a-delete-{{msg.id}}" msgid="{{msg.id}}" href="#">{% trans "Delete" %}</a></li>
+          {% endif %}
+        </ul>
+        <div id="msg_entry_reply-a-{{msg.id}}" class="msg_entry_reply">
+          <form action="message/send_reply/" method="post">{% csrf_token %}
+            <input type="hidden" name="current_community" value="{{ community_id }}">
+            <input type="hidden" name="com_page" value="{{ com_page }}">
+            <input type="hidden" name="search_string" value="{{ search_string }}">
+            <input type="hidden" name="member_id" value="{{ member_id }}">
+            <input type="hidden" name="message_id" value="{{ message_id }}">
+            <input type="hidden" name="contenttype_id" value="{{ contenttype_id }}">
+            <input type="hidden" name="msg_id" value="{{msg.id}}"/>
+            <textarea  class="txt-input" name="reply_message" id="reply_message-{{msg.id}}"  rows="3"></textarea>
+            <input type="button" id="msg_entry_send-{{msg.id}}" msgid="{{msg.id}}" value="Submit" class="ac-input"/>
+          </form>
+        </div>
+        <div id="msg_entry_reply-wait-{{msg.id}}" class="msg_entry_reply_wait">
+          <img src="{{ MEDIA_URL }}images/ajax_wait.gif" class="ajax_wait"/>
+        </div>
+      </div>
+        {% if msg.nb_replies %}
+        <div id="msg_replies_container-{{msg.id}}" class="msg_reply_container">
+        {% for reply in msg.replies %}
+        {% include "communities/message_reply.html" %}
+        {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>

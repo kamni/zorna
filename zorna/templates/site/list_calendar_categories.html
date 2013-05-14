@@ -1,0 +1,39 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Calendar categories" %}</h1>  
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th>{% trans "Category" %}</th>
+    <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cat in categories %}
+    <tr>
+    <td><a href="{% url admin_edit_calendar_category cat.pk %}" title="{% trans "Click to edit item" %}">{{cat.name}}</a></td>
+    <td width="1%">
+    	<span style="background-color: #{{cat.bgcolor}}; color: #{{cat.bgcolor}}">{{cat.bgcolor}}</span>
+   	</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "site/admin_right_menu.html" %}
+{% endblock %}
+

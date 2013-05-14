@@ -1,0 +1,36 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Resources calendars" %} </h1>
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Calendars" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for resource in calendars_list %}
+    <tr>
+    <td width="1%"><a href="{% url admin_acl_calendar resource.pk %}?next={% url admin_list_calendars %}" title="{% trans "Click to edit rights" %}"><img src="{{ MEDIA_URL }}images/access.png" /></a></td>
+    <td><a href="{% url admin_edit_calendar resource.pk %}" title="{% trans "Click to edit calendar" %}">{{resource.name}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "calendars/admin_right_menu.html" %}
+{% endblock %}
+

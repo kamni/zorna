@@ -1,0 +1,9 @@
+{% load i18n %}
+<ul>
+  <li><a href="{% url view_calendar %}" %}">{% trans "Back to calendars" %}</a></li>
+</ul>
+<h3>{% trans "Settings" %}</h3>
+<ul>
+  <li><a href="{% url calendar_user_settings %}" %}">{% trans "Settings" %}</a></li>
+  <li><a href="{% url calendar_settings_shared_url %}" %}">{% trans "Private address" %}</a></li>
+</ul>

@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if curcommunity %}
+<h3>{{ curcommunity.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_community curcommunity.pk %}" title="{% trans "Click to edit community" %}">{% trans "Edit community" %}</a></li>
+  <li><a href="{% acl_groups_object_url curcommunity %}?next={% url admin_list_communities %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+  <li><a href="{% acl_users_object_url curcommunity %}?next={% url admin_list_communities %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Communities" %}</h3>
+<ul>
+  <li><a href="{% url admin_list_communities %}" title="{% trans "List of communities" %}">{% trans "Communities" %}</a></li>
+  <li><a href="{% url admin_add_community %}" title="{% trans "Click to edit add new community" %}">{% trans "Add new community" %}</a></li>
+</ul>

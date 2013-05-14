@@ -1,0 +1,22 @@
+{% load i18n %}
+{% if curuser %}
+<h3>{{ curuser.get_full_name }}</h3>
+<ul>
+  <li><a href="{% url edit_user curuser.pk %}" title="{% trans "Click to edit user profile" %}">{% trans "Edit profile" %}</a></li>
+  <li><a href="{% url edit_user_password curuser.pk %}" title="{% trans "Click to change user password" %}">{% trans "Change user password" %}</a></li>
+  {% if request.user.is_superuser %}
+  <li><a href="{% url groups_user curuser.pk %}" title="{% trans "Click to list user groups" %}">{% trans "User groups" %}</a></li>
+  {% endif %}
+</ul>
+{% endif %}
+<h3>{% trans "Users/Groups"%}</h3>
+<ul>
+  <li><a href="{% url list_users %}" title="{% trans "Users list" %}">{% trans "Users" %}</a></li>
+  {% if request.user.is_superuser %}
+  <li><a href="{% url list_groups %}" title="{% trans "Groups list" %}">{% trans "Groups" %}</a></li>
+  <li><a href="{% url list_administrators %}" title="{% trans "Administrators list" %}">{% trans "Administrators" %}</a></li>
+  <li><a href="{% url add_group %}" title="{% trans "Click to add new group" %}">{% trans "Add new group" %}</a></li>
+  <li><a href="{% url add_user %}" title="{% trans "Click to add new user" %}">{% trans "Add new user" %}</a></li>
+  <li><a href="{% url import_users_view %}" title="{% trans "Click to import users from CSV file" %}">{% trans "Import users" %}</a></li>
+  {% endif %}
+</ul>

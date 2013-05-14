@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load acl_tags %}
+
+{% if curcategory %}
+<h3>{{ curcategory.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_category curcategory.pk %}" title="{% trans "Click to edit category" %}">{% trans "Edit category" %}</a></li>
+  <li><a href="{% acl_users_object_url curcategory %}?next={% url admin_list_categories %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+  <li><a href="{% acl_groups_object_url curcategory %}?next={% url admin_list_categories %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Categories" %}</h3>
+<ul>
+  <li><a href="{% url admin_list_categories %}" title="{% trans "List of articles categories" %}">{% trans "Articles categories" %}</a></li>
+  <li><a href="{% url admin_add_category %}" title="{% trans "Click to add new category" %}">{% trans "Add new category" %}</a></li>
+{% if not curcategory %}
+  <li><a href="{% url admin_order_categories %}" title="{% trans "Click to order categories" %}">{% trans "Order categories" %}</a></li>
+{% endif %}
+</ul>

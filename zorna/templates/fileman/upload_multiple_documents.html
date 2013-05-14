@@ -1,0 +1,68 @@
+{% load i18n %}
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+	<h1 class="hnpath">
+		{% for component in cdir_components %}
+			  <a href="#" rel="{{component.rel}}/" class="npath">{{component.text}}</a>{% if not forloop.last %} &raquo;{% endif %}
+		{% endfor%}
+	</h1>	
+</div>
+
+<form action="{% url fm_multiple_upload_view %}" id="form_upload" method="post" enctype="multipart/form-data">{% csrf_token %}
+<input type="hidden" id="folder_dest" name="dir" value="{{folder_dest}}"/>
+<div id="uploader">
+		<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+	</div>
+</form>
+<style type="text/css">@import url({{ MEDIA_URL }}javascript/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
+
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/plupload/plupload.full.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/plupload/i18n/{{language}}.js"></script>
+<script type="text/javascript">
+<!--
+// Convert divs to queue widgets when the DOM is ready
+$(function() {
+	$("#uploader").pluploadQueue({
+		// General settings
+		runtimes : 'flash,html5,gears,html4,silverlight,browserplus',
+		url : '{% url fm_multiple_upload_view %}',
+		chunk_size : '250kb',
+		headers : {'X-Requested-With' : 'XMLHttpRequest', 'X-CSRFToken' : '{{csrf_token}}'},
+		multipart_params : {
+        "dir" : "{{folder_dest}}"
+    	},
+
+		// Flash settings
+		flash_swf_url : '{{ MEDIA_URL }}javascript/plupload/plupload.flash.swf',
+
+		// Silverlight settings
+		silverlight_xap_url : '{{ MEDIA_URL }}javascript/plupload/plupload.silverlight.xap'
+	});
+
+	// Client side form validation
+	$('form').submit(function(e) {
+        var uploader = $('#uploader').pluploadQueue();
+
+        // Files in queue upload them first
+        if (uploader.files.length > 0) {
+            // When all files are uploaded submit form
+            uploader.bind('StateChanged', function() {
+                if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+                    $('form')[0].submit();
+                }
+            });
+                
+            uploader.start();
+        } else {
+            alert('{% trans "You must queue at least one file" %}');
+        }
+
+        return false;
+    });
+});
+
+	$("#fm-wrapper-bloc h1 a").click(function(event){
+		dirlistHandler({'dir':$(this).attr('rel')}, '{{folder_content_url}}');
+	});	
+-->
+</script>

@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if curfolder %}
+<h3>{{ curfolder.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_folder curfolder.pk %}" title="{% trans "Click to edit category" %}">{% trans "Edit folder" %}</a></li>
+  <li><a href="{% acl_users_object_url curfolder %}?next={% url admin_list_folders %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+  <li><a href="{% acl_groups_object_url curfolder %}?next={% url admin_list_folders %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Folders" %}</h3>
+<ul>
+  <li><a href="{% url admin_list_folders %}" title="{% trans "List of folders" %}">{% trans "Folders" %}</a></li>
+  <li><a href="{% url admin_add_folder %}" title="{% trans "Click to add new folder" %}">{% trans "Add new folder" %}</a></li>
+</ul>

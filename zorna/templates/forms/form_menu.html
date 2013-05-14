@@ -1,0 +1,52 @@
+{% load i18n %}
+{% load acl_tags %}
+<table width="100%">
+<tr>
+<td>
+<div class="fields-tools">
+	<ul>
+		<li>
+			<a href="{% url forms_edit_form current_form.pk %}" title="{% trans "Click to edit form" %} {{current_form.name}}">
+				<img src="{{ MEDIA_URL }}images/icons/form_edit.gif" />{% trans "Edit" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_form_add_field current_form.pk %}" title="{% trans "Click to add new field" %}">
+				<img src="{{ MEDIA_URL }}images/add.png" />{% trans "New field" %}</a>
+		</li>
+		<li>
+			<a href="{% url form_import_fields current_form.pk %}" title="{% trans "Click to import form fields" %}">
+				<img src="{{ MEDIA_URL }}images/icons/import.gif" />{% trans "Import" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_form_order_fields current_form.pk %}" title="{% trans "Click to order fields" %}">
+				<img src="{{ MEDIA_URL }}images/icons/order.png" />{% trans "Order fields" %}</a>
+		</li>
+		<li>
+			<a href="{% acl_groups_object_url current_form %}?next={% url forms_home current_form.workspace.slug current_form.pk %}" target="_top" title="{% trans "Click to edit rights" %}">
+				<img src="{{ MEDIA_URL }}images/access.png" />{% trans "Permissions" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_edit_form_email_settings current_form.pk %}" title="{% trans "Click to edit email submission" %}">
+				<img src="{{ MEDIA_URL }}images/icons/email.gif" />{% trans "Email submission" %}</a>
+		</li>
+		<li>
+			<a href="{% url form_form_action_home current_form.pk %}"  title="{% trans "Click to set form action" %}">
+				<img src="{{ MEDIA_URL }}images/icons/report.gif" />{% trans "Form action" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_form_export_entries current_form.pk %}" title="{% trans "Click to export entries" %}">
+				<img src="{{ MEDIA_URL }}images/icons/export.gif" />{% trans "Export" %}</a>
+		</li>
+		<li>
+			<a href="{% url form_browse_entries_view current_form.slug %}"  target="_top" title="{% trans "Click to browse entries" %}">
+				<img src="{{ MEDIA_URL }}images/icons/report.gif" />{% trans "Browse" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_form_panels current_form.pk %}"  title="{% trans "Click to set form panels" %}">
+				<img src="{{ MEDIA_URL }}images/icons/panel-16x16.gif" />{% trans "Panels" %}</a>
+		</li>
+	</ul>	
+</div>
+</td>
+</tr>
+</table>

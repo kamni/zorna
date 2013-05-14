@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block zorna_title_page %}
+{% if zorna_title_page %}{{zorna_title_page}}{% else %} {% trans "Intranet" %}{% endif %}
+{% endblock %}
+
+{% block zorna_page_content %}
+<div id="page_content">
+<div id="left3_content" class="left_content">
+{% block zorna_left_content %}{% endblock %}
+</div>
+<div id="middle3_content">
+  <div class="zbloc">
+{% block zorna_middle_content %}{% endblock %}
+  </div>
+</div>
+
+<div id="right3_content" class="right3_content">
+{% block zorna_right_content %}{% endblock %}
+</div>
+</div>
+{% endblock %}
+

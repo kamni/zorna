@@ -1,0 +1,7 @@
+{% load articles_tags %}
+<li>
+<a href="{{ category.url }}">{{ category.name }}</a>
+{% if children %}
+    <ul>{% for child in children %}{% pages_item_menu child "reader" %}{% endfor %}</ul>
+{% endif %}
+</li>

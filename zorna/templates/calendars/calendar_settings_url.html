@@ -1,0 +1,59 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/calendars.css" />
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".acal-reset").click(function() {
+		var x=window.confirm('{% trans "This will invalidate any existing private feeds. Are you sure you want to reset the private URL feed" %}?');
+		return x;
+	});
+});
+</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc-calendars">
+  <h1>{% trans "Private address URLs" %}</h1>
+<div class="calendars" id="calendars">
+<table>
+    <tr>
+    	<td>
+    		<div class="bloc">
+				<span>{% trans "This is the private address for calendar. Don't share this address with others unless you want them to see all the events on calendar." %}</span>
+				<table>
+					<thead>
+						<tr>
+						<th>{% trans "Calendar" %}</th>
+						<th>{% trans "Address url" %}</th>
+						<th></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						{% for cal in calendars %}
+						<tr>
+						<td>
+							{{cal.calendar.name}}
+						</td>
+						<td><a href="{{cal.zorna_url}}" title="{% trans "Copy and paste this into any calendar product that supports the iCal format" %}">{{cal.zorna_url}}</a></td>
+						<td><a class="acal-reset" href="{% url calendar_reset_secret_key cal.pk %}" title="{% trans "Reset Private URL" %}">{% trans "Reset"%}</a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+    		</div>
+    	</td>
+    </tr>
+</table>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "calendars/settings_right_menu.html" %}
+{% endblock %}

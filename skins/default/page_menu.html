@@ -1,0 +1,42 @@
+{% load i18n %}
+{% load articles_tags %}
+{% load menus_tags %}
+
+{% category_roots reader as roots %}
+<ul id="zorna-page-menu">
+  <li>
+    <a href="/">{% trans "Accueil" %}</a>
+   </li>
+{% if roots.count %}
+	{% for e in roots %} 
+    <li><a href="{{e.url}}">{{e.name}}</a>
+    {% category_childs reader e as childs %}
+	{% if childs %}
+	    <ul>{% for child in childs %}{% pages_item_menu child "reader" %}{% endfor %}</ul>
+	{% endif %}    
+    </li>
+    {% endfor %}
+{% endif %}
+{% menu_item 'top-menu' as topmenu %}
+{% for item in topmenu.menu_children %}
+      <li><a href="{{item.url}}" {% if item.target_blank %}target="_blank"{% endif %}>{{item.name}}</a></li>
+{% endfor %}
+</ul>
+
+
+
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  var options = { 
+    minWidth: 120, 
+    hoverOpenDelay: 300,
+    arrowSrc: '{{MEDIA_URL}}images/arrow_right.gif', 
+    copyClassAttr: false 
+	};
+  jQuery('#zorna-page-menu').menu(options);
+});
+
+-->
+</script>

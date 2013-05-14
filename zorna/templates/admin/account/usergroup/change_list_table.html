@@ -1,0 +1,34 @@
+{% load i18n  %}
+
+<table cellspacing="0" id="group-table-dnd">
+	<input type="hidden" name="user_id" value="uru" />
+    <thead>
+        <tr>
+            <th class="action-checkbox-column">
+                <input id="action-toggle" type="checkbox" style="display: inline;"/>
+            </th>
+            <th class="sorted ascending">{% trans "title" %}</th>
+       </tr>
+    </thead>
+    <tbody>
+
+        {% for group in groups %}
+		<tr id="node-{{ group.id }}" class="row1 {% if group.parent.id > 3 %}child-of-node-{{group.parent.id}}"{% endif %}">
+	    <td><input class="action-select" type="checkbox" name="_selected_action" value="{{ group.id }}"/></td>
+	    <td>
+	        <div class="title-cell-container" style="margin-left:2em">
+            <a href="{{ url }}{{ group.id }}/" class="title changelink">{{group.name}}</a>
+            </div>
+   	 	</td>
+        </tr>           
+        {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#group-table-dnd").treeTable(
+		  { treeColumn : 1 }
+	);
+});
+</script>

@@ -1,0 +1,59 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/faq.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.tablednd_0_5.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function() {
+  $("#category-table-dnd").tableDnD({
+    dragHandle: "dragHandle"
+  });
+  $("#category-table-dnd tr").hover(function() {
+          $(this.cells[0]).addClass('showDragHandle');
+    }, function() {
+          $(this.cells[0]).removeClass('showDragHandle');
+  });
+  
+  $("#bupdate_order").click(function(){
+    window.location.href = "{% url sort_faq_categories curfaq.pk %}?"+$("#category-table-dnd").tableDnDSerialize();
+  });
+});
+-->
+</script>
+
+<div class="bloc">
+  <h1>{% trans "Faq" %}&nbsp;:&nbsp;{{curfaq.name}}</h1>
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Faq categories" %}</th>
+    <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+    <tr id="{{category.pk}}">
+     <td  width="1%" class="dragHandle">&nbsp;</td>
+    <td><a href="{% url manager_faq_edit_category category.pk%}" title="{% trans "Click to edit faq category" %}">{{category.name}}</a></td>
+     <td  width="1%"><a href="{% url manager_faq_list_questions category.pk%}" title="{% trans "Click to list questions" %}">{% trans "Questions"%}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a class="ovalbutton" id="bupdate_order" href="#"><span>{% trans "Update Order" %}</span></a>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "faq/manager_right_menu.html" %}
+{% endblock %}
+

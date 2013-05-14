@@ -1,0 +1,16 @@
+<div id="embed-container">
+	<div class="embed-info">
+		{% if embedly_info %}
+			<img src="{{embedly_info.thumbnail_url}}" style="width:80px; height: auto" />
+		{% else %}
+			<img src="{{ MEDIA_URL }}/images/web.png"  style="width:80px; height: auto" />
+		{% endif %}
+		<h3><a href="{{msg.url}}" target="_blank">{% if msg.title %}{{msg.title|safe}}{% else %}{{msg.url}}{% endif %}</a></h3>
+		<p>{{msg.description|safe}}</p>
+	</div>
+	{% if embedly_info %}
+	<div class="embed-code">
+		{{embedly_info.html|safe}}
+	</div>
+	{% endif %}
+</div>

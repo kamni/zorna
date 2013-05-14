@@ -1,0 +1,738 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pages.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jqueryFileTree.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}javascript/codemirror/codemirror.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}javascript/codemirror/theme/default.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/ui-layout/jquery.layout-latest.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.livequery.min.js"></script>
+{% comment %} jqueryFileTree has been hacked to support live query{% endcomment %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jqueryFileTree.js"></script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.form.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/codemirror/mode/css/css.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<script type="text/javascript">
+<!--
+var sourceEditor;
+var sourceEditorChanged = false;
+var trans_create_new_folder = '{% trans "Create new folder" %}';
+var trans_rename_folder = '{% trans "Rename folder" %}';
+var trans_paste = '{% trans "Paste" %}';
+
+function basename(path){return path.replace(/.*\//,"");}
+var surreal={
+	safe_filename:function(filename){
+		filename=filename.replace(/[^A-Za-z0-9-_]/g,'-');
+		while(filename.match('--'))
+			filename=filename.replace('--','-');
+		while(filename.match(/^-|-$/))
+			filename=filename.replace(/^-|-$/,'');
+		return filename;
+	},
+	
+	clean_path:function(path){
+		if(path==''||path==null)
+			return'';
+		path=path.replace(/\\/,'/');
+		while(path.match(/\/\//))
+			path=path.replace(/\/\//,'/');
+		return path;
+	}
+};
+
+// Handles re-labeling of pages
+var labelEditor = {
+	src: null,
+	webpage: null,
+	originalTitle: null,
+	
+	show: function(li) {
+		$(".confirm").remove();
+		// Hide existing editors
+		labelEditor.hide();
+		labelEditor.src = $(li).find('.title');
+		labelEditor.webpage = $(labelEditor.src).attr('rel')  +'/'+ $(labelEditor.src).attr('title') + '.html';
+		labelEditor.originalTitle = $(labelEditor.src).attr('title');
+		// Show textfield
+		$(labelEditor.src).hide().after('<input type="text" id="new_label" class="textfield" size="60" maxlength="60" />');
+		// Focus on the textfield
+		var webpage = $(labelEditor.src).attr('title');
+		webpage = basename( webpage.replace(/\.(.*?)$/, '') );
+		$("#new_label").val( webpage ).focus().select();
+		// Handle save/discard
+		$("#new_label").keypress( function(e) {
+			if( e.keyCode == 13 ) labelEditor.save();
+			if( e.keyCode == 27 ) labelEditor.hide();
+		}).blur( function() {
+			labelEditor.save();
+		});
+	},
+	hide: function() {
+		$("#new_label").remove();
+		$(".title").show();
+		labelEditor.src = null;
+		labelEditor.originalTitle = null;
+		labelEditor.webpage = null;
+	},
+	save: function() {
+		var li = $(labelEditor.src).parents('LI.webpage');
+		var new_label = $("#new_label").val();
+		var file_type = $("INPUT[name=file_type]").val();
+		var src = labelEditor.src;
+		var webpage = labelEditor.webpage;
+		// Trim spaces
+		new_label = new_label.replace(/^ +/g, '');
+		new_label = new_label.replace(/ +$/g, '');
+		// New title can't be empty or just spaces
+		if( new_label.replace(/ /g, '') == '') new_label = labelEditor.originalTitle;
+		// Hide textfield
+		$("#new_label").remove();
+		// Add extension
+		new_lable = new_label + ".html";
+		// Update label and short label
+		$(labelEditor.src).attr('title', new_label).text(new_label).show();
+		// Only send the request if the title has changed
+		if( new_label != labelEditor.originalTitle ) {
+			var params = {
+				webpage: labelEditor.webpage,
+				new_name: new_label,
+				file_type: file_type,
+				csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+			};
+			$(li).addClass('wait');
+			labelEditor.hide();
+			$.post('/pages/fmbrowser/rename/webpage/', params, function(r) {
+				if( r.status == 'success' ) {
+					$(li).removeClass('wait');
+					var file = $(src).attr('title')+'.html';
+					var elem = $('a[rel='+webpage+']')
+					$(elem).attr('rel',$(src).attr('rel') + file);
+					$(elem).html(file);
+				} else {
+					alert( r.message );
+				}
+			}, 'json');
+		}
+	}
+};
+
+
+// Handles page cloning
+var zclone = {
+	
+	src: null,
+	webpage: null,
+	
+	show: function(li) {
+		// Only show if another clone section isn't open
+		if( $("#active_clone").size() > 0 ) return false;
+		
+		$(".confirm").remove();
+		
+		// Hide existing clones-in-progress
+		zclone.hide();
+		zclone.src = li;
+		elem = $(li).find('.title');
+		zclone.webpage = elem.attr('rel') +'/'+ elem.attr('title') + '.html';
+		
+		var original_name = basename( elem.attr('title') );
+		
+		// Show clone section
+		$(li).after('<li id="active_clone" class="clone confirm" style="display: none;"></li>');
+		$("#active_clone").html( $("#clone_template").html() );
+		$("#active_clone INPUT[name=new_page]").val(original_name);
+		$("#active_clone").slideDown( function() {
+			$("#active_clone INPUT[name=new_page]").focus().select();
+		});
+		
+		// Cancel clone
+		$("#active_clone .cancel").click( function() {
+			zclone.hide('normal');
+			return false;
+		});
+		
+		// Handle key presses
+		$("#active_clone INPUT[name=new_page]").keypress( function(e) {
+			if( e.keyCode == 13 ) zclone.clone();
+			if( e.keyCode == 27 ) zclone.hide('normal');
+		});
+		
+		// Proceed with clone
+		$("#active_clone .clone").click( function() {
+			zclone.clone();
+			return false;
+		});
+	},
+	
+	hide: function(speed, callback) {
+		if( !speed ) speed = 0;
+		zclone.src = null;
+		zclone.webpage = null;
+		$("#active_clone").slideUp(speed, function() {
+			$(this).remove();
+			if( callback ) callback.call();
+		});
+	},
+	
+	clone: function() {
+		// Make filename web-safe
+		$("#active_clone INPUT[name=new_page]").val( surreal.safe_filename( $("#active_clone INPUT[name=new_page]").val() ) );
+		// Get new name
+		var new_page = $("#active_clone INPUT[name=new_page]").val();
+		var file_type = $("INPUT[name=file_type]").val();
+		var csrf = $("INPUT[name=csrfmiddlewaretoken]").val();
+		var params = {
+			webpage: zclone.webpage,
+			new_page: new_page,
+			file_type: file_type,
+			csrfmiddlewaretoken: csrf
+		};
+		
+		$("#active_clone").addClass('wait').find(':input').attr('disabled', true);
+		$.post('/pages/fmbrowser/clone/webpage/', params, function(r) {
+			$("#active_clone").removeClass('wait').find(':input').attr('disabled', false);
+			if( r.status == 'success' ) {
+				// Had to set height to prevent the animation from jumping
+				$(zclone.src).after(r.html).next('LI').height( $(zclone.src).height() ).slideDown();
+				var elem = $('a[rel='+zclone.webpage+']').parent('.'+file_type).parent();
+				elem.append(r.head_html);
+				zclone.hide('normal');
+			} else {
+				alert(r.message);
+			}
+		}, 'json');
+	}
+};
+
+
+// Handle webpage deletes
+var delete_page = {
+	src: null,
+	show: function(li) {
+		$(".confirm").remove();
+		delete_page.hide();
+		delete_page.src = li;
+		$(li).after('<li id="active_delete_page" class="confirm remove" style="display: none;"></li>');
+		$("#active_delete_page").html( $("#delete_page_template").html() ).slideDown();
+		// Cancel delete
+		$("#active_delete_page .cancel").click( function() {
+			delete_page.hide('normal');
+			return false;
+		});
+		// Perform delete
+		$("#active_delete_page .accept").click( function() {
+			delete_page.remove();
+			return false;
+		});
+	},
+	
+	hide: function(speed, callback) {
+		if( !speed ) speed = 0;
+		delete_page.src = null;
+		delete_page.webpage = null;
+		$("#active_delete_page").slideUp(speed, function() {
+			$(this).remove();
+			if( callback ) callback.call();
+		});
+	},
+	
+	remove: function() {
+		var li = delete_page.src;
+		// Get params
+		var elem = $(li).find('A.title');
+		var file_type = $("INPUT[name=file_type]").val();
+		var params = {
+			webpage: elem.attr('rel') + '/'+ elem.attr('title') + '.html',
+			file_type: file_type,
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		delete_page.hide('normal');
+		$(li).addClass('wait');
+		$.post('/pages/fmbrowser/delete/webpage/', params, function(r) {
+			$(li).removeClass('wait');
+			if( r.status == 'success' ) {
+				$(li).slideUp( function() {
+					var rel = elem.attr('rel') + elem.attr('title') + '.html';
+					$('a[rel='+rel+']').parent('.'+file_type).remove();
+					$(this).remove();
+					// Show "no webpages" notice?
+					if( $("#manage_webpages .h-list LI.webpage").size() == 0 ) {
+						$("#manage_webpages .h-list LI.no_webpages").slideDown();
+					}
+				});
+			} else {
+				alert( r.message );
+			}
+		}, 'json');
+	}
+};
+
+
+// Handle webpage deletes
+var cut_page = {
+	show: function(li) {
+		cut_page.hide();
+		var elem = $(li).find('.title');
+		$.cookie('cut-rel', $(elem).attr('rel'));
+		$.cookie('cut-title', $(elem).attr('title'));
+		$.cookie('cut-type', $("INPUT[name=file_type]").val());
+		$(li).addClass('cut');
+	},
+	
+	hide: function() {
+		$("#manage_webpages li.webpage").removeClass('cut');
+	},
+	
+	show_past: function(){
+		var rel = $.cookie('cut-rel');
+		var title = $.cookie('cut-title');
+		var file_type = $.cookie('cut-type');
+		var cur_a = $("#manage_webpages a[title="+title+"]");
+		var cur_file_type = $("INPUT[name=file_type]").val();
+		var cur_file_rel = $("INPUT[name=file_rel]").val();
+		if( title && file_type == cur_file_type ) {
+			if( rel == cur_a.attr('rel')){
+				cur_a.parents("LI.webpage").addClass('cut');
+			}
+			if ( cur_a.attr('rel') != rel && title != cur_a.attr('title')) {
+				if(rel) {
+					rel = rel+'/'+title
+				} else {
+					rel = title;
+				}
+				$("#fm-wrapper-bloc li.paste").html('<a href="" title="'+rel+'" class="paste">'+trans_paste+'</a>');
+			}
+		}
+	},
+	
+	paste: function() {
+		var rel = $.cookie('cut-rel');
+		var title = $.cookie('cut-title');
+		var file_type = $.cookie('cut-type');
+		var cur_file_type = $("INPUT[name=file_type]").val();
+		var cur_file_rel = $("INPUT[name=file_rel]").val();
+		if(rel) {
+			var webpage =  rel + '/' +title + '.html';	
+		} else {
+			var webpage =  title + '.html';
+		}
+		
+		var params = {
+			webpage:webpage,
+			file_type: cur_file_type,
+			webrel : cur_file_rel,
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		$.post('/pages/fmbrowser/past/webpage/', params, function(r) {
+			$("li.paste").addClass('wait');
+			if( r.status == 'success' ) {
+				if( $("#manage_webpages .h-list LI.webpage").size() == 0 ) {
+					$("#manage_webpages .h-list LI.no_webpages").hide();
+					$("#manage_webpages .h-list").append(r.html);
+				} else {
+					$("#manage_webpages li.webpage").last().after(r.html);
+				}
+				if( cur_file_rel) {
+					$("div#fm-"+file_type+"s a[rel="+cur_file_rel+"] ~ ul").append(r.head_html);
+				} else {
+					$("div#fm-"+file_type+"s ul").first().append(r.head_html)
+				}
+				$('a[rel='+webpage+']').parent('.'+file_type).remove();
+				$("#fm-wrapper-bloc li.paste").html('');
+				$.cookie('cut-rel', '');
+				$.cookie('cut-title', '');
+				$.cookie('cut-type', '');
+			} else {
+				alert( r.message );
+			}
+			$("li.paste").removeClass('wait');
+		}, 'json');
+		
+	}
+};
+
+// Handles page cloning
+var handle_folder = {
+	show: function(a) {
+		$(".confirm").remove();
+		// Show clone section
+		$("#manage_webpages ul.h-list").prepend('<li id="active_foption" class="foption confirm" style="display: none;"></li>');
+		$("#active_foption").html( $("#foption_template").html() );
+		$("#active_foption").slideDown();
+		
+		if($(a).parent().hasClass('rename')) {
+			$("#active_foption INPUT[name=new_folder]").val($(a).attr('folder'));
+			$("#active_foption INPUT[name=what]").val('rename');
+			$("#active_foption .foption").val(trans_rename_folder);
+		} else {
+			$("#active_foption INPUT[name=what]").val('create');
+			$("#active_foption .foption").val(trans_create_new_folder);
+		}
+
+		// Cancel clone
+		$("#active_foption .cancel").click( function() {
+			handle_folder.hide('normal');
+			return false;
+		});
+		// Handle key presses
+		$("#active_foption INPUT[name=new_folder]").keypress( function(e) {
+			if( e.keyCode == 13 ) handle_folder.manage();
+			if( e.keyCode == 27 ) handle_folder.hide('normal');
+		});
+		
+		// Proceed with clone
+		$("#active_foption .foption").click( function() {
+			handle_folder.manage();
+			return false;
+		});
+
+	},
+	
+	hide: function(speed, callback) {
+		if( !speed ) speed = 0;
+		$("#active_foption").slideUp(speed, function() {
+			$(this).remove();
+			if( callback ) callback.call();
+		});	},
+	
+	manage: function() {
+		var what = $("#active_foption INPUT[name=what]").val();
+		var file_rel = $("INPUT[name=file_rel]").val();
+		var file_type =  $("INPUT[name=file_type]").val();
+		var params = {
+			new_folder: $("#active_foption INPUT[name=new_folder]").val(),
+			file_type: file_type,
+			file_rel: file_rel,
+			what: what,
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		
+		$("#active_foption").addClass('wait').find(':input').attr('disabled', true);
+		$.post('/pages/fmbrowser/manage/folder/', params, function(r) {
+			$("#active_foption").removeClass('wait').find(':input').attr('disabled', false);
+			if( r.status == 'success' ) {
+				if(what == 'rename') {
+					window.location.href = r.url;
+				} else if( r.url) {
+					var sel1 = '';
+					var sel2 = '';
+					if( file_rel) {
+						sel1 = $("div#fm-"+file_type+"s a[rel="+file_rel+"] ~ ul li.directory");
+						sel2 = "div#fm-"+file_type+"s a[rel="+file_rel+"] ~ ul";
+					} else {
+						sel1 = $("div#fm-"+file_type+"s li.directory");
+						sel2 = "div#fm-"+file_type+"s ul";
+					}
+					if($(sel1).size()) {
+						$(sel1).last().after(r.url);
+					}else {
+						$(sel2).html(r.url);
+					}
+				}
+				handle_folder.hide('normal');
+			} else {
+				alert(r.message);
+			}
+		}, 'json');
+		
+	}
+};
+
+function sourceEditorChange() {
+	sourceEditorChanged = true;
+}
+
+function resetDirty() {
+	var ckinstances = CKEDITOR.instances;
+	for(k in  ckinstances) {
+		ckinstances[k].resetDirty();
+	}
+	sourceEditorChanged = false;
+}
+
+function checkDirty() {
+	var ckinstances = CKEDITOR.instances;
+	var changed = false;
+	for(k in  ckinstances) {
+		if (ckinstances[k].checkDirty()) {
+			changed = true; 
+		}
+	}
+	if(sourceEditorChanged) {
+		changed = true;
+	}
+	if( changed ) {
+		 return window.confirm('{% trans "You will lose the changes made in the editor" %}');
+	} else {
+		return true;
+	}
+}
+
+function showStatus(msg,msgClass,duration){
+	$("#status").removeClass('error').removeClass('success');
+	if(msgClass)
+		$("#status").addClass(msgClass);
+	$("#status").html(msg).fadeIn();
+	if(duration){
+		setTimeout(function(){$("#status").fadeOut(function(){$(this).html('').removeClass(msgClass)});},duration);
+	}
+}
+
+function showResponse(responseText, statusText, xhr, $form) {
+	if ( responseText.status == 'success') {
+		resetDirty();
+	}
+	showStatus('<p>' + responseText.message + '</p>', responseText.status, 5000);
+}
+
+function showWebPageWait() {
+	//verifier si le text a été modifié
+	var ckinstances = CKEDITOR.instances;
+	for(k in  ckinstances) {
+		if (ckinstances[k]) { ckinstances[k].destroy(true); }
+	}
+	$("#rp-content").html("");
+	$("#fm-wait").show();
+}
+
+function hideWebPageWait() {
+	//verifier si le text a été modifié
+	$("#fm-wait").hide();
+}
+
+function folderHandler(dir, template) {
+	showWebPageWait();
+	if(template) {
+		url = "{% url dirlist_folder_templates %}";
+	} else {
+		url = "{% url dirlist_folder_files %}";
+	}
+	$.get(url, { dir: dir }, function(data) {
+		hideWebPageWait();
+		$("#rp-content").html(data);
+		cut_page.show_past();
+		// Show "no webpages" notice?
+		if( $("#manage_webpages .h-list LI.webpage").size() == 0 ) {
+			$("#manage_webpages .h-list LI.no_webpages").slideDown();
+		}
+		$("#fm-wrapper-bloc h1 a").click(function(event){
+			folderHandler($(this).attr('rel'), template);
+		});		
+	});
+}
+
+function templatesFolderHandler(dir) {
+	return folderHandler(dir, true);
+}
+
+function filesFolderHandler(dir) {
+	return folderHandler(dir, false);
+}
+
+function editSourceFile() {
+	file = $("#edit_source").attr('rel');
+	return showWebPageTemplate(file, false);
+}
+
+
+function editWebPageTemplate(file) {
+	return showWebPageTemplate(file, true);
+}
+
+function showWebPageTemplate(file, template) {
+	if(!checkDirty()) {
+		return false;
+	}
+	showWebPageWait();
+	if(template) {
+		url = '{% url edit_template %}'
+	} else {
+		url = '{% url edit_source_file %}'
+	}
+	$.get(url, { file: file }, function(data) {
+		var ckinstances = CKEDITOR.instances;
+		for(k in  ckinstances) {
+			if (ckinstances[k]) { ckinstances[k].destroy(true); }
+		}
+		c = $("#rp-content")
+		$(c).html(data);
+		$("#fm-wrapper-bloc h1 a").click(function(event){
+			folderHandler($(this).attr('rel'), template);
+		});		
+		hideWebPageWait();
+		$('#fm-form').submit(function(){
+			$(this).ajaxSubmit({
+				target: "#status",
+				dataType: 'json',
+				success: showResponse
+			});
+			return false;
+		});				
+	});
+}
+
+
+function editWebPageFile(file) {
+	if(!checkDirty()) {
+		return false;
+	}
+	showWebPageWait(); 
+	$.get('{% url edit_page %}', { file: file }, function(data) {
+		name ='id_body'
+		var ckinstances = CKEDITOR.instances;
+		for(k in  ckinstances) {
+			if (ckinstances[k]) { ckinstances[k].destroy(true); }
+		}
+		c = $("#rp-content")
+		$(c).html(data);
+		$("#fm-wrapper-bloc h1 a").click(function(event){
+			folderHandler($(this).attr('rel'), false);
+		});		
+		hideWebPageWait();
+		$('#fm-form').submit(function(){
+			var what = $("#fm-form #fm-what").val();
+			if( what == 'save') {
+				$(this).ajaxSubmit({
+					target: "#status",
+					dataType: 'json',
+					success: showResponse
+				});
+				return false;
+			} else {
+				return true;
+			}
+		});				
+	});
+}
+
+
+jQuery(document).ready(function() {
+	$('#fm-wrapper').layout({ applyDefaultStyles: true });
+	$('#fm-templates').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_templates %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1, 
+		folderHandler: templatesFolderHandler
+		},
+		editWebPageTemplate
+		);	
+	$('#fm-files').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_files %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1,
+		folderHandler: filesFolderHandler 
+		},
+		editWebPageFile 
+		);
+	// Clone page
+	$("A.clone").livequery('click', function() {
+		zclone.show( $(this).parents('LI.webpage') );
+		return false;
+	});
+	// Delete webpage
+	$("A.delete").livequery('click', function() {
+		delete_page.show( $(this).parents('LI.webpage') );
+		return false;
+	});
+	// Change page label
+	$("A.edit_label").livequery('click', function() {
+		labelEditor.show( $(this).parents('LI.webpage') );
+		return false;
+	});
+
+	// Cut webpage
+	$("A.cut").livequery('click', function() {
+		cut_page.show( $(this).parents('LI.webpage'));
+		return false;
+	});
+
+	// Cut webpage
+	$("li.paste a").livequery('click', function() {
+		cut_page.paste();
+		return false;
+	});
+	
+	$("a.foption").livequery('click', function() {
+		handle_folder.show($(this));
+		return false;
+	});
+
+	$('A[rel="external"]').livequery('click',function(){ 
+		var win=window.open($(this).attr('href'));
+		if(!win){
+			$(this).attr('target','_blank');
+			return true;
+		}else{
+			return false;
+		}
+	});
+
+	$("#manage_webpages a.title").livequery('click',function(event){
+		var rel = $(this).attr('rel');
+		if (rel) {
+			file = $(this).attr('rel') +'/'+ $(this).attr('title') + '.html';
+		} else {
+			file = $(this).attr('title') + '.html';
+		}
+		file_type = $("INPUT[name=file_type]").val();
+		if(file_type == 'template') {
+			showWebPageTemplate(file, true);
+		} else {
+			editWebPageFile(file);
+		}
+	});
+
+	$("#fm-wrapper div.files a").click(function(event){
+		folderHandler($(this).attr('rel'), false);
+	});
+	$("#fm-wrapper div.templates a").click(function(event){
+		folderHandler($(this).attr('rel'), true);
+	});
+	{% if dir %}
+	setTimeout(function(){$('div#fm-{{file_type}}s  a[rel={{dir}}]').trigger('dblclick');}, 800 );
+	{% else %}
+	folderHandler('/', false);
+	{% endif %}
+});
+-->
+</script>
+
+<div class="fm-wrapper" id="fm-wrapper">
+	<div id="left-panel" class="ui-layout-west">
+			{% if pages_manager %}
+			<div class="files fm-header"><a href="#" rel="/">{% trans "Pages" %}</a></div>
+			<div id="fm-files">
+			</div>
+			{% endif %}
+			{% if templates_manager %}
+			<div class="templates fm-header"><a href="#" rel="/">{% trans "Templates" %}</a></div>
+			<div id="fm-templates">
+			</div>
+			{% endif %}
+	</div>
+	<div id="right-panel"  class="ui-layout-center">
+		<div id="fm-wait"><p>{% trans "Loading..."%}</p></div>
+		<div id="fm_main_content">
+			<div id="rp-content"></div>
+		</div>
+	</div>
+</div>	
+<div id="status" class="hidden"></div>
+
+{% endblock %}

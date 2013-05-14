@@ -1,0 +1,13 @@
+{% load i18n %}
+{% trans "Hi" %}
+{% if upload %}{% trans "A new file(s) has been uploaded in folder" %}{% else %}{% trans "File has been updated in folder" %}{% endif %} {{folder.name}} {% trans "by"%} {{user.get_full_name}}:
+
+
+{% for file in files %}
+{{file.name}} ({{file.description}})
+
+{% endfor%}
+
+
+{% trans "To access folder content, click on the button below " %}:
+{{url}}

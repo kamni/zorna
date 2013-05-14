@@ -1,0 +1,98 @@
+{% extends "full.html" %}
+{% load i18n %}
+{% load articles_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/articles.css" />
+{% endblock %}
+
+{% block zorna_full_content %}
+        <div class="inner"> 
+        	<div class="text">
+				<h2 class="title-page">
+				  <span>
+					{% for a in ancestors %}
+					<a href="{{ a.get_url_path }}">{{a.name}}</a>&nbsp;/&nbsp;
+					{% endfor %}
+					{{category.name}}
+					{% if category_archive_date %}
+					[ {{category_archive_date|date:"F Y"}} {% trans "archive"%}]
+					{% endif %}
+				  </span>
+				</h2>                    
+				<div class="clear"></div>
+
+			    {% for story in object_list %}
+				<h2><a href="{% url view_story category.pk story.pk story.slug %}">{{ story.title }}</a></h2>
+				
+				<p>
+					{% if story.image %}
+						<img class="{% cycle 'alignright' 'alignleft' %}" src="{% url get_story_image story.pk %}" style="width:300px; height:auto;">
+				    {% endif %}
+						<a href="{% url view_story category.pk story.pk story.slug %}">{{story.body|striptags|truncatewords_html:50|safe}}</a>
+					
+				</p>
+				<p class="meta">
+					{% get_story_attachments story as attachments %}
+					{% if attachments %}
+						<ul class="short arrow">
+						{% for doc in attachments %}
+							<li><a href="{{doc.file_url}}" title="{{doc.description}}">{{doc.file_name}}</a></li>
+						{% endfor %}
+						</ul>
+					{% endif %}
+				</p>
+				<p class="meta">
+					<span class="left">&mdash; par {{story.get_owner_full_name }},&nbsp;{{ story.time_created }}</span>
+				</p>
+				
+				<div class="clear"></div>
+				{% endfor %}
+
+			    {% if is_paginated  %}
+	            <div class='blog-pagination'>
+					  {% for p in paginator.page_range %}
+						{% if page == p %}
+						<span class="current">{{ p }}</span>
+						{% else %}
+							  <a href="?page={{ p }}" class='page'>{{ p }}</a>
+						{% endif %}
+					  {% endfor %}
+				</div>
+				{% endif %}
+				
+			</div> 
+			
+			<!-- START SIDEBAR -->
+                <div class="sidebar"> 
+				
+					<!-- START ARCHIVES -->
+					<div class="widget">
+						<h2>{% trans "Archives"%}</h2>		
+						
+						<ul>
+							{% for archdate in category_archive_dates %}
+							<li><a href="{{category.get_url_path}}/{{ archdate.date|date:"Y" }}/{{ archdate.date|date:"m" }}/">{{archdate.date|date:"F Y"}}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+					<!-- END ARCHIVES -->
+					                      
+					<!-- CATEGORIES -->
+					<div class="widget">
+						<h2>{% trans "RSS feed"%}</h2>
+						
+						<ul>	
+							<a href="{% url article_category_feed category.pk %}">{% trans "Last entries"%}</a>
+						</ul>
+					</div>
+					<!-- END CATEGORIES -->                
+				
+				</div>                
+                <!-- END SIDEBAR -->                
+    
+    		<div class="clear"></div>
+
+		</div>
+{% endblock %}
+

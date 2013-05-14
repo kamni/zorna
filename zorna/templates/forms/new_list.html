@@ -1,0 +1,73 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+
+{% block iframe_extrahead %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.formset.js"></script>
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+{% block iframe_content %}
+<script type="text/javascript">
+   $(function() {
+	$('.form-row-set').formset({ prefix: '{{ form_set.prefix }}',
+			addText: "{% trans "Add another" %}",
+            deleteText: "{% trans "Remove" %}"
+		});
+   });
+   	parent.updatePathForms("{{forms_path|escapejs}}");
+</script>
+<div class="zbloc">			
+<form id="form_edit_field" action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+  		<table>
+  			<tr>
+  				<td>
+			      {{ field.label_tag }}
+  				</td>
+  				<td>
+					{% if field.errors %}
+		  			<ul class="errorlist">
+		      		{% for error in field.errors %}
+		        		<li>{{ error }}</li>
+		      		{% endfor %}
+		      		</ul>
+		      		{% endif %}
+				  {{ field }}
+  				</td>
+  			</tr>
+  		</table>       	
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+
+  <fieldset class="module aligned">
+  {{ form_set.management_form }}	
+  <div class="form-row">
+    <div>
+  		<table>
+  {%  for form in form_set.forms %}
+  			<tr class="form-row-set">
+  				<td>
+			      {{ form.value.label_tag }}
+			      {{ form.id }}
+				{% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+  				</td>
+  				<td>
+				  {{ form.value }}
+  				</td>
+  			</tr>
+  {% endfor %}
+  		</table>       	
+    </div>
+  </div>  
+  </fieldset>
+
+<input type="submit" value="{% trans "Save" %}" />
+</form>
+</div>
+{% endblock %}

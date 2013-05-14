@@ -1,0 +1,66 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/calendars.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+$(function() {
+});
+</script>
+
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<div class="bloc-calendars">
+  <h1>{% trans "Calendar" %} </h1>
+{% if form.errors %}
+<strong>{{ form.non_field_errors }}</strong>
+{% endif %}
+<div class="calendars" id="calendars">
+<table>
+    <tr>
+    <td class="calendars-one" colspan="2">
+      <div id='calendar-one-header' class='calendar-one-header'>
+        <table>
+          <tr>
+            <td>
+              <span class="calendar-action">
+                <a href="{% url view_calendar %}">&lt;&lt;{% trans "Back to calendars"%}</a>
+              </span>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </td>
+    </tr>
+    <tr>
+    	<td>
+    		<div class="bloc">
+    		{{acl_form}}
+    		</div>
+    	</td>
+    	<td>
+    		<div class="bloc">
+				<h3>{% trans "Help on permissions" %}</h3>
+				{%  for k,v in verbs.items %}
+				<h4>{{ k|capfirst }}</h4>
+				<p>{{v.text}}</p>
+				{% endfor %}
+			</div>    		
+    	</td>
+    </tr>
+</table>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% endblock %}
+

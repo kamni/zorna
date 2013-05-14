@@ -1,0 +1,64 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.autocomplete.js"></script>
+{% endblock %}
+
+
+
+{% block zorna_left_content %}
+
+{% auto_completion_search_users "suggest1" "id_user_pk" %}
+<div class="bloc">
+	<form method="post" action="." autocomplete="off">{% csrf_token %} 
+	<input type="text" id="suggest1" size="40" />
+	<input type="hidden" id="id_user_pk" name="u" value=""/>
+	{% trans "Enter the name of the user you want to add" %}
+<table>
+	<thead>
+		<tr>
+		<th></th>
+		<th>{% trans "Firstname" %}</th>
+		<th>{% trans "Lastname" %}</th>
+		<th></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		{% for user in object_list %}
+		<tr>
+		<td width="1%"><input type="checkbox" name="_selected_action" value="{{ user.id }}" checked="checked" /></td>
+		<td><a href="{% url edit_user user.id %}" title="{% trans "Click to edit user profile" %}">{{ user.first_name }}</a></td>
+		<td>{{ user.last_name }}</td>
+		<td><a href="{% url groups_user user.id %}" title="{% trans "Click to list user groups" %}"><img src="{{ MEDIA_URL }}images/group.gif"></img></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+	<input type="submit" value="{% trans "Update" %}" />
+	</form>
+	
+{% if is_paginated  %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}&g={{ group_id }}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+            {{ page_obj.paginator.count }} Users
+        </span>	
+</p>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "account/admin_right_menu.html" %}
+{% endblock %}
+

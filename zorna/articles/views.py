@@ -1,0 +1,443 @@
+import shutil
+import os
+from datetime import date
+from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import render_to_response
+from django.template import loader, RequestContext
+from django.core.urlresolvers import reverse
+from django.template import Template
+from django.http import HttpResponse, Http404
+from django.forms.formsets import formset_factory
+from django.utils.text import truncate_words
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.core.paginator import Paginator, InvalidPage
+from django.template.loader import render_to_string
+from django.template.defaultfilters import slugify
+
+from zorna.acl.models import get_allowed_objects, get_acl_by_object
+from zorna.site.email import ZornaEmail
+from zorna.articles.models import ArticleCategory, ArticleStory, ArticleAttachments, ArticleComments
+from zorna.articles.forms import ArticleCategoryForm, ArticleStoryForm, ArticleAttachmentsForm, ArticleCommentsForm
+from zorna.utilit import get_upload_articles_images, get_upload_articles_files
+from zorna.account.models import UserAvatar
+
+@login_required()
+def admin_list_categories(request):
+    if request.user.is_superuser:
+        ob_list = ArticleCategory.objects.all()
+        extra_context = {}
+        extra_context['categories_list'] = ob_list
+        context = RequestContext(request)
+        return render_to_response('articles/list_categories.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
+@login_required()
+def admin_add_category(request):
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            form = ArticleCategoryForm(request.POST)
+            if form.is_valid():
+                category = form.save(commit=False)
+                category.owner = request.user
+                category.save()
+                ct = ContentType.objects.get_for_model(category)
+                return HttpResponseRedirect(reverse('acl_groups_object', args=[ct.pk, category.pk]) + '?next=' + reverse('admin_list_categories'))
+                # return HttpResponseRedirect(reverse('admin_list_categories'))
+            else:
+                form = ArticleCategoryForm(request.POST)
+        else:
+            form = ArticleCategoryForm()
+
+        context = RequestContext(request)
+        extra_context = {'form': form, 'curcategory': False}
+        return render_to_response('articles/edit_category.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
+@login_required()
+def admin_edit_category(request, category):
+    if request.user.is_superuser:
+        c = ArticleCategory.objects.get(pk=category)
+        if request.method == 'POST':
+            form = ArticleCategoryForm(request.POST, instance=c)
+            if form.is_valid():
+                form.save()
+                if request.POST.has_key('childs_ids') and request.POST['childs_ids']:
+                    ids = request.POST['childs_ids'].split(',')
+                    last_m = ArticleCategory.objects.get(pk=ids.pop(0))
+                    last_m.move_to(last_m.parent, position='first-child')
+                    for id in ids:
+                        last_m = ArticleCategory.objects.get(pk=last_m.id)
+                        m = ArticleCategory.objects.get(pk=id)
+                        m.move_to(last_m, position='right')
+                        last_m = m
+                return HttpResponseRedirect(reverse('admin_list_categories'))
+        else:
+            form = ArticleCategoryForm(instance=c)
+
+        context = RequestContext(request)
+        extra_context = {'form': form, 'curcategory': c}
+        return render_to_response('articles/edit_category.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
+def admin_order_categories(request):
+    if request.user.is_superuser:
+        fields = request.GET.getlist('category-table-dnd[]')
+        if len(fields):
+            last_m = ArticleCategory.objects.get(pk=fields.pop(0))
+            last_m.move_to(last_m.parent, position='first-child')
+            for id in fields:
+                last_m = ArticleCategory.objects.get(pk=last_m.id)
+                m = ArticleCategory.objects.get(pk=id)
+                m.move_to(last_m, position='right')
+                last_m = m
+            return HttpResponseRedirect(reverse('admin_list_categories'))
+        ob_list = ArticleCategory.objects.filter(parent__isnull=True)
+        extra_context = {}
+        extra_context['categories_list'] = ob_list
+        context = RequestContext(request)
+        return render_to_response('articles/order_categories.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseForbidden()
+
+def view_category(request, category, year=None, month=None):
+    allowed_objects = get_allowed_objects(request.user, ArticleCategory, 'reader')
+    if category.pk in allowed_objects:
+        template = None
+        if category.template == '':
+            anc = category.get_ancestors(True)
+            for parent in anc:
+                if parent.template != '':
+                    template = parent.template
+                    break
+        else:
+            template = category.template
+
+        extra_context = {}
+        extra_context['category'] = category
+        extra_context['zorna_title_page'] = category.name
+        if year and month:
+            story_lists = ArticleStory.objects.filter(categories__exact=category, time_created__year=year, time_created__month=month).order_by('-time_updated')
+            extra_context['category_archive_date'] = date(int(year), int(month), 1)
+        else:
+            extra_context['category_archive_date'] = None
+            story_lists = ArticleStory.objects.filter(categories__exact=category).order_by('-time_updated')
+
+        extra_context['category_archive_dates'] = ArticleStory.objects.filter(categories=category).annotate(Count('title')).dates('time_created', 'month', order='DESC')
+        extra_context['ancestors'] = category.get_ancestors()
+        extra_context['object_list'] = story_lists
+        if template:
+            t = Template(template)
+        else:
+            try:
+                t = loader.get_template('category_default.html')
+            except:
+                t = loader.get_template("articles/category_default.html")
+
+        paginate_by = 10
+        paginator = Paginator(story_lists._clone(), paginate_by, allow_empty_first_page=True)
+        page = request.GET.get('page', 1)
+        try:
+            page_number = int(page)
+        except ValueError:
+            if page == 'last':
+                page_number = paginator.num_pages
+            else:
+                # Page is not 'last', nor can it be converted to an int.
+                raise Http404
+        try:
+            page_obj = paginator.page(page_number)
+        except InvalidPage:
+            raise Http404
+
+        extra_context['paginator'] = paginator
+        extra_context['page_obj'] = page_obj
+
+        c = RequestContext(request, extra_context)
+        return HttpResponse(t.render(c))
+    else:
+        return HttpResponseRedirect('/')
+
+def view_category_archive(request, category, year, month):
+    return view_category(request, category, year, month)
+
+
+def notify_users(request, story, categories, new_article=True):
+    bnotify = request.POST.get('notify_users', 0)
+    users_email = []
+    for cat in categories:
+        if cat.email_notification and (cat.email_notification == 1 or bnotify):
+            acl_users = get_acl_by_object(cat, 'reader')
+            if acl_users:
+                users_email.extend([ u.email for u in  acl_users])
+
+    users_email = list(set(users_email))
+    if users_email:
+        email = ZornaEmail()
+        url = request.build_absolute_uri(reverse('view_story', args=[categories[0].pk, story.pk, story.slug]))
+        ec = {"story": story, 'url': url, 'new_article': new_article, 'user': request.user}
+        body_text = render_to_string('articles/email_notification_text.html', ec)
+        body_html = render_to_string('articles/email_notification_html.html', ec)
+        if new_article:
+            subject = _(u'A new article has been published')
+        else:
+            subject = _(u'An article has been updated')
+        step = getattr(settings, "ZORNA_MAIL_MAXPERPACKET", 25)
+        for n in range(0, len(users_email) / step + 1):
+            email.append(subject, body_text, body_html, settings.DEFAULT_FROM_EMAIL, bcc=users_email[n * step:(n + 1) * step])
+        email.send()
+
+@login_required()
+def add_new_story(request):
+    allowed_objects = get_allowed_objects(request.user, ArticleCategory, 'writer')
+    if len(allowed_objects) == 0:
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        form_story = ArticleStoryForm(request.POST, request.FILES)
+        fa_set = formset_factory(ArticleAttachmentsForm, extra=2)
+        form_attachments_set = fa_set(request.POST, request.FILES)
+        if form_story.is_valid():
+            if request.FILES.has_key('image'):
+                image_file = request.FILES['image']
+                mimetype = image_file.content_type
+            else:
+                image_file = None
+                mimetype = ''
+
+            if image_file:
+                story = form_story.save()
+                upload_path = get_upload_articles_images()
+                path_src = u"%s/%s" % (upload_path, story.image)
+                path_dest = u"%s/%s" % (upload_path, story.pk)
+                os.makedirs(path_dest)
+                shutil.move(path_src, path_dest)
+                s = os.path.splitext(image_file.name)
+                filename = u"%s%s" % (slugify(s[0]), s[1])
+                story.image = "%s/%s" % (story.pk, filename)
+            else:
+                story = form_story.save(commit=False)
+
+            story.mimetype = mimetype
+            story.owner = request.user
+            story.save()
+
+            story.categories.clear()
+            selected_categories = request.POST.getlist('_selected_action')
+            story.categories = selected_categories
+
+            if form_attachments_set.is_valid():
+                for i in range(0, form_attachments_set.total_form_count()):
+                    form = form_attachments_set.forms[i]
+                    try:
+                        file = request.FILES['form-' + str(i) + '-attached_file']
+                        attachment = ArticleAttachments(description=form.cleaned_data['description'], mimetype=file.content_type)
+                        attachment.article = story
+                        attachment.save()
+                        attachment.attached_file.save(file.name, file)
+                    except:
+                        pass
+            if story.categories:
+                notify_users(request, story, story.categories.all(), True)
+
+            return HttpResponseRedirect(reverse('writer_stories_list', args=[]))
+    else:
+        form_story = ArticleStoryForm()
+        fa_set = formset_factory(ArticleAttachmentsForm, extra=2)
+        form_attachments_set = fa_set()
+
+    context = RequestContext(request)
+    extra_context = {'form_story': form_story, 'form_attachments': form_attachments_set}
+    return render_to_response('articles/new_article.html', extra_context, context_instance=context)
+
+@login_required()
+def edit_story(request, story):
+    try:
+        story = ArticleStory.objects.select_related().get(pk=story)
+        if story.owner != request.user:
+            return HttpResponseRedirect('/')
+    except:
+        return HttpResponseRedirect('/')
+
+    attachments = story.articleattachments_set.all()
+    categories = story.categories.all()
+    if request.method == 'POST':
+        if request.POST.has_key('bdelstory'):
+            story.articleattachments_set.all().delete()
+            pk = story.pk
+            story.delete()
+            try:
+                shutil.rmtree(u"%s/%s" % (get_upload_articles_images(), pk))
+            except:
+                pass
+            try:
+                shutil.rmtree(u"%s/%s" % (get_upload_articles_files(), pk))
+            except:
+                pass
+            return HttpResponseRedirect(reverse('writer_stories_list', args=[]))
+
+        form_story = ArticleStoryForm(request.POST, request.FILES, instance=story)
+        if form_story.is_valid():
+            if request.POST.has_key('selected_image'):
+                story.image.delete()
+            if request.FILES.has_key('image'):
+                story.mimetype = request.FILES['image'].content_type
+            else:
+                image_file = None
+
+            story.modifier = request.user
+            story.save()
+
+            story.categories.clear()
+            selected_categories = request.POST.getlist('_selected_action')
+            story.categories = selected_categories
+
+        form_story = ArticleStoryForm(instance=story)
+
+        if len(attachments) < 2:
+            fa_set = formset_factory(ArticleAttachmentsForm, extra=2 - len(attachments))
+            form_attachments_set = fa_set(request.POST, request.FILES)
+            if form_attachments_set.is_valid():
+                for i in range(0, form_attachments_set.total_form_count()):
+                    form = form_attachments_set.forms[i]
+                    try:
+                        file = request.FILES['form-' + str(i) + '-attached_file']
+                        attachment = ArticleAttachments(description=form.cleaned_data['description'], mimetype=file.content_type)
+                        attachment.article = story
+                        attachment.save()
+                        attachment.attached_file.save(file.name, file)
+                    except:
+                        pass
+
+        if request.POST.has_key('selected_attachments'):
+            att = request.POST.getlist('selected_attachments')
+            ArticleAttachments.objects.filter(pk__in=att).delete()
+        attachments = story.articleattachments_set.all()
+        extra = len(attachments)
+        if extra < 2:
+            fa_set = formset_factory(ArticleAttachmentsForm, extra=2 - extra)
+            form_attachments_set = fa_set()
+        else:
+            form_attachments_set = None
+
+        if story.categories:
+            notify_users(request, story, story.categories.all(), False)
+
+
+    else:
+        form_story = ArticleStoryForm(instance=story)
+        extra = len(attachments)
+        if extra < 2:
+            fa_set = formset_factory(ArticleAttachmentsForm, extra=2 - extra)
+            form_attachments_set = fa_set()
+        else:
+            form_attachments_set = None
+
+    context = RequestContext(request)
+    extra_context = {'form_story': form_story,
+                     'story': story,
+                     'form_attachments': form_attachments_set,
+                     'attachments':attachments,
+                     'categories': [c.pk for c in categories],
+                     }
+    return render_to_response('articles/edit_article.html', extra_context, context_instance=context)
+
+def get_story_image(request, story):
+    try:
+        story = ArticleStory.objects.select_related().get(pk=story)
+        allowed_objects = get_allowed_objects(request.user, ArticleCategory, 'reader')
+        al = story.categories.filter(pk__in=allowed_objects)
+        if len(al) == 0:
+            return HttpResponseRedirect('/')
+    except:
+        return HttpResponseRedirect('/')
+
+    try:
+        path = u"%s/%s" % (get_upload_articles_images(), story.image)
+        image_data = open(path, "rb").read()
+        return HttpResponse(image_data, mimetype=story.mimetype)
+    except:
+        return HttpResponseRedirect('/')
+
+def get_story_file(request, file_id):
+    try:
+        file = ArticleAttachments.objects.get(pk=file_id)
+        story = file.article
+        allowed_objects = get_allowed_objects(request.user, ArticleCategory, 'reader')
+        al = story.categories.filter(pk__in=allowed_objects)
+        if len(al) == 0:
+            return HttpResponseForbidden()
+    except:
+        return HttpResponseForbidden()
+
+    path = "%s/%s" % (get_upload_articles_files(), file.attached_file.name)
+    fp = open(path, 'rb')
+    content_type = file.mimetype
+    response = HttpResponse(fp.read(), content_type=content_type)
+    response['Content-Length'] = os.path.getsize(path)
+    response['Content-Disposition'] = "attachment; filename=%s" % os.path.basename(file.attached_file.name)
+    return response
+
+
+def view_story(request, category, story, slug):
+    allowed_objects = get_allowed_objects(request.user, ArticleCategory, 'reader')
+    category = int(category)
+    if category in allowed_objects:
+        category = ArticleCategory.objects.get(pk=category)
+        try:
+            story = ArticleStory.objects.get(pk=story, categories=category)
+        except ArticleStory.DoesNotExist:
+            return HttpResponseForbidden()
+        extra_context = {}
+        extra_context['ancestors'] = category.get_ancestors()
+        extra_context['category'] = category
+        extra_context['story'] = story
+        extra_context['story_comments'] = ArticleComments.objects.filter(article=story)
+        extra_context['zorna_title_page'] = story.title
+        try:
+            avatar_user = UserAvatar.objects.get(user=story.owner)
+        except UserAvatar.DoesNotExist:
+            avatar_user = None
+        extra_context['avatar_user'] = avatar_user
+        extra_context['recent_stories'] = ArticleStory.objects.filter(owner=story.owner, categories__in=allowed_objects).distinct().exclude(pk=story.pk).order_by('-time_created')[0:10]
+        for s in extra_context['recent_stories']:
+            s.category = s.categories.all()[0]
+        context = RequestContext(request)
+        return render_to_response(['story_default.html', 'articles/story_default.html'], extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
+def add_story_comment(request, story):
+    # TODO check if comment is authorized on this story
+    if request.method == 'POST':
+        form = ArticleCommentsForm(request.POST)
+        if form.is_valid():
+            com = form.save(commit=False)
+            if form.cleaned_data['title'] == '':
+                com.title = truncate_words(com.comment, 4, '')
+            com.article_id = story
+            com.owner = request.user
+            com.save()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+@login_required()
+def writer_stories_list(request):
+    ob_list = ArticleStory.objects.filter(owner=request.user).annotate(Count('categories')).order_by('-time_updated')
+    extra_context = {}
+    context = RequestContext(request)
+    if ob_list:
+        extra_context['stories_list'] = ob_list
+        return render_to_response('articles/writer_stories_list.html', extra_context, context_instance=context)
+    else:
+        allowed_objects = get_allowed_objects(request.user, ArticleCategory, 'writer')
+        if len(allowed_objects):
+            extra_context['stories_list'] = None
+            return render_to_response('articles/writer_stories_list.html', extra_context, context_instance=context)
+
+    return HttpResponseForbidden()

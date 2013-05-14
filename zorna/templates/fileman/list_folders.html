@@ -1,0 +1,49 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Folders" %} </h1>
+<table id="folder-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Folders" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for folder in folders_list %}
+    <tr id="node-{{ folder.id }}" class="{% if folder.parent %}child-of-node-{{folder.parent.id}}{% endif %}">
+    <td width="1%"><a href="{% acl_groups_object_url folder%}?next={% url admin_list_folders %}" title="{% trans "Click to edit rights" %}"><img src="{{ MEDIA_URL }}images/access.png" /></a></td>
+    <td><a href="{% url admin_edit_folder folder.id%}" title="{% trans "Click to edit folder" %}">{{folder.name}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#folder-table-dnd").treeTable(
+      { treeColumn : 1, initialState: 'expanded' }
+  );
+});
+</script>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "fileman/right_menu.html" %}
+{% endblock %}
+

@@ -1,0 +1,80 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/forms.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/splitter.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<script type="text/javascript">
+var current_form = 0;
+function loadForms(){
+	var param = "";
+    jQuery.ajax({
+      url: "{% url forms_json_forms workspace.slug %}",
+      cache: false,
+      data: param,
+      dataType: "json",
+      success: function(data) {
+      	$("#forms-left-items").html(data.content);
+      	current_form = data.current_form;
+		$("#forms-table").treeTable({ treeColumn : 1, initialState: 'expanded'  });
+		$("#forms-table-masters").treeTable({ treeColumn : 1, initialState: 'expanded'  });
+		}
+      });
+}
+
+function updatePathForms(path){
+	$(".forms-right-header").html(path);
+	$("#workspace-selector").change(function(){
+		var ws = $("#workspace-selector option:selected").val();
+	    window.location = "/forms/"+ws+"/home/";
+	});
+	
+}
+
+$(document).ready(function() {
+	$("#forms-wrapper").splitter({
+		type: "v",
+		outline: true,
+		minLeft: 0, sizeLeft: 250, minRight: 100,
+		resizeToWidth: true,
+		accessKey: 'I'
+	});
+	loadForms();
+});
+</script>
+
+<div class="bloc-forms">
+<div class="forms-wrapper" id="forms-wrapper">
+	<div id="forms-left-panel">
+		<div class="forms-left-header">
+			<div class="forms_left_header_title">
+				<span class="path-name">{% trans "Forms" %}</span>&nbsp;[ <a id="afieldnew" href="{% url forms_add_form workspace.slug %}"  target="iframe_right_content">{% trans "New" %}</a> ]
+				</div>
+		</div>
+		<div id="forms-left-items" class="forms-left-items">
+
+		</div>
+	</div>
+	<div id="forms-right-panel">
+		<div class="forms-right-header">
+        </div>
+		<div id="forms-right-content">
+		<iframe name="iframe_right_content" id="iframe_right_content" style="width:100%; height:100%;" src="{{url_frame}}">
+		</iframe>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% endblock %}
+

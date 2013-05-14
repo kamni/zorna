@@ -1,0 +1,125 @@
+{% extends "full.html" %}
+{% load i18n %}
+{% load forms_tags %}
+
+{% block zorna_page_content %}
+{% check_form_permission form.slug modifier as modifier %}
+{% check_form_permission form.slug creator as creator %}
+{% check_form_permission form.slug viewer as viewer %}
+<div class="bloc">
+	<h1><a href="{% url form_browse_entries_view form.slug %}">{{ form.name }}</a>
+	{% for parent in parents %}
+	 / <a href="{% url form_browse_entries_view form.slug %}?where={{parent.entry.form.slug}}.{{parent.row.slug}}:{{parent.entry.id}}">{{ parent.row.value }}</a>
+	{% endfor %}
+	</h1>
+	<div>
+		<form id="forms-serach" action="" method="get">
+			<label for="searchbar">
+				<img alt="" src="{{ MEDIA_URL }}images/icon_search.gif" />
+			</label>
+			<input id="searchbar" type="text" value="{{q}}" name="q" size="40"/>
+			<input type="submit" value="{% trans "Search"%}">
+			<input type="hidden" name="ot" value="{{column_order}}" />
+			<input type="hidden" name="o" value="{{column_filter}}" />
+			<input type="hidden" name="where" value="{{where}}" />
+			{% for k,v in filters.iteritems %}
+				{{v}}
+			{% endfor %}
+		</form>
+	</div>
+<table id="field-table-dnd">
+  <thead>
+    <tr>
+	    <th>
+	    	{% if creator %}
+	    		<a href="{% url forms_add_form_entry form.slug %}?where={{where}}"><img src="{{ MEDIA_URL }}images/add.png" /></a>&nbsp;&nbsp;&nbsp;
+	    		<a href="{% url forms_add_formset_entry form.slug %}?where={{where}}"><img src="{{ MEDIA_URL }}images/add_more_rows.png" /></a>
+	    	{% endif %}
+	    </th>
+    {% for field in columns.fields %}
+    	{% if column_filter == field.slug %}
+    	<th class="sorted {% if column_order == "asc"%}descending{%else%}ascending{%endif%}">
+	    <a href="?ot={% if column_order == "asc"%}desc{%else%}asc{%endif%}&o={{field.slug}}&q={{q}}&where={{where}}">{{ field.label }}</a></th>
+    	{% else %}
+    	<th>
+	    <a href="?ot={% if column_order == "asc"%}asc{%else%}desc{%endif%}&o={{field.slug}}&q={{q}}&where={{where}}">{{ field.label }}</a></th>
+    	{% endif %}
+    {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+        {% for row in rows.object_list %}
+        <tr class="{% cycle on,off %}">
+            <td width="1%" nowrap>
+        	{% if modifier  or viewer %}
+            	<a href="{% url forms_form_view_entry row.id %}" title="{% trans "Click to view this entry"%}"><img src="{{ MEDIA_URL }}images/icons/txt.gif"></a>
+            {% endif %}
+        	{% if modifier %}
+            <a href="{% url forms_edit_form_entry row.id %}?where={{where}}" title="{% trans "Click to edit this entry"%}"><img src="{{ MEDIA_URL }}images/edit.gif"></a>
+            {% endif %}
+            </td>
+            {% for c in row.fields %}
+            <td {% if c.type == 'decimal'  or c.type == 'integer' %}style="text-align:right;"{%endif%}>
+            	{% if c.type == 'file' %} {# FILE #}
+	            	<a href="{{ c.value }}">{{ c.value }}</a>
+            	{% else %}
+	            	{% if c.field_bind %}
+	            	<a href="{% url form_browse_entries_view form.slug %}?where={{c.form_bind}}.{{c.field_bind}}:{{c.entry_bind.id}}">
+	            		{{ c.value }}
+	            	</a>
+	            	{% else %}
+		            	{% if c.type == 'checkbox_multiple' or c.type == 'select_multiple' or c.type == 'radio_multiple' %}
+		            		{{ c.value|join:" , " }}
+	            		{% else %}
+		            		{% if c.type == 'decimal' %}
+		            			{{ c.value|floatformat:2 }}
+		            		{%else%}
+			            		{% if c.type == 'checkbox' %}
+				            		{% if c.value %}
+				            			<img src="{{ MEDIA_URL }}images/icons/mini-check.gif" />
+				            		{%endif%}
+			            		{%else%}
+				            		{% if c.type == 'email' %}
+				            			<a href="mailto:{{c.value}}">{{c.value}}</a>
+				            		{%else%}
+				            			{{ c.value }}
+				            		{%endif%}
+			            		{%endif%}
+		            		{%endif%}
+	            		{%endif%}
+	            	{% endif %}
+            	{% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    <tfoot>
+    	<th>&nbsp;
+    	</th>
+    {% for field in columns.fields %}
+    	<th {% if field.type == 'decimal' or field.type == 'integer' %}style="text-align:right;"{%endif%}>
+    	{% if field.total%}
+	    	{{field.total|floatformat:2}}
+    	{% endif %}
+	    </th>
+    {% endfor %}
+    </tfoot>
+  </tbody>
+</table>
+
+{% if paginator.num_pages > 1 %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}&ot={{column_order}}&o={{column_filter}}&q={{q}}&where={{where}}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+             {% trans "Total" %}:{{ rows.paginator.count }}
+        </span>	
+</p>
+{% endif %}
+</div>
+{% endblock %}

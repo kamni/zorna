@@ -1,0 +1,71 @@
+{% load i18n %}
+{% load accounts_tags %}
+
+{% auto_completion_search_users "suggest1" "id_user_pk" %}
+	<form method="post" action="." autocomplete="off">{% csrf_token %} 
+	<input type="hidden" id="id_user_pk" name="u" value=""/>
+  <input type="hidden" name="next" value="{{ next }}" />  
+<table>
+  <tr>
+    <td>
+      <input type="submit" value="{% trans "Update permissions for"%}" />&nbsp;&nbsp;<span class="objectname">{{ object_name }}</span>
+    </td>
+    <td>
+      {% trans "Add user" %}:
+      <input type="text" id="suggest1" size="40" />
+      <p>
+      {% for k,v in verbs.items %}
+      <input type="checkbox" name="_selected_verbs" value="{{ k }}" />{{ k }}
+      {% endfor %}
+      </p>
+    </td>
+  </tr>
+</table>
+
+<table>
+	<thead>
+		<tr>
+		<th></th>
+		<th>Nom</th>
+		<th>Prenom</th>
+    {%  for k,v in verbs.items %}
+    <th>{{ k }}</th>
+    {% endfor %}
+		</tr>
+	</thead>
+	
+	<tbody>
+		{% for user in users_list %}
+		<tr>
+		<td width="1%"><input type="checkbox" name="_selected_action" value="{{ user.id }}" checked="checked"/></td>
+		<td>{{ user.first_name }}</td>
+		<td>{{ user.last_name }}</td>
+    {%  for k,v in user.verbs.items %}
+    <td>
+      <select name="perm_{{ k }}_{{ user.id }}">
+        <option value=""></option>
+        <option value="0" {% if v == 0 %} selected="selected" {% endif %}>Deny</option>
+        <option value="2" {% if v == 2 %} selected="selected" {% endif %}>Allow</option>
+      </select>
+    </td>
+    {% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+	</form>
+	
+{% if is_paginated  %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+            {{ page_obj.paginator.count }} {% trans "Users" %}
+        </span>	
+</p>
+{% endif %}

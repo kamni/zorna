@@ -1,0 +1,26 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta http-equiv="Content-Language" content="fr-FR" /> 
+  <meta name="ROBOTS" content="ALL" /> 
+  <meta name="Copyright" content="This site's design and contents Copyright (c) 2010  ZornaProject" /> 
+  <meta name="keywords" content="Python, Django, framework, open-source, portail, DEVELOPPEMENT, REGIE, FORFAIT, WEB, CONSEIL, REALISATION, CONCEPTION, portail, groupware, workflow, colaboratif, agenda, fichiers partagés, articles, groupes, support technique, assistance" /> 
+  <meta name="description" content="Zorna cms is an open-source project from france. the content management system is based on the web framework django and is written in python." /> 
+  <title>Zorna | {% block zorna_title_page %}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/common.css" />
+  {% block iframe_extrahead %}{% endblock %}  
+</head>
+<body style="font-size:.8em; font-family:Arial,Verdana;  margin:0; padding:0;">
+<table cellspacing="0" cellpadding="0" border="0" style="float: none; margin: 0 auto;">
+	<tr>
+		<td style="width: auto;">
+			<div style="width: 760px;">
+			{% block print_content %}{% endblock %}
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

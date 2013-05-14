@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/community.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_title_page %}
+{% trans "Communities" %}
+{% endblock%}
+
+
+{% block zorna_page_content %}
+<div id="com_wrapper">
+	<div class="com_main_content">
+		<div id="com_content" class="com_content">
+			<div id="com_main">
+				<div id="ucom-list">
+					<ul class="h-list">
+					    <li>
+					    	<div>
+					    		<a class="com-button {{aselected}}" href="{% url list_communities %}">{% trans "Communities" %} ({{communities_count}})</a>
+					    		 | <a class="com-button {{bselected}}" href="{% url user_list_communities %}">{% trans "My communities" %} ({{allowed_communities|length}})</a>
+					    		 | <a class="com-button {{cselected}}" href="{% url last_activity_communities %}">{% trans "Last activity" %}</a>
+					    	</div>
+					    </li>
+					    {% for obj in object_list %}
+					    {% get_users_by_permission obj member as obj_members %}
+					    {% get_users_by_permission obj manage as obj_managers %}
+					    <li class="com-page">
+					    	{% if aselected or bselected %}
+					    	<div style="background-color: #{{obj.bgcolor}};" class="com-square"></div>
+					    	<div class="options">
+					    		<ul>
+					    			{% if obj.status == 1 %}
+									{% if obj.pk not in allowed_communities %}
+						    		<li><a title="{% trans "Join community"%}" href="{% url join_community obj.name|slugify obj.pk %}">{% trans "Join"%}</a></li>
+						    		{% else %}
+						    		<li><a title="{% trans "Leave community"%}" href="{% url leave_community obj.name|slugify obj.pk %}">{% trans "Leave"%}</a></li>
+						    		{% endif %}
+						    		<li><span>{% trans "Public" %}</span></li>
+						    		{%else%}
+						    		<li><span>{% trans "Private" %}</span></li>
+						    		{%endif%}
+					    		</ul>
+					    	</div>
+					    	<div class="options">
+						    	{{obj_members|length}}&nbsp;<span>{% trans "member"%}{{ obj_members|length|pluralize }}</span><br >
+						    	{{obj_managers|length}}&nbsp;<span>{% trans "manager"%}{{ obj_managers|length|pluralize }}</span>
+					    	</div>
+					    	<div class="item">
+						    	<div>
+						    		{% if obj.pk in allowed_communities %}
+						    		<a href="{% url communities_home_page %}?community_id={{obj.pk}}">{{obj.name}}</a>
+						    		{% else %}
+						    		{{obj.name}}
+						    		{% endif %}
+						    	</div>
+						    	<span class="com-desc">{{obj.description}}</span>
+					    	</div>
+					    	{% else %}
+							<time>
+							<span class="com-day">{{obj.time_updated|date:"d"}}</span>
+							<span class="com-month">{{obj.time_updated|date:"M"}}</span>
+							<span class="com-time">{{obj.time_updated|date:"H:i"}}</span>
+							</time>					    	
+					    	<div class="options">
+					    		<ul>
+					    		</ul>
+					    	</div>
+					    	<div class="item">
+						    	<span>
+						    		{{obj.modifier.get_full_name}}
+						    	</span> <span class="com-desc">{%trans " for "%}</span>
+						    	
+						    		{% for com in obj.communities.all %}
+						    			<span style="color: #{{com.bgcolor}};">{{com.name}}</span>
+						    		{% endfor %}
+						    		{% for user in obj.users.all %}
+						    			{{user.get_full_name}}
+						    		{% endfor %}
+						    	
+						    	{% if obj.time_created == obj.time_updated %}
+						    	<span class="com-desc">{% trans "posted a message"%}: </span><br />
+						    	{% else %}
+						    	<span class="com-desc">{% trans "updated the message"%}: </span><br />
+						    	{% endif %}
+						    	<span class="com-desc">"<a href="{% url communities_home_page %}?all_msg=message&message_id={{obj.pk}}">{{obj.message|truncatewords:15}}</a>"</span><br />
+					    	</div>
+					    	{% endif %}
+					    </li>
+					    {% endfor %}
+						{% if is_paginated  %}
+						<li>
+						<p class="paginator">
+								{% for p in paginator.page_range %}
+									{% if page == p %}
+									{{ p }}
+									{% else %}
+						            <a href="?page={{ p }}">{{ p }}</a>
+									{% endif %}
+								{% endfor %}
+						        <span class="current">
+						            {{ page_obj.paginator.count }} {% trans "Communities"%}
+						        </span>	
+						</p>
+						</li>
+						{% endif %}					
+					</ul>
+				</div>
+			</div>	
+			<div id="sidebar_right" class="sidebar_right">
+				{% include sidebar_right_template %}
+			</div>
+		</div>
+	</div>	
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% endblock %}
+

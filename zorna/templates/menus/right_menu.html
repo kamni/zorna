@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load acl_tags %}
+
+<h3>{% trans "Menus" %}</h3>
+<ul>
+  <li><a href="{% url menus_home_view %}" title="{% trans "Menus" %}">{% trans "Menus" %}</a></li>
+  <li><a href="{% url menus_add_item_url %}" title="{% trans "Click to add new menu item" %}">{% trans "Add new url" %}</a></li>
+  <li>{% trans "Add new url to" %}:</li>
+  <ul>
+	  <li><a href="{% url menus_add_item_article_category %}" title="{% trans "Click to add new menu item" %}">{% trans "Category of articles" %}</a></li>
+	  <li><a href="{% url menus_add_item_faq %}" title="{% trans "Click to add new menu item" %}">{% trans "Faq" %}</a></li>
+	  <li><a href="{% url menus_add_item_form_submission %}" title="{% trans "Click to add new menu item" %}">{% trans "Form submission" %}</a></li>
+	  <li><a href="{% url menus_add_item_form_browse %}" title="{% trans "Click to add new menu item" %}">{% trans "Form browse" %}</a></li>
+	  <li><a href="{% url menus_add_item_page_content %}" title="{% trans "Click to add new menu item" %}">{% trans "Page" %}</a></li>
+  </ul>
+</ul>

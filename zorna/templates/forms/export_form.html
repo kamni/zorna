@@ -1,0 +1,74 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+{% block iframe_content %}
+<script type="text/javascript">
+$(function() {
+    $("#id_start_date").datepicker();
+    $("#id_end_date").datepicker();
+});
+</script>
+	
+{% include "forms/form_menu.html"%}
+<div class="zbloc">
+    <form method="post">
+        {% csrf_token %}
+  	<fieldset class="module aligned">
+  	<div class="form-row">
+    	<div>
+  			<table>
+  	{% for field in export_form %}
+  				<tr>
+  					<td>
+			      		{{ field.label_tag }}
+  					</td>
+  					<td>
+						{% if field.errors %}
+			  			<ul class="errorlist">
+			      		{% for error in field.errors %}
+			        		<li>{{ error }}</li>
+			      		{% endfor %}
+			      		</ul>
+			      		{% endif %}
+			      		{% if field.help_text %}
+				  		{{ field.help_text }}
+			      		<br />
+			      		{% endif %}
+				  		{{ field }}
+
+  					</td>
+  				</tr>
+  	{% endfor %}
+  				<tr>
+  					<td>
+  					</td>
+  					<td>
+			      		<input type="submit" class="button default" name="export" value="{% trans "Export CSV" %}" />
+  						{% trans "with separator" %}:
+						<select name="separator">
+							<option value=";">{% trans "Semicolon"%}</option>
+							<option value=",">{% trans "Comma"%}</option>
+							<option value="t">{% trans "Tab"%}</option>
+						 </select>
+						{% trans "or type another caracter" %}:
+						<input type="text" name="oseparator" value="" size="2" maxlength="1"/>
+  					</td>
+  				</tr>  	
+  				<tr>
+  					<td>
+  					</td>
+  					<td>
+        				<input type="submit" class="button default" value="{% trans "View entries" %}" />
+  					</td>
+  				</tr>  			
+  			</table>       	
+    	</div>
+  	</div>  
+  	</fieldset>
+    </form>
+ </div>
+{% endblock %}

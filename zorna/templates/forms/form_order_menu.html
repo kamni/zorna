@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load acl_tags %}
+<table width="100%">
+<tr>
+<td>
+<div class="fields-tools">
+	<ul>
+		<li>
+			<a href="{% url forms_form_order_fields current_form.pk %}"  title="{% trans "Click to set form fields order" %}">
+				<img src="{{ MEDIA_URL }}images/icons/order.png" />{% trans "Form fields" %}</a>
+		</li>
+		<li>
+			<a href="{% url forms_table_order_fields current_form.pk %}"  title="{% trans "Click to set columns table order" %}">
+				<img src="{{ MEDIA_URL }}images/icons/order.png" />{% trans "Table fields" %}</a>
+		</li>
+	</ul>	
+</div>
+</td>
+</tr>
+</table>

@@ -1,0 +1,13 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+{% block zorna_title_page %}
+{{form.name}}
+{% endblock %}
+
+{% block zorna_left_content %}
+<div class="zbloc">
+	<h1>{{ form.name }}</h1>
+	<p>{{ body }}</p>
+</div>
+{% endblock %}

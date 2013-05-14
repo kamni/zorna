@@ -1,0 +1,344 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/calendars.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/syronex-colorpicker.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.timePicker.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/syronex-colorpicker.js"></script>
+<script type="text/javascript">
+var timepicker_opts = {step: {{calendar.time_scale}}};
+var default_meeting_length = {{calendar.default_meeting_length}};
+$(function() {
+    $("#id_start_0").datepicker();
+    $("#id_end_0").datepicker();
+    $("#id_start_1").timePicker(timepicker_opts);
+    $("#id_end_1").timePicker(timepicker_opts);
+    $("#id_end_recurring_period").datepicker();
+    var oldTime = $.timePicker("#id_start_1").getTime();
+    $("#id_start_1").change(function() {
+      if ($("#id_end_1").val()) { // Only update when second input has a value.
+      // Calculate duration.
+      //var duration = ($.timePicker("#id_end_1").getTime() - oldTime);
+      var time = $.timePicker("#id_start_1").getTime();
+      // Calculate and update the time in the second input.
+      $.timePicker("#id_end_1").setTime(new Date(new Date(time.getTime() + default_meeting_length*60000)));
+      oldTime = time;
+      }
+    });
+    // Validate.
+    // TODO this should validate date AND time
+    $("#id_end_1").change(function() {
+      if($.timePicker("#id_start_1").getTime() > $.timePicker(this).getTime()) {
+      $(this).addClass("error");
+      }
+      else {
+      $(this).removeClass("error");
+      }
+    });
+
+  $('#divcolor').colorPicker({      
+    click: function(color){$('#id_bgcolor').val(color);} 
+  });  
+  
+  
+  
+    {% if event and event.rule and not boccurrence %}
+    function confirm_action(action){
+       $("#eventaction").val(action);
+      $("#formevent").submit();      
+    }
+    
+    // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+    $( "#dialog:ui-dialog" ).dialog( "destroy" );
+    var dg_update_option = {
+      resizable: false,
+      autoOpen: false,
+      height:180,
+      width: 600,
+      modal: true,
+      buttons: {
+        "{% trans "Only this instance" %}": function() {
+          $( this ).dialog( "close" );
+          confirm_action('updateevent');
+        },
+        "{% trans "All events in the series" %}": function() {
+          $( this ).dialog( "close" );
+          confirm_action('updateall');
+        },
+        "{% trans "Cancel" %}": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    }
+    
+    $( "#dg-confirm-many" ).dialog(dg_update_option);
+    
+    $( "#updateevent" )
+      .click(function() {
+        $( "#dg-confirm-many" ).dialog( "open" );
+      });
+
+    var dg_delete_option = {
+      resizable: false,
+      autoOpen: false,
+      height:180,
+      width: 600,
+      modal: true,
+      buttons: {
+        "{% trans "Only this instance" %}": function() {
+          $( this ).dialog( "close" );
+          confirm_action('deleteone');
+        },
+        "{% trans "All events in the series" %}": function() {
+          $( this ).dialog( "close" );
+          confirm_action('deleteall');
+        },
+        "{% trans "Cancel" %}": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    }
+
+    $( "#dg-delete-many" ).dialog(dg_delete_option);
+    
+    $( "#deleteevent" )
+      .click(function() {
+        $( "#dg-delete-many" ).dialog( "open" );
+      });
+
+    {% else %}
+    $(".ovalbutton").click(function(){
+       $("#eventaction").val($(this).attr('id'));
+      $("#formevent").submit();
+    });
+    {% endif %}
+  
+    
+          
+});
+</script>
+
+{% endblock %}
+
+
+{% block zorna_full_content %}
+{% if event and event.rule %}
+<div id="dg-confirm-many" title="{% trans "Reccurrent event" %}">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;">
+    </span>
+    {% trans "Would you like to change only this event or all events in the series" %}
+  </p>
+</div>
+
+<div id="dg-delete-many" title="{% trans "Reccurrent event" %}">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;">
+    </span>
+    {% trans "Would you like to delete only this event or all events in the series" %}
+  </p>
+</div>
+{% endif %}
+
+<div class="bloc-calendars">
+  <h1>{% trans "Calendar" %} </h1>
+{% if form.errors %}
+<strong>{{ form.non_field_errors }}</strong>
+{% endif %}
+<div class="calendars" id="calendars">
+<table>
+    <tr>
+    <td class="calendars-one" colspan="2">
+      <div id='calendar-one-header' class='calendar-one-header'>
+        <table>
+          <tr>
+            <td>
+              <span class="calendar-action">
+                <a href="{% url view_calendar %}">&lt;&lt;{% trans "Back to calendars"%}</a>
+              </span>
+            </td>
+            <td>
+              <div class="buttonwrapper">
+              <a class="ovalbutton" id="updateevent" href="#"><span>{% trans "Save" %}</span></a>
+              {%if calendar %}
+              <a class="ovalbutton" id="deleteevent" href="#"><span>{% trans "Delete" %}</span></a>
+              {% endif %}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </td>
+    </tr>
+    <tr>
+      <form action="" id="formevent" method="post">{% csrf_token %}
+      <input type="hidden" value="save" id="eventaction" name="action"/>
+      <td>
+        <fieldset class="module aligned">
+          <div class="form-row">
+            <div>
+            <label for="id_calendar">{% trans "Calendar" %}</label>
+            <select name="calendar_id">
+              {% for cal in calendars %}
+              <option value="{{cal.pk}}" {% if calendar.pk == cal.pk %}selected="selected" {%endif%}>{{cal.calendar.name}}</option>
+              {% endfor %}
+            </select>
+            </div>
+          </div>
+        <div class="form-row">
+          <div>
+          	{% if form.start.errors %}
+            <ul class="errorlist">
+            {% for error in form.start.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.start.label_tag }}
+            {{ form.start }}
+            <br />
+            {{form.start.help_text}}
+          </div>
+        </div>  
+        <div class="form-row">
+          <div>
+          	{% if form.end.errors %}
+            <ul class="errorlist">
+            {% for error in form.end.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.end.label_tag }}
+            {{ form.end }}
+            <br />
+            {{form.end.help_text}}
+          </div>
+        </div>  
+        <div class="form-row">
+          <div>
+          	{% if form.title.errors %}
+            <ul class="errorlist">
+            {% for error in form.title.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            <br />
+            {{form.title.help_text}}
+          </div>
+        </div>  
+        <div class="form-row">
+          <div>
+          	{% if form.description.errors %}
+            <ul class="errorlist">
+            {% for error in form.description.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            <br />
+            {{form.description.help_text}}
+          </div>
+        </div>  
+        </fieldset>
+      </td>
+      <td>
+        <fieldset class="module aligned">
+        {% for field in form_details %}
+        <div class="form-row">
+          <div>
+			{% if field.errors %}
+  			<ul class="errorlist">
+      		{% for error in field.errors %}
+        		<li>{{ error }}</li>
+      		{% endfor %}
+      		</ul>
+      		{% endif %}
+            {{field.help_text}}
+            <br />
+            {{ field.label_tag }}{{ field }}
+            {% if field.html_name == "bgcolor" %}
+            <div id="divcolor"></div>
+            {% endif%}
+          </div>
+        </div>  
+        {% endfor %}
+        </fieldset>
+        {% if not boccurrence %}
+        <fieldset class="module aligned">
+        <div class="form-row">
+          <div>
+          	{% if form.rule.errors %}
+            <ul class="errorlist">
+            {% for error in form.rule.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.rule.label_tag }}
+            {{ form.rule }}
+            <br />
+            {{form.rule.help_text}}
+          </div>
+        </div>  
+        <div class="form-row">
+          <div>
+          	{% if form.interval.errors %}
+            <ul class="errorlist">
+            {% for error in form.interval.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.interval.label_tag }}
+            {{ form.interval }}
+            <br />
+            {{form.interval.help_text}}
+          </div>
+        </div>  
+        <div class="form-row">
+          <div>
+            {{ form.weekdays.label_tag }}
+            <div class="weekdayschoices">
+            {{ form.weekdays }}
+            </div>
+            <br />
+            {{form.weekdays.help_text}}
+          </div>
+        </div>  
+        <div class="form-row">
+          <div>
+          	{% if form.end_recurring_period.errors %}
+            <ul class="errorlist">
+            {% for error in form.end_recurring_period.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {{ form.end_recurring_period.label_tag }}
+            {{ form.end_recurring_period }}
+            <br />
+            {{form.end_recurring_period.help_text}}
+          </div>
+        </div>  
+        </fieldset>
+        {% endif %}
+      </td>
+      </form>
+    </tr>
+</table>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% endblock %}
+

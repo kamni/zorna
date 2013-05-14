@@ -1,0 +1,36 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/facebox.js"></script>
+{% endblock %}
+
+
+{% block iframe_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+	$("select[name='reference']").change(function(){
+		$("INPUT[name={{target}}]").val($(this).find("option:selected").val());
+		$.facebox.close();
+	});
+});
+
+-->
+</script>
+<h2 id="popuptitle">
+	{% trans "Choose a field to reference"%}:
+</h2>
+<div id="popupform">
+	<select name="reference" size="10">
+		{% for form in forms %}
+		<optgroup label="{{form.name}}">
+			{% for field in form.fields.all %}
+			<option value="{{form.slug}}.{{field.slug}}">{{field.slug}}</option>
+			{% endfor %}
+		</optgroup>
+		{% endfor %}
+	</select>
+</div>
+{% endblock %}

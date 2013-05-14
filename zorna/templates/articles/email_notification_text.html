@@ -1,0 +1,9 @@
+{% load i18n %}
+{% trans "Hi" %}
+{% if new_article %}{% trans "A new article has been published" %}{% else %}{% trans "An article has been updated" %}{% endif %} {% trans "by"%} {{user.get_full_name}}:
+
+
+{{story.title}}
+
+{% trans "To read this article, click on the link below " %}:
+{{url}}

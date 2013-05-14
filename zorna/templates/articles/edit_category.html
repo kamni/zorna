@@ -1,0 +1,94 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.tablednd_0_5.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  $("#id_name").keyup(function() { $("#id_slug").val(string_to_slug($("#id_name").val())); });
+
+  $("#category-table-dnd").tableDnD({
+    dragHandle: "dragHandle",
+	onDrop: function(table, row) {
+		// grab the table's rows into an array
+		var a_rows = table.tBodies[0].rows;
+		// establish list variable
+		var childs_ids = '';
+		for (var i=0; i<a_rows.length; i++) {
+			// Add ID of each video
+			childs_ids += a_rows[i].id + '';
+			// Create comma delimited list for Save
+			if(i!=a_rows.length-1) childs_ids += ',';
+		}
+		// Move to hidden form field (list) for submission to database
+		$('#childs_ids').val(childs_ids);
+	}    
+  });
+  $("#category-table-dnd tr").hover(function() {
+          $(this.cells[0]).addClass('showDragHandle');
+    }, function() {
+          $(this.cells[0]).removeClass('showDragHandle');
+  });
+});
+-->
+</script>
+<div class="bloc">
+  {% if curcategory %}
+  <h1>{% trans "Update category" %}:&nbsp;{{ curcategory.name }}</h1>
+  {% else %}
+  <h1>{% trans "Add new category" %}</h1>
+  {% endif %}
+<form action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+		{% if field.errors %}
+		<ul class="errorlist">
+  		{% for error in field.errors %}
+    		<li>{{ error }}</li>
+  		{% endfor %}
+  		</ul>
+  		{% endif %}
+      {{ field.label_tag }}{{ field }}
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+ {% if curcategory and not curcategory.is_leaf_node %}
+ {% trans "Drag and drop  to reorder rows "%}
+ <input type="hidden" id="childs_ids" name="childs_ids" value="" />
+ <table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Childs" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for child in curcategory.get_children %}
+    <tr id="{{child.pk}}">
+     <td  width="1%" class="dragHandle">&nbsp;</td>
+    <td>{{child.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>	
+ {% endif %}
+<input type="submit" value="Submit" />
+</form>
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "articles/right_menu.html" %}
+{% endblock %}

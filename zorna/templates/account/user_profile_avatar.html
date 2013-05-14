@@ -1,0 +1,46 @@
+{% extends "account/user_settings.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+{% endblock %}
+
+{% block main_content %}
+<div>
+  <h3>{% trans "Change your photo" %}</h3>
+</div>
+<div class="squarebox">
+{% if avatar %}
+<img src="/{{ avatar.avatar|thumbnail:"200x150" }}" />
+{% else %}
+<img src="{{ MEDIA_URL }}images/uu-128x128.png" />
+{% endif %}
+</div>
+
+<div id="user-photo" class="settings-content">
+<form enctype="multipart/form-data" method="POST" action="">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in upload_avatar_form %}
+  <div class="form-row">
+    <div>
+		{% if field.errors %}
+		<ul class="errorlist">
+  		{% for error in field.errors %}
+    		<li>{{ error }}</li>
+  		{% endfor %}
+  		</ul>
+  		{% endif %}
+      {{ field.label_tag }}{{ field }}
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+  <div class="form-row">
+    <div>
+    <input type="submit" name="bavatar" value="{% trans "Upload New Image" %}" />&nbsp;&nbsp;
+    <input type="submit" name="bdelavatar" value="{% trans "Delete current image" %}" />
+    </div>
+  </div>  
+</form>
+</div>
+{% endblock %}

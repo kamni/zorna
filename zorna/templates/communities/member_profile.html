@@ -1,0 +1,44 @@
+{% load i18n %}
+{% load accounts_tags %}
+<style type="text/css">
+	.member-avatar {
+		float:left;
+	}
+	.profile-entry { 
+	    font-size: 13px;
+	    margin-left: 146px;
+	    margin-top: 0 !important;
+	    padding: 2px 2px 5px !important;
+	    width: 500px;
+	} 
+	.profile-entry-label {
+	   font-size: 11px;
+	   font-style: italic;
+	   font-weight: bold;
+	}
+	.profile-entry-value {
+	    background-color: #ECEFF5;
+	    margin-top: 2px;
+	    padding: 7px;
+	    margin-bottom:5px;		
+	}
+</style> 
+
+{% get_user_profile member_id as columns, row %}
+<div>
+    {% if avatar_user %}
+      <img src="/{{ avatar_user.avatar|thumbnail:"200x150" }}" class="member-avatar"/>
+    {% else %}
+      <img src="{{ MEDIA_URL }}images/unknown.jpg" class="member-avatar"/>
+    {% endif %}
+    <div class="profile-entry">
+	{% for field in row.fields %}
+      	<div class="profile-entry-label">
+          	<span class="uprofile">{{field.label}}</span>
+      	</div>
+      	<div class="profile-entry-value">
+      		{{field.value}}
+		</div>      
+	{% endfor %}
+    </div>
+</div>	

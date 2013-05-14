@@ -1,0 +1,5 @@
+{% load menus_tags %}
+<li>
+	<a href="{{ menu_item.url }}" {% if menu_item.target_blank %}target="_blank"{% endif %}>{{ menu_item.name }}</a>
+	{% if menu_item.menu_item_children %}{% show_menu menu_item.slug %}{% endif %}
+</li>

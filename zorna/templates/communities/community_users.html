@@ -1,0 +1,52 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+{% endblock %}
+
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{{users_title}}</h1>
+<table>
+	<thead>
+		<tr>
+		<th>Nom</th>
+		<th>Prenom</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for user in object_list %}
+		<tr>
+		<td>{{ user.first_name }}</td>
+		<td>{{ user.last_name }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+	
+{% if is_paginated  %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+            {{ page_obj.paginator.count }} Users
+        </span>	
+</p>
+{% endif %}
+
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "communities/manager_right_menu.html" %}
+{% endblock %}

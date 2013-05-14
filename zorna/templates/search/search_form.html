@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load acl_tags %}
+<div id="search-form">
+<h3>{% trans "SEARCH" %}</h3>
+<form method="get" action=".">
+    <table width="100%">
+        <tr>
+            <td>
+                {{form.q}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="search-input" type="submit" value="{% trans "Search" %}">
+            </td>
+        </tr>
+    </table>
+</form>
+</div>

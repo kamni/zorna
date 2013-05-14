@@ -1,0 +1,71 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/facebox.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/facebox.js"></script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+
+{% block iframe_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  $("#id_name").keyup(function() { $("#id_slug").val(string_to_slug($("#id_name").val())); });
+
+  $("#bdelete").click(function (){
+	var x=window.confirm("{% trans "Are you sur you want to delete this form. All associated data will be deleted!" %}");
+	return x;
+  });
+  $.facebox.settings.loadingImage = '{{ MEDIA_URL }}images/loading.gif';
+  $.facebox.settings.closeImage = '{{ MEDIA_URL }}images/closelabel.png';
+  $('a[rel*=facebox]').facebox();
+});
+
+-->
+</script>
+{% if current_form %}
+{% include "forms/form_menu.html"%}
+{% endif %}		
+<div class="zbloc">
+<form id="form_edit_form" action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+  		<table>
+  			<tr>
+  				<td>
+			      {{ field.label_tag }}
+  				</td>
+  				<td>
+					{% if field.errors %}
+		  			<ul class="errorlist">
+		      		{% for error in field.errors %}
+		        		<li>{{ error }}</li>
+		      		{% endfor %}
+		      		</ul>
+		      		{% endif %}
+		      		{% if field.help_text %}
+			  		{{ field.help_text }}
+		      		<br />
+		      		{% endif %}
+				  {{ field }}
+				  {% if field.html_name == 'bind_to_entry' %}
+				  	<span><a rel="facebox" href="{% url browse_references current_form.workspace.slug %}?target={{field.html_name}}">Browse</a></span>
+				  {% endif %}
+  				</td>
+  			</tr>
+  		</table>       	
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="{% trans "Save" %}" />
+<input type="submit" id="bdelete" name="bdelete" value="{% trans "Delete"%}" />
+</form>
+</div>
+{% endblock %}

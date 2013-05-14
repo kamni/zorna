@@ -1,0 +1,60 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/facebox.css" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}javascript/facebox.js"></script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  $.facebox.settings.loadingImage = '{{ MEDIA_URL }}images/loading.gif';
+  $.facebox.settings.closeImage = '{{ MEDIA_URL }}images/closelabel.png';
+  $('a[rel*=facebox]').facebox();
+});
+-->
+</script>  
+{% endblock %}
+
+
+{% block iframe_content %}
+{% include "forms/form_menu.html"%}
+<div class="zbloc">
+<h1>{% trans "Enter a custom message. When the form is submitted, your users will see this message in the browser."%}</h1>		
+<form id="form_edit_field" action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+  		<table>
+  			<tr>
+  				<td>
+			      {{ field.label_tag }}
+  				</td>
+  				<td>
+					{% if field.errors %}
+		  			<ul class="errorlist">
+		      		{% for error in field.errors %}
+		        		<li>{{ error }}</li>
+		      		{% endfor %}
+		      		</ul>
+		      		{% endif %}
+				  {{ field }}
+				  {% if field.html_name == 'message' %}<br />
+				  	<span><a rel="facebox" href="{% url browse_references_form_fields current_form.pk %}?target={{field.html_name}}">{% trans "Variables" %}</a></span>
+				  {% endif %}
+				  <br />
+				  {% trans "Click on this link to customize message with values the user enters into the form" %}
+  				</td>
+  			</tr>
+  		</table>       	
+    </div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="{% trans "Save" %}" />
+</form>
+</div>
+{% endblock %}

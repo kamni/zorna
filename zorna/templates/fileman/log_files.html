@@ -1,0 +1,30 @@
+{% extends "full.html" %}
+{% load i18n %}
+{% load articles_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+{% endblock %}
+
+
+{% block zorna_page_content %}
+<div class="bloc">
+  <h1>{% trans "Files added" %}</h1>
+<table>
+	<thead>
+		<tr>
+		<td width="1%">&nbsp;</td>
+		<td>{% trans "File" %}</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for file in files %}
+		<tr>
+		<td></td>
+		<td>{{file}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}
+

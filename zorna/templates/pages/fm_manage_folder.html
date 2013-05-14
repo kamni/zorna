@@ -1,0 +1,71 @@
+{% load i18n %}
+
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+<div id="fm_folder_options">
+	<ul class="options">
+		{% if cdir_components %}
+		{% with cdir_components|last as last %}
+		<li><a title="{% trans "Rename this folder"%}"  class="foption rename" href="" folder="{{last.text}}">{% trans "Rename" %}</a></li>
+		{% endwith %}
+		{% endif %}
+		<li><a title="{% trans "Create new folder"%}"  class="foption create" href="">{% trans "New folder" %}</a></li>
+		<li class="paste"></li>
+	</ul>
+</div>	
+<h1 class="{{file_type}}">
+		<a href="#" rel="/">
+		{% if file_type == "template" %}
+			{% trans "Templates" %}
+		{% else %}
+			{% trans "Pages" %}
+		{% endif %}
+		</a>
+	{% for component in cdir_components %}
+			{% if forloop.last %}
+		  &raquo;  <span>{{component.text}}</span>
+		  	{% else %}
+		  &raquo;  <a href="#" rel="{{component.rel}}">{{component.text}}</a>
+		  	{% endif %}
+	{% endfor%}
+</h1>
+<div id="manage_webpages">
+	<ul class="h-list">
+		<li class="notice no_webpages" style="display: none;">{% trans "There are currently no files enabled for editing" %}.</li>
+		{% for f in files %}
+		{% include "pages/fm_folder_item.html"%}
+		{% endfor %}
+	</ul>
+</div>
+<div id="delete_page_template" class="hidden">
+	<p>{% trans "Permanently delete this file from the server? This will remove the file from the server completely!" %}</p>
+	<p>
+		<a class="fm-button accept" href="#">{% trans "Delete" %}</a>
+		<a class="fm-button cancel" href="#">{% trans "Cancel" %}</a>
+	</p>
+</div>
+
+<div id="commom_template" class="hidden">
+	{% csrf_token %}
+	<input type="hidden" name="file_type" value="{{file_type}}" />
+	<input type="hidden" name="file_rel" value="{{cdir}}{% if cdir %}/{% endif%}" />
+</div>
+
+
+<div id="clone_template" class="hidden">
+	<p>{% trans "New Filename" %}
+		<input type="text" class="textfield" size="40" name="new_page" />
+		<input type="button" class="fm-button default clone" value="{% trans "Create New Webpage" %}" />
+		<input type="button" class="fm-button cancel" value="{% trans "Cancel" %}"/>
+	</p>
+</div>
+
+<div id="foption_template" class="hidden">
+	<p>{% trans "Folder" %}
+		<input type="text" class="textfield" size="40" name="new_folder" />
+		<input type="hidden" name="what" value="create" />
+		<input type="button" class="fm-button default foption" value="{% trans "Create new folder"%}" />
+		<input type="button" class="fm-button cancel" value="{% trans "Cancel" %}"/>
+	</p>
+</div>
+
+</div>

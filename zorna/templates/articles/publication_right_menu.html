@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if curstory %}
+<h3>{{ curcategory.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_category curcategory.pk %}" title="{% trans "Click to edit category" %}">{% trans "Edit category" %}</a></li>
+  <li><a href="{% acl_users_object_url curcategory %}?next={% url admin_list_categories %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+  <li><a href="{% acl_groups_object_url curcategory %}?next={% url admin_list_categories %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Stories" %}</h3>
+<ul>
+  <li><a href="{% url writer_stories_list %}" title="{% trans "List of my stories" %}">{% trans "My stories" %}</a></li>
+  <li><a href="{% url add_new_story %}" title="{% trans "Click to begin writing a new story" %}">{% trans "Write new story" %}</a></li>
+</ul>

@@ -1,0 +1,65 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Users  list" %}</h1>
+  <form method="post" action=".">{% csrf_token %} 
+  <input type="text" id="search" name="q" value="{{ search_value }}" size="40" />
+  <input type="submit" value="{% trans "Search" %}" />
+<table>
+	<thead>
+		<tr>
+		<th width="1%">&nbsp;</th>
+		<th width="1%">&nbsp;</th>
+		<th>{% trans "Firstname" %}</th>
+		<th>{% trans "Lastname" %}</th>
+		<th></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		{% for user in object_list %}
+		<tr>
+		<td>
+			{% if user.is_active %}
+				<img title="{% trans "Account active" %}" src="{{ MEDIA_URL }}images/icons/mini-check.gif" />
+			{% else %}
+				<img title="{% trans "Account disabled" %}" src="{{ MEDIA_URL }}images/icons/mini-uncheck.gif" />
+			{% endif %}
+		</td>
+		<td><a href="{% url edit_user user.id %}" title="{% trans "Click to edit user profile" %}"><img src="{{ MEDIA_URL }}images/edit.gif"></img></a></td>
+		<td><a href="{% url edit_user user.id %}" title="{% trans "Click to edit user profile" %}">{{ user.first_name }}</a></td>
+		<td>{{ user.last_name }}</td>
+		<td>
+			{% if request.user.is_superuser %}
+			<a href="{% url groups_user user.id %}" title="{% trans "User's groups" %}"><img src="{{ MEDIA_URL }}images/group.gif"></img></a>
+			{% endif %}
+		</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</form>
+{% if is_paginated  %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+            {{ page_obj.paginator.count }} Users
+        </span>	
+</p>
+{% endif %}
+
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "account/admin_right_menu.html" %}
+{% endblock %}

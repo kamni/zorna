@@ -1,0 +1,9 @@
+{% load i18n %}
+<table>
+	<tr><td>{% trans "Name" %}:</td><td>{{file.file_info.name}}</td></tr>
+	<tr><td>{% trans "Size" %}:</td><td>{{file.file_info.size|filesizeformat}}</td></tr>
+	<tr><td>{% trans "Created" %}:</td><td>{{file.time_created}}</td></tr>
+	<tr><td>{% trans "by" %}:</td><td>{{file.get_owner_full_name}}</td></tr>
+	<tr><td>{% trans "Updated" %}:</td><td>{{file.time_updated}}</td></tr>
+	<tr><td>{% trans "by" %}:</td><td>{{file.get_modifier_full_name}}</td></tr>
+</table>

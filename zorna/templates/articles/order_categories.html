@@ -1,0 +1,50 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.tablednd_0_5.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Order categories" %} </h1>
+<table id="category-table-dnd">
+  <thead>
+  <tbody>
+    {% for category in categories_list %}
+    <tr id="{{ category.id }}">
+	<td  width="1%" class="dragHandle">&nbsp;</td>
+    <td><a href="{% url admin_edit_category category.id%}" title="{% trans "Click to edit articles category" %}">{{category.name}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a class="ovalbutton" id="bupdate_order" href="#"><span>{% trans "Update Order" %}</span></a>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#category-table-dnd").tableDnD({
+    dragHandle: "dragHandle"
+  });
+  $("#category-table-dnd tr").hover(function() {
+          $(this.cells[0]).addClass('showDragHandle');
+    }, function() {
+          $(this.cells[0]).removeClass('showDragHandle');
+  });  
+  $("#bupdate_order").click(function(){
+    window.location.href = "{% url admin_order_categories %}?"+$("#category-table-dnd").tableDnDSerialize();
+  });  
+});
+</script>
+
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "articles/right_menu.html" %}
+{% endblock %}
+

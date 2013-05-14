@@ -1,0 +1,150 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+
+{% block iframe_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+	$(".tabs A").click(function () {
+	    var group = $(this).parents("#tab-group:first");
+	    var tabs = $(group).find("> .tabs");
+	    $(tabs).find("LI").removeClass("tab-focus");
+	    $(this).parent().addClass("tab-focus");
+	    $(group).find("> .tab-panel").hide();
+	    $($(this).attr("href")).show();
+	    return false;
+	});	
+});
+
+-->
+</script>
+{% include "forms/form_panels_menu.html"%}
+<form id="form_edit_field" action="" method="post">{% csrf_token %}
+	<div id="tab-group">
+		<ul class="tabs">
+			<li id="settings_region_tab" class="tab-focus">
+				<a href="#settings_region">{% trans "Settings" %}</a>
+			</li>
+			<li id="header_region_tab" class="">
+				<a href="#header_region">{% trans "Header message" %}</a>
+			</li>
+			<li id="footer_region_tab" class="">
+				<a href="#footer_region">{% trans "Footer message" %}</a>
+			</li>
+		</ul>
+		<div id="settings_region" class="tab-panel tab-focus">
+			<div class="zbloc">
+		  <fieldset class="module aligned">
+		  {% for field in form %}
+		  {% if not field.html_name in "panel_header panel_footer" %}
+		  <div class="form-row">
+		    <div>
+		  		<table>
+		  			<tr>
+		  				<td>
+							<span class="{%if field.field.required %}required{% endif%}">
+					      		{{ field.label_tag }}
+					      	</span>
+		  				</td>
+		  				<td>
+							{% if field.errors %}
+				  			<ul class="errorlist">
+				      		{% for error in field.errors %}
+				        		<li>{{ error }}</li>
+				      		{% endfor %}
+				      		</ul>
+				      		{% endif %}
+				      		{% if field.help_text %}
+					  		{{ field.help_text }}
+				      		<br />
+				      		{% endif %}
+						  {{ field }}
+		  				</td>
+		  			</tr>
+		  		</table>       	
+		    </div>
+		  </div> 
+		  {% endif %}
+		  {% endfor %}
+		  </fieldset>
+		  </div>		
+  		</div>
+		<div id="header_region" class="tab-panel">
+			<div class="zbloc">
+		  <fieldset class="module aligned">
+		  <div class="form-row">
+		    <div>
+		  		<table>
+		  			<tr>
+		  				<td>
+							<span class="{%if form.panel_header.required %}required{% endif%}">
+					      		{{ form.panel_header.label_tag }}
+					      	</span>
+		  				</td>
+		  				<td>
+							{% if form.panel_header.errors %}
+				  			<ul class="errorlist">
+				      		{% for error in form.panel_header.errors %}
+				        		<li>{{ error }}</li>
+				      		{% endfor %}
+				      		</ul>
+				      		{% endif %}
+				      		{% if form.panel_header.help_text %}
+					  		{{ form.panel_header.help_text }}
+				      		<br />
+				      		{% endif %}
+						  {{ form.panel_header }}
+		  				</td>
+		  			</tr>
+		  		</table>       	
+		    </div>
+		  </div> 
+		  </fieldset>
+		  </div>		
+		</div>
+		<div id="footer_region" class="tab-panel">
+			<div class="zbloc">
+		  <fieldset class="module aligned">
+		  <div class="form-row">
+		    <div>
+		  		<table>
+		  			<tr>
+		  				<td>
+							<span class="{%if form.panel_footer.required %}required{% endif%}">
+					      		{{ form.panel_footer.label_tag }}
+					      	</span>
+		  				</td>
+		  				<td>
+							{% if form.panel_footer.errors %}
+				  			<ul class="errorlist">
+				      		{% for error in form.panel_footer.errors %}
+				        		<li>{{ error }}</li>
+				      		{% endfor %}
+				      		</ul>
+				      		{% endif %}
+				      		{% if form.panel_footer.help_text %}
+					  		{{ form.panel_footer.help_text }}
+				      		<br />
+				      		{% endif %}
+						  {{ form.panel_footer }}
+		  				</td>
+		  			</tr>
+		  		</table>       	
+		    </div>
+		  </div> 
+		  </fieldset>
+		  </div>		
+		</div>	</div>	
+<input type="submit" value="{% trans "Save" %}" />
+{% if bdelete %}
+<input type="submit" id="bdelete" name="bdelete" value="{% trans "Delete" %}" />
+{% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,51 @@
+div.login {
+    background: none repeat scroll 0 0 #F6F5F5;
+    border: 1px solid #FFFFFF;
+    box-shadow: 1px 1px 9px #555555;
+    margin: 50px auto;
+    padding: 10px 30px;
+    width: 500px;
+}
+div.login img {
+    float: left;
+    margin: 55px 0 0 40px;
+}
+div.login h1 {
+    color: #550B00;
+    float: right;
+    font-family: "Myriad Pro";
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    width: 240px;
+}
+
+div.login h2 {
+    color: #666666;
+    float: right;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0 0 20px;
+    width: 240px;
+}
+
+div.login form {
+    float: right;
+}
+div.login label {
+    color: #666666;
+    font-family: "Myriad Pro";
+    font-size: 26px;
+}
+div.login input#id_username, input#id_password {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E7E9D9;
+    color: #333333;
+    font-size: 16px;
+    padding: 5px;
+    width: 230px;
+}
+
+form.loginform {
+    width: 240px;
+}

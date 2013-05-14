@@ -1,0 +1,37 @@
+{% load i18n %}
+<li class="webpage">
+<div class="note-view-content">
+	<div class="note-header">
+	<table>
+		<tr>
+			<td>
+				{% if owner %}
+				<div class="note-info"><a class="nedit" note="{{note.pk}}" href="#">{% trans "Edit"%}</a></div>
+				{% endif %}
+				<div class="note-info">{% trans "Created"%}:{{note.time_created}} - {% trans "Updated"%}: {{note.time_updated}}</div>
+				<div class="note-title">{{note.title}}</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="note-files">
+			    	<ul>
+					{% for f in note.attachments %}
+			    		<li><a href="{% url get_note_attachment f.pk %}">{{f.file_name}}</a></li>
+			    	{% endfor %}
+			    	</ul>		
+				</div>
+				<div>
+			    	<ul class="note-tags">
+			    	{% for tag in note.get_tag_list%}
+			    		<li><a href="#" rel="{{category.pk}}/">{{tag}}</a></li>
+			    	{% endfor %}
+			    	</ul>		
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+	<div class="note-content">{{note.content|safe}}</div>
+</div>
+</li>

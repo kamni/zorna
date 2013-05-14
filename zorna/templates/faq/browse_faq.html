@@ -1,0 +1,48 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+{% block zorna_title_page %}
+FAQ {{curcategory.name}}
+{% endblock%}
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/faq.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% if curcategory %}{{curcategory.name}}{% else %}{{curfaq.name}}{% endif %}</h1>
+<div id="faq_main_content">
+  {% if curcategory %}
+    {% for question in curcategory.get_active_questions %}
+    <h2>
+      <span id="{{question.slug}}"></span>
+      {{question.question}}<a class="headerlink" href="#{{question.slug}}">¶</a>
+    </h2>
+    {{question.answer|safe}}
+    {% endfor %}
+  {% else %}
+  <ul>
+    {% for category in categories %}
+    <li>
+      <a href="{{ category.get_url_path }}">{{category.name}}</a>
+      <ul>
+        {% for question in category.get_active_questions %}
+        <li>
+          <a href="{{ category.get_url_path }}#{{question.slug}}">{{question.question}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "faq/user_right_menu.html" %}
+{% endblock %}
+

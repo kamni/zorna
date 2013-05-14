@@ -1,0 +1,187 @@
+{% load i18n %}
+{% load notes_tags %}
+
+<div id="notes-wrapper-bloc" class="notes-wrapper-bloc">
+<h1 class="categories">
+		<a href="#" rel="/" class="npath">
+		{% if note_type == "template" %}
+			{% trans "Templates" %}
+		{% else %}
+			{% trans "Pages" %}
+		{% endif %}
+		</a>
+	{% for c in category_ancestors %}
+		  &raquo;  <a href="#" rel="{{c.pk}}/" class="npath">{{c.name}}</a>
+	{% endfor%}
+		{% if category %}
+		  &raquo;  <span class="nlast">{{category.name}}</span>
+		{% endif %}
+</h1>
+<div id="manage_webpages">
+<form action="{{url_action}}" id="form_edit_note" method="post" enctype="multipart/form-data">{% csrf_token %}
+<input type="hidden" id="id_tags_pk" name="u" value=""/>
+<table width="100%">
+  <tr>
+    <td>
+		<fieldset class="module aligned">
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				  		{{ form_note.category.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form_note.category.errors%}
+				  		<ul class="errorlist">
+				  		{% for error in form_note.category.errors %}
+				    	<li>{{ error }}</li>
+				  		{% endfor %}
+				  		</ul>
+				  		{% endif %}
+					    {{ form_note.category }}
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				  		{{ form_note.title.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form_note.title.errors%}
+				  		<ul class="errorlist">
+				  		{% for error in form_note.title.errors %}
+				    	<li>{{ error }}</li>
+				  		{% endfor %}
+				  		</ul>
+				  		{% endif %}
+					    {{ form_note.title }}
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ form_note.tags.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form_note.tags.errors%}
+				      <ul class="errorlist">
+				      {% for error in form_note.tags.errors %}
+				        <li>{{ error }}</li>
+				      {% endfor %}
+				      </ul>
+				      {% endif %}
+      					{{ form_note.tags }}
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ form_note.content.label_tag }}
+	  				</td>
+	  				<td>
+	  					{% if form_note.content.errors%}
+				      <ul class="errorlist">
+				      {% for error in form_note.content.errors %}
+				        <li>{{ error }}</li>
+				      {% endfor %}
+				      </ul>
+				      {% endif %}
+      					{{ form_note.content }}
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+{% if attachments %}
+  {% for f in attachments %}
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      <label>Attachment</label>
+	  				</td>
+	  				<td>
+				      <div>{{ f.description }}</div>
+				      <div>{{ f.file }}</div>
+				      <div><input type="checkbox" value="{{f.pk}}" name="selected_attachments">Delete this attachment</div>
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+  {% endfor %}
+{% endif %}
+{{ form_attachments.management_form }}
+{%  for form in form_attachments.forms %}
+  {% for field in form %}
+        <div class="form-row">
+	  		<table>
+	  			<tr>
+	  				<td>
+				      {{ field.label_tag }}
+	  				</td>
+	  				<td>
+					{% if field.errors %}
+		  			<ul class="errorlist">
+		      		{% for error in field.errors %}
+		        		<li>{{ error }}</li>
+		      		{% endfor %}
+		      		</ul>
+		      		{% endif %}
+      					{{ field }}
+	  				</td>
+	  			</tr>
+	  		</table>        	
+        </div>
+	{% endfor %}
+{% endfor %}
+		</fieldset>
+    </td>
+    </tr>
+</table>
+<input type="submit" id="bupdnote" name="bupdnote" value="{% trans "Update" %}" />
+<input type="button" id="bdelnote" name="bdelnote" value="{% trans "Delete" %}" />
+</form>
+</div>
+</div>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.form.js"></script>
+<script type="text/javascript">
+function showEditResponse(responseText, statusText, xhr, $form) {
+	showStatus('<p>' + responseText.message + '</p>', responseText.status, 5000);
+	var ckinstances = CKEDITOR.instances;
+	for(k in  ckinstances) {
+		if (ckinstances[k]) { ckinstances[k].destroy(true); }
+	}
+	$("#rp-content").html(responseText.data);
+}
+
+var options = {
+			target: "#status",
+			dataType: 'json',
+			iframe: true,
+			success: showEditResponse
+	};
+	
+	$('#bupdnote').click(function(){
+		options.data = {'bupdnote': 1};
+		for ( instance in CKEDITOR.instances )
+        	CKEDITOR.instances[instance].updateElement();
+		$("#form_edit_note").ajaxSubmit(options);
+		return false;
+	});	
+
+	$('#bdelnote').click(function(){
+		options.data = {'bdelnote': 1};
+		$("#form_edit_note").ajaxSubmit(options);
+		return false;
+	});	
+	{% auto_completion_search_tags_zornanote "id_tags" "id_tags_pk"  %}	
+  	$("#id_tags").multiselect({completions: members_data, enable_new_options: true});
+</script>

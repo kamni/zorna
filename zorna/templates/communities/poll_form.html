@@ -1,0 +1,62 @@
+{% load i18n %}
+{% if form_extra.errors %}
+<strong>{{ form_extra.non_field_errors }}</strong>
+{% endif %}
+  	<fieldset class="module aligned">
+  {% for field in form_extra.hidden_fields %}
+  {{ field }}
+  {% endfor %}
+  {% for field in form_extra.visible_fields %}
+  	<div class="form-row">
+    	<div>
+  			<table>
+  				<tr>
+  					<td>
+			      		{{ field.label_tag }}
+  					</td>
+  					<td class="forms-form-row">
+						{% if field.errors %}
+			  			<ul class="errorlist">
+			      		{% for error in field.errors %}
+			        		<li>{{ error }}</li>
+			      		{% endfor %}
+			      		</ul>
+			      		{% endif %}
+			      		{% if field.help_text %}
+				  		{{ field.help_text }}
+			      		<br />
+			      		{% endif %}
+				  		{{ field }}
+  					</td>
+  				</tr>
+  			</table>       	
+    	</div>
+  	</div>  
+  	{% endfor %}
+  {{ form_extra.poll_form_set.management_form }}	
+  <div class="form-row">
+    <div>
+  		<table>
+  {%  for form in form_extra.poll_form_set.forms %}
+  			<tr class="form-row-set">
+  				<td>
+			      {{ form.choice.label_tag }}
+			      {{ form.id }}
+				{% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+  				</td>
+  				<td>
+				  {{ form.choice }}
+  				</td>
+  			</tr>
+  {% endfor %}
+  		</table>       	
+    </div>
+  </div>  
+  </fieldset>  	
+	<div style="clear:left;">&nbsp;</div>
+<script type="text/javascript">
+	$('.form-row-set').formset({ prefix: '{{ form_extra.poll_form_set.prefix }}',
+			addText: "{% trans "Add another" %}",
+            deleteText: "{% trans "Remove" %}"
+		});
+</script>

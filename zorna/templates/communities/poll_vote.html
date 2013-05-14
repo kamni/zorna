@@ -1,0 +1,39 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/poll.css" />
+<script type="text/javascript">
+$(document).ready(function() {
+	var h = $('#poll{{poll.pk}}').height();
+	$('#polliframe{{poll.pk}}', window.parent.document).height(h+10);
+});
+</script>
+{% endblock %}
+
+{% block iframe_content %}
+<div class="poll">
+<div class='tab_panel sc-container-border sc-theme-boxshadow' id='poll{{poll.pk}}'>
+<h3>{{poll.question}}</h3>
+<form action="" method="post">{% csrf_token %}
+<div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="yXgMY6Xd6wrDpDUDhyNqFjeYXzJowBp4WOdxuWPOq5k=" /></div>
+<ul class='answers'>
+{% for answer in poll.pollcommunitychoice_set.all %}	
+<li>
+<input id="answer_{{answer.pk}}" name="answer" type="radio" value="{{answer.pk}}" />
+<label for="answer_{{answer.pk}}">{{answer.choice}}</label>
+</li>
+{% endfor %}
+</ul>
+<button class='btn_default btn_sm' type='submit'>
+<span><b>Vote</b></span>
+</button>
+
+<div class='bottom_bar sc-comment-bg sc-border-top'>
+<!--<a href="#results" class="tab selected view_results">View Results »</a>-->
+</div>
+</form>
+
+</div>
+</div>
+{% endblock %}

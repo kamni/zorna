@@ -1,0 +1,75 @@
+{% load i18n %}
+
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+		{% if manager %}
+<div id="fm_folder_options">
+	<ul class="options">
+		<li><a title="{% trans "Upload file"%}" class="fupload" href="#">{% trans "Upload file" %}</a></li>
+		{% with cdir_components|last as last %}
+		{% if brename %}
+		<li><a title="{% trans "Rename this folder"%}" class="foption rename" href="#">{% trans "Rename" %}</a></li>
+		{% endif %}
+		<li><a title="{% trans "Create new folder"%}" class="foption create" href="#">{% trans "New folder" %}</a></li>
+		{% if bdelete %}
+		<li><a title="{% trans "Delete this folder"%}" class="foption delete" href="#">{% trans "Delete" %}</a></li>
+		{% endif %}
+		{% endwith %}
+	</ul>
+</div>
+		{% endif %}
+
+<h1 class="hnpath">
+	<a rel="" href="#"><img src="{{ MEDIA_URL }}images/icons/home.png" title="{% trans "Click to display recent files" %}"/></a>
+	{% for component in cdir_components %}
+			{% if forloop.last %}
+		  <span class="nlast">{{component.text}}</span>
+		  	{% else %}
+		  <a href="#" rel="{{component.rel}}/" class="npath">{{component.text}}</a> &raquo;
+		  	{% endif %}
+	{% endfor%}
+</h1>
+	{% if search_tag %}
+		 <span class="raction"><a id="search-tag" href="#" class="util-button delete">{{search_tag}}</a></span>
+	{% endif %}
+<div id="manage_webpages">
+	<ul class="h-list">
+		<li class="notice no_webpages" style="display: none;">{% trans "There are currently no files in this folder" %}.</li>
+		{% for f in files %}
+		{% include folder_item_template %}
+		{% endfor %}
+	</ul>
+</div>
+<div id="delete_page_template" class="hidden">
+	<p>{% trans "Permanently delete this file from the server? This will remove the file from the server completely!" %}</p>
+	<p>
+		<a class="fm-button accept" href="#">{% trans "Delete" %}</a>
+		<a class="fm-button cancel" href="#">{% trans "Cancel" %}</a>
+	</p>
+</div>
+<div id="delete_folder_template" class="hidden">
+	<p>{% trans "Permanently delete this folder from the server? This will remove the folder from the server completely!" %}</p>
+	<p>
+		<a class="fm-button accept" href="#">{% trans "Delete" %}</a>
+		<a class="fm-button cancel" href="#">{% trans "Cancel" %}</a>
+	</p>
+</div>
+
+<div id="commom_template" class="hidden">
+	{% csrf_token %}
+	{% with cdir_components|last as last %}
+	<input type="hidden" name="path_rel" value="{{last.rel}}/" />
+	{% endwith %}
+	<input type="hidden" name="upload_url" value="{% url fm_upload_view %}" />
+</div>
+
+<div id="foption_template" class="hidden">
+	<p>{% trans "Folder" %}
+		<input type="text" class="textfield" size="40" name="new_folder" />
+		<input type="hidden" name="what" value="create" />
+		<input type="button" class="fm-button default foption" value="{% trans "Create new folder"%}" />
+		<input type="button" class="fm-button cancel" value="{% trans "Cancel" %}"/>
+	</p>
+</div>
+
+	
+</div>

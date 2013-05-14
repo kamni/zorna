@@ -1,0 +1,57 @@
+{% extends "communities/home_base.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<script type="text/javascript">
+$(document).ready(function() {
+});
+</script>
+{% endblock %}
+
+
+{% block main_content %}
+<div id="community_title" class="community_title">
+  <h1>{{community_title}}</h1>
+</div>
+<div id="msg_wrapper">
+	  {% for member in com_members.object_list %}
+    <div id="msg_container-{{att.message.id}}" msgid="{{att.message.id}}" class="msg_container">
+    <a href="{% url communities_home_page%}?all_msg=all&from_id={{member.pk}}">	
+    {% if member.avatar_user %}
+      <img src="/{{ member.avatar_user.avatar|thumbnail:"42x42" }}" class="avatar"/>
+    {% else %}
+      <img src="{{ MEDIA_URL }}images/unknown.jpg" class="avatar"/>
+    {% endif %}
+    </a>
+    <div id="member_entry-{{member.pk}}" class="msg_entry">
+			{{member.html}}
+      <div class="msg_entry_footer">
+        <ul>
+          <li><a href="mailto:{{member.email}}">{% trans "Send email" %}</a></li>
+        </ul>
+        <div id="member_entry_wait_{{member.pk}}" class="msg_entry_reply_wait">
+          <img src="{{ MEDIA_URL }}images/ajax_wait.gif" class="ajax_wait"/>
+        </div>
+      </div>
+	
+
+	</div>
+	</div>
+  {% endfor %}
+	{% if paginator.num_pages > 1 %}
+<p class="paginator">
+		{% for p in paginator.page_range %}
+			{% if page == p %}
+			{{ p }}
+			{% else %}
+            <a href="?page={{ p }}">{{ p }}</a>
+			{% endif %}
+		{% endfor %}
+        <span class="current">
+             {% trans "Total" %}:{{ com_members.paginator.count }}
+        </span>	
+</p>
+{% endif %}
+</div>
+{% endblock %}

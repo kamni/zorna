@@ -1,0 +1,60 @@
+{% load i18n %}
+
+<div id="notes-wrapper-bloc" class="notes-wrapper-bloc">
+<div id="notes_folder_options">
+	<ul class="options">
+{% if owner %}
+		{% if category %}
+		<li><a title="{% trans "Add note"%}"  category="{{category.pk}}" class="foption1 add" href="#">{% trans "Add note" %}</a></li>
+		<li><a title="{% trans "Share this category"%}"  class="share" href="{% url notes_share_category category.pk%}?next={% url notes_home_view %}">{% trans "Share" %}</a></li>
+		<li><a title="{% trans "Rename this category"%}"  class="foption2 rename" href="#">{% trans "Rename" %}</a></li>
+		<li><a title="{% trans "Create new category"%}"  class="foption2 create" href="#">{% trans "New category" %}</a></li>
+		{% endif %}
+{% else %}
+		{% if category %}
+		<li class="shared">{% trans "Shared by"%}: {{category.owner.get_full_name}}</li>
+		{% else %}
+		<li><a title="{% trans "Create new category"%}"  class="foption2 create" href="#">{% trans "New category" %}</a></li>
+		{% endif %}
+{% endif %}	
+	</ul>
+</div>
+<h1 class="categories">
+		<a href="#" rel="/" class="npath">
+		{% if note_type == "template" %}
+			{% trans "Templates" %}
+		{% else %}
+			{% trans "Pages" %}
+		{% endif %}
+		</a>
+	{% for c in category_ancestors %}
+		  &raquo;  <a href="#" rel="{{c.pk}}/" class="npath">{{c.name}}</a>
+	{% endfor%}
+		{% if category %}
+		  &raquo;  <span class="nlast">{{category.name}}</span>
+		{% endif %}
+
+	{% if search_tag %}
+		 <span class="raction"><a id="search-tag" rel="{{category.pk}}/" href="#" class="util-button delete">{{search_tag}}</a></span>
+	{% endif %}		  
+		  
+</h1>
+<div id="manage_webpages">
+	<ul class="h-list">
+		<li class="notice no_webpages" style="display: none;">{% trans "There are currently no notes in this category" %}.</li>
+		{% for note in notes %}
+		{% include "notes/note_item.html"%}
+		{% endfor %}
+	</ul>
+</div>
+<div id="foption_template" class="hidden">
+	<p>{% trans "Category" %}
+		{% csrf_token %}
+		<input type="text" class="textfield" size="40" name="new_folder" />
+		<input type="hidden" name="what" value="create" />
+		<input type="hidden" name="category" value="{{category.pk}}" />
+		<input type="button" class="fm-button default foption" value="{% trans "Create new folder"%}" />
+		<input type="button" class="fm-button cancel" value="{% trans "Cancel" %}"/>
+	</p>
+</div>
+</div>

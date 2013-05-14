@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+{% load communities_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/community.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/facebox.css" />
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/menu.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/community.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/facebox.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.menu.js"></script>
+<script type="text/javascript">
+var com_page = {{com_page}};
+var community_id = {{community_id}};
+var all_msg = "{{all_msg}}";
+var search_string = "{{search_string}}";
+var member_id = "{{member_id}}";
+var from_id = "{{from_id}}";
+var message_id = "{{message_id}}";
+var contenttype_id = "{{contenttype_id}}";
+var members_data = {{ members_data|safe }};
+var new_message_text = '{% trans "New messages" %}'
+$(document).ready(function() {
+  var options = { 
+    minWidth: 120, 
+    hoverOpenDelay: 300,
+    arrowSrc: '{{ MEDIA_URL }}images/arrow_right.gif', 
+    copyClassAttr: true, 
+    onClick: function(e, menuItem){
+      // alert('you clicked item "' + jQuery(this).text() + '"');
+    }};
+  $('#com_actions_menu').menu(options); 	
+	
+  //$('.aview-profile').click(function(event){
+  //	display_profile($(this).attr('id'));
+  //});
+	$("#com_selector").change(function(){
+		var cs = $("#com_selector option:selected").val();
+		var p = "community_id="+cs+"&all_msg="+all_msg+"&search_string="+search_string+"&member_id="+member_id+"&from_id="+from_id+"&message_id="+message_id;
+    	window.location = "?"+p;
+	});
+
+  $.facebox.settings.loadingImage = '{{ MEDIA_URL }}images/loading.gif';
+  $.facebox.settings.closeImage = '{{ MEDIA_URL }}images/closelabel.png';
+  $('a[rel*=facebox]').facebox(); 
+  $('#close-search').click(function(event){
+	$("#search-box").val("");
+	$('#com-search').submit();
+	return true;
+  });
+  $('#close-from').click(function(event){
+	$("#from_id").val("");
+	$('#com-search').submit();
+	return true;
+  });});
+</script>
+{% endblock %}
+
+{% block zorna_title_page %}{{zorna_title_page}}{% endblock %}
+
+{% block zorna_page_content %}
+<div id="com_wrapper">
+	<div id="sidebar_left" class="sidebar_left">
+		<div class="user_info">
+			{% if avatar %}
+			<img src="/{{ avatar.avatar|thumbnail:"42x42" }}" />
+			{% else %}
+			<img src="{{ MEDIA_URL }}images/unknown.jpg" />
+			{% endif %}
+			<a href=""><strong>{{request.user.get_full_name}}</strong></a>
+			<a href="{% url user_settings %}" class="small">Edit settings</a>
+		</div>
+		<ol id="com_menu" class="com_menu">
+			<li class="icon messages {%if current_menu == "messages" %}selected{%endif%}">
+				<a href="{% url communities_home_page %}?community_id={{ community_id }}">{% trans "Messages" %}</a>
+			</li>
+			<li class="icon followed {%if current_menu == "followed" %}selected{%endif%}">
+				<a href="{% url communities_home_page %}?all_msg=followed">{% trans "Followed posts" %}</a>
+			</li>
+			<li class="icon tome {%if current_menu == "tome" %}selected{%endif%}">
+				<a href="{% url communities_home_page %}?all_msg=tome">{% trans "Direct to me" %}</a>
+			</li>
+			<li class="icon lastm {%if current_menu == "last" %}selected{%endif%}">
+				<a href="{% url communities_home_page %}?all_msg=last">{% trans "Recent messages" %}</a>
+			</li>
+			<li class="icon members {%if current_menu == "members" %}selected{%endif%}">
+				<a href="{% url communities_home_members %}?community_id={{ community_id }}">{% trans "Members" %} ({{members_count}})</a>
+			</li>
+			<li class="icon files {%if current_menu == "files" %}selected{%endif%}">
+				<a href="{% url communities_home_files %}?community_id={{ community_id }}">{% trans "Files" %}</a>
+			</li>
+			{% for plugin in plugins_menus %}
+			<li class="icon {%if plugin.css_icon %}{{plugin.css_icon}}{%else%}none{%endif%} {%if current_menu == plugin.id %}selected{%endif%}">
+				<a href="{{plugin.url}}?community_id={{ community_id }}">{{plugin.title}}</a>
+			</li>
+			{% endfor %}
+		</ol>
+	</div>
+	<div class="com_main_content">
+	<div id="com_content" class="com_content">
+	<div id="com_main">
+		<div id="com_filter" class="com_filter">
+			<select id="com_selector" name="com_selector">
+				<option value="0">{% trans "All" %}</option>	
+			{% for com in communities %}
+				<option value="{{com.pk}}" {% if current_community.pk == com.pk %}selected="selected"{% endif %}>{{com.name}}</option>	
+			{% endfor %}
+			</select>
+			{% if current_community.manager %}
+			<div id="com_actions_wrapper">
+				<ul id="com_actions_menu">
+					<li>
+						<span>{% trans "Actions" %}...</span>
+						<ul>
+						<li><a href="{% url manage_community_members community_id %}">{% trans "Show members" %}</a></li>
+						<li><a href="{% url manage_community_managers community_id %}">{% trans "Show managers" %}</a></li>
+						<li><a href="{% url invite_community_member community_id %}" rel="facebox">{% trans "Invite..." %}</a></li>
+						</ul>
+					</li>
+				</ul>				
+			</div>
+			{%endif%}
+		</div>
+		{% block main_content %}{% endblock %}
+	</div>
+	<div id="sidebar_right" class="sidebar_right">
+		<div class="com_inner">
+			<div class="com_inner_box">
+				<h3>{% trans "Search" %}</h3>	
+			  <form id="com-search" method="get" action=".">{% csrf_token %}
+			  <input type="hidden" name="community_id" value="{{ community_id }}">
+			  <input type="hidden" name="all_msg" value="{{ all_msg }}">
+			  <input type="text" id="search-box" name="search_string" value="{{search_string}}"/>
+			  <input type="hidden" name="member_id" value="{{ member_id }}">
+			  <input type="hidden" id="from_id" name="from_id" value="{{ from_id }}">
+			  <input type="hidden" name="contenttype_id" value="{{ contenttype_id }}">
+			  <input type="submit" value="{% trans "Search" %}" class="ac-input"/>
+			  </form>
+			</div>
+			{% get_last_communities_attachments current_community 10 as attachments %}
+			{% if attachments %}
+			<div class="com_inner_box">
+				<h3>{% trans "Last files" %}</h3>	
+			  <ul>
+			  {% for att in attachments %}
+			  {% for file in att.files %}
+				    <li>
+				    	<a href="{% url get_file att.message.id file %}"><img class="link_image" src="{{ MEDIA_URL }}images/download-icon.png" /></a>&nbsp;<a href="{% url communities_home_page %}?all_msg=message&message_id={{att.message.pk}}">{{file}}</a>
+			    	</li>
+			  {% endfor %}
+			  {% endfor %}
+			  </ul>
+			</div>
+			{% endif %}
+			{% if plugins %}
+			{% for p in plugins %}
+			<div class="com_inner_box">
+			  {% comment %}{<h1><a href="{% url communities_home_page %}?all_msg=contenttype&contenttype_id={{p.contenttype_id}}">{{p.title}}</a></h1>{% endcomment %}
+			  <h3>{{p.title}}</h3>
+			  {{p.html}}
+			</div>
+			{% endfor %}
+			{% endif %}
+			<div class="com_inner_box">
+			{% include "communities/members_widget.html" %}
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

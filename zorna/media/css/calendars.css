@@ -1,0 +1,143 @@
+@CHARSET "UTF-8";
+
+.calendars > table {
+  width: 100%;
+}
+
+.calendars td {
+  vertical-align: top;
+}
+
+.bloc-calendars {
+  border:#ccc 1px solid;
+  background:#fff;
+  margin:.6em .4em;
+  padding:.6em;
+  overflow:auto;
+}
+
+.bloc-calendars h1 { 
+  font-size: 1.3em; 
+  margin: 0 0; 
+  padding:.2em 1em;
+}
+
+
+.calendars-left {
+  width: 1px;
+  padding: 0 !important;
+  vertical-align:top;
+  padding:.2em .4em;
+  margin:0;
+  border-left:#ccc 1px solid;
+  border-right:#ccc 1px solid;
+  border-bottom:#ccc 1px solid;
+  background:#fff;
+  text-align:left;
+}
+
+.calendars-right {
+  padding: 0 !important;
+  height:100%;
+  width:80%;
+}
+
+.calendars-left-header {
+    background-color: #BBCCFF;
+    height: 31px;
+    padding-top:7px;
+    padding-left:10px;
+}
+
+.calendars-one {
+  padding: 0 !important;
+  height:100%;
+}
+
+.calendar-one-header {
+    background-color: #BBCCFF;
+    height: 31px;
+    padding-top:7px;
+    padding-left:10px;
+}
+
+.calendar-action a {
+  border: 1px solid #BBCCFF;
+  color: #112ABB;
+  font-size: 18px;
+  font-weight: bold;  
+}
+
+.calendar-action a:hover, a:visited, a:link {
+  color:#112ABB;
+}
+
+#id_start_1, #id_end_1 { width:80px;}
+
+
+.weekdayschoices li {
+    border-left: 1px solid #FFF;
+    display: inline;
+    padding: 0 0.75em;
+}    
+
+.weekdayschoices li ul {
+    display: inline;
+    text-decoration:none;    
+}  
+
+.weekdayschoices label {
+    display: inline;
+    width:35px;    
+}  
+
+#shared_calendars {
+    height:105px;
+    overflow-y: auto;
+}
+
+.my_calendars,.shared_calendars{
+    margin-left:10px;
+    margin-top:4px;
+    width:90%;
+    padding: 3px 0px 1px 0px;
+}
+
+.shared_calendar, .my_calendars {
+	width: 90%;
+	overflow: hidden;
+	font-size: 12px;
+	font-family: Arial,sans-serif;
+	text-decoration: none;
+	text-align: left;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	cursor:pointer;
+}
+
+.calshow {
+	background-color: #E6E6E6;
+}
+
+#smallmonth {
+	margin-bottom: 10px;
+}
+
+.lcaltitle {
+	margin: 10px;
+	background-color: #BBCCFF;
+	padding: 5px 0px 5px 5px;
+}
+
+span.event-item {
+    font-weight: bold;    
+}
+
+.cal-settings {
+	float:right;
+    background-image: url("/zmedia/images/icons/settings16.png") !important;
+    background-position: 3px center;
+    background-repeat: no-repeat !important;
+    padding: 5px 0 5px 22px;
+}

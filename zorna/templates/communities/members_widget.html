@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load accounts_tags %}
+  <h3>{% trans "Major contributors" %}</h3>
+	<div class="members-contributors">
+{% for member in contributors %}
+		<div class="member_profile">
+			<a class="aview-profile" id="{{member.user.pk}}" href="{% url communities_home_page%}?all_msg=contributor&member_id={{member.user.pk}}" title="{{member.user.get_full_name}}">
+		{% if  member.avatar %}
+			<img src="/{{ member.avatar.avatar|thumbnail:"42x42" }}" class="avatar"/>
+		{% else %}
+	      	<img src="{{ MEDIA_URL }}images/unknown.jpg" class="uu-avatar"/>
+	    {% endif %}
+	    	</a>
+		</div>
+{% endfor %}
+	</div>		

@@ -1,0 +1,157 @@
+{% extends "communities/home_base.html" %}
+{% load i18n %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.MultiFile.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.multiselect.css" />
+{% for tab in tabs %}
+{% if tab.css_file %}
+<link rel="stylesheet" type="text/css" href="{{tab.css_file}}" />
+{% endif %}
+{% endfor %}
+
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.formset.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.multiselect.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.jeditable.mini.js"></script>
+<script type="text/javascript">
+var jsfollow = '{{jsfollow}}';
+var jsunfollow = '{{jsunfollow}}';
+$(document).ready(function() {
+
+ // toggles the slickbox on clicking the noted link  
+  originalTitle = document.title;
+
+  $([window, document]).blur(function(){
+    windowFocus = false;
+  }).focus(function(){
+    windowFocus = true;
+    document.title = originalTitle;
+  });
+  
+  bind_reply_click();
+
+  $("a[id=msg_more]").click(function(event) {
+    param = "com_page="+com_page+"&community_id="+community_id+"&all_msg="+all_msg;
+    jQuery.ajax({
+      url: "message/check_messages_ajax/",
+      cache: false,
+      data: param,
+      dataType: "json",
+      success: function(data) {
+        jQuery.each(data.html_messages, function(i,item){
+          idElem =  "#msg_container-"+item.id;
+          if(!$(idElem).length) {
+            $("#msg_wrapper").append(item.msg);
+          }
+        });
+        if (typeof data.messages_more != 'undefined') {
+	        com_page = data.com_page;
+	        if( data.messages_more == false )
+	          $("#msg_more").hide();
+        }
+        if(data.html_messages.length) {
+	        $("a[id^=a-]").unbind("click");
+	        $("input[id^=msg_entry_send-]").unbind("click");
+	        bind_reply_click();
+        }
+      }});
+      return false;
+  });
+  
+
+  $("a[id^=follow-]").click(function(event) {
+    param = "message="+$(this).attr('msgid');
+    url = $(this).attr('href');
+    jQuery.ajax({
+      url: url,
+      cache: false,
+      data: param,
+      dataType: "json",
+      success: function(data) {
+        if ( data.error == false ) {
+          var idElem = $("a[id=follow-"+data.msgid+"]");
+          if ( data.follow == true ) {
+            $(idElem).html(jsunfollow);
+            $(idElem).attr('href', 'message/unfollow_message_ajax/')
+          }
+          else {
+            $(idElem).html(jsfollow);
+            $(idElem).attr('href', 'message/follow_message_ajax/')
+          }
+        }
+      }});
+      return false;
+  });
+
+  
+  setTimeout('msgHeartbeat();',30000);
+
+  //On Click Event
+  $("div.msg-tabs li").click(function() {
+
+	$("div.msg-tabs div").removeClass("selected"); 
+    $("div", this).addClass("selected"); //Add "active" class to selected tab
+
+    var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+    loadTabs($(activeTab).attr('id'), community_id);
+    return false;
+  });
+  	$(".com_recipients").multiselect({completions: members_data, enable_new_options: false});
+  	$("div:#div_{{tab}}").addClass("selected"); //Activate first tab
+});
+</script>
+{% endblock %}
+
+
+{% block main_content %}
+		<div class="top">
+			<div class="msg-tabs">
+				<ul>
+					{% for tab in tabs %}
+					<li id="ul_{{tab.id}}">
+						<div id="div_{{tab.id}}" class="msg-tab-entry">
+							<span><a href="#{{tab.id}}"  id="{{tab.id}}" title="{{tab.title}}">{{tab.title}}</a></span>
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="tab_content">
+			 	<form action="" enctype="multipart/form-data" method="post" autocomplete="off">{% csrf_token %}
+			 		<input type="hidden" name="community_id" value="{{ community_id }}">
+			  		<input type="hidden" name="search_string" value="{{ search_string }}">
+			  		<input type="hidden" name="member_id" value="{{ member_id }}">
+			  		<input type="hidden" name="from_id" value="{{ from_id }}">
+			  		<input type="hidden" name="message_id" value="{{ message_id }}">
+			  		<div id="share_post_text" class="share_post_text">
+			  			{{html_form}}
+			  		</div>
+					<input type="submit" value="Submit" />
+				</form>
+			</div>
+		</div>
+		<div id="community_title" class="community_title">
+		{% if search_string != ""  or from_id %}
+		  <span class="raction">
+			 {%if from_id %}
+				<a  id="close-from" class="util-button delete" href="#">{% trans "From"%} {{msg_sender.get_full_name}}</a>
+			 {%endif%}
+			{% if search_string != "" %}
+				<a id="close-search" class="util-button delete" href="#">{{ search_string }}</a>
+			{% endif %}
+		  </span>
+		{% endif %}
+		  <h1>{{community_title}}
+		 </h1>
+		</div>
+		<div id="msg_wrapper">
+		  {% for html in html_messages %}
+		      {{ html.msg|safe }}
+		  {% endfor %}
+		</div>
+		<div class="pagination_wrapper">
+			{% if messages_more %}
+			<div class="pagination"><a id="msg_more"  class="btn_default" href=""><span>{% trans "More" %}...</span></a></div> 
+			{% endif %}
+		</div>
+{% endblock %}

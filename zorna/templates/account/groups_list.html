@@ -1,0 +1,49 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Groups list" %}</h1>
+<table id="group-table-dnd">
+	<thead>
+		<tr>
+		<th>{% trans "Groups" %}</th>
+    <th></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		{% for group in object_list %}
+		<tr id="node-{{ group.id }}" class="{% if group.parent.id > 3 %}child-of-node-{{group.parent.id}}{% endif %}">
+		<td><a href="{% url edit_group group.id %}" title="{% trans "Click to edit group" %}">{{group.name}}</a></td>
+    <td><a href="{% url users_group group.id %}" title="{% trans "Group members" %}"><img src="{{ MEDIA_URL }}images/group.gif"></img></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#group-table-dnd").treeTable(
+		  { treeColumn : 0, initialState: 'expanded' }
+	);
+});
+</script>
+
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "account/admin_right_menu.html" %}
+{% endblock %}

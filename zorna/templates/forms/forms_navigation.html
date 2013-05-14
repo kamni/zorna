@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load mptt_tags %}
+<table id="forms-table">
+	<tbody>
+	{% for form in  forms_list %}
+	<tr id="node-{{ form.pk }}">
+    <td width="1%">&nbsp;</td>
+	<td><a href="{% url forms_form form.pk %}"  target="iframe_right_content"  relx="{{structure.ancestors|join:" / "}}" title="{{form.slug}}">{{form.name}}</a></td>
+	</tr>
+	{% for field in form.zfields %}
+	<tr id="node-{{ form.pk }}-{{field.pk}}" class="child-of-node-{{form.pk}}">
+    <td width="1%">&nbsp;</td>
+	<td><a href="{% url forms_form_edit_field field.pk %}"  target="iframe_right_content"  relx="{{structure.ancestors|join:" / "}}" title="{{field.slug}}">{{field.label}}</a></td>
+	</tr>
+	{% endfor %}
+	{% endfor %}
+	</tbody>
+</table>
+<div class="forms-masters-title">
+	<span>{% trans "Masters" %}</span>
+</div>			
+<table id="forms-table-masters">
+	<tbody>
+	<tr id="node-lists">
+    <td width="1%">&nbsp;</td>
+	<td><a href="{% url forms_lists_list workspace.slug %}"  target="iframe_right_content"  relx="" title="{% trans "Click to list lists" %}">{% trans "Lists" %}</a></td>
+	</tr>
+	{% for list in lists %}
+	<tr id="node-list-{{list.pk}}" class="child-of-node-lists">
+    <td width="1%">&nbsp;</td>
+	<td><a href="{% url forms_edit_list list.pk %}"  target="iframe_right_content"  relx="" title="{{list.description}}">{{list.name}}</a></td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>

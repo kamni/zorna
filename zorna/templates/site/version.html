@@ -1,0 +1,83 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="zbloc">
+<h1>{% trans "Version" %}</h1>
+  <fieldset class="module aligned">
+  	<div class="form-row">
+    	<div>
+  			<table>
+  				<tr>
+  					<td>
+			      		<label>{% trans "ZORNA version"%}</label>
+  					</td>
+  					<td class="forms-form-row">{{zorna_version}}</td>
+  				</tr>
+  			</table>       	
+    	</div>
+  	</div>  
+  	<div class="form-row">
+    	<div>
+  			<table>
+  				<tr>
+  					<td>
+			      		<label>{% trans "DJANGO version"%}</label>
+  					</td>
+  					<td class="forms-form-row">{{django_version}}</td>
+  				</tr>
+  			</table>       	
+    	</div>
+  	</div>  
+  	<div class="form-row">
+    	<div>
+  			<table>
+  				<tr>
+  					<td>
+			      		<label>{% trans "PYTHON version"%}</label>
+  					</td>
+  					<td class="forms-form-row">{{python_version}}</td>
+  				</tr>
+  			</table>       	
+    	</div>
+  	</div>  
+  </fieldset>
+</div>
+<div class="bloc">  
+<h1>META</h1>
+<table>
+	<tbody>
+		{% for k, v in request.META.iteritems %}
+		<tr>
+		<td>{{k}}</td>
+		<td>{{v}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+<div class="bloc">  
+<h1>META</h1>
+<table>
+	<tbody>
+      {% for var in settings.items|dictsort:"0" %}
+        <tr>
+          <td>{{ var.0 }}</td>
+          <td><pre>{{ var.1|pprint }}</pre></td>
+        </tr>
+      {% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "site/admin_right_menu.html" %}
+{% endblock %}

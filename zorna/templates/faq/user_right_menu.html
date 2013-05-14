@@ -1,0 +1,25 @@
+{% load i18n %}
+<h3>{% trans "Faq content"%}</h3>
+{% if curcategory %}
+<ul>
+  <li>
+  <a href="{% url browse_faq curfaq.slug %}">{{curfaq.name}}</a>
+  </li>
+  <li>
+    <a href="{{ curcategory.get_url_path }}">{{curcategory.name}}
+    <ul>
+      {% for question in curcategory.questions %}
+      <li>
+      <a href="{{ curcategory.get_url_path }}#{{question.slug}}">{{question.question}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+</ul>
+{% else %}
+<ul>
+  <li>
+  <a href="{% url browse_faq curfaq.slug %}">{{curfaq.name}}</a>
+  </li>
+</ul>
+{% endif %}

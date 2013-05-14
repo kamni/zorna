@@ -1,0 +1,110 @@
+#wrapper {
+	background-color: #F3F6FA;
+	border-top: #550B00 2px solid;
+	border-bottom: #550B00 2px solid;
+	float: left;
+	width: 100%;
+}
+
+#wmain {
+	float:left;
+	overflow:hidden;
+	width: 650px;
+	background-color: #FFFFFF;
+	border-left: 2px solid #FFFFFF;
+	margin-bottom: 5px;
+}
+
+
+
+.sidebar_left {
+    float: left;
+    font-size: 12px;
+    padding-left: 0;
+    padding-top: 0;
+    width: 220px;
+}
+
+.sidebar_left ol.com_menu {
+    list-style: none outside none;
+    margin: 4px 0 0;
+    padding: 0;
+}
+
+.sidebar_left li.icon {
+    height: 30px
+}
+
+
+.sidebar_left ol.com_menu li.icon a {
+    background-image: url("/zmedia/images/icons/icons.png") !important;
+    background-position: 0 -2500px;
+    background-repeat: no-repeat !important;
+    padding-left: 47px;
+}
+
+.sidebar_left ol.com_menu li.selected {
+    color: #2E2E2E;
+    background-color: #FFFFFF;
+    font-weight: bold;
+}
+
+
+.sidebar_left ol.com_menu li a {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    color: #1C4967;
+    text-decoration: none;
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.5);
+}
+
+.sidebar_left ol.com_menu li a:hover {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 1);
+    text-decoration: none;
+}
+
+
+.sidebar_left ol.com_menu li.messages a {
+    background-position: 18px -1370px !important;
+}
+
+.sidebar_left ol.com_menu li.members a {
+    background-position: 18px -1010px !important;
+}
+
+.sidebar_left ol.com_menu li.files a {
+    background-position: 18px -85px !important;
+}
+
+
+.user_info {
+    overflow: hidden;
+    padding: 10px 10px 5px;
+}
+
+.user_info img {
+	float: left;
+}
+
+.user_info a {
+    display: block;
+    margin-left: 50px;	
+    background-color: inherit;
+    color: #1C4967;
+    text-decoration: none;
+}
+
+.user_info a.small {
+    opacity: 0.5;
+    font-size: 10px;
+}
+
+.squarebox {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #B5B1B1;
+    float: left;
+    margin-right: 10px;
+    padding: 1px;
+}

@@ -1,0 +1,105 @@
+{% load i18n %}
+
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+	<h1 class="file">
+		<a href="#" rel="/">{% trans "Pages" %}</a>
+		{% for component in cdir_components %}
+			{% if forloop.last %}
+		  &raquo;  <span>{{component.text}}</span>
+		  	{% else %}
+		  &raquo;  <a href="#" rel="{{component.rel}}">{{component.text}}</a>
+		  	{% endif %}
+		{% endfor%}
+	</h1>	
+	<div>
+		<div id="webpage_workspace">
+			<form id="fm-form" action="{% url edit_page %}" method="post" >{% csrf_token %}
+			<input type="hidden" value="save" id="fm-what" name="what"/>
+			<input type="hidden" value="{{template_file}}" id="web-file" name="file"/>
+				<div class="tab-group">
+					<ul class="fm-tabs">
+						<li id="content_regions_tabs" class="tab-focus">
+							<a href="#content_regions">{% trans "Content" %}</a>
+						</li>
+						<li id="properties_tabs" class="">
+							<a href="#properties">{% trans "Properties" %}</a>
+						</li>
+					</ul>
+					<div id="content_regions" class="tab-panel tab-focus">
+						{% if form.fields %}
+						<div id="content-toolbar">
+							<ul class="subtabs">
+								{% for field in form %}
+								<li class="{%if forloop.first %}selected{% endif%}">
+									<a class="div" rel="{{forloop.counter0}}" href="#" title="Select this content region">{{field.label}}</a>
+								</li>
+								{% endfor %}
+							</ul>
+							<div style="clear: both;"></div>
+						</div>
+						{% for field in form %}
+						<p id="region_{{forloop.counter0}}" class="region" style="display: {%if forloop.first %}block{%else%}none{% endif%};">
+							{{field}}
+						</p>
+						{% endfor %}
+						{% else %}
+						<div class="no_regions">{% trans "Nothing to edit" %}</div>
+						{% endif %}
+					</div>
+					<div id="properties" class="tab-panel">
+					  {% for field in form_context %}
+					      {{ field.label_tag }}:<br />{{ field }}<br />
+					  {% endfor %}
+					</div>
+				</div>
+				<div class="webpage_options">
+					<p>
+						<a id="publish" class="fm-button accept">{% trans "Save" %}</a>
+						<a id="edit_source" class="fm-button edit" rel="{{template_file}}">{% trans "Edit source" %}</a>
+						<a id="preview" class="fm-button preview">{% trans "Preview" %}</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	$("#content-toolbar A").click( function() {
+		$("#content-toolbar A").parent().removeClass('selected');
+		$(".region").hide();
+		$(this).parent().addClass('selected');
+		$("#region_" + $(this).attr('rel')).show();
+		return false;
+	});
+	$(".fm-tabs A").click(function () {
+	    var group = $(this).parents(".tab-group:first");
+	    var tabs = $(group).find("> .fm-tabs");
+	    $(tabs).find("LI").removeClass("tab-focus");
+	    $(this).parent().addClass("tab-focus");
+	    $(group).find("> .tab-panel").hide();
+	    $($(this).attr("href")).show();
+	    return false;
+	});	
+	$("#edit_source").click(function () {
+		return editSourceFile();
+	});
+	$("#publish").click(function () {
+		var ckinstances = CKEDITOR.instances;
+		for(k in  ckinstances) {
+			if (ckinstances[k]) { $('#'+k).val(ckinstances[k].getData());}
+		}
+		$("#fm-what").val('save');
+		$('#fm-form').submit();
+	});
+	$("#preview").click(function () {
+		var ckinstances = CKEDITOR.instances;
+		for(k in  ckinstances) {
+			if (ckinstances[k]) { $('#'+k).val(ckinstances[k].getData());}
+		}
+		$("#fm-what").val('preview');
+		$("#fm-form").attr('target', '_blank');
+		$('#fm-form').submit();
+	});
+-->
+</script>

@@ -1,0 +1,65 @@
+{% load i18n %}
+{% load acl_tags %}
+{% load zorna_tags %}
+<div id="header" class="header">
+	<div>
+	{% if user.is_authenticated %}
+  <ul id="zorna-menu-user">
+    <li>
+          {{ user.first_name }} {{ user.last_name }}
+    </li>
+    <li>
+          <a href="{% url user_logout %}">{% trans "Log out" %}</a>
+    </li>
+    <li>  
+      <a href="">{% trans "User" %}</a>
+      <ul>
+        {% get_user_menus as user_menus %}
+        {% for item in user_menus %}
+        <li><a href="{{item.url}}">{{item.text}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% get_administrator_menus as user_menus %}
+    {% if user_menus %}    
+    <li>  
+      <a href="">{% trans "Administration" %}</a>
+      <ul>
+        {% for item in user_menus %}
+        <li><a href="{{item.url}}">{{item.text}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endif %}    
+  </ul>
+	{% else %}
+	<a href="{% url user_login %}">{% trans "Log in" %}</a>
+	{% if ZORNA_REGISTRATION %}
+	<a href="{% url user_register %}">{% trans "Register" %}</a>
+	{% endif %}
+	{% endif %}
+	</div>
+	<h1><a href="/"><img src="{{ MEDIA_URL }}images/hdr_logo.jpg" /></a>Welcome to ZORNA Portal</h1>
+</div>
+
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  var options = { 
+    minWidth: 120, 
+    hoverOpenDelay: 300,
+    arrowSrc: '{{ MEDIA_URL }}images/arrow_right.gif', 
+    copyClassAttr: true, 
+    onClick: function(e, menuItem){
+      // alert('you clicked item "' + jQuery(this).text() + '"');
+    }};
+  
+
+  jQuery('#zorna-menu-user').menu(options);
+
+  //jQuery('#zorna-menu-root').css('position', 'absolute').css('top', '0px').css('left', '0px');
+});
+
+-->
+</script>

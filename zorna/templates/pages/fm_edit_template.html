@@ -1,0 +1,58 @@
+{% load i18n %}
+
+<div id="fm-wrapper-bloc" class="fm-wrapper-bloc">
+    <style type=text/css>
+      .CodeMirror {
+        float: left;
+        border: 1px solid black;
+        width:100%;
+        font-size: 10pt;
+      }
+    </style>
+	
+	<h1  class="{% if template %}template{% else %}file{% endif %}">
+		<a href="#" rel="/">{% if template %}{% trans "Templates" %}{% else %}{% trans "Pages" %}{% endif%}</a>
+		{% for component in cdir_components %}
+			{% if forloop.last %}
+		  &raquo;  <span>{{component.text}}</span>
+		  	{% else %}
+		  &raquo;  <a href="#" rel="{{component.rel}}">{{component.text}}</a>
+		  	{% endif %}
+		{% endfor%}
+	</h1>	
+	<div class="zbloc">
+		<form id="fm-form" action="{{url_action}}" method="post">{% csrf_token %}
+			<input type="hidden" value="{{template_file}}" id="web-file" name="file"/>
+			<textarea id="id_body" name="body">{{text}}</textarea>
+		</form>
+	</div>
+	<div class="webpage_options">
+		<p>
+			<a id="publish" class="fm-button accept">{% trans "Save" %}</a>
+			{% if not template %}
+			<a id="cancel" class="fm-button cancel">{% trans "Cancel" %}</a>
+			{% endif %}
+		</p>
+	</div>
+	
+<script type="text/javascript">
+<!--
+sourceEditor = CodeMirror.fromTextArea(document.getElementById('id_body'), {
+		mode: 'text/html',
+		lineNumbers: true,
+		indentUnit: 4,
+		onChange: sourceEditorChange
+});
+$("#publish").click(function(){
+	$('#id_body').val(sourceEditor.getValue());
+	$('#fm-form').submit();
+});
+
+$("#cancel").click(function(){
+	file = $('#web-file').val();
+	console.log('file=' + file);
+	return editWebPageFile(file);
+});
+-->
+</script>
+</div>

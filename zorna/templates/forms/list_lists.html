@@ -1,0 +1,59 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+{% block iframe_content %}
+<script type="text/javascript">
+$(document).ready(function() {
+	{% if load_navigation %}
+	parent.loadForms();
+	{% endif %}		
+	parent.updatePathForms("{{forms_path|escapejs}}");
+});
+</script>
+<table width="100%">
+<tr>
+<td>
+<div class="fields-tools">
+	<ul>
+		<li>	
+			<a href="{% url forms_add_list workspace.slug %}" title="{% trans "Click to add new list" %}"><span>{% trans "New list" %}</span></a>
+		</li>
+	</ul>	
+</div>
+</td>
+</tr>
+</table>
+
+<div class="bloc">
+<table>
+  <thead>
+    <tr>
+    <th width="1%"></th>
+    <th>{% trans "Name" %}</th>
+    <th>{% trans "Description" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for list in lists %}
+    <tr>
+    <td>
+    	<input class="check-box-list" type="checkbox" name="_selected_action" value="{{note.pk}}"/>
+    </td>
+    <td>
+      <a href="{% url forms_edit_list list.pk %}">
+      	{{list.name}}
+      </a>
+    </td>
+    <td>
+    	{{list.description}}
+    </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

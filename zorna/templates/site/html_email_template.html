@@ -1,0 +1,47 @@
+{% load i18n %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv= "Content-Type" content= "text/html; charset= utf-8">
+<style type="text/css">
+	a:active{
+		color:white;
+	}
+	a:visited span {
+		color:white;
+	}
+	a span { 
+		color:white !IMPORTANT;white-space: nowrap;
+	}
+</style>
+</head>
+<body>
+<table cellspacing= "0" cellpadding= "0" style="width:600px;border:1px solid #cccccc;border-collapse:collapse;">
+<tr>
+	<td style= "background:#550B00;">
+		<span style= "background:#550B00;font-size:12px;text-align:center;display:block;padding:4px 0px;">
+			<p id= "btn" style="display:block;margin: 5px;height:100%;width:260px;color:white;text-decoration:=none;font-size:20px;min-height:0%;font-family:tahoma;font-weight:bolder;">
+				&nbsp;&nbsp;&nbsp;&nbsp;ZORNA&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+		</span>
+	</td>
+</tr>
+<tr>
+	<td valign= "top" style= "padding:16px">
+		{{body}}
+	</td>
+</tr>
+<tr>
+	<td valign= "top" style= "padding:16px;font:11px tahoma,verdana,sans-serif;">
+				{% trans "Regards" %},<br><br>
+				{% trans "The ZORNA Portal Team" %}<br>
+				<br>
+	</td>
+</tr>
+
+</table>
+<br>
+<div style= "font:11px tahoma,verdana,sans-serif;color:#cccccc">
+</div>
+</body>
+</html>

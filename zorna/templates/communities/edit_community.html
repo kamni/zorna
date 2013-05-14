@@ -1,0 +1,73 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/syronex-colorpicker.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/syronex-colorpicker.js"></script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function() {
+  $('#test').colorPicker({      
+    click: function(color){$('#id_bgcolor').val(color);} 
+  });  
+});
+-->
+</script>
+
+<div class="zbloc">
+  {% if curcommunity %}
+  <h1>{% trans "Update community" %}:&nbsp;{{ curcommunity.name }}</h1>
+  {% else %}
+  <h1>{% trans "Add new community" %}</h1>
+  {% endif %}
+<form action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+		<div>
+			<table>
+				<tr>
+					<td>
+						<span class="{%if field.field.required %}required{% endif%}">
+				      		{{ field.label_tag }}
+				      	</span>
+					</td>
+					<td>
+						{% if field.errors %}
+			  			<ul class="errorlist">
+			      		{% for error in field.errors %}
+			        		<li>{{ error }}</li>
+			      		{% endfor %}
+			      		</ul>
+			      		{% endif %}
+			      		{% if field.help_text %}
+				  		{{ field.help_text }}
+			      		<br />
+			      		{% endif %}
+					  {{ field }}
+				      {% if forloop.last %}
+				        <div id="test"></div>
+				      {% endif %}
+					</td>
+				</tr>
+			</table>       	
+		</div>
+  </div>  
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="Submit" />
+</form>
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "communities/admin_right_menu.html" %}
+{% endblock %}

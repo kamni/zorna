@@ -1,0 +1,59 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.tablednd_0_5.js"></script>
+{% endblock %}
+
+
+{% block iframe_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  $("#field-table-dnd").tableDnD({
+    dragHandle: "dragHandle"
+  });
+  $("#field-table-dnd tr").hover(function() {
+          $(this.cells[0]).addClass('showDragHandle');
+    }, function() {
+          $(this.cells[0]).removeClass('showDragHandle');
+  });
+  
+  $("#bupdate_order").click(function(){
+    var params = $('[name="fdisp[]"]').serialize();
+    params += '&' + $('[name="fsort"]').serialize();
+    window.location.href = "{% url forms_table_order_fields current_form.pk %}?"+$("#field-table-dnd").tableDnDSerialize()+'&'+params;
+  });
+});
+
+-->
+</script>
+{% include "forms/form_order_menu.html"%}
+<div class="bloc">
+<h1>{% trans "Table order fields" %}</h1>			
+<table id="field-table-dnd">
+  <thead>
+    <tr>
+    <th></th>
+    <th>{% trans "Form fields" %}</th>
+    <th>{% trans "Fields to display" %}</th>
+    <th>{% trans "Sort by default on" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for field in fields %}
+    <tr id="{{field.pk}}">
+     <td  width="1%" class="dragHandle">&nbsp;</td>
+    <td><a href="{% url forms_form_edit_field field.pk %}">{{field.label}}</a></td>
+    <td><input type="checkbox" name="fdisp[]"  value="{{field.pk}}" {% if field.visible_in_list %}checked="checked"{% endif%} /></td>
+    <td><input type="radio" name="fsort" value="{{field.pk}}" {% if field.for_sort %}checked="checked"{% endif%} /></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a class="ovalbutton" id="bupdate_order" href="#"><span>{% trans "Update Order" %}</span></a>
+</div>
+</div>
+{% endblock %}

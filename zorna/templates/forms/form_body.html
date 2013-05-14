@@ -1,0 +1,62 @@
+{% load i18n %}
+{% load forms_tags %}
+<div id="form-container" class="">
+	{% if not form_design %}
+	<form id="form_edit_entry" method="post"{% if form_for_form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+	{% csrf_token %}
+	<input type="hidden" name="REMOTE_ADDR" value="{{request.META.REMOTE_ADDR}}" />
+	<input type="hidden" name="where" value="{{where}}" />
+	{% for field in form_for_form.hidden_fields %}
+	{{ field }}
+	{% endfor %}
+	{% endif %}
+	<div id="form-header">
+		{% if form.description %}
+		<p>{{ form.description|safe }}</p>
+		{% endif %}
+		{% if form_for_form.errors %}
+		<strong>{{ form_for_form.non_field_errors }}</strong>
+		{% endif %}
+	</div>
+	<div id="c-form" class="">
+		{% for panel in form.formsformpanel_set.all %}
+		{% get_panel_fields form_for_form panel.name as fields %}
+			<div class="f-panel {%if panel.css_class%}{{panel.css_class}}{%endif%}" name="{{panel.name}}" style="{%if panel.width%}width: {{panel.width}};{%endif%}{%if panel.heigth%} heigth: {{panel.heigth}};{%endif%}{%if panel.margin%} margin: {{panel.margin}};{%endif%}">
+				{% if panel.label|length %}
+				<div class="h-panel">
+					<span class="h-panel-title">{{panel.label}}&nbsp;</span>
+				</div>
+				{% endif %}
+				{% if panel.panel_header %}
+				<div class="h-panel-header">
+					<span class="panel-header">{{panel.panel_header|safe}}</span>
+				</div>
+				{% endif %}
+				{% for field in fields %}
+					{% include "forms/form_body_control.html"%}
+				{% endfor %}
+				{% if panel.panel_footer %}
+				<div class="h-panel-footer">
+					<span class="panel-footer">{{panel.panel_footer|safe}}</span>
+				</div>
+				{% endif %}
+			</div>
+		{% endfor %}		
+		{% get_panel_fields form_for_form '' as fields %}
+		<div class="f-panel" style="width: 100%;">
+			{% for field in fields %}
+				{% include "forms/form_body_control.html"%}
+			{% endfor %}
+		</div>
+	</div>
+	<div style="clear:left;">&nbsp;</div>
+	{% if not form_print %}
+	<input type="submit" value="{{ form.button_text }}" />
+	{%if form_for_form.instance.id and bdelete %}
+	<input type="submit" id="bdelete" name="bdelete" value="{% trans "Delete"%}" />
+	{% endif %}
+	{% if not form_design %}
+	</form>
+	{% endif %}
+	{% endif %}
+</div>

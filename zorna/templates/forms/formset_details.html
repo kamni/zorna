@@ -1,0 +1,85 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+{% block zorna_extrahead %}{{ block.super }}
+{% include "forms/form_for_form_header.html" %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.formset.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#id_contact_info_table tbody tr').formset({
+            extraClasses: ['row1', 'row2', 'row3'],
+            addText: "{% trans "Add another" %}",
+            deleteText: "{% trans "Remove" %}",
+            keepFieldValues: "input:hidden"
+        })
+    })
+</script>
+<!-- Here's an example of how you can style add/delete buttons with CSS -->
+<style type="text/css">
+    .add-row {
+        padding-left:18px;
+        background:url({{ MEDIA_URL }}images/add.png) no-repeat left center;
+    }
+    .delete-row {
+        float:right;
+        display:block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+        background:url({{ MEDIA_URL }}images/delete.png) no-repeat left center;
+        width:16px;
+        height:16px;
+    }
+    tr.row1 td { background-color: #f9f9f9; }
+    tr.row2 td { background-color: #f3f3f3; }
+    tr.row3 td { background-color: #ededed; }
+</style>
+{% endblock %}
+
+{% block zorna_title_page %}
+{{form.name}}
+{% endblock %}
+
+{% block zorna_full_content %}
+<div class="bloc">
+	<h1>
+		<a href="{% url form_browse_entries_view form.slug %}">{{ form.name }}</a>
+		{% for parent in parents %}
+		 / <a href="{% url form_browse_entries_view form.slug %}?where={{parent.entry.form.slug}}.{{parent.row.slug}}:{{parent.entry.id}}">{{ parent.row.value }}</a>
+		{% endfor %}
+	</h1>
+    <div class="entry">
+		<form id="form_edit_entry" method="post" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+            <table id="id_contact_info_table" border="0" cellpadding="0" cellspacing="5">
+            	<thead>
+                    {% for form in formset.forms %}
+                    {% if forloop.first %}
+                    <tr>
+						{% for field in form.visible_fields %}
+						<th scope="col">{{ field.label_tag }}</th>
+						{% endfor %}
+                    </tr>
+                    {% endif %}
+					{% endfor %}            		
+            	</thead>
+                <tbody>
+                    {% for form in formset.forms %}
+                    <tr id="{{ form.prefix }}-row">
+						{% for field in form.hidden_fields %}
+						{{ field }}
+						{% endfor %}
+						{% for field in form.visible_fields %}
+						<td>{{ field }}</td>
+						{% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p>
+                {{ formset.management_form }}
+                <input type="submit" value="Submit" />
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

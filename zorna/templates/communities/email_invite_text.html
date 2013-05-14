@@ -1,0 +1,9 @@
+{% load i18n %}
+{% trans "Hi" %} {{member.first_name}}
+{{user.get_full_name}} {% trans "added you to community"%} {{community.name}} {% trans "as" %} {{role}}
+
+{{message}}
+
+
+{% trans "Let's work togheter, click on the link below" %}:
+{{url}}?community_id={{community.pk}}

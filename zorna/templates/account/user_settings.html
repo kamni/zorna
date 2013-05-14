@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/account.css" />
+{% endblock %}
+
+{% block zorna_title_page %}{{zorna_title_page}}{% endblock %}
+
+{% block zorna_page_content %}
+<div id="wrapper">
+	<div id="sidebar_left" class="sidebar_left">
+		<div class="user_info">
+			{% if avatar %}
+			<img src="/{{ avatar.avatar|thumbnail:"42x42" }}" />
+			{% else %}
+			<img src="{{ MEDIA_URL }}images/unknown.jpg" />
+			{% endif %}
+			<a href="{% url user_settings %}"><strong>{{request.user.get_full_name}}</strong></a>
+		</div>
+		<ol id="com_menu" class="com_menu">
+			<li class="icon messages {%if current_menu == "messages" %}selected{%endif%}">
+				<a href="{% url user_settings_profile %}">{% trans "Change your profile" %}</a>
+			</li>
+			<li class="icon members {%if current_menu == "members" %}selected{%endif%}">
+				<a href="{% url user_settings_avatar %}">{% trans "Change your photo" %}</a>
+			</li>
+			<li class="icon members {%if current_menu == "members" %}selected{%endif%}">
+				<a href="{% url change_my_password %}">{% trans "Change password" %}</a>
+			</li>
+		</ol>
+	</div>
+	<div id="wmain">
+		{% block main_content %}{% endblock %}
+	</div>
+</div>
+{% endblock %}

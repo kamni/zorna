@@ -1,0 +1,57 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/community.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.multiselect.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.form.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.multiselect.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#submitform').ajaxForm({
+		target: '#facebox .content',
+		success: function(data) {
+			if (data == ''){
+				window.location.href = window.location.href
+			}
+		}
+		
+	});
+    jQuery.ajax({
+      url: "{% url invite_list_users community.pk %}",
+      cache: false,
+      dataType: "json",
+      success: function(data) {
+		$(".com_users").multiselect({completions: data.data, enable_new_options: false});
+      }});
+});	
+</script>
+{% endblock %}
+
+
+{% block iframe_content %}
+<h2 id="popuptitle">{% trans "Invite user to join community:"%}  {{community.name}}</h2>
+<div id="popupform">
+<form id="submitform" action="{{action}}" method="post">{% csrf_token %}
+  {% for field in form %}
+	<fieldset>
+	<legend>
+		{% if field.errors %}
+		<ul class="errorlist">
+  		{% for error in field.errors %}
+    		<li>{{ error }}</li>
+  		{% endfor %}
+  		</ul>
+  		{% endif %}
+		{{ field.label }}{% if field.help_text %}<span class="helptext"> - {{field.help_text}}</span>{% endif %}
+	</legend>
+	{{ field }}
+	</fieldset>	
+  {% endfor %}
+	<fieldset>
+		<input class="button" type="submit" value="{% trans "Add" %}" />
+	</fieldset>
+</form>
+<div class="clear"></div>
+</div>
+{% endblock %}

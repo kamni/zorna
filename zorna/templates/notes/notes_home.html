@@ -1,0 +1,297 @@
+{% extends "full.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/notes.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jqueryFileTree.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.multiselect.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/ui-layout/jquery.layout-latest.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.livequery.min.js"></script>
+{% comment %} jqueryFileTree has been hacked to support live query{% endcomment %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jqueryFileTree.js"></script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.multiselect.js"></script>
+{% endblock %}
+
+
+{% block zorna_full_content %}
+<script type="text/javascript">
+<!--
+var trans_create_new_folder = '{% trans "Create new category" %}';
+var trans_rename_folder = '{% trans "Rename category" %}';
+
+function showStatus(msg,msgClass,duration){
+	$("#status").removeClass('error').removeClass('success');
+	if(msgClass)
+		$("#status").addClass(msgClass);
+	$("#status").html(msg).fadeIn();
+	if(duration){
+		setTimeout(function(){$("#status").fadeOut(function(){$(this).html('').removeClass(msgClass)});},duration);
+	}
+}
+
+function showSearchResponse(responseText, statusText, xhr, $form) {
+	showStatus('<p>' + responseText.message + '</p>', responseText.status, 5000);
+	$("#rp-content").html(responseText.data);
+}
+
+function showWebPageWait() {
+	//verifier si le text a été modifié
+	var ckinstances = CKEDITOR.instances;
+	for(k in  ckinstances) {
+		if (ckinstances[k]) { ckinstances[k].destroy(true); }
+	}
+	$("#rp-content").html("");
+	$("#notes-wait").show();
+}
+
+function hideWebPageWait() {
+	//verifier si le text a été modifié
+	$("#notes-wait").hide();
+}
+
+function viewAddFormNote(params) {
+	showWebPageWait();
+	params = $.extend({}, params);
+	$.get('{% url notes_add_note %}', params, function(r) {
+		hideWebPageWait();
+		if(r.status == 'success') {
+			$("#rp-content").html(r.data);
+		} else {
+			showStatus('<p>' + r.message + '</p>', r.status, 5000);
+		}
+	}, 'json');
+}
+
+function viewEditFormNote(params) {
+	showWebPageWait();
+	params = $.extend({}, params);
+	$.get('{% url notes_edit_note %}', params, function(r) {
+		hideWebPageWait();
+		if(r.status == 'success') {
+			$("#rp-content").html(r.data);
+		} else {
+			showStatus('<p>' + r.message + '</p>', r.status, 5000);
+		}
+	}, 'json');
+}
+
+function viewCategoryNotesHandler(dir, shared, params) {
+	if(shared) {
+		url = "{% url dirlist_category %}";
+	} else {
+		url = "{% url dirlist_category %}";
+	}
+	params = $.extend({}, params);
+	params.dir = dir;
+	if ( $("#search-tag").length != 0 && params.search_tag == undefined ) {
+		params.search_tag = $("#search-tag").html();
+	}
+	params.search_text = $("#search-note").val();
+	
+	showWebPageWait();
+	$.get(url, params, function(data) {
+		hideWebPageWait();
+		$("#rp-content").html(data);
+		// Show "no webpages" notice?
+		if( $("#manage_webpages .h-list LI.webpage").size() == 0 ) {
+			$("#manage_webpages .h-list LI.no_webpages").slideDown();
+		}
+		$("#notes-wrapper-bloc h1 a.npath").click(function(event){
+			viewCategoryNotesHandler($(this).attr('rel'), shared);
+		});		
+
+		$("#manage_webpages .note-tags a").click(function(event){
+			var tag = $(this).html();
+			viewCategoryNotesHandler($(this).attr('rel'), shared, {'search_tag': tag});
+		});		
+
+		$("#search-tag").click(function(event){
+			viewCategoryNotesHandler($(this).attr('rel'), shared, {'search_tag': ''});
+		});
+	});
+}
+
+function categoriesFolderHandler(dir) {
+	return viewCategoryNotesHandler(dir, false);
+}
+
+function sharedFolderHandler(dir) {
+	return viewCategoryNotesHandler(dir, true);
+}
+
+// Handles page cloning
+var handle_folder = {
+	show: function(a) {
+		$(".confirm").remove();
+		// Show manage folder section
+		$("#manage_webpages ul.h-list").prepend('<li id="active_foption" class="foption confirm" style="display: none;"></li>');
+		$("#active_foption").html( $("#foption_template").html() );
+		$("#active_foption").slideDown();
+		
+		if($(a).hasClass('rename')) {
+			$("#active_foption INPUT[name=new_folder]").val($(a).attr('folder'));
+			$("#active_foption INPUT[name=what]").val('rename');
+			$("#active_foption .foption").val(trans_rename_folder);
+		} else {
+			$("#active_foption INPUT[name=what]").val('create');
+			$("#active_foption .foption").val(trans_create_new_folder);
+		}
+
+		// Cancel button
+		$("#active_foption .cancel").click( function() {
+			handle_folder.hide('normal');
+			return false;
+		});
+		// Handle key presses
+		$("#active_foption INPUT[name=new_folder]").keypress( function(e) {
+			if( e.keyCode == 13 ) handle_folder.manage();
+			if( e.keyCode == 27 ) handle_folder.hide('normal');
+		});
+		
+		// Proceed with create or rename
+		$("#active_foption .foption").click( function() {
+			handle_folder.manage();
+			return false;
+		});
+
+	},
+	
+	hide: function(speed, callback) {
+		if( !speed ) speed = 0;
+		$("#active_foption").slideUp(speed, function() {
+			$(this).remove();
+			if( callback ) callback.call();
+		});	},
+	
+	manage: function() {
+		var what = $("#active_foption INPUT[name=what]").val();
+		var category = $("INPUT[name=category]").val();
+		var new_category = $("#active_foption INPUT[name=new_folder]").val();
+		var params = {
+			new_category: new_category,
+			category: category,
+			what: what,
+			csrfmiddlewaretoken: $("INPUT[name=csrfmiddlewaretoken]").val()
+		};
+		if (what == 'create') {
+			var url = '{% url notes_add_category %}';
+		} else {
+			var url = '{% url notes_rename_category %}';
+		}
+		
+		$("#active_foption").addClass('wait').find(':input').attr('disabled', true);
+		$.post(url, params, function(r) {
+			$("#active_foption").removeClass('wait').find(':input').attr('disabled', false);
+			if( r.status == 'success' ) {
+				if ( what == 'rename') {
+					$("#notes-categories a[id="+category+"]").html(new_category);
+					$("h1.categories span.nlast").html(new_category);
+				} else if( r.url) {
+					var sel1 = '';
+					var sel2 = '';
+					if( category ) {
+						sel1 = $("div#notes-categories a[id="+category+"] ~ ul li.directory");
+						sel2 = $("div#notes-categories a[id="+category+"] ~ ul");
+					} else {
+						sel1 = $("div#notes-categories li.directory");
+						sel2 = $("div#notes-categories ul");
+					}
+					if(sel1.size()) {
+						sel1.last().after(r.url);
+					}else {
+						sel2.html(r.url);
+					}					
+				}
+				handle_folder.hide('normal');
+			} else {
+				alert(r.message);
+			}
+		}, 'json');
+		
+	}
+};
+
+jQuery(document).ready(function() {
+	$('#notes-wrapper').layout({ applyDefaultStyles: true });
+	$('#notes-categories').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_categories %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1, 
+		folderHandler: categoriesFolderHandler
+		}
+		);	
+	$('#notes-shared').fileTree({ 
+		root: '', 
+		script: '{% url dirlist_shared %}', 
+		folderEvent: 'dblclick', 
+		expandSpeed: 1, 
+		collapseSpeed: 1,
+		folderHandler: sharedFolderHandler 
+		} 
+		);
+
+	viewCategoryNotesHandler('/', false);
+
+	$("#notes-wrapper div.categories a").livequery('click', function() {
+		viewCategoryNotesHandler($(this).attr('rel'), false);
+	});
+	
+	$("#notes-wrapper-bloc a.nedit").livequery('click', function() {
+		viewEditFormNote({note: $(this).attr('note')});
+	});
+	
+	$("a.foption1").livequery('click', function() {
+		viewAddFormNote({category: $(this).attr('category')});
+		return false;
+	});	
+	$("a.foption2").livequery('click', function() {
+		handle_folder.show($(this));
+		return false;
+	});
+	
+	$('#form-search-note').submit(function(){
+		var category = $("INPUT[name=category]").val();
+		var dir = category + '/';
+		viewCategoryNotesHandler(dir, true, {});		
+		return false;
+	});				
+	
+});
+-->
+</script>
+
+<div class="notes-wrapper" id="notes-wrapper">
+	<div id="left-panel" class="ui-layout-west">
+			<div class="notes-search-box">
+				<form action="" id="form-search-note" method="post">
+				{% csrf_token %}
+				<button class="flatbutton grey" name="op" type="submit">
+				<span>Search</span>
+				</button>
+				<input name="search-text" id="search-note" type="text" value="{{search_text}}" />
+				</form>
+			</div>
+			<div class="categories notes-header"><a href="#" rel="/">{% trans "Notes" %}</a></div>
+			<div id="notes-categories">
+				
+			</div>
+			<div class="shared notes-header"><a href="#" rel="/">{% trans "Shared notes" %}</a></div>
+			<div id="notes-shared">
+				
+			</div>
+	</div>
+	<div id="right-panel"  class="ui-layout-center">
+		<div id="notes-wait"><p>{% trans "Loading..."%}</p></div>
+		<div id="notes_main_content">
+			<div id="rp-content"></div>
+		</div>
+	</div>
+</div>	
+<div id="status" class="hidden"></div>
+
+{% endblock %}

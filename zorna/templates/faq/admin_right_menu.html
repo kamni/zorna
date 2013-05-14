@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load acl_tags %}
+{% if curfaq %}
+<h3>{{ curfaq.name }}</h3>
+<ul>
+  <li><a href="{% url admin_edit_faq curfaq.pk %}" title="{% trans "Click to edit faq details" %}">{% trans "Edit faq" %}</a></li>
+  <li><a href="{% acl_users_object_url curfaq %}?next={% url list_faqs %}" title="{% trans "Click to edit permissions by users" %}">{% trans "Permissions by users" %}</a></li>
+  <li><a href="{% acl_groups_object_url curfaq %}?next={% url list_faqs %}" title="{% trans "Click to edit permissions by groups" %}">{% trans "Permissions by groups" %}</a></li>
+</ul>
+{% endif %}
+<h3>{% trans "Faqs" %}</h3>
+<ul>
+  <li><a href="{% url list_faqs %}" title="{% trans "List of faqs" %}">{% trans "Faqs" %}</a></li>
+  <li><a href="{% url admin_add_faq %}" title="{% trans "Click to add new faq" %}">{% trans "Add new faq" %}</a></li>
+</ul>

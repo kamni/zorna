@@ -1,0 +1,22 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+{% endblock %}
+
+
+{% block iframe_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+ 	 parent.updatePathForms("{{forms_path|escapejs}}");
+	{% if load_navigation %}
+	parent.loadForms();
+	{% endif %}  
+});
+
+-->
+</script>
+{% endblock %}

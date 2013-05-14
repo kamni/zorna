@@ -1,0 +1,33 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms_form.css" />
+{% include "forms/form_for_form_header.html" %}
+{% endblock %}
+
+{% block zorna_title_page %}
+{{form.name}}
+{% endblock %}
+
+{% block zorna_left_content %}
+<div class="zbloc">
+	<h1>
+		{% if entry %}
+			<a href="{% url forms_form_print form.pk entry.pk %}" target="_blank" title="{% trans "Print this entry" %}">
+		{% else %}
+			<a href="{% url forms_form_print form.pk %}" target="_blank" title="{% trans "Print this form" %}">
+		{% endif %}
+		<img src="{{ MEDIA_URL }}images/icons/printer.gif" /></a>
+		{% if can_browse %}
+		<a href="{% url form_browse_entries_view form.slug %}">{{ form.name }}</a>
+		{% for parent in parents %}
+		 / <a href="{% url form_browse_entries_view form.slug %}?where={{parent.entry.form.slug}}.{{parent.row.slug}}:{{parent.entry.id}}">{{ parent.row.value }}</a>
+		{% endfor %}
+		{% else %}
+		{{ form.name }}
+		{% endif %}
+	</h1>
+	{% include "forms/form_body.html"%}
+</div>
+{% endblock %}

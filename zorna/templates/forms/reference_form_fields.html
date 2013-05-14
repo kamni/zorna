@@ -1,0 +1,41 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/facebox.js"></script>
+{% endblock %}
+
+
+{% block iframe_content %}
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+	$("select[name='reference']").change(function(){
+		try {
+			var editor = CKEDITOR.instances.id_{{target}};
+		} catch(err) {
+			var editor = false;
+		}
+		if ( editor) {
+			editor.insertText($(this).find("option:selected").val());
+		} else {
+			var elem = $('[name={{target}}]');
+			elem.val(elem.val() + $(this).find("option:selected").val());
+		}
+		$.facebox.close();
+	});
+});
+-->
+</script>
+<h2 id="popuptitle">
+	{% trans "Choose a field to reference"%}:
+</h2>
+<div id="popupform">
+	<select name="reference" size="10">
+		{% for field in form.fields.all %}
+		<option value="{% templatetag openvariable %}{{field.slug}}.value{% templatetag closevariable %}">{{field.slug}}</option>
+		{% endfor %}
+	</select>
+</div>
+{% endblock %}

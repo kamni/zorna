@@ -1,0 +1,8 @@
+{% load i18n %}
+{% trans "Hi" %}
+{% trans "A new message has been posted in communities" %} {% trans "by"%} {{user.get_full_name}}:
+
+{{message.message}}
+
+{% trans "To read this message, click on the link below " %}:
+{{url}}

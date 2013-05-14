@@ -1,0 +1,6 @@
+[
+{% for occ in occurrences %}
+    {"id":"{{occ.id}}", "url": "{{occ.url}}", "title":"{{occ.title|escapejs}}", "start":"{{occ.start}}", "end":"{{occ.end}}", "author":"{{occ.author|escapejs}}", "description":"{{occ.description|escapejs}}", "location":"{{occ.details.location|escapejs}}", "readOnly": {{occ.read_only|yesno:"true,false"}}, "recurring": {{occ.recurring|yesno:"true,false"}}, "persisted": {{occ.persisted|yesno:"true,false"}}, "event_id": {{occ.event.id}}, "allDay": {{occ.allday|yesno:"true,false"}}, "calendar_id": {{occ.calendar_id}} }
+    {%if forloop.last %}{% else %},{% endif %}
+{% endfor %}
+]

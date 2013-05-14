@@ -1,0 +1,37 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/faq.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Faq" %}&nbsp;:&nbsp;{{curfaq.name}}</h1>
+<div id="faq_main_content">
+  <ul>
+    {% for category in categories %}
+    <li>
+      <a href="{% url manager_faq_edit_category category.pk %}">{{category.name}}</a>
+      <ul>
+        {% for question in category.questions %}
+        <li>
+          
+          <a {% if not question.is_active %}class="strikelink"{% endif %} href="{% url manager_faq_edit_question question.pk %}">{{question.question}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "faq/manager_right_menu.html" %}
+{% endblock %}
+

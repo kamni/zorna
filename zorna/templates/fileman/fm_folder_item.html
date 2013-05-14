@@ -1,0 +1,55 @@
+{% load i18n %}
+<li class="webpage">
+	<table style="table-layout: fixed;">
+		<tr valign="top">
+			<td width="1%">
+		      	<a href="{% url get_file %}?file={{ f.file_info.path}}/{{ f.file_info.realname}}">
+		        	{% if f.file_info.ext in "pdf xls ppt doc" %}
+		          	<img src="{{ MEDIA_URL }}images/icons/{{f.file_info.ext}}.gif" />
+		        	{% else %}
+		          	<img src="{{ MEDIA_URL }}images/icons/txt.gif" />
+		        	{% endif %}
+				</a>				
+			</td>
+			<td>
+				<a rel="{{ f.file_info.path}}/" fid="{{f.pk}}" href="{% url get_file %}?file={{ f.file_info.path}}/{{ f.file_info.realname}}" class="title">{{f.file_info.name}}</a>
+				<br />
+				<span class="smalltext">&nbsp;{{f.description}}</span>
+			</td>
+			<td width="5%"  valign="middle">
+				<span class="smalltext">&nbsp;{{f.file_info.size|filesizeformat}}</span>
+			</td>
+			<td width="25%">
+				<div>
+			    	<ul class="fm-tags">
+				    	{% for tag in f.get_tag_list %}
+				    		<li><a href="#">{{tag}}</a></li>
+				    	{% endfor %}
+			    	</ul>
+			    </div>
+			</td>
+			<td width="25%">
+			    <div>		
+					<div class="creator">
+						<span class="smalltext">{{f.owner.get_full_name}} {% trans "on" %} {{f.time_created}}</span>
+					</div>
+						{% if f.time_created != f.time_updated %}
+							<div class="modifier">
+								<span class="smalltext">{{f.modifier.get_full_name}} {% trans "on" %} {{f.time_updated}}</span>
+							</div>
+						{% endif %}
+				</div>
+			<td width="5%" nowrap="nowrap">
+				<ul class="options">
+					{% if manager %}
+					<li><a title="{% trans "Properties"%}" href="#" rel="{{cdir}}" class="properties"><img src="/zmedia/images/icons/properties.png" alt="{% trans "Properties"%}"/></a></li>
+					<li><a title="{% trans "Rename file"%}" href="#" rel="{{cdir}}" class="edit_label"><img src="/zmedia/images/icons/rename.png" alt="{% trans "Rename"%}"/></a></li>
+					<li><a title="{% trans "Delete this file from the server" %}" href="#" rel="{{cdir}}" class="delete"><img src="/zmedia/images/icons/delete.png" alt="{% trans "Properties"%}"/></a></li>
+					{% endif %}
+				</ul>
+				
+			</td>
+			</td>
+		</tr>
+	</table>
+</li>

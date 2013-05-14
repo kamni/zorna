@@ -1,0 +1,26 @@
+.margin-form {
+    color: #7F7F7F;
+    font-size: 0.85em;
+    padding: 0 0 1em 210px;
+}
+
+#sidetreecontrol {
+	background-color:#EFEFDE; 
+	padding:5px 0 5px 5px;	
+}
+
+#zorna-menu-root {
+    font-size: 0.85em;	
+}
+
+#zorna-menu-root input {
+    vertical-align: middle;
+}
+
+span.label {
+    float: left;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0 0;
+    text-align: right;
+    width: 200px;
+}

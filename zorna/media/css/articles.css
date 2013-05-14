@@ -1,0 +1,175 @@
+#full_content .inner { width:970px; margin:0 auto; margin-top: 5px; background-color: #FFFFFF; padding: 10px; }
+
+#full_content .inner div ,#content .inner p {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ====================== START BLOG ====================== */
+#full_content div.date { margin-bottom:5px; margin-top:45px }
+#full_content h3.title-blog { float:left; display:inline-block; width:430px; font-size:1.8em; font-weight:bold; margin:0 !important }
+#full_content h3.title-blog a { color:#161616 }
+#full_content #full_content .day, #full_content .mon-year { float:right; display:inline-block; color:#979797; text-transform:uppercase }   
+#full_content .day { font-size:36px; font-family:Arial; font-weight:bold; border-right:1px solid #cacaca; text-align:right; padding-right:10px }
+#full_content .mon-year { font-size:18px; text-align:justify; padding-left:10px; letter-spacing:2px }
+#full_content .mon-year span { letter-spacing:6px }
+#full_content p.meta { margin-bottom:0; line-height:16px }
+#full_content p.meta span { display:block; height:16px; margin:8px 5px 30px 0 }
+#full_content p.meta span.tags { padding-left:20px; background:url('../#inner/mark.png') no-repeat }
+#full_content p.meta span.comment { padding-left:20px; background:url('../images/icons/comment-icon.png') no-repeat }
+#full_content p.tags { padding-left:30px; background:url('../images/article.png') no-repeat left center }
+#full_content .inner p.left { width:400px }
+#full_content .space-content { height:20px }
+#full_content .text .line { margin:0 }                                
+#full_content .text { width:640px; float:left } 
+#full_content .recent-post { margin-top:20px }
+#full_content .recent-post div.link { display:block; font-size:1.2em; }
+#full_content .recent-post a { color:#696969 }
+#full_content .recent-post a strong { color:#000; font-weight:normal }
+#full_content .recent-post img { padding:3px !important; float:left; }
+#full_content .recent-post small { font-style:italic }
+#full_content .hentry img { max-width:628px; height:auto }
+#full_content h4.title-widget-blog { margin-bottom:0em !important }
+/* ====================== END BLOG ====================== */   
+
+                                                          
+                                                          
+/* ====================== START PAGINATION BLOG ====================== */ 
+#full_content .blog-pagination {clear: both;}
+#full_content .blog-pagination a, .blog-pagination span{text-decoration:none;border:1px solid #BFBFBF;padding:3px 5px;margin:2px;}
+#full_content .blog-pagination a:hover, .blog-pagination span.current{border-color:#000;}
+#full_content .blog-pagination span.current{font-weight:bold;}          
+/* ====================== END PAGINATION BLOG ====================== */ 
+ 
+
+
+/* ====================== START SIDEBAR ====================== */
+#full_content .sidebar { margin-top:32px }  
+#full_content .sidebar, #full_content .sidebar-home { width:300px; float:right } 
+#full_content .recent-post img { float:left; margin-right:1.4em } 
+#full_content .sidebar ul, .sidebar-home ul { list-style:none; margin:-10px 0 30px }
+#full_content .sidebar li, .sidebar-home li { border-bottom:1px solid #ccc; padding:8px 0; }
+#full_content .sidebar h2, .sidebar-home h2 { margin-bottom:30px !important; font-size: 1.7em; }
+#full_content .sidebar h3, .sidebar-home h3 { margin-bottom:0px }
+#full_content .widget { margin-bottom:45px }
+#full_content .sidebar .box-sections, #full_content .sidebar-home .box-sections { margin-left:0; margin-top:20px }
+#full_content .sidebar .box-sections h2, #full_content .sidebar-home .box-sections h2 { margin-bottom:0 }
+#full_content .sidebar .box-sections h3, .sidebar-home .box-sections h3 { line-height:32px }
+#full_content .sidebar-nav ul { list-style:none; margin-bottom:50px; margin-top:40px }
+#full_content .sidebar-nav li { border-bottom:1px solid #cacaca; margin-bottom:10px; padding-bottom:5px }
+#full_content .sidebar-nav a, #full_content .sidebar-nav li { display:block; height:40px; line-height:30px; font-family:'ChampagneLimousinesBold'; color:#979797; text-transform:uppercase; font-size:18px; font-weight:bold }
+#full_content .sidebar-nav a { padding-left:40px }
+#full_content .sidebar-nav a:hover { text-decoration:none; color:#a10404 } 
+#full_content .twitter_update_list li:first-child { padding-top:0 }
+#testimonial-widget li { border-bottom:0 }
+#testimonial-widget p { font-size:1em }
+/* ====================== END SIDEBAR ====================== */  
+
+
+/* ====================== START COMMENTS ====================== */
+h3#comments-title {margin:30px 0;padding-left:35px;background:url('../images/icons/comment2.png') no-repeat left center}
+h3#comments-title span {font-size:.8em;}
+.comment-container {padding:5px;border:1px solid #d8d7d7;}
+.comment-author {float:left;margin:25px 10px 0 0;width:110px;}
+.comment-author img {border:4px solid #d7d7d7;margin:0 0 0 16px;}
+.comment-body p {font-size:12px !important; margin-bottom:5px !important}
+.fn {font-style:normal;text-align:center;font-size:90%;margin:10px 0 0 0;display:block;}
+/*comments visitors*/
+.comment-meta {margin:1px 0 1px 120px;padding:20px 20px 10px 20px;border-left:1px solid #d8d7d7;min-height:145px;}
+.comment-metaTextarea {position:relative;margin:0 0 15px 120px;width:422px;padding:20px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;behavior:url(http://www.yourinspirationweb.com/tf/bolder/wp-content/themes/bolder/PIE.htc);}
+em.moderation {float:right;clear:right;font-size:85%;}
+/*.comment-meta p {font-size:0.83em;color:#363533;}   */
+.contentMetaData {width:100%;height:30px;}
+.intro {width:100%;height:25px;margin-bottom:5px}
+.commentNumber {float:right;font-size:150%;color:#bebcbd;}
+.commentDate {float:left;margin:0 0 0px 0;}
+ol.commentlist,li.comment {margin:0 0 5px 0;padding:0;list-style-type:none!important;}
+li.comment ul.children {margin-left:6.5em;}
+li.comment ul.children li {margin:20px 0 0 0;}
+
+/*comments author*/
+.bypostauthor .comment-container, .bypostauthor .comment-container .children,.bypostauthor .children .bypostauthor .comment-container,
+.bypostauthor .children .bypostauthor .children .comment-container,.bypostauthor .children .bypostauthor .children .bypostauthor .comment-container,
+.bypostauthor .children .bypostauthor .children .bypostauthor .children .bypostauthor .comment-container,
+.bypostauthor .children .bypostauthor .children .bypostauthor .children .bypostauthor .children .bypostauthor .comment-container  
+{background-color:#f4f4f4;}
+/*comments visitors*/
+.comment-container .children, .bypostauthor .children .comment-container,.bypostauthor .children .bypostauthor .children .comment-container,
+.bypostauthor .children .bypostauthor .children .bypostauthor .children .comment-container,
+.bypostauthor .children .bypostauthor .children .bypostauthor .children .bypostauthor .children .comment-container
+ {background-color:#fff;}
+ /*comments link*/
+/*.comment-meta a:link, .comment-meta a:visited {color:#9a052a;text-decoration:none;}
+.comment-meta a:active, .comment-meta a:hover {color:#8c0106;}
+
+/*trackback*/
+#trackbacks {}
+ol.trackbacklist {margin:20px 35px;}
+ol.trackbacklist li {padding:10px 0;}             
+/* ====================== END COMMENTS ====================== */
+
+                                                              
+/* ====================== START RESPOND ====================== */   
+#respond {margin:60px 0 30px;}                                      
+#respond input {padding:10px;margin:0 0 10px 10px;border:1px solid #d8d7d7;background-color:#fff;}
+#respond input:focus,#respond textarea:focus {background-color:#f7f7f7;}
+#respond textarea {border:1px solid #d8d7d7;background-color:#fff;height:135px;margin:0 0 10px 10px;padding:10px;}
+#respond input, #respond textarea {width:495px;}
+#respond #submit {color:#666363;background:#eee;width:150px;float:right;margin:0 0 20px 0;padding:10px;font-weight:bold;font-size:0.95em!important;}
+#respond #submit:hover {background-color:#fff;cursor:pointer;color:#000}  
+#respond .containerPost {font-size:1.1em}
+img.comment-avatar {margin:20px 0 0 0;border:1px solid #ccc; padding:3px}
+#commentform { margin-left:10px }
+#commentform label {width:101.5px;clear:left;display:block;float:left;font-size:1em;line-height:40px;margin:0;text-align:left;vertical-align:middle;}
+#commentform p {padding:10px 0 0px;margin-bottom:0}
+#commentform p.form-submit {border-bottom:none;}
+#commentform p.comment-form-author label,#commentform p.comment-form-email label,#commentform p.comment-form-url label {height:38px;}
+#commentform p.comment-form-comment label {height:155px;}    
+/* ====================== END RESPOND ====================== */
+
+
+
+/* ====================== START REPLY COMMENTS ====================== */
+#full_content .reply {text-align:right;margin:25px 0 0 0;}
+#full_content h3#reply-title{padding-left:35px;background:url('../images/icons/leave-comment.png') no-repeat left center}
+/*.depth-3 {width:466px;}
+.depth-3 .comment-meta {width:305px;}
+.depth-4 {width:475px;}
+.depth-4 .comment-meta {width:310px;}
+.depth-5 {width:435px;}
+.depth-5 .comment-meta {width:270px;}  */
+#full_content .form-reply p {text-align:right;padding-bottom:5px;margin-right:24px;}
+#full_content .form-reply p small {text-align:left;}
+/* ====================== END REPLY COMMENTS ====================== */
+
+/*Styling Images*/
+#full_content img.alignright {float:right; margin:0 0 0.5em 1.5em;display:inline;}
+#full_content img.alignleft {float:left;margin:0 1.5em 0.5em 0;display:inline;}
+#full_content img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+#full_content a img.alignright {float:right; margin:0 0 0.5em 1.5em}
+#full_content a img.alignleft {float:left; margin:0 1.5em 0.5em 0}
+#full_content a img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+#full_content p.wp-caption-text {font-style:italic;}
+#full_content img.wp-smiley {border:0 !important;padding:0 !important}
+
+/* Extras */
+
+#full_content .left{float:left;margin-right:10px;}
+#full_content .right{float:right;;margin-left:10px;}
+#full_content .nomargin{margin:0}
+#full_content .nopadding{padding:0}           
+#full_content .last {margin-right:0!important;}
+
+/* ====================== START SHORTCODE ====================== */
+#full_content hr {margin:40px auto;width:600px;border:1px dotted #ccc;clear:both}
+
+/*typography*/
+#full_content h1,#full_content h2,#full_content h3,#full_content h4,#full_content h5,#full_content h6 {margin:0.5em 0 0.8em;}
+
+
+
+#full_content .text h2 > a { color: inherit; font-size: 1.5em; margin-bottom: 5px; text-align: left; text-decoration: none;}
+#full_content .text h2 > a:hover { color:inherit; font-size: 1.5em; text-align: left; text-decoration: underline;}
+#full_content .text p > a { color: inherit; text-decoration: none;}
+#full_content .text p > a:hover {color: inherit;text-decoration: underline;}

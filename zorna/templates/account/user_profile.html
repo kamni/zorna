@@ -1,0 +1,16 @@
+{% extends "account/user_settings.html" %}
+{% load i18n %}
+{% load accounts_tags %}
+
+{% block zorna_extrahead %}{{ block.super }}
+<link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms_form.css" />
+{% endblock %}
+
+{% block main_content %}
+<div>
+  <h3>{% trans "Personnal informations" %}</h3>
+</div>
+{% if form_for_form %}
+{% include "forms/form_body.html"%}
+{% endif %}
+{% endblock %}

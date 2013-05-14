@@ -1,0 +1,62 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+
+
+{% block zorna_extrahead %}
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Import results"%}</h1>
+<table>
+	<thead>
+		<tr>
+		<td>{% trans "Result" %}</td>
+		<td>{% trans "Lines" %}</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+		<td>
+			{% blocktrans count counter=users_added|length %}
+			One user added
+			{% plural %}
+			{{counter}} users added.
+			{% endblocktrans %}			
+		<td>
+			{{users_added.keys|join:" - "}}
+		</td>
+		</tr>
+		<tr>
+		<td>
+			{% blocktrans count counter=users_updated|length %}
+			One user updated
+			{% plural %}
+			{{counter}} users updated.
+			{% endblocktrans %}			
+		<td>{{users_updated.keys|join:" - "}}</td>
+		</tr>
+		<tr>
+		<td>
+			{% blocktrans count counter=users_error|length %}
+			One line missed
+			{% plural %}
+			{{counter}} lines missed.
+			{% endblocktrans %}			
+		<td>
+			{% for k,v in users_error.iteritems %}
+				{{k}} - {{v}}<br />
+			{% endfor %}
+		</td>
+		</tr>
+	</tbody>
+</table>
+  
+</div>
+{% endblock %}
+
+
+{% block zorna_right_content %}
+{% include "account/admin_right_menu.html" %}
+{% endblock %}
