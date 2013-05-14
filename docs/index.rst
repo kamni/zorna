@@ -9,7 +9,6 @@ Welcome to zorna's documentation!
 Getting Started
 ---------------
 
-Contents:
 
 .. toctree::
    :maxdepth: 2
