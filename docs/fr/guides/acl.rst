@@ -1,5 +1,5 @@
-Gestion des droits d'accès sous ZORNA
-*************************************
+Gestion des droits d'accès
+**************************
 
 Préambule
 =========
@@ -31,8 +31,8 @@ Les autorisations d'un droit pour un utilisateur sont:
 * **Allow:** pour autoriser le droit à l'utilisateur
 * **Deny**: pour refuser le droit
 
-Duplication des droits d'accès
-==============================
+Duplication des droits
+======================
 L'octroi des droits à un objet peut facilement devenir fastidueux surtout si le nombre de groupes est trop important.
 
 Pour éviter cela, ZORNA vous permet de dupliquer les droits d'un objet pour les appliquer à un autre.

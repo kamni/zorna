@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'zorna'
-copyright = u'2013, Noureddine Ayachi'
+copyright = u'2013, AFRAZ'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -217,7 +217,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'zorna', u'zorna Documentation',
-     [u'Noureddine Ayachi'], 1)
+     [u'AFRAZ'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -231,7 +231,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'zorna', u'zorna Documentation',
-   u'Noureddine Ayachi', 'zorna', 'One line description of project.',
+   u'AFRAZ', 'zorna', 'One line description of project.',
    'Miscellaneous'),
 ]
 
