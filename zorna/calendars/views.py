@@ -30,6 +30,7 @@ def jsondump_occurences(occurrences, user):
         ed = {}
         ed['id'] = encode_occurrence(occ)
         ed['calendar_id'] = occ.calendar_id
+        ed['calendar_name'] = occ.calendar_name
         if occ.start.time().__str__() == '00:00:00' and occ.end.time().__str__() == '00:00:00':
             ed['allday'] = True
         else:
@@ -113,6 +114,7 @@ def json_events(request):
             for o in period.occurrences:
                 if period.classify_occurrence(o):
                     o.calendar_id = obj.pk
+                    o.calendar_name = obj.calendar.name
                     if o.event.calendar_id == obj.calendar.pk:
                         o.manager = manager
                         o.creator = creator

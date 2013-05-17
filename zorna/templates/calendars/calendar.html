@@ -101,7 +101,7 @@ var fcoptions = {
 		eventRender: function (event, element) {
 		        element.qtip({    
 		            content: {    
-		                title: { text: event.title },
+		                title: { text: '<center>'+event.calendar_name + '</center><br />' + event.title },
 		                text: formatEvent(event, element)
 		            },
 		            position: { adjust: { screen: true } },

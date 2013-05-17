@@ -13,8 +13,8 @@ Getting Started
 .. toctree::
    :maxdepth: 1
 
-    fr/index
-    en/index
+   en/index
+   fr/index
 
 
 Indices and tables

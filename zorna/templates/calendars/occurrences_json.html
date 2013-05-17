@@ -1,6 +1,6 @@
 [
 {% for occ in occurrences %}
-    {"id":"{{occ.id}}", "url": "{{occ.url}}", "title":"{{occ.title|escapejs}}", "start":"{{occ.start}}", "end":"{{occ.end}}", "author":"{{occ.author|escapejs}}", "description":"{{occ.description|escapejs}}", "location":"{{occ.details.location|escapejs}}", "readOnly": {{occ.read_only|yesno:"true,false"}}, "editable": {{occ.editable|yesno:"true,false"}}, "allDay": {{occ.allday|yesno:"true,false"}}, "calendar_id": {{occ.calendar_id}}{%if occ.backgroundColor %}, "backgroundColor": "#{{occ.backgroundColor}}"{%endif%}, "category": "{{occ.category}}", "location": "{{occ.location}}" }
+    {"id":"{{occ.id}}", "url": "{{occ.url}}", "title":"{{occ.title|escapejs}}", "start":"{{occ.start}}", "end":"{{occ.end}}", "author":"{{occ.author|escapejs}}", "description":"{{occ.description|escapejs}}", "location":"{{occ.details.location|escapejs}}", "readOnly": {{occ.read_only|yesno:"true,false"}}, "editable": {{occ.editable|yesno:"true,false"}}, "allDay": {{occ.allday|yesno:"true,false"}}, "calendar_name": "{{occ.calendar_name}}", "calendar_id": {{occ.calendar_id}}{%if occ.backgroundColor %}, "backgroundColor": "#{{occ.backgroundColor}}"{%endif%}, "category": "{{occ.category}}", "location": "{{occ.location}}" }
     {%if forloop.last %}{% else %},{% endif %}
 {% endfor %}
 ]
