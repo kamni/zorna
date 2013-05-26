@@ -277,6 +277,8 @@ def create_calendar_event(request):
             event = form.save(commit=False)
             event.creator = request.user
             event.calendar = calendar.calendar
+            if 'end_recurring_period' in form.cleaned_data:
+                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds= -1)
 
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
@@ -338,6 +340,8 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
             calendar = get_object_or_404(ZornaCalendar, pk=request.POST['calendar_id'])
             event = form.save(commit=False)
             event.calendar = calendar.calendar
+            if 'end_recurring_period' in form.cleaned_data:
+                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds= -1)
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
                 if request.POST['rule'] == 'WEEKLY':
@@ -432,6 +436,8 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
             calendar = get_object_or_404(ZornaCalendar, pk=request.POST['calendar_id'])
             evt = form.save(commit=False)
             evt.calendar = calendar.calendar
+            if 'end_recurring_period' in form.cleaned_data:
+                evt.end_recurring_period = evt.end_recurring_period + datetime.timedelta(days=1, seconds= -1)
             rule = event.rule
             if rule and request.POST['rule'] == '':
                 persisted_occurrences = event.occurrence_set.all()
