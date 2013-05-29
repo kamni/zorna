@@ -23,6 +23,7 @@ from zorna.acl.models import get_acl_for_model
 
 from zorna.calendars.api import *
 
+
 def jsondump_occurences(occurrences, user):
     occ_list = []
     for occ in occurrences:
@@ -87,6 +88,7 @@ def jsondump_occurences_old(occurrences, user):
     resp = rnd.render(Context({'occurrences':occ_list}))
     return resp
 
+
 def json_events(request):
     ret = ''
     if request.user.is_authenticated():
@@ -137,6 +139,7 @@ def json_events(request):
     # json_data = simplejson.dumps(ret)
     return HttpResponse(ret)
 
+
 def calendar_update_event_dates(request):
     id = request.POST.get('id', None)
     start = request.POST.get('start', None)
@@ -183,7 +186,7 @@ def calendar_update_event_dates(request):
                 privacy=ied.privacy,
                 bgcolor=ied.bgcolor,
                 category=ied.category,
-                )
+            )
         return HttpResponse("success", mimetype="text/javascript")
     else:
         return HttpResponse("error", mimetype="text/javascript", status=400)
@@ -225,6 +228,7 @@ def view_calendar(request):
     else:
         return HttpResponseForbidden()
 
+
 def add_to_view_calendar(request, calendar):
     my_calendars = request.session.get('my_calendars', [])
     if not int(calendar) in my_calendars:
@@ -232,12 +236,14 @@ def add_to_view_calendar(request, calendar):
     request.session['my_calendars'] = my_calendars
     return view_calendar(request)
 
+
 def remove_from_view_calendar(request, calendar):
     my_calendars = request.session.get('my_calendars', [])
     if int(calendar) in my_calendars and len(my_calendars) > 1:
         my_calendars.remove(int(calendar))
     request.session['my_calendars'] = my_calendars
     return view_calendar(request)
+
 
 def create_calendar_event(request):
     start = request.GET.get('start', None)
@@ -277,8 +283,8 @@ def create_calendar_event(request):
             event = form.save(commit=False)
             event.creator = request.user
             event.calendar = calendar.calendar
-            if 'end_recurring_period' in form.cleaned_data:
-                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds= -1)
+            if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
+                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds=-1)
 
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
@@ -287,8 +293,7 @@ def create_calendar_event(request):
                     if not weekdays:
                         weekdays = [str((int(event.start.strftime('%w')) + 6) % 7)]
                     params += ";byweekday:" + ",".join(weekdays)
-                rule = Rule(
-                            name=request.POST['rule'],
+                rule = Rule(name=request.POST['rule'],
                             frequency=request.POST['rule'],
                             params=params
                             )
@@ -316,10 +321,11 @@ def create_calendar_event(request):
         'form_details': form_details,
         'calendars': calendars,
         'calendar': get_personal_calendar(request.user),
-        }
+    }
 
     context = RequestContext(request)
     return render_to_response('calendars/calendar_edit.html', extra_context, context_instance=context)
+
 
 def edit_calendar_simple_event(request, event_id, event, occurrence):
     instance_event_details = EventDetails.objects.get_eventdetails_for_object(event)
@@ -340,8 +346,8 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
             calendar = get_object_or_404(ZornaCalendar, pk=request.POST['calendar_id'])
             event = form.save(commit=False)
             event.calendar = calendar.calendar
-            if 'end_recurring_period' in form.cleaned_data:
-                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds= -1)
+            if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
+                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds=-1)
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
                 if request.POST['rule'] == 'WEEKLY':
@@ -374,10 +380,11 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
         'form_details': form_details,
         'calendars': calendars,
         'calendar': ZornaCalendar.objects.get(calendar=event.calendar)
-        }
+    }
 
     context = RequestContext(request)
     return render_to_response('calendars/calendar_edit.html', extra_context, context_instance=context)
+
 
 def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
     instance_event_details = EventDetails.objects.get_eventdetails_for_object(event)
@@ -436,8 +443,8 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
             calendar = get_object_or_404(ZornaCalendar, pk=request.POST['calendar_id'])
             evt = form.save(commit=False)
             evt.calendar = calendar.calendar
-            if 'end_recurring_period' in form.cleaned_data:
-                evt.end_recurring_period = evt.end_recurring_period + datetime.timedelta(days=1, seconds= -1)
+            if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
+                evt.end_recurring_period = evt.end_recurring_period + datetime.timedelta(days=1, seconds=-1)
             rule = event.rule
             if rule and request.POST['rule'] == '':
                 persisted_occurrences = event.occurrence_set.all()
@@ -463,8 +470,7 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
                     evt.rule.params = params
                     evt.rule.save()
                 else:
-                    rule = Rule(
-                                name=request.POST['rule'],
+                    rule = Rule(name=request.POST['rule'],
                                 frequency=request.POST['rule'],
                                 params=params
                                 )
@@ -491,10 +497,11 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
         'form_details': form_details,
         'calendars': calendars,
         'calendar': ZornaCalendar.objects.get(calendar=event.calendar)
-        }
+    }
 
     context = RequestContext(request)
     return render_to_response('calendars/calendar_edit.html', extra_context, context_instance=context)
+
 
 def edit_calendar_occurrence(request, event_id, event, occurrence):
     instance_event_details = EventDetails.objects.get_eventdetails_for_object(occurrence)
@@ -538,7 +545,7 @@ def edit_calendar_occurrence(request, event_id, event, occurrence):
         'form_details': form_details,
         'calendars': calendars,
         'calendar': ZornaCalendar.objects.get(calendar=event.calendar)
-        }
+    }
 
     context = RequestContext(request)
     return render_to_response('calendars/calendar_edit.html', extra_context, context_instance=context)
@@ -562,6 +569,7 @@ def edit_calendar_event(request):
         else:
             return edit_calendar_reccurrent_event(request, event_id, instance_event, occurrence)
 
+
 @login_required()
 def calendar_share(request):
     if request.user.is_authenticated():
@@ -572,6 +580,7 @@ def calendar_share(request):
         return render_to_response('calendars/calendar_share.html', extra_context, context_instance=context)
     else:
         return HttpResponseForbidden()
+
 
 @login_required()
 def calendar_user_settings(request):
@@ -593,6 +602,7 @@ def calendar_user_settings(request):
     else:
         return HttpResponseRedirect('/')
 
+
 @login_required()
 def calendar_settings_shared_url(request):
     if request.user.is_authenticated():
@@ -605,6 +615,7 @@ def calendar_settings_shared_url(request):
         return render_to_response('calendars/calendar_settings_url.html', extra_context, context_instance=context)
     else:
         return HttpResponseForbidden()
+
 
 @login_required()
 def calendar_reset_secret_key(request, calendar):
@@ -622,6 +633,7 @@ def calendar_reset_secret_key(request, calendar):
     else:
         return HttpResponseForbidden()
 
+
 @login_required()
 def admin_list_calendars(request):
     if request.user.is_superuser:
@@ -633,13 +645,15 @@ def admin_list_calendars(request):
     else:
         return HttpResponseRedirect('/')
 
+
 @login_required()
 def admin_acl_calendar(request, resource_calendar):
     if request.user.is_superuser:
         c = ZornaResourceCalendar.objects.get(pk=resource_calendar)
         calendar = get_resource_calendar(c)
         ct = ContentType.objects.get_for_model(type(calendar))
-        return HttpResponseRedirect(reverse('acl_groups_object', args=[ct.pk, calendar.pk]) + '?next=%s' % reverse('admin_list_calendars'))
+        return HttpResponseRedirect(reverse('acl_groups_object',
+                        args=[ct.pk, calendar.pk]) + '?next=%s' % reverse('admin_list_calendars'))
     else:
         return HttpResponseRedirect('/')
 
@@ -665,6 +679,7 @@ def admin_add_calendar(request):
         return render_to_response('calendars/edit_calendar.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
+
 
 @login_required()
 def admin_edit_calendar(request, resource_calendar):

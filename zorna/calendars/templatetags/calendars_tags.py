@@ -13,6 +13,7 @@ from zorna.calendars.api import get_resource_calendar
 
 register = template.Library()
 
+
 def get_last_day_of_month(year, month):
     if (month == 12):
         year += 1
@@ -27,7 +28,8 @@ def month_cal(context, year, month):
     ret = []
     if request.user.is_authenticated():
         evt = EventRelation.objects.get_events_for_object(request.user)
-        period = Period(events=evt, start=datetime.datetime(year, month, 1), end=datetime.datetime(year, month, 30))
+        period = Period(events=evt, start=datetime.datetime(year, month, 1), 
+                        end=datetime.datetime(year, month, 30))
         occurrences = []
         for o in period.occurrences:
             if period.classify_occurrence(o):
@@ -56,7 +58,7 @@ def month_cal(context, year, month):
         if day.month == month:
             cal_day['in_month'] = True
         else:
-            cal_day['in_month'] = False  
+            cal_day['in_month'] = False
         week.append(cal_day)
         if day.weekday() == 6:
             month_cal.append(week)
@@ -66,7 +68,7 @@ def month_cal(context, year, month):
 
     return {'calendar': month_cal, 'headers': week_headers}
 
-register.inclusion_tag('calendars/month_cal.html', takes_context = True)(month_cal)
+register.inclusion_tag('calendars/month_cal.html', takes_context=True)(month_cal)
 
 
 def get_date_status(value):
@@ -75,7 +77,7 @@ def get_date_status(value):
         present day returns representing string. Otherwise, returns an empty string or overdue string
         if date value is late.
         """
-        try: 
+        try:
             value = date(value.year, value.month, value.day)
         except AttributeError:
             # Passed value wasn't a date object
@@ -115,11 +117,11 @@ def get_events_for_object(obj, start_date, end_date):
             ed['allday'] = True
         else:
             ed['allday'] = False
-            
+
         ed['title'] = occ.title
         ed['start'] = occ.start
         ed['end'] = occ.end
-        ed['status'] = get_date_status(occ.start) # 'overdue', 'today' , 'tomorrow' or ''
+        ed['status'] = get_date_status(occ.start)  # 'overdue', 'today' , 'tomorrow' or ''
         ed['description'] = occ.description
         ed['author'] = User.objects.get(pk=occ.event.creator_id).get_full_name()
         if occ.details.bgcolor:
@@ -130,12 +132,13 @@ def get_events_for_object(obj, start_date, end_date):
         else:
             ed['backgroundColor'] = False
             ed['category'] = ''
-             
+
         events_list.append(ed)
     return events_list
 
-@register.tag(name="user_calendar_events")        
-def user_calendar_events( parser, token ):
+
+@register.tag(name="user_calendar_events")
+def user_calendar_events(parser, token):
     '''
     {% calendar_events 'date' 'limit' as events %}
     return events for current user
@@ -154,30 +157,32 @@ def user_calendar_events( parser, token ):
     varname = bits[-1]
     return user_calendar_events_node(cal_date, limit, varname)
 
-class user_calendar_events_node( template.Node ):
+
+class user_calendar_events_node(template.Node):
     def __init__(self, cal_date, limit, var_name):
         sd = cal_date[1:-1]
         if sd:
             sd = map(int, sd.split('-'))
             start_date = datetime.datetime(sd[0], sd[1], sd[2])
         else:
-            start_date = datetime.datetime.today() 
-            
+            start_date = datetime.datetime.today()
+
         limits = limit[1:-1].split(',')
         self.start_date = start_date - datetime.timedelta(days=int(limits[0]))
         self.end_date = start_date + datetime.timedelta(days=int(limits[1]))
         self.var_name = var_name
-        
+
     def render(self, context):
         request = context['request']
         events_list = []
         if request.user.is_authenticated():
-            events_list = get_events_for_object(request.user, self.start_date, self.end_date)
+            events_list = get_events_for_object(User.objects.get(pk=request.user.pk),
+                                                self.start_date, self.end_date)
         context[self.var_name] = events_list
         return ''
-    
-@register.tag(name="resource_calendar_events")        
-def resource_calendar_events( parser, token ):
+
+@register.tag(name="resource_calendar_events")
+def resource_calendar_events(parser, token):
     '''
     {% resource_calendar_events 'id' 'start_date' 'end_date' as events %}
     return events for current user
@@ -195,21 +200,22 @@ def resource_calendar_events( parser, token ):
     cal_id = int(bits[1][1:-1])
     return resource_calendar_events_node(cal_id, cal_date, limit, varname)
 
-class resource_calendar_events_node( template.Node ):
+
+class resource_calendar_events_node(template.Node):
     def __init__(self, cal_id, cal_date, limit, var_name):
         sd = cal_date[1:-1]
         if sd:
             sd = map(int, sd.split('-'))
             start_date = datetime.datetime(sd[0], sd[1], sd[2])
         else:
-            start_date = datetime.datetime.today() 
-            
+            start_date = datetime.datetime.today()
+
         limits = limit[1:-1].split(',')
         self.start_date = start_date - datetime.timedelta(days=int(limits[0]))
         self.end_date = start_date + datetime.timedelta(days=int(limits[1]))
         self.var_name = var_name
         self.cal_id = cal_id
-        
+
     def render(self, context):
         request = context['request']
         events_list = []
@@ -220,6 +226,6 @@ class resource_calendar_events_node( template.Node ):
             if calendar.pk in ao:
                 events_list = get_events_for_object(resource, self.start_date, self.end_date)
         except:
-            pass 
+            pass
         context[self.var_name] = events_list
         return ''
