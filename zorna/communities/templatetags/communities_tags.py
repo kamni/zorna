@@ -12,7 +12,8 @@ from zorna.utilit import get_upload_path, get_upload_communities
 from zorna.acl.models import get_acl_for_model, get_allowed_objects, get_acl_by_object
 from zorna.communities.views import get_all_messages
 
-register = template.Library() 
+register = template.Library()
+
 
 def auto_completion_search_members(context, input_suggest):
     """
@@ -23,12 +24,12 @@ def auto_completion_search_members(context, input_suggest):
     """
     request = context['request']
     input_suggest = input_suggest
-    
+
     data = []
     ao = set([])
-    ao_member = get_allowed_objects(request.user, Community, 'member')        
+    ao_member = get_allowed_objects(request.user, Community, 'member')
     ao = ao.union(set(ao_member))
-    ao_manage = get_allowed_objects(request.user, Community, 'manage')        
+    ao_manage = get_allowed_objects(request.user, Community, 'manage')
     ao = ao.union(set(ao_manage))
 
     communities = Community.objects.filter(id__in=ao).order_by('name')
@@ -37,9 +38,10 @@ def auto_completion_search_members(context, input_suggest):
         objects = objects.union(set(get_acl_by_object(com, 'member')))
         objects = objects.union(set(get_acl_by_object(com, 'manage')))
         data.append([com.name, ("g-%s" % str(com.id))])
-    
-    data.extend([ ("%s %s" % (x.last_name, x.first_name), ("u-%s" % str(x.id))) for x in objects ])
-    members_data = simplejson.dumps(data)    
+
+    data.extend([("%s %s" % (x.last_name, x.first_name), ("u-%s" % str(x.id)))
+                for x in objects])
+    members_data = simplejson.dumps(data)
     return locals()
 
 auto_completion_search_members = register.inclusion_tag(
@@ -48,23 +50,27 @@ auto_completion_search_members = register.inclusion_tag(
 )(auto_completion_search_members)
 
 
-class user_communities( template.Node ):
+class user_communities(template.Node):
+
     def __init__(self, var_name):
         self.var_name = var_name
-        
+
     def render(self, context):
         request = context['request']
         check = get_acl_for_model(Community)
-        allowed_objects = get_allowed_objects(request.user, Community, 'member')        
-        communities = Community.objects.filter(id__in=allowed_objects).order_by('name')
+        allowed_objects = get_allowed_objects(
+            request.user, Community, 'member')
+        communities = Community.objects.filter(
+            id__in=allowed_objects).order_by('name')
         for com in communities:
             com.manager = check.manage_community(com, request.user)
             com.member = True
         context[self.var_name] = communities
         return ''
-    
-@register.tag(name="get_user_communities")        
-def get_user_communities( parser, token ):
+
+
+@register.tag(name="get_user_communities")
+def get_user_communities(parser, token):
     bits = token.split_contents()
     if 3 != len(bits):
         raise TemplateSyntaxError('%r expects 3 arguments' % bits[0])
@@ -74,19 +80,22 @@ def get_user_communities( parser, token ):
     varname = bits[-1]
     return user_communities(varname)
 
-class community_messages( template.Node ):
+
+class community_messages(template.Node):
+
     def __init__(self, community, var_name):
         self.var_name = var_name
         self.community = community
-        
+
     def render(self, context):
-        request = context['request']
-        messages = MessageCommunity.objects.select_related().filter(communities__exact=self.community)
+        messages = MessageCommunity.objects.select_related().filter(
+            communities__exact=self.community)
         context[self.var_name] = messages
         return ''
-    
-@register.tag(name="get_community_messages")        
-def get_community_messages( parser, token ):
+
+
+@register.tag(name="get_community_messages")
+def get_community_messages(parser, token):
     bits = token.split_contents()
     if 4 != len(bits):
         raise TemplateSyntaxError('%r expects 4 arguments' % bits[0])
@@ -97,11 +106,13 @@ def get_community_messages( parser, token ):
     varname = bits[-1]
     return community_messages(community, varname)
 
-class attachments_message( template.Node ):
+
+class attachments_message(template.Node):
+
     def __init__(self, message, var_name):
         self.var_name = var_name
         self.message = message
-        
+
     def render(self, context):
         path = "%s/%s" % (get_upload_path(), self.message)
         try:
@@ -109,9 +120,10 @@ class attachments_message( template.Node ):
         except:
             context[self.var_name] = []
         return ''
-    
-@register.tag(name="get_attachments_message")        
-def get_attachments_message( parser, token ):
+
+
+@register.tag(name="get_attachments_message")
+def get_attachments_message(parser, token):
     bits = token.split_contents()
     if 4 != len(bits):
         raise TemplateSyntaxError('%r expects 4 arguments' % bits[0])
@@ -122,12 +134,14 @@ def get_attachments_message( parser, token ):
     varname = bits[-1]
     return attachments_message(message, varname)
 
-class last_communities_attachments( template.Node ):
+
+class last_communities_attachments(template.Node):
+
     def __init__(self, community, number, var_name):
         self.community = Variable(community)
         self.var_name = var_name
         self.number = number
-        
+
     def render(self, context):
         request = context['request']
         community = self.community.resolve(context)
@@ -136,7 +150,7 @@ class last_communities_attachments( template.Node ):
 
         context[self.var_name] = []
         nbfiles = self.number
-        for msg in messages:        
+        for msg in messages:
             if nbfiles == 0:
                 break
             path = "%s/%s" % (get_upload_communities(), msg.pk)
@@ -147,13 +161,14 @@ class last_communities_attachments( template.Node ):
                     nbfiles -= 1
                     if nbfiles == 0:
                         break
-                context[self.var_name].append({ 'message': msg, 'files': files})
+                context[self.var_name].append({'message': msg, 'files': files})
             except:
                 pass
         return ''
-    
-@register.tag(name="get_last_communities_attachments")        
-def get_last_communities_attachments( parser, token ):
+
+
+@register.tag(name="get_last_communities_attachments")
+def get_last_communities_attachments(parser, token):
     bits = token.split_contents()
     if 5 != len(bits):
         raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])

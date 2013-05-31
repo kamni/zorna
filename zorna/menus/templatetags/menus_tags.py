@@ -1,11 +1,7 @@
-import os
 
-from django.core.urlresolvers import reverse
 from django.template import TemplateSyntaxError
 from django import template
 from django.db.models import Q
-from django.template import Variable
-from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from zorna.menus.models import ZornaMenuItem
@@ -16,6 +12,7 @@ from zorna.forms.models import FormsForm
 from zorna.faq.models import Faq
 
 register = template.Library()
+
 
 def get_menu_children(request, menu):
     ao_articles = get_allowed_objects(request.user, ArticleCategory, 'reader')
@@ -42,6 +39,7 @@ def get_menu_children(request, menu):
                 child.url = child.content_object.get_url_browse_path()
     return children
 
+
 def show_menu(context, menu_name, menu_type=None):
     '''
     {% show_menu slug extra_info %}
@@ -61,6 +59,7 @@ def show_menu(context, menu_name, menu_type=None):
     return context
 register.inclusion_tag('menus/menu.html', takes_context=True)(show_menu)
 
+
 def show_menu_item(context, menu_item):
     '''
     {% show_menu menu %}
@@ -72,7 +71,8 @@ def show_menu_item(context, menu_item):
     context['menu_item'] = menu_item
     context['menu_item_children'] = get_menu_children(request, menu_item)
     return context
-register.inclusion_tag('menus/menu_item.html', takes_context=True)(show_menu_item)
+register.inclusion_tag(
+    'menus/menu_item.html', takes_context=True)(show_menu_item)
 
 
 @register.tag(name="menu_item")
@@ -92,7 +92,9 @@ def menu_item(parser, token):
     varname = bits[-1]
     return menu_item_node(menu_item, varname)
 
+
 class menu_item_node(template.Node):
+
     def __init__(self, menu_item, var_name):
         if not (menu_item[0] == menu_item[-1] and menu_item[0] in ('"', "'")):
             self.menu_item = template.Variable(menu_item)
@@ -111,7 +113,8 @@ class menu_item_node(template.Node):
             mi = ZornaMenuItem.objects.get(slug=menu_item)
         except ZornaMenuItem.DoesNotExist:
             return ''
-        ao_articles = get_allowed_objects(request.user, ArticleCategory, 'reader')
+        ao_articles = get_allowed_objects(
+            request.user, ArticleCategory, 'reader')
         if mi.object_id and mi.content_type == ContentType.objects.get(model='ArticleCategory'):
             if not mi.object_id in ao_articles:
                 return ''

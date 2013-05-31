@@ -20,12 +20,13 @@ EVENT_ITEMS = (
     ('rrule', 'rrule'),
 )
 
+
 class ZornaICalendarFeed(object):
 
     def __call__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        
+
         self.cal = vobject.iCalendar()
 
         for item in self.items():
@@ -36,7 +37,7 @@ class ZornaICalendarFeed(object):
                 for po in persisted_occurrences:
                     item.occ = po
                     self.add_event(item)
-            
+
         response = HttpResponse(self.cal.serialize(), mimetype='text/calendar')
         response['Filename'] = 'calendar.ics'  # IE needs this
         response['Content-Disposition'] = 'attachment; filename=calendar.ics'
@@ -48,14 +49,12 @@ class ZornaICalendarFeed(object):
             value = getattr(self, 'item_' + key)(item)
             if value:
                 event.add(vkey).value = value
-        
 
     def items(self):
         return []
 
     def item_uid(self, item):
         pass
-
 
     def item_start(self, item):
         pass
@@ -77,20 +76,22 @@ class ZornaICalendarFeed(object):
 
     def item_created(self, item):
         pass
-    
+
     def item_rrule(self, item):
         pass
 
     def item_recurrence_id(self, item):
         pass
-    
+
+
 class ZornaCalendarICalendar(ZornaICalendarFeed):
+
     def items(self):
-        cal_id = self.args[1]
         slug = self.args[1]
         key = self.args[2]
         try:
-            zcal = ZornaCalendar.objects.get(calendar__slug=slug, secret_key=key)
+            zcal = ZornaCalendar.objects.get(
+                calendar__slug=slug, secret_key=key)
             cal = zcal.calendar
         except:
             return Calendar.objects.none()
@@ -116,7 +117,7 @@ class ZornaCalendarICalendar(ZornaICalendarFeed):
             return item.occ.title
         else:
             return item.title
-        
+
     def item_description(self, item):
         if item.occ:
             return item.occ.description
@@ -125,25 +126,26 @@ class ZornaCalendarICalendar(ZornaICalendarFeed):
 
     def item_created(self, item):
         return item.created_on
-    
+
     def item_rrule(self, item):
         rrule = ''
         if item.occ is None and item.rule:
-            rrule = 'FREQ='+item.rule.frequency
+            rrule = 'FREQ=' + item.rule.frequency
             p = item.rule.params.split(';')
             for e in p:
                 e = e.split(':')
                 if e[0] == 'byweekday':
                     e[0] = 'BYDAY'
-                rrule = rrule + ';'+e[0]+'='
-                el= e[1].split(',')
+                rrule = rrule + ';' + e[0] + '='
+                el = e[1].split(',')
                 days = []
                 for d in el:
                     days.append(DAYS_NUMS[int(d)])
-                rrule = rrule + ','.join(days) 
+                rrule = rrule + ','.join(days)
             if item.end_recurring_period:
-                rrule = rrule + ';UNTIL=' + item.end_recurring_period.strftime('%Y%m%dT%H%M%SZ')
-            
+                rrule = rrule + ';UNTIL=' + \
+                    item.end_recurring_period.strftime('%Y%m%dT%H%M%SZ')
+
         return rrule.upper()
 
     def item_recurrence_id(self, item):

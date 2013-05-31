@@ -4,5 +4,5 @@ from zorna.search.views import search
 
 
 urlpatterns = patterns('',
-    url(r'^$', search, name='haystack_search'),
+                       url(r'^$', search, name='haystack_search'),
                        )

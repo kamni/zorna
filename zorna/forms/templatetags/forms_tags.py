@@ -6,18 +6,20 @@ from django.template import Variable
 from zorna.acl.models import get_acl_for_model
 from zorna.forms.models import FormsForm
 from zorna.forms.api import forms_get_entries
-    
-register = template.Library() 
 
-class check_form_permission_node( template.Node ):
+register = template.Library()
+
+
+class check_form_permission_node(template.Node):
+
     def __init__(self, form, permission, var_name):
         if not (form[0] == form[-1] and form[0] in ('"', "'")):
             self.form = template.Variable(form)
         else:
-            self.form = form[1:-1]           
+            self.form = form[1:-1]
         self.var_name = var_name
         self.permission = permission
-    
+
     def render(self, context):
         request = context['request']
         try:
@@ -30,14 +32,15 @@ class check_form_permission_node( template.Node ):
             func = getattr(check, '%s_formsform' % self.permission, None)
             if func is None:
                 raise Exception("No handler for type %r" % self.permission)
-            else:    
+            else:
                 context[self.var_name] = func(form, request.user)
         except Exception as e:
             pass
         return ''
-    
-@register.tag(name="check_form_permission")        
-def check_permission( parser, token ):
+
+
+@register.tag(name="check_form_permission")
+def check_permission(parser, token):
     bits = token.split_contents()
     if 5 != len(bits):
         raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
@@ -50,7 +53,8 @@ def check_permission( parser, token ):
     return check_form_permission_node(form, permission, varname)
 
 
-class forms_get_entries_node( template.Node ):
+class forms_get_entries_node(template.Node):
+
     def __init__(self, slug, columns, rows, where_field, where_id, q, o, ot):
         self.columns = columns
         self.slug = slug
@@ -60,9 +64,8 @@ class forms_get_entries_node( template.Node ):
         self.q = q
         self.where_field = where_field
         self.where_id = where_id
-    
+
     def render(self, context):
-        request = context['request']
         kwargs = {}
         try:
             kwargs['q'] = self.q.resolve(context)
@@ -83,7 +86,7 @@ class forms_get_entries_node( template.Node ):
                 where_field = wf.resolve(context)
             except Exception as e:
                 where_field = self.where_field
-    
+
             try:
                 wd = Variable(self.where_id)
                 where_id = wd.resolve(context)
@@ -95,11 +98,13 @@ class forms_get_entries_node( template.Node ):
         context[self.rows] = rows
         return ''
 
-@register.tag(name="forms_get_entries")        
-def do_forms_get_entries( parser, token ):
+
+@register.tag(name="forms_get_entries")
+def do_forms_get_entries(parser, token):
     bits = token.split_contents()
     if 5 > len(bits):
-        raise TemplateSyntaxError("%r tag follows form %r slug [q <search_string] [o <asc|desc>]  [ot <column_to_sort>] as <column_var> <rows_var>" % bits[0])
+        raise TemplateSyntaxError(
+            "%r tag follows form %r slug [q <search_string] [o <asc|desc>]  [ot <column_to_sort>] as <column_var> <rows_var>" % bits[0])
     if bits[-3] != 'as':
         raise TemplateSyntaxError(
             '%r expects "as" as argument' % bits[0])
@@ -130,15 +135,17 @@ def do_forms_get_entries( parser, token ):
         where_field = where_id = None
     return forms_get_entries_node(slug, columns, rows, where_field, where_id, q, o, ot)
 
-class get_panel_fields_node( template.Node ):
+
+class get_panel_fields_node(template.Node):
+
     def __init__(self, form, panel, varname):
         self.form = Variable(form)
         if not (panel[0] == panel[-1] and panel[0] in ('"', "'")):
             self.panel = Variable(panel)
         else:
-            self.panel = panel[1:-1]        
+            self.panel = panel[1:-1]
         self.var_name = varname
-        
+
     def render(self, context):
         if isinstance(self.panel, Variable):
             form_panel = self.panel.resolve(context)
@@ -154,7 +161,8 @@ class get_panel_fields_node( template.Node ):
                             if isinstance(e[1], (list, tuple)):
                                 for c in e[1]:
                                     if c[0] == f.value():
-                                        f.zcontrol_value = '%s - %s' % (e[0], c[1])
+                                        f.zcontrol_value = '%s - %s' % (
+                                            e[0], c[1])
                                         break
                             else:
                                 if e[0] == f.value():
@@ -165,13 +173,14 @@ class get_panel_fields_node( template.Node ):
                 context[self.var_name].append(f)
             elif not panel and not form_panel:
                 context[self.var_name].append(f)
-        
-        #context[self.var_name] = [f for f in form.visible_fields() if f.field.panel and f.field.panel.name == self.panel]
+
+        # context[self.var_name] = [f for f in form.visible_fields() if
+        # f.field.panel and f.field.panel.name == self.panel]
         return ''
 
 
-@register.tag(name="get_panel_fields")        
-def get_panel_fields( parser, token ):
+@register.tag(name="get_panel_fields")
+def get_panel_fields(parser, token):
     bits = token.split_contents()
     if 5 != len(bits):
         raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
@@ -182,6 +191,7 @@ def get_panel_fields( parser, token ):
     panel = bits[2]
     varname = bits[-1]
     return get_panel_fields_node(form, panel, varname)
+
 
 def show_form_test(context, slug):
     """Display a content form for test.
@@ -197,11 +207,12 @@ def show_form_test(context, slug):
         form = FormsForm.objects.get(slug=slug)
         return {'content': forms_view_design_form(request, form)}
     except FormsForm.DoesNotExist:
-        return { 'content': '' }
-        
+        return {'content': ''}
+
 show_form_test = register.inclusion_tag('forms/form_body_test.html',
-                                      takes_context=True)(show_form_test)
+                                        takes_context=True)(show_form_test)
+
 
 @register.filter(name='zstr')
 def str_(value):
-    return str(value)                                    
+    return str(value)

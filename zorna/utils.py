@@ -1,7 +1,8 @@
 # Create your views here.
 import os
 import re
-import posixpath, urllib
+import posixpath
+import urllib
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse, HttpResponseRedirect
@@ -16,16 +17,18 @@ from django.contrib.auth.decorators import user_passes_test
 from zorna.articles.models import ArticleCategory
 from zorna.articles.views import view_category, view_category_archive
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def su(request, username, redirect_url='/'):
     su_user = get_object_or_404(User, username=username, is_active=True)
     request.session[SESSION_KEY] = su_user.id
     return http.HttpResponseRedirect(redirect_url)
 
+
 def get_context_text(pathfile):
     """
     Parse file an return context ( yaml ) and text.
-    Context is between "{% zorna" tag and "%}" tag 
+    Context is between "{% zorna" tag and "%}" tag
     """
     start = re.compile(r'.*?{%\s*zorna\s+(.*?)(%}|$)')
     end = re.compile(r'(.*?)(%})')
@@ -51,12 +54,13 @@ def get_context_text(pathfile):
         else:
             text = text + line
     for line in fin:
-        text = text + line            
-    #tag_re = re.compile(r'(%s\s*block(.*?)\s*%s)(.*?)(%s\s*endblock.*?\s*%s)' % (re.escape('{%'), re.escape('%}'),re.escape('{%'), re.escape('%}')), re.M|re.DOTALL)
-    #tag_re2 = re.compile(r'(%s\s*zorna)(.*?)(\s*%s)' % (re.escape('{%'), re.escape('%}')), re.M|re.DOTALL)
-    #for match in tag_re.finditer(text):
+        text = text + line
+    # tag_re = re.compile(r'(%s\s*block(.*?)\s*%s)(.*?)(%s\s*endblock.*?\s*%s)' % (re.escape('{%'), re.escape('%}'),re.escape('{%'), re.escape('%}')), re.M|re.DOTALL)
+    # tag_re2 = re.compile(r'(%s\s*zorna)(.*?)(\s*%s)' % (re.escape('{%'), re.escape('%}')), re.M|re.DOTALL)
+    # for match in tag_re.finditer(text):
     #    g = match.groups()
     return context, text
+
 
 def render_page(request, path):
     path = posixpath.normpath(urllib.unquote(path))
@@ -79,25 +83,26 @@ def render_page(request, path):
         folders = newpath.split('/')
         filename = folders.pop() + ".html"
         newpath = "/".join(folders)
-    
+
     if newpath:
-        pathfile = newpath + '/' +filename
+        pathfile = newpath + '/' + filename
     else:
-        pathfile = filename            
-    context, text = get_context_text(os.path.join(settings.PROJECT_PATH, settings.ZORNA_CONTENT, pathfile))
+        pathfile = filename
+    context, text = get_context_text(os.path.join(
+        settings.PROJECT_PATH, settings.ZORNA_CONTENT, pathfile))
     if context:
         import yaml
         context = yaml.load(context)
         context['zorna_title_page'] = context['title']
-        if context.has_key('keywords'):
+        if 'keywords' in context:
             context['zorna_keywords_page'] = context['keywords']
         else:
             context['zorna_keywords_page'] = ''
-        if context.has_key('description'):
+        if 'description' in context:
             context['zorna_description_page'] = context['description']
         else:
             context['zorna_description_page'] = ''
-            
+
         try:
             context['author'] = User.objects.get(pk=int(context['author']))
         except:
@@ -113,13 +118,15 @@ def render_page(request, path):
         print >> sys.stderr, '%s' % e
         return ''
 
+
 def view_content(request, path):
     page = render_page(request, path)
     if page:
         return HttpResponse(page)
     else:
         return HttpResponseRedirect('/')
-        
+
+
 def load_home_page(request):
     if request.user.is_anonymous():
         url = getattr(settings, 'ZORNA_PUBLIC_REDIRECT_URL', None)
@@ -133,21 +140,21 @@ def load_home_page(request):
             return HttpResponseRedirect(url)
         t = loader.get_template('private.html')
         title = _(u'Intranet')
-        
+
     c = RequestContext(request, {'zorna_title_page': title})
-    return HttpResponse(t.render(c))  
-    
+    return HttpResponse(t.render(c))
 
 
 def zorna_category(request, path=None):
     obj = ArticleCategory.objects.from_path(path)
-    if obj == None:
-        return load_home_page(request) #raise Http404
-    return view_category(request, obj)    
+    if obj is None:
+        return load_home_page(request)  # raise Http404
+    return view_category(request, obj)
+
 
 def zorna_stories_archives(request, path, year, month):
     try:
         obj = ArticleCategory.objects.from_path(path)
         return view_category_archive(request, obj, year, month)
     except:
-        return HttpResponseRedirect('/') 
+        return HttpResponseRedirect('/')

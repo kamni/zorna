@@ -1,4 +1,3 @@
-import os
 from django.forms import ModelForm
 from django.template.defaultfilters import slugify
 from django import forms
@@ -9,10 +8,10 @@ from zorna.acl.models import get_allowed_objects
 
 
 class FaqForm(ModelForm):
-    
+
     class Meta:
         model = Faq
-        exclude = ('sort_order',)  
+        exclude = ('sort_order',)
 
     def clean_slug(self):
         if 'slug' in self.cleaned_data and 'name' in self.cleaned_data:
@@ -20,21 +19,24 @@ class FaqForm(ModelForm):
                 pass
             else:
                 self.cleaned_data['slug'] = self.cleaned_data['name']
-            self.cleaned_data['slug'] = slugify(self.cleaned_data['slug'])        
+            self.cleaned_data['slug'] = slugify(self.cleaned_data['slug'])
             return self.cleaned_data['slug']
         else:
-            raise forms.ValidationError(_(u'You must provide a slug or a category name'))
+            raise forms.ValidationError(_(
+                u'You must provide a slug or a category name'))
 
 
 class FaqQuestionCategoryForm(ModelForm):
+
     class Meta:
         model = FaqCategory
-        exclude = ('sort_order',)  
+        exclude = ('sort_order',)
 
     def __init__(self, request, *args, **kwargs):
         super(FaqQuestionCategoryForm, self).__init__(*args, **kwargs)
         allowed_objects = get_allowed_objects(request.user, Faq, 'manager')
-        self.fields['faq'].queryset = Faq.objects.filter(pk__in=allowed_objects)
+        self.fields['faq'].queryset = Faq.objects.filter(
+            pk__in=allowed_objects)
 
     def clean_slug(self):
         if 'slug' in self.cleaned_data and 'name' in self.cleaned_data:
@@ -42,19 +44,22 @@ class FaqQuestionCategoryForm(ModelForm):
                 pass
             else:
                 self.cleaned_data['slug'] = self.cleaned_data['name']
-            self.cleaned_data['slug'] = slugify(self.cleaned_data['slug'])        
+            self.cleaned_data['slug'] = slugify(self.cleaned_data['slug'])
             return self.cleaned_data['slug']
         else:
-            raise forms.ValidationError(_(u'You must provide a slug or a category name'))
-        
+            raise forms.ValidationError(_(
+                u'You must provide a slug or a category name'))
+
+
 class FaqQuestionForm(ModelForm):
-    question = forms.CharField(_(u'question'), widget=forms.Textarea(attrs={'rows':'5', 'cols':'80'}))
-    answer = forms.CharField(_(u'answer'), widget=CKEditorWidget())
+    question = forms.CharField(label=_(u'Question'), widget=forms.Textarea(
+        attrs={'rows': '5', 'cols': '80'}))
+    answer = forms.CharField(label=_(u'Answer'), widget=CKEditorWidget())
+
     class Meta:
         model = FaqQuestion
-        exclude = ('sort_order', 'slug')  
+        exclude = ('sort_order', 'slug')
 
     def __init__(self, request, faq, *args, **kwargs):
         super(FaqQuestionForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = FaqCategory.objects.filter(faq=faq)
-       

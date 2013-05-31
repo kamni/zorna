@@ -17,6 +17,7 @@ from zorna.utilit import get_upload_communities
 
 
 class ZornaCommunityAddons(object):
+
     def get_title(self, id):
         return ''
 
@@ -74,6 +75,7 @@ class ZornaCommunityAddons(object):
     def render_widget(self, request, id, community_id):
         return None, None
 
+
 def initialize_context(request):
     ret = {}
     ret['all_msg'] = request.REQUEST.get("all_msg", 'all')
@@ -117,21 +119,25 @@ def initialize_context(request):
     data = []
     ret['members'] = set([])
     for com in communities:
-        ret['members'] = ret['members'].union(set(get_acl_by_object(com, 'member')))
-        ret['members'] = ret['members'].union(set(get_acl_by_object(com, 'manage')))
+        ret['members'] = ret['members'].union(
+            set(get_acl_by_object(com, 'member')))
+        ret['members'] = ret['members'].union(
+            set(get_acl_by_object(com, 'manage')))
         data.append([com.name, "g-%s" % str(com.id)])
 
-    data.extend([ ("%s %s" % (x.last_name, x.first_name), ("u-%s" % str(x.id))) for x in ret['members']])
+    data.extend([("%s %s" % (x.last_name, x.first_name), ("u-%s" % str(x.id)))
+                for x in ret['members']])
     ret['members_count'] = len(ret['members'])
 
     if int(ret['community_id']):
         contributors = MessageCommunity.objects.values('owner').filter(
-                                Q(communities=int(ret['community_id'])) |
-                                Q(reply__communities=int(ret['community_id']))
-                            ).annotate(total=Count('owner')
-                        )
+            Q(communities=int(ret['community_id'])) |
+            Q(reply__communities=int(ret['community_id']))
+        ).annotate(total=Count('owner')
+                   )
     else:
-        contributors = MessageCommunity.objects.values('owner').annotate(total=Count('owner'))
+        contributors = MessageCommunity.objects.values(
+            'owner').annotate(total=Count('owner'))
     contributors = contributors.order_by('-total')[0:10]
 
     ret['users_avatars'] = {}
@@ -243,12 +249,15 @@ def get_community_managers(user, community):
 def is_member_by_message(user, message):
     baccess = False
     allowed_objects = get_allowed_objects(user, Community, 'member')
-    c = Community.objects.filter(messagecommunity__pk=message, pk__in=allowed_objects)
+    c = Community.objects.filter(
+        messagecommunity__pk=message, pk__in=allowed_objects)
     if c:
         baccess = True
     elif user.is_authenticated():
         # is this message is sent to current user?
-        # u = User.objects.filter(Q(message_users__messagecommunity__pk=message, pk=user.pk))
+        # u =
+        # User.objects.filter(Q(message_users__messagecommunity__pk=message,
+        # pk=user.pk))
         l = MessageCommunity.objects.filter(users=user, pk=message)
         if l:
             baccess = True
@@ -264,7 +273,8 @@ def is_member_by_message(user, message):
 def is_manager_by_message(user, message):
     baccess = False
     allowed_objects = get_allowed_objects(user, Community, 'manage')
-    c = Community.objects.filter(messagecommunity__pk=message, pk__in=allowed_objects)
+    c = Community.objects.filter(
+        messagecommunity__pk=message, pk__in=allowed_objects)
     if c:
         baccess = True
     elif user.is_authenticated():
@@ -278,36 +288,46 @@ def is_manager_by_message(user, message):
 
 
 def get_all_messages(request, community_id=0, from_date=None):
-    allowed_objects = get_allowed_objects(request.user, Community, ['member', 'manage'])
+    allowed_objects = get_allowed_objects(
+        request.user, Community, ['member', 'manage'])
     messages = MessageCommunity.objects.none()
     if request.user.is_authenticated():
         if community_id and int(community_id) in allowed_objects:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities=community_id), reply__isnull=True)
+            messages = MessageCommunity.objects.select_related().filter(
+                Q(communities=community_id), reply__isnull=True)
         elif int(community_id) == 0:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) | Q(users=request.user) | Q(owner=request.user), reply__isnull=True)
+            messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) | Q(
+                users=request.user) | Q(owner=request.user), reply__isnull=True)
     else:
         if community_id and int(community_id) in allowed_objects:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities=community_id), reply__isnull=True)
+            messages = MessageCommunity.objects.select_related().filter(
+                Q(communities=community_id), reply__isnull=True)
         elif int(community_id) == 0:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects), reply__isnull=True)
+            messages = MessageCommunity.objects.select_related().filter(
+                Q(communities__in=allowed_objects), reply__isnull=True)
 
     if from_date:
-        messages = messages.filter(Q(time_updated__gt=from_date) | Q(reply__time_updated__gt=from_date))
+        messages = messages.filter(Q(time_updated__gt=from_date) | Q(
+            reply__time_updated__gt=from_date))
     return messages
 
 
 def get_message_by_id(request, message_id):
-    allowed_objects = get_allowed_objects(request.user, Community, ['member', 'manage'])
+    allowed_objects = get_allowed_objects(
+        request.user, Community, ['member', 'manage'])
     if request.user.is_authenticated():
-        messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) | Q(users=request.user) | Q(owner=request.user), reply__isnull=True, pk=message_id)
+        messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) | Q(
+            users=request.user) | Q(owner=request.user), reply__isnull=True, pk=message_id)
     else:
-        messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects), reply__isnull=True, pk=message_id)
+        messages = MessageCommunity.objects.select_related().filter(Q(
+            communities__in=allowed_objects), reply__isnull=True, pk=message_id)
     return messages
 
 
 def get_followed_messages(request):
     if request.user.is_authenticated():
-        messages = MessageCommunity.objects.select_related().filter(followers=request.user)
+        messages = MessageCommunity.objects.select_related().filter(
+            followers=request.user)
     else:
         return MessageCommunity.objects.none()
     return messages
@@ -315,53 +335,70 @@ def get_followed_messages(request):
 
 def get_last_messages(request):
     if request.user.is_authenticated():
-        messages = get_all_messages(request, 0, request.user.get_profile().last_activity)
+        messages = get_all_messages(
+            request, 0, request.user.get_profile().last_activity)
     else:
         return MessageCommunity.objects.none()
     return messages
 
 
 def get_member_messages(request, member):
-    allowed_objects = get_allowed_objects(request.user, Community, ['member', 'manage'])
-    messages = MessageCommunity.objects.select_related().filter(Q(users=member) | (Q(communities__in=allowed_objects) & (Q(owner=member) | Q(messagecommunity__owner=member) | Q(messagecommunity__users=member) | Q(users=member))))
+    allowed_objects = get_allowed_objects(
+        request.user, Community, ['member', 'manage'])
+    messages = MessageCommunity.objects.select_related().filter(Q(users=member) | (Q(communities__in=allowed_objects) & (
+        Q(owner=member) | Q(messagecommunity__owner=member) | Q(messagecommunity__users=member) | Q(users=member))))
     return messages
 
 
 def get_contributor_messages(request, member):
-    allowed_objects = get_allowed_objects(request.user, Community, ['member', 'manage'])
-    # messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) & (Q(owner=member)|Q(messagecommunity__owner=member)))
-    messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) & (Q(owner=member, reply__isnull=True) | Q(messagecommunity__owner=member)))
+    allowed_objects = get_allowed_objects(
+        request.user, Community, ['member', 'manage'])
+    # messages =
+    # MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects)
+    # & (Q(owner=member)|Q(messagecommunity__owner=member)))
+    messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) & (
+        Q(owner=member, reply__isnull=True) | Q(messagecommunity__owner=member)))
     return messages
 
 
 def get_messages_extra_by_content_type(request, ct, community_id=0):
-    allowed_objects = get_allowed_objects(request.user, Community, ['member', 'manage'])
+    allowed_objects = get_allowed_objects(
+        request.user, Community, ['member', 'manage'])
     if request.user.is_authenticated():
         if community_id and int(community_id) in allowed_objects:
-            messages = MessageCommunityExtra.objects.select_related().filter(Q(message__communities=community_id), message__reply__isnull=True, content_type=ct)
+            messages = MessageCommunityExtra.objects.select_related().filter(Q(
+                message__communities=community_id), message__reply__isnull=True, content_type=ct)
         else:
-            messages = MessageCommunityExtra.objects.select_related().filter(Q(message__communities__in=allowed_objects) | Q(message__users=request.user) | Q(message__owner=request.user), message__reply__isnull=True, content_type=ct)
+            messages = MessageCommunityExtra.objects.select_related().filter(Q(message__communities__in=allowed_objects) | Q(
+                message__users=request.user) | Q(message__owner=request.user), message__reply__isnull=True, content_type=ct)
     else:
         if community_id and int(community_id) in allowed_objects:
-            messages = MessageCommunityExtra.objects.select_related().filter(Q(message__communities=community_id), message__reply__isnull=True, content_type=ct)
+            messages = MessageCommunityExtra.objects.select_related().filter(Q(
+                message__communities=community_id), message__reply__isnull=True, content_type=ct)
         else:
-            messages = MessageCommunityExtra.objects.select_related().filter(Q(message__communities__in=allowed_objects), message__reply__isnull=True, content_type=ct)
+            messages = MessageCommunityExtra.objects.select_related().filter(Q(
+                message__communities__in=allowed_objects), message__reply__isnull=True, content_type=ct)
 
     return messages.distinct()
 
 
 def get_messages_by_content_type(request, ct, community_id=0):
-    allowed_objects = get_allowed_objects(request.user, Community, ['member', 'manage'])
+    allowed_objects = get_allowed_objects(
+        request.user, Community, ['member', 'manage'])
     if request.user.is_authenticated():
         if community_id and int(community_id) in allowed_objects:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities=community_id) | Q(users=request.user) | Q(owner=request.user), messagecommunityextra__content_type=ct)
+            messages = MessageCommunity.objects.select_related().filter(Q(communities=community_id) | Q(
+                users=request.user) | Q(owner=request.user), messagecommunityextra__content_type=ct)
         else:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) | Q(users=request.user) | Q(owner=request.user), messagecommunityextra__content_type=ct)
+            messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects) | Q(
+                users=request.user) | Q(owner=request.user), messagecommunityextra__content_type=ct)
     else:
         if community_id and int(community_id) in allowed_objects:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities=community_id), messagecommunityextra__content_type=ct)
+            messages = MessageCommunity.objects.select_related().filter(Q(
+                communities=community_id), messagecommunityextra__content_type=ct)
         else:
-            messages = MessageCommunity.objects.select_related().filter(Q(communities__in=allowed_objects), messagecommunityextra__content_type=ct)
+            messages = MessageCommunity.objects.select_related().filter(Q(
+                communities__in=allowed_objects), messagecommunityextra__content_type=ct)
 
     return messages.distinct()
 
@@ -372,14 +409,16 @@ def get_message_by_object(obj):
 
 def get_tome_messages(request):
     if request.user.is_authenticated():
-        messages = MessageCommunity.objects.select_related().filter(users=request.user)
+        messages = MessageCommunity.objects.select_related().filter(
+            users=request.user)
     else:
         return MessageCommunity.objects.none()
     return messages
 
 
 def detete_message_community_extra(object, ct):
-    MessageCommunityExtra.objects.filter(content_type=ct, object_id=object.pk).delete()
+    MessageCommunityExtra.objects.filter(
+        content_type=ct, object_id=object.pk).delete()
 
 
 def add_community(name, description):
@@ -388,7 +427,8 @@ def add_community(name, description):
         return com
     except Community.DoesNotExist:
         try:
-            com = Community(name=name, description=description, bgcolor='FF7400')
+            com = Community(
+                name=name, description=description, bgcolor='FF7400')
             com.save()
             get_community_calendar(com)
             return com

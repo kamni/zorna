@@ -1,15 +1,15 @@
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 
 from zorna.menus.models import ZornaMenuItem
 from zorna.site.models import SiteOptions
-from zorna.menus.forms import ZornaMenuItemUrlForm, ZornaMenuItemArticleCategoryForm, ZornaMenuItemFaqForm, ZornaMenuItemFormsForm, ZornaMenuItemPageContentForm
+from zorna.menus.forms import ZornaMenuItemUrlForm, ZornaMenuItemArticleCategoryForm, \
+    ZornaMenuItemFaqForm, ZornaMenuItemFormsForm, ZornaMenuItemPageContentForm
 
 
 def user_has_access_to_menus(user):
@@ -27,6 +27,7 @@ def menus_home_view(request):
     else:
         return HttpResponseRedirect('/')
 
+
 @login_required()
 def menus_add_item_url(request):
     if user_has_access_to_menus(request.user):
@@ -43,28 +44,33 @@ def menus_add_item_url(request):
             form = ZornaMenuItemUrlForm()
 
         context = RequestContext(request)
-        extra_context = {'form': form, 'curitem': False, 'title': _(u'Add a link')}
+        extra_context = {'form':
+                         form, 'curitem': False, 'title': _(u'Add a link')}
         return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
 
+
 @login_required()
 def menus_edit_item_url(request, item):
     if request.method == 'POST':
-        form = ZornaMenuItemUrlForm(request.POST, instance=item, initial={'url': item.url})
+        form = ZornaMenuItemUrlForm(
+            request.POST, instance=item, initial={'url': item.url})
         if form.is_valid():
             item = form.save(commit=False)
             item.url = form.cleaned_data['url']
             item.save()
             return HttpResponseRedirect(reverse('menus_home_view'))
         else:
-            form = ZornaMenuItemUrlForm(request.POST, instance=item, initial={'url': item.url})
+            form = ZornaMenuItemUrlForm(
+                request.POST, instance=item, initial={'url': item.url})
     else:
         form = ZornaMenuItemUrlForm(instance=item, initial={'url': item.url})
 
     context = RequestContext(request)
     extra_context = {'form': form, 'curitem': item}
     return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
+
 
 @login_required()
 def menus_add_item_article_category(request):
@@ -82,24 +88,29 @@ def menus_add_item_article_category(request):
             form = ZornaMenuItemArticleCategoryForm()
 
         context = RequestContext(request)
-        extra_context = {'form': form, 'curitem': False, 'title': _(u'Add a link to an articles category')}
+        extra_context = {'form':
+                         form, 'curitem': False, 'title': _(u'Add a link to an articles category')}
         return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
 
+
 @login_required()
 def menus_edit_item_article_category(request, item):
     if request.method == 'POST':
-        form = ZornaMenuItemArticleCategoryForm(request.POST, instance=item, initial={'category': item.object_id})
+        form = ZornaMenuItemArticleCategoryForm(
+            request.POST, instance=item, initial={'category': item.object_id})
         if form.is_valid():
             item = form.save(commit=False)
             item.content_object = form.cleaned_data['category']
             item.save()
             return HttpResponseRedirect(reverse('menus_home_view'))
         else:
-            form = ZornaMenuItemArticleCategoryForm(request.POST, instance=item, initial={'category': item.object_id})
+            form = ZornaMenuItemArticleCategoryForm(
+                request.POST, instance=item, initial={'category': item.object_id})
     else:
-        form = ZornaMenuItemArticleCategoryForm(instance=item, initial={'category': item.object_id})
+        form = ZornaMenuItemArticleCategoryForm(
+            instance=item, initial={'category': item.object_id})
 
     context = RequestContext(request)
     extra_context = {'form': form, 'curitem': item}
@@ -122,24 +133,29 @@ def menus_add_item_faq(request):
             form = ZornaMenuItemFaqForm()
 
         context = RequestContext(request)
-        extra_context = {'form': form, 'curitem': False, 'title': _(u'Add a link to faq')}
+        extra_context = {'form':
+                         form, 'curitem': False, 'title': _(u'Add a link to faq')}
         return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
 
+
 @login_required()
 def menus_edit_item_faq(request, item):
     if request.method == 'POST':
-        form = ZornaMenuItemFaqForm(request.POST, instance=item, initial={'faq': item.object_id})
+        form = ZornaMenuItemFaqForm(
+            request.POST, instance=item, initial={'faq': item.object_id})
         if form.is_valid():
             item = form.save(commit=False)
             item.content_object = form.cleaned_data['faq']
             item.save()
             return HttpResponseRedirect(reverse('menus_home_view'))
         else:
-            form = ZornaMenuItemFaqForm(request.POST, instance=item, initial={'faq': item.object_id})
+            form = ZornaMenuItemFaqForm(
+                request.POST, instance=item, initial={'faq': item.object_id})
     else:
-        form = ZornaMenuItemFaqForm(instance=item, initial={'faq': item.object_id})
+        form = ZornaMenuItemFaqForm(instance=item, initial={
+                                    'faq': item.object_id})
 
     context = RequestContext(request)
     extra_context = {'form': form, 'curitem': item}
@@ -163,10 +179,12 @@ def menus_add_item_form_submission(request):
             form = ZornaMenuItemFormsForm()
 
         context = RequestContext(request)
-        extra_context = {'form': form, 'curitem': False, 'title': _(u'Add a link to form submission')}
+        extra_context = {'form':
+                         form, 'curitem': False, 'title': _(u'Add a link to form submission')}
         return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
+
 
 @login_required()
 def menus_add_item_form_browse(request):
@@ -185,7 +203,8 @@ def menus_add_item_form_browse(request):
             form = ZornaMenuItemFormsForm()
 
         context = RequestContext(request)
-        extra_context = {'form': form, 'curitem': False, 'title': _(u'Add a link to form list')}
+        extra_context = {'form':
+                         form, 'curitem': False, 'title': _(u'Add a link to form list')}
         return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
@@ -194,16 +213,19 @@ def menus_add_item_form_browse(request):
 @login_required()
 def menus_edit_item_form(request, item):
     if request.method == 'POST':
-        form = ZornaMenuItemFormsForm(request.POST, instance=item, initial={'form': item.object_id})
+        form = ZornaMenuItemFormsForm(
+            request.POST, instance=item, initial={'form': item.object_id})
         if form.is_valid():
             item = form.save(commit=False)
             item.content_object = form.cleaned_data['form']
             item.save()
             return HttpResponseRedirect(reverse('menus_home_view'))
         else:
-            form = ZornaMenuItemFormsForm(request.POST, instance=item, initial={'form': item.object_id})
+            form = ZornaMenuItemFormsForm(
+                request.POST, instance=item, initial={'form': item.object_id})
     else:
-        form = ZornaMenuItemFormsForm(instance=item, initial={'form': item.object_id})
+        form = ZornaMenuItemFormsForm(instance=item, initial={
+                                      'form': item.object_id})
     if item.extra_info == 'submission':
         form.fields['form'].label = _(u"Form submission")
     else:
@@ -212,6 +234,7 @@ def menus_edit_item_form(request, item):
     context = RequestContext(request)
     extra_context = {'form': form, 'curitem': item}
     return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
+
 
 @login_required()
 def menus_add_item_page_content(request):
@@ -224,7 +247,8 @@ def menus_add_item_page_content(request):
             return HttpResponseRedirect(reverse('menus_home_view'))
 
         context = RequestContext(request)
-        extra_context = {'form': form, 'curitem': False, 'title': _(u'Add a link to page content')}
+        extra_context = {'form':
+                         form, 'curitem': False, 'title': _(u'Add a link to page content')}
         return render_to_response('menus/edit_menu_item.html', extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')

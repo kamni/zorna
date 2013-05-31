@@ -1,4 +1,5 @@
-import datetime, time
+import datetime
+import time
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
@@ -27,7 +28,6 @@ from zorna.calendars.api import *
 def jsondump_occurences(occurrences, user):
     occ_list = []
     for occ in occurrences:
-        original_id = occ.id
         ed = {}
         ed['id'] = encode_occurrence(occ)
         ed['calendar_id'] = occ.calendar_id
@@ -43,11 +43,13 @@ def jsondump_occurences(occurrences, user):
         ed['description'] = "<br />".join(occ.description.split("\n"))
         if occ.manager or occ.event.creator == user:
             ed['editable'] = True
-            ed['url'] = reverse("edit_calendar_event") + "?id=" + encode_occurrence(occ)
+            ed['url'] = reverse(
+                "edit_calendar_event") + "?id=" + encode_occurrence(occ)
         else:
             ed['url'] = ''
             ed['editable'] = False
-        ed['author'] = User.objects.get(pk=occ.event.creator_id).get_full_name()
+        ed['author'] = User.objects.get(
+            pk=occ.event.creator_id).get_full_name()
         ed['location'] = occ.details.location
         if occ.details.bgcolor:
             ed['backgroundColor'] = occ.details.bgcolor
@@ -60,7 +62,7 @@ def jsondump_occurences(occurrences, user):
 
         occ_list.append(ed)
     rnd = loader.get_template('calendars/occurrences_json.html')
-    resp = rnd.render(Context({'occurrences':occ_list}))
+    resp = rnd.render(Context({'occurrences': occ_list}))
     return resp
 
 
@@ -77,7 +79,8 @@ def jsondump_occurences_old(occurrences, user):
         occ.end = occ.end.__str__()
         occ.recurring = bool(occ.event.rule)
         occ.persisted = bool(original_id)
-        occ.description = occ.description.replace('\n', '\\n')  # this can be multiline
+        occ.description = occ.description.replace(
+            '\n', '\\n')  # this can be multiline
         if occ.manager:
             occ.url = reverse("edit_calendar_event") + "?id=" + occ.id
         else:
@@ -85,7 +88,7 @@ def jsondump_occurences_old(occurrences, user):
         occ.author = User.objects.get(pk=occ.event.creator_id).get_full_name()
         occ_list.append(occ)
     rnd = loader.get_template('calendars/occurrences_json.html')
-    resp = rnd.render(Context({'occurrences':occ_list}))
+    resp = rnd.render(Context({'occurrences': occ_list}))
     return resp
 
 
@@ -102,16 +105,18 @@ def json_events(request):
             ao[p] = get_user_calendars(request.user, [p])
             allowed_objects = allowed_objects.union(set(ao[p]))
         for obj in allowed_objects:
-            evt = EventRelation.objects.get_events_for_object(obj.content_object)
+            evt = EventRelation.objects.get_events_for_object(
+                obj.content_object)
             if obj.pk == pcal.pk or obj in ao['manager']:
                 manager = True
             else:
                 manager = False
-            if  obj.pk == pcal.pk or obj in ao['creator']:
+            if obj.pk == pcal.pk or obj in ao['creator']:
                 creator = True
             else:
                 creator = False
-            period = Period(events=evt, start=datetime.datetime.fromtimestamp(float(start)), end=datetime.datetime.fromtimestamp(float(end)))
+            period = Period(events=evt, start=datetime.datetime.fromtimestamp(
+                float(start)), end=datetime.datetime.fromtimestamp(float(end)))
             occurrences = []
             for o in period.occurrences:
                 if period.classify_occurrence(o):
@@ -124,16 +129,19 @@ def json_events(request):
                         o.manager = False
                         o.creator = False
                     if o.id:
-                        o.details = EventDetails.objects.get_eventdetails_for_object(o)
+                        o.details = EventDetails.objects.get_eventdetails_for_object(
+                            o)
                     else:
-                        o.details = EventDetails.objects.get_eventdetails_for_object(o.event)
+                        o.details = EventDetails.objects.get_eventdetails_for_object(
+                            o.event)
 
                     if o.details.privacy == 2 and request.user != obj.owner:  # Private event
                         continue
                     else:
                         occurrences.append(o)
             if len(occurrences):
-                ret += '"' + obj.calendar.slug + '": ' + jsondump_occurences(occurrences, request.user) + ','
+                ret += '"' + obj.calendar.slug + '": ' + \
+                    jsondump_occurences(occurrences, request.user) + ','
     ret = ret[:-1]
     ret = '{' + ret + '}'
     # json_data = simplejson.dumps(ret)
@@ -178,7 +186,8 @@ def calendar_update_event_dates(request):
             occurrence.start = ostart
             occurrence.end = oend
             occurrence.save()
-            ied = EventDetails.objects.get_eventdetails_for_object(instance_event)
+            ied = EventDetails.objects.get_eventdetails_for_object(
+                instance_event)
             EventDetails.objects.create_details(
                 occurrence,
                 location=ied.location,
@@ -194,7 +203,8 @@ def calendar_update_event_dates(request):
 
 def view_calendar(request):
     if request.user.is_authenticated():
-        allowed_objects = get_user_calendars(request.user, ['viewer', 'manager', 'creator'])
+        allowed_objects = get_user_calendars(
+            request.user, ['viewer', 'manager', 'creator'])
         if not allowed_objects:
             return HttpResponseForbidden()
         cal = get_personal_calendar(request.user)
@@ -203,7 +213,8 @@ def view_calendar(request):
         else:
             cal.bshare = False
         extra_context = {}
-        write_calendars = get_user_calendars(request.user, ['manager', 'creator'])
+        write_calendars = get_user_calendars(
+            request.user, ['manager', 'creator'])
         if write_calendars:
             extra_context['bcreate'] = True
         else:
@@ -211,7 +222,8 @@ def view_calendar(request):
         extra_context['week_start_on'] = cal.week_start_on
         extra_context['custom_view'] = cal.custom_view
 
-        extra_context['start_date'] = int(time.mktime(datetime.date.today().timetuple()))
+        extra_context['start_date'] = int(time.mktime(
+            datetime.date.today().timetuple()))
         extra_context['end_date'] = extra_context['start_date']
         extra_context['calendar'] = cal
         my_calendars = request.session.get('my_calendars', [])
@@ -221,8 +233,10 @@ def view_calendar(request):
             else:
                 my_calendars = [allowed_objects[0].pk]
         request.session['my_calendars'] = my_calendars
-        extra_context['my_calendars'] = ZornaCalendar.objects.filter(pk__in=list(set(my_calendars) & set([ao.pk for ao in allowed_objects]))).order_by('calendar__name')
-        extra_context['calendars_viewer'] = ZornaCalendar.objects.filter(pk__in=allowed_objects).exclude(pk__in=my_calendars).order_by('calendar__name')
+        extra_context['my_calendars'] = ZornaCalendar.objects.filter(pk__in=list(set(
+            my_calendars) & set([ao.pk for ao in allowed_objects]))).order_by('calendar__name')
+        extra_context['calendars_viewer'] = ZornaCalendar.objects.filter(
+            pk__in=allowed_objects).exclude(pk__in=my_calendars).order_by('calendar__name')
         context = RequestContext(request)
         return render_to_response('calendars/calendar.html', extra_context, context_instance=context)
     else:
@@ -258,8 +272,9 @@ def create_calendar_event(request):
         try:
             start = datetime.datetime.fromtimestamp(float(start))
             initial_data['start'] = start
-            if end :
-                initial_data['end'] = datetime.datetime.fromtimestamp(float(end))
+            if end:
+                initial_data[
+                    'end'] = datetime.datetime.fromtimestamp(float(end))
             else:
                 initial_data['end'] = start + datetime.timedelta(minutes=30)
         except TypeError:
@@ -284,14 +299,16 @@ def create_calendar_event(request):
             event.creator = request.user
             event.calendar = calendar.calendar
             if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
-                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds=-1)
+                event.end_recurring_period = event.end_recurring_period + \
+                    datetime.timedelta(days=1, seconds=-1)
 
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
                 if request.POST['rule'] == 'WEEKLY':
                     weekdays = request.POST.getlist('weekdays')
                     if not weekdays:
-                        weekdays = [str((int(event.start.strftime('%w')) + 6) % 7)]
+                        weekdays = [str((int(
+                            event.start.strftime('%w')) + 6) % 7)]
                     params += ";byweekday:" + ",".join(weekdays)
                 rule = Rule(name=request.POST['rule'],
                             frequency=request.POST['rule'],
@@ -328,7 +345,8 @@ def create_calendar_event(request):
 
 
 def edit_calendar_simple_event(request, event_id, event, occurrence):
-    instance_event_details = EventDetails.objects.get_eventdetails_for_object(event)
+    instance_event_details = EventDetails.objects.get_eventdetails_for_object(
+        event)
     calendars = get_user_calendars(request.user, ['manager', 'creator'])
     if event.calendar.pk not in [c.calendar_id for c in calendars]:
         return HttpResponseRedirect(reverse('view_calendar', args=[]))
@@ -341,13 +359,16 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
             return HttpResponseRedirect(reverse('view_calendar', args=[]))
 
         form = EditEventForm(data=request.POST, instance=event)
-        form_details = EditEventDetailsForm(data=request.POST, instance=instance_event_details)
+        form_details = EditEventDetailsForm(
+            data=request.POST, instance=instance_event_details)
         if form.is_valid():
-            calendar = get_object_or_404(ZornaCalendar, pk=request.POST['calendar_id'])
+            calendar = get_object_or_404(
+                ZornaCalendar, pk=request.POST['calendar_id'])
             event = form.save(commit=False)
             event.calendar = calendar.calendar
             if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
-                event.end_recurring_period = event.end_recurring_period + datetime.timedelta(days=1, seconds=-1)
+                event.end_recurring_period = event.end_recurring_period + \
+                    datetime.timedelta(days=1, seconds=-1)
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
                 if request.POST['rule'] == 'WEEKLY':
@@ -357,10 +378,10 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
                     if wl:
                         params += ";byweekday:" + ",".join(wl)
                 rule = Rule(
-                            name=request.POST['rule'],
-                            frequency=request.POST['rule'],
-                            params=params
-                            )
+                    name=request.POST['rule'],
+                    frequency=request.POST['rule'],
+                    params=params
+                )
                 rule.save()
                 event.rule = rule
             event.save()
@@ -387,7 +408,8 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
 
 
 def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
-    instance_event_details = EventDetails.objects.get_eventdetails_for_object(event)
+    instance_event_details = EventDetails.objects.get_eventdetails_for_object(
+        event)
     calendars = get_user_calendars(request.user, ['manager', 'creator'])
     if event.calendar.pk not in [c.calendar_id for c in calendars]:
         return HttpResponseRedirect(reverse('view_calendar', args=[]))
@@ -395,10 +417,11 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
     params = event.rule.get_params()
     initial_data = {}
     initial_data['rule'] = event.rule.frequency
-    if params.has_key('interval'):
+    if 'interval' in params:
         initial_data['interval'] = params['interval']
-    if params.has_key('byweekday'):
-        initial_data['weekdays'] = params['byweekday'] if type(params['byweekday']) == type(list()) else [params['byweekday']]
+    if 'byweekday' in params:
+        initial_data['weekdays'] = params['byweekday'] if type(params[
+                                                               'byweekday']) == type(list()) else [params['byweekday']]
     initial_data['start'] = occurrence.start
     initial_data['end'] = occurrence.end
     initial_data['title'] = occurrence.title
@@ -406,7 +429,8 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
 
     if request.method == 'POST':
         form = EditEventForm(data=request.POST, instance=event)
-        form_details = EditEventDetailsForm(data=request.POST, instance=instance_event_details)
+        form_details = EditEventDetailsForm(
+            data=request.POST, instance=instance_event_details)
 
         action = request.POST.get('action', None)
         if action and action == 'deleteone':
@@ -417,7 +441,8 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
             persisted_occurrences = event.occurrence_set.all()
             for occ in persisted_occurrences:
                 try:
-                    EventDetails.objects.get_eventdetails_for_object(occ).delete()
+                    EventDetails.objects.get_eventdetails_for_object(
+                        occ).delete()
                 except:
                     pass
             event.rule.delete()
@@ -428,29 +453,34 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
         if action and action == 'updateevent' and form.is_valid():  # update only this occurrence
             occurrence.title = form.cleaned_data['title']
             occurrence.description = form.cleaned_data['description']
-            occurrence.start = form.cleaned_data['start'].strftime('%Y-%m-%d %H:%M:%S')
-            occurrence.end = form.cleaned_data['end'].strftime('%Y-%m-%d %H:%M:%S')
+            occurrence.start = form.cleaned_data[
+                'start'].strftime('%Y-%m-%d %H:%M:%S')
+            occurrence.end = form.cleaned_data[
+                'end'].strftime('%Y-%m-%d %H:%M:%S')
             occurrence.save()
             EventDetails.objects.create_details(
                 occurrence,
                 request.POST.get('location', ''),
                 request.POST.get('free_busy', 0),
                 request.POST.get('privacy', 0),
-                )
+            )
             return HttpResponseRedirect(reverse('view_calendar', args=[]))
 
         if form.is_valid():
-            calendar = get_object_or_404(ZornaCalendar, pk=request.POST['calendar_id'])
+            calendar = get_object_or_404(
+                ZornaCalendar, pk=request.POST['calendar_id'])
             evt = form.save(commit=False)
             evt.calendar = calendar.calendar
             if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
-                evt.end_recurring_period = evt.end_recurring_period + datetime.timedelta(days=1, seconds=-1)
+                evt.end_recurring_period = evt.end_recurring_period + \
+                    datetime.timedelta(days=1, seconds=-1)
             rule = event.rule
             if rule and request.POST['rule'] == '':
                 persisted_occurrences = event.occurrence_set.all()
                 for occ in persisted_occurrences:
                     try:
-                        EventDetails.objects.get_eventdetails_for_object(occ).delete()
+                        EventDetails.objects.get_eventdetails_for_object(
+                            occ).delete()
                     except:
                         pass
                 event.rule = None
@@ -478,8 +508,10 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
                     evt.rule = rule
             if occurrence.start.date() == evt.start.date():
                 td = evt.end.date() - evt.start.date()
-                evt.start = datetime.datetime.combine(original_start.date(), evt.start.time())
-                evt.end = datetime.datetime.combine(original_start.date() + td, evt.end.time())
+                evt.start = datetime.datetime.combine(
+                    original_start.date(), evt.start.time())
+                evt.end = datetime.datetime.combine(
+                    original_start.date() + td, evt.end.time())
             evt.save()
             form_details.save()
             return HttpResponseRedirect(reverse('view_calendar', args=[]))
@@ -504,7 +536,8 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
 
 
 def edit_calendar_occurrence(request, event_id, event, occurrence):
-    instance_event_details = EventDetails.objects.get_eventdetails_for_object(occurrence)
+    instance_event_details = EventDetails.objects.get_eventdetails_for_object(
+        occurrence)
     calendars = get_user_calendars(request.user, ['manager', 'creator'])
     if event.calendar.pk not in [c.calendar_id for c in calendars]:
         return HttpResponseRedirect(reverse('view_calendar', args=[]))
@@ -516,7 +549,8 @@ def edit_calendar_occurrence(request, event_id, event, occurrence):
 
     if request.method == 'POST':
         form = EditEventForm(data=request.POST, instance=event)
-        form_details = EditEventDetailsForm(data=request.POST, instance=instance_event_details)
+        form_details = EditEventDetailsForm(
+            data=request.POST, instance=instance_event_details)
 
         action = request.POST.get('action', None)
         if action and action == 'deleteevent':
@@ -526,8 +560,10 @@ def edit_calendar_occurrence(request, event_id, event, occurrence):
         if form.is_valid():
             occurrence.title = form.cleaned_data['title']
             occurrence.description = form.cleaned_data['description']
-            occurrence.start = form.cleaned_data['start'].strftime('%Y-%m-%d %H:%M:%S')
-            occurrence.end = form.cleaned_data['end'].strftime('%Y-%m-%d %H:%M:%S')
+            occurrence.start = form.cleaned_data[
+                'start'].strftime('%Y-%m-%d %H:%M:%S')
+            occurrence.end = form.cleaned_data[
+                'end'].strftime('%Y-%m-%d %H:%M:%S')
             occurrence.save()
             form_details.save()
             return HttpResponseRedirect(reverse('view_calendar', args=[]))
@@ -575,7 +611,8 @@ def calendar_share(request):
     if request.user.is_authenticated():
         cal = get_personal_calendar(request.user)
         check = get_acl_for_model(cal)
-        extra_context = check.get_acl_users_forms(request, cal.pk, template=None)
+        extra_context = check.get_acl_users_forms(
+            request, cal.pk, template=None)
         context = RequestContext(request)
         return render_to_response('calendars/calendar_share.html', extra_context, context_instance=context)
     else:
@@ -608,9 +645,11 @@ def calendar_settings_shared_url(request):
     if request.user.is_authenticated():
         allowed_objects = get_user_calendars(request.user, ['manager'])
         extra_context = {}
-        extra_context['calendars'] = ZornaCalendar.objects.select_related(depth=1).filter(pk__in=allowed_objects)
+        extra_context['calendars'] = ZornaCalendar.objects.select_related(
+            depth=1).filter(pk__in=allowed_objects)
         for cal in extra_context['calendars']:
-            cal.zorna_url = request.build_absolute_uri(reverse('calendar_ical', args=[cal.calendar.slug, cal.secret_key]))
+            cal.zorna_url = request.build_absolute_uri(reverse(
+                'calendar_ical', args=[cal.calendar.slug, cal.secret_key]))
         context = RequestContext(request)
         return render_to_response('calendars/calendar_settings_url.html', extra_context, context_instance=context)
     else:
@@ -653,7 +692,7 @@ def admin_acl_calendar(request, resource_calendar):
         calendar = get_resource_calendar(c)
         ct = ContentType.objects.get_for_model(type(calendar))
         return HttpResponseRedirect(reverse('acl_groups_object',
-                        args=[ct.pk, calendar.pk]) + '?next=%s' % reverse('admin_list_calendars'))
+                                            args=[ct.pk, calendar.pk]) + '?next=%s' % reverse('admin_list_calendars'))
     else:
         return HttpResponseRedirect('/')
 
@@ -697,7 +736,8 @@ def admin_edit_calendar(request, resource_calendar):
 
                 return HttpResponseRedirect(reverse('admin_list_calendars'))
         else:
-            form = ResourceCalendarForm(instance=c, initial={'slug': c.calendar.calendar.slug})
+            form = ResourceCalendarForm(
+                instance=c, initial={'slug': c.calendar.calendar.slug})
 
         context = RequestContext(request)
         extra_context = {'form': form, 'resource_calendar': c}

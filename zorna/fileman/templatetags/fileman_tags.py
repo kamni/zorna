@@ -10,6 +10,7 @@ from zorna.fileman.api import get_folder_files
 
 register = template.Library()
 
+
 def auto_completion_search_tags_zornafile(context, input_suggest, input_result):
     """
     Render an auto completion to search users.
@@ -17,7 +18,7 @@ def auto_completion_search_tags_zornafile(context, input_suggest, input_result):
     input_suggest = input_suggest
     input_result = input_result
     tags = Tag.objects.usage_for_model(ZornaFile)
-    data = [ (x.name, x.name) for x in tags ]
+    data = [(x.name, x.name) for x in tags]
     tags_data = simplejson.dumps(data)
     return locals()
 
@@ -26,7 +27,9 @@ auto_completion_search_tags_zornafile = register.inclusion_tag(
     takes_context=True
 )(auto_completion_search_tags_zornafile)
 
+
 class get_recent_files_node(template.Node):
+
     def __init__(self, limit, var_name, what='all'):
         self.what = what
         self.limit = limit
@@ -36,6 +39,7 @@ class get_recent_files_node(template.Node):
         request = context['request']
         context[self.var_name] = recent_files(request, self.what, self.limit)
         return ''
+
 
 def parse_tag(parser, token, what):
     bits = token.split_contents()
@@ -48,6 +52,7 @@ def parse_tag(parser, token, what):
     varname = bits[-1]
     return get_recent_files_node(limit, varname, what)
 
+
 @register.tag(name="get_recent_files")
 def get_recent_files(parser, token):
     """
@@ -57,6 +62,7 @@ def get_recent_files(parser, token):
     {% endfor %}
     """
     return parse_tag(parser, token, 'all')
+
 
 @register.tag(name="get_recent_communities_files")
 def get_recent_communities_files(parser, token):
@@ -68,6 +74,7 @@ def get_recent_communities_files(parser, token):
     """
     return parse_tag(parser, token, 'communities')
 
+
 @register.tag(name="get_recent_shared_files")
 def get_recent_shared_files(parser, token):
     """
@@ -77,6 +84,7 @@ def get_recent_shared_files(parser, token):
     {% endfor %}
     """
     return parse_tag(parser, token, 'shared')
+
 
 @register.tag(name="get_recent_personal_files")
 def get_recent_personal_files(parser, token):
@@ -89,18 +97,8 @@ def get_recent_personal_files(parser, token):
     return parse_tag(parser, token, 'personal')
 
 
-class get_recent_files_node(template.Node):
-    def __init__(self, limit, var_name, what='all'):
-        self.what = what
-        self.limit = limit
-        self.var_name = var_name
-
-    def render(self, context):
-        request = context['request']
-        context[self.var_name] = recent_files(request, self.what, self.limit)
-        return ''
-
 class get_shared_folder_files_node(template.Node):
+
     def __init__(self, folder_id, path, limit, varname):
         self.folder_id = int(folder_id)
         self.path = path
@@ -111,7 +109,8 @@ class get_shared_folder_files_node(template.Node):
         request = context['request']
         aof = get_allowed_shared_folders(request.user, ['reader'])
         if self.folder_id in aof:
-            context[self.var_name] = get_folder_files('F%s/%s' % (self.folder_id, self.path), self.limit)
+            context[self.var_name] = get_folder_files(
+                'F%s/%s' % (self.folder_id, self.path), self.limit)
         else:
             context[self.var_name] = []
         return ''

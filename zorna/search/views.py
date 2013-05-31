@@ -21,38 +21,42 @@ def search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['q']
-            what= request.GET.get('what', None)
-            if what == 'articles' or what == None:
-                ao = get_allowed_objects(request.user, ArticleCategory, 'reader')
+            what = request.GET.get('what', None)
+            if what == 'articles' or what is None:
+                ao = get_allowed_objects(
+                    request.user, ArticleCategory, 'reader')
                 ao = [str(p) for p in ao]
-                results_articles = SearchQuerySet().filter(content=query).filter(categories__in=ao).models(ArticleStory)
+                results_articles = SearchQuerySet().filter(
+                    content=query).filter(categories__in=ao).models(ArticleStory)
                 if results_articles:
                     paginator = Paginator(results_articles, RESULTS_PER_PAGE)
                     try:
                         page = paginator.page(int(request.GET.get('page', 1)))
                     except InvalidPage:
                         raise Http404("No such page of results!")
-                    results['articles'] = {'results': results_articles, 'page': page, 'paginator': paginator }
-        
-            if what == 'faqs' or what == None:
+                    results['articles'] = {
+                        'results': results_articles, 'page': page, 'paginator': paginator}
+
+            if what == 'faqs' or what is None:
                 ao = get_allowed_objects(request.user, Faq, 'reader')
                 ao = [str(p) for p in ao]
-                results_faqs = SearchQuerySet().filter(content=query).filter(faq__in=ao).models(FaqQuestion)
+                results_faqs = SearchQuerySet().filter(
+                    content=query).filter(faq__in=ao).models(FaqQuestion)
                 if results_faqs:
                     paginator = Paginator(results_faqs, RESULTS_PER_PAGE)
                     try:
                         page = paginator.page(int(request.GET.get('page', 1)))
                     except InvalidPage:
                         raise Http404("No such page of results!")
-                    results['faqs'] = {'results': results_faqs, 'page': page, 'paginator': paginator }
+                    results['faqs'] = {
+                        'results': results_faqs, 'page': page, 'paginator': paginator}
     else:
         form = SearchForm()
-    
+
     context = RequestContext(request)
     extra_context = {
-                    'form': form, 
-                    'results': results,
-                    'query': query,
-                    }
+        'form': form,
+        'results': results,
+        'query': query,
+    }
     return render_to_response('search/search.html', extra_context, context_instance=context)
-            

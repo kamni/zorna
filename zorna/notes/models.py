@@ -14,8 +14,10 @@ from tagging.models import Tag
 from zorna.models import ZornaEntity
 from zorna.utilit import get_upload_notes_attachments
 
+
 class ZornaNoteCategory(MPTTModel, ZornaEntity):
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, related_name='children')
     name = models.CharField(_('name'), max_length=255)
     slug = models.SlugField(_('slug'), max_length=255, null=True, blank=True)
 
@@ -31,7 +33,7 @@ class ZornaNoteCategory(MPTTModel, ZornaEntity):
     def get_acl_permissions():
         return {
             'viewer': ugettext_noop(u'Who can browse notes in this category'),
-            }
+        }
     get_acl_permissions = staticmethod(get_acl_permissions)
 
 
@@ -61,14 +63,17 @@ class ZornaNote(ZornaEntity):
 
 fs = FileSystemStorage(location=get_upload_notes_attachments(), base_url='')
 
+
 def get_note_filepath(instance, filename):
     s = os.path.splitext(filename)
     filename = u"%s%s" % (slugify(s[0]), s[1])
     return os.path.join(u"u%s/%s" % (str(instance.note.pk), filename))
 
+
 class ZornaNoteFile(models.Model):
     note = models.ForeignKey(ZornaNote, blank=True, editable=False)
-    file = models.FileField(storage=fs, max_length=1024, upload_to=get_note_filepath, blank=True)
+    file = models.FileField(
+        storage=fs, max_length=1024, upload_to=get_note_filepath, blank=True)
     description = models.CharField(max_length=255)
     mimetype = models.CharField(max_length=255, editable=False)
 
@@ -83,4 +88,3 @@ class ZornaNoteFile(models.Model):
         path = self.file.path
         os.remove(path)
         return super(ZornaNoteFile, self).delete()
-

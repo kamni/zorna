@@ -13,6 +13,7 @@ from django.contrib.contenttypes.models import ContentType
 from zorna.forms import fields
 from zorna.models import ZornaEntity
 
+
 class FormsWorkspace(ZornaEntity):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150)
@@ -27,15 +28,17 @@ class FormsWorkspace(ZornaEntity):
     def get_acl_permissions():
         return {
             u'manager': ugettext_noop(u'Who can use this workspace'),
-            }
+        }
     get_acl_permissions = staticmethod(get_acl_permissions)
 
 
 class FormsList(models.Model):
+
     """
     """
     name = models.CharField(_("Name"), max_length=255)
-    description = models.CharField(_("Description"), blank=True, max_length=255)
+    description = models.CharField(_(
+        "Description"), blank=True, max_length=255)
     workspace = models.ForeignKey(FormsWorkspace, editable=False)
 
     class Meta:
@@ -47,8 +50,8 @@ class FormsList(models.Model):
         return self.name
 
 
-
 class FormsListEntry(models.Model):
+
     """
     """
     value = models.CharField(_("Value"), max_length=255)
@@ -62,24 +65,33 @@ class FormsListEntry(models.Model):
     def __unicode__(self):
         return self.value
 
+
 class FormsForm(ZornaEntity):
+
     """
     """
     name = models.CharField(_("Name"), max_length=255)
     slug = models.SlugField(max_length=100, unique=True)
-    bind_to_account = models.BooleanField(_("Bind to account"), default=False, help_text=_("If checked, each record will be linked to user account"))
-    bind_to_entry = models.CharField(_("Bind to entry"), default='', max_length=255, help_text=_("If filled, each record will be linked to target form entry"))
-    bind_display = models.CharField(_("Bind display"), default='', max_length=255, editable=False)
-    button_text = models.CharField(_("Button text"), max_length=50, default=_("Submit"))
+    bind_to_account = models.BooleanField(_("Bind to account"), default=False, help_text=_(
+        "If checked, each record will be linked to user account"))
+    bind_to_entry = models.CharField(_("Bind to entry"), default='', max_length=255, help_text=_(
+        "If filled, each record will be linked to target form entry"))
+    bind_display = models.CharField(_(
+        "Bind display"), default='', max_length=255, editable=False)
+    button_text = models.CharField(_(
+        "Button text"), max_length=50, default=_("Submit"))
     description = models.TextField(_('Description'), blank=True)
-    send_email = models.BooleanField(_("Send email"), default=False, help_text=_("If checked, an email will be sent"), editable=False)
-    email_from = models.EmailField(_("From address"), blank=True, help_text=_("The address the email will be sent from"), editable=False)
-    email_copies = models.CharField(_("Send copies to"), blank=True, help_text=_("One or more email addresses, separated by commas"), max_length=200, editable=False)
-    email_subject = models.CharField(_("Subject"), max_length=200, blank=True, editable=False)
+    send_email = models.BooleanField(_("Send email"), default=False, help_text=_(
+        "If checked, an email will be sent"), editable=False)
+    email_from = models.EmailField(_("From address"), blank=True, help_text=_(
+        "The address the email will be sent from"), editable=False)
+    email_copies = models.CharField(_("Send copies to"), blank=True, help_text=_(
+        "One or more email addresses, separated by commas"), max_length=200, editable=False)
+    email_subject = models.CharField(_(
+        "Subject"), max_length=200, blank=True, editable=False)
     email_message = models.TextField(_("Message"), blank=True, editable=False)
     template = models.TextField(_('Template'), editable=False, blank=True)
     workspace = models.ForeignKey(FormsWorkspace, editable=False)
-
 
     class Meta:
         verbose_name = _('forms form')
@@ -100,8 +112,9 @@ class FormsForm(ZornaEntity):
             u'viewer': ugettext_noop(u'Who can see the list of recordings of this form'),
             u'creator': ugettext_noop(u'Who can create new records'),
             u'modifier': ugettext_noop(u'Who can modify records'),
-            }
+        }
     get_acl_permissions = staticmethod(get_acl_permissions)
+
 
 class FormsFormAction(models.Model):
     form = models.ForeignKey(FormsForm, null=True, editable=False)
@@ -116,6 +129,7 @@ class FormsFormAction(models.Model):
 
     def __unicode__(self):
         return u'%s [%s]' % (self.content_object, self.form.name)
+
 
 class FormsFormActionMessage(models.Model):
     form = models.ForeignKey(FormsForm, null=True, editable=False)
@@ -142,16 +156,25 @@ class FormsFormActionUrl(models.Model):
     def __unicode__(self):
         return u'%s' % self.url
 
+
 class FormsFormPanel(models.Model):
     form = models.ForeignKey(FormsForm, null=True, editable=False)
-    name = models.CharField(_("Name"), max_length=255, help_text=_("Control name"))
-    label = models.CharField(_("Title"), max_length=255, help_text=_("Panel title"), null=True, blank=True)
-    width = models.CharField(_("Width"), max_length=255, help_text=_("Width including units (px, %, ...)"), null=True, blank=True)
-    height = models.CharField(_("Height"), max_length=255, help_text=_("Height including units (px, %, ...)"), null=True, blank=True)
-    margin = models.CharField(_("Margin"), max_length=255, help_text=_("Margin including units (px, %, ...)"), null=True, blank=True)
-    css_class = models.CharField(_("Css Class"), max_length=255, help_text=_("Css classes"), null=True, blank=True)
-    stacked = models.BooleanField(_("Stacked"), help_text=_("Label and control are stacked"), default=False)
-    sort_order = models.IntegerField(_('sort order'), default=0, editable=False, help_text='The order you would like panels to be displayed.')
+    name = models.CharField(_(
+        "Name"), max_length=255, help_text=_("Control name"))
+    label = models.CharField(_("Title"), max_length=255, help_text=_(
+        "Panel title"), null=True, blank=True)
+    width = models.CharField(_("Width"), max_length=255, help_text=_(
+        "Width including units (px, %, ...)"), null=True, blank=True)
+    height = models.CharField(_("Height"), max_length=255, help_text=_(
+        "Height including units (px, %, ...)"), null=True, blank=True)
+    margin = models.CharField(_("Margin"), max_length=255, help_text=_(
+        "Margin including units (px, %, ...)"), null=True, blank=True)
+    css_class = models.CharField(_("Css Class"), max_length=255, help_text=_(
+        "Css classes"), null=True, blank=True)
+    stacked = models.BooleanField(_("Stacked"), help_text=_(
+        "Label and control are stacked"), default=False)
+    sort_order = models.IntegerField(_(
+        'sort order'), default=0, editable=False, help_text='The order you would like panels to be displayed.')
     panel_header = models.TextField(_('Panel header'), blank=True)
     panel_footer = models.TextField(_('Panel footer'), blank=True)
 
@@ -164,7 +187,9 @@ class FormsFormPanel(models.Model):
     def __unicode__(self):
         return u'%s (%s)' % (self.name, self.label)
 
+
 class FormsFormFieldManager(models.Manager):
+
     """
     Only show visible fields when displaying actual form..
     """
@@ -198,8 +223,8 @@ LABEL_SIZE = (
 )
 
 
-
 class FormsFormField(models.Model):
+
     """
     """
     form = models.ForeignKey(FormsForm, related_name="fields", editable=False)
@@ -208,28 +233,48 @@ class FormsFormField(models.Model):
     help_text = models.CharField(_("Help text"), blank=True, max_length=255)
     required = models.BooleanField(_("Required"), default=True)
     visible = models.BooleanField(_("Visible"), default=True)
-    default_value = models.CharField(_("Default value"), blank=True, max_length=255)
-    sort_order = models.IntegerField(_('sort order'), default=0, editable=False, help_text='The order you would like fields to be displayed.')
-    field_type = models.IntegerField(_("Type"), choices=fields.NAMES, default=fields.TEXT)
+    default_value = models.CharField(_(
+        "Default value"), blank=True, max_length=255)
+    sort_order = models.IntegerField(_(
+        'sort order'), default=0, editable=False, help_text='The order you would like fields to be displayed.')
+    field_type = models.IntegerField(_(
+        "Type"), choices=fields.NAMES, default=fields.TEXT)
     list = models.ForeignKey(FormsList, null=True, blank=True,)
-    reference = models.CharField(_("Reference"), max_length=255, blank=True, default='')
-    reference_display = models.CharField(_("Reference display"), max_length=255, blank=True, default='')
+    reference = models.CharField(_(
+        "Reference"), max_length=255, blank=True, default='')
+    reference_display = models.CharField(_(
+        "Reference display"), max_length=255, blank=True, default='')
     panel = models.ForeignKey(FormsFormPanel, null=True, blank=True)
-    visible_in_list = models.BooleanField(_("Visible in list"), default=True, editable=False)
-    sort_order_list = models.IntegerField(_('sort order list'), default=0, editable=False, help_text='The order you would like fields to be displayed in lists.')
-    for_sort = models.BooleanField(_("Use this field to sort"), default=False, editable=False)
-    width = models.CharField(_("Width"), max_length=255, help_text=_("Width including units (px, %, ...)"), null=True, blank=True)
-    margin = models.CharField(_("Margin"), max_length=255, help_text=_("Margin including units (px, %, ...)"), null=True, blank=True)
-    padding = models.CharField(_("Height"), max_length=255, help_text=_("Padding including units (px, %, ...)"), null=True, blank=True)
-    css_class = models.CharField(_("Css Class"), max_length=255, help_text=_("Css classes"), null=True, blank=True)
-    bg_color = models.CharField(_("Background color"), max_length=255, help_text=_("Background color ( string or hex )"), null=True, blank=True)
-    border_width = models.CharField(_("Border width"), max_length=255, help_text=_("Border width including units (px, %, ...)"), null=True, blank=True)
-    border_style = models.CharField(_("Border style"), max_length=20, choices=BORDER_STYLES, default='', help_text=_("Border style"), blank=True)
-    border_color = models.CharField(_("Border color"), max_length=255, help_text=_("Background color ( string or hex )"), null=True, blank=True)
-    label_color = models.CharField(_("Label color"), max_length=255, help_text=_("Label color ( string or hex )"), null=True, blank=True)
-    label_size = models.CharField(_("Label size"), max_length=20, choices=LABEL_SIZE, default='', help_text=_("Label size"), blank=True)
-    bold = models.BooleanField(_("Bold"), help_text=_("Check this checkbox to make the control's label bold"), default=False)
-    italic = models.BooleanField(_("Italic"), help_text=_("Check this checkbox to italicize the control's label"), default=False)
+    visible_in_list = models.BooleanField(_(
+        "Visible in list"), default=True, editable=False)
+    sort_order_list = models.IntegerField(_(
+        'sort order list'), default=0, editable=False, help_text='The order you would like fields to be displayed in lists.')
+    for_sort = models.BooleanField(_(
+        "Use this field to sort"), default=False, editable=False)
+    width = models.CharField(_("Width"), max_length=255, help_text=_(
+        "Width including units (px, %, ...)"), null=True, blank=True)
+    margin = models.CharField(_("Margin"), max_length=255, help_text=_(
+        "Margin including units (px, %, ...)"), null=True, blank=True)
+    padding = models.CharField(_("Height"), max_length=255, help_text=_(
+        "Padding including units (px, %, ...)"), null=True, blank=True)
+    css_class = models.CharField(_("Css Class"), max_length=255, help_text=_(
+        "Css classes"), null=True, blank=True)
+    bg_color = models.CharField(_("Background color"), max_length=255, help_text=_(
+        "Background color ( string or hex )"), null=True, blank=True)
+    border_width = models.CharField(_("Border width"), max_length=255, help_text=_(
+        "Border width including units (px, %, ...)"), null=True, blank=True)
+    border_style = models.CharField(_(
+        "Border style"), max_length=20, choices=BORDER_STYLES, default='', help_text=_("Border style"), blank=True)
+    border_color = models.CharField(_("Border color"), max_length=255, help_text=_(
+        "Background color ( string or hex )"), null=True, blank=True)
+    label_color = models.CharField(_("Label color"), max_length=255, help_text=_(
+        "Label color ( string or hex )"), null=True, blank=True)
+    label_size = models.CharField(_(
+        "Label size"), max_length=20, choices=LABEL_SIZE, default='', help_text=_("Label size"), blank=True)
+    bold = models.BooleanField(_("Bold"), help_text=_(
+        "Check this checkbox to make the control's label bold"), default=False)
+    italic = models.BooleanField(_("Italic"), help_text=_(
+        "Check this checkbox to italicize the control's label"), default=False)
 
     objects = FormsFormFieldManager()
 
@@ -251,7 +296,8 @@ class FormsFormField(models.Model):
         elif self.reference and '.' in self.reference:
             r = self.reference.split('.')
             form_target = FormsForm.objects.get(slug=r[0])
-            columns, entries = FormsFieldEntry.objects.forms_get_entries(form_target, **{'ot':'asc', 'o':r[1]})
+            columns, entries = FormsFieldEntry.objects.forms_get_entries(
+                form_target, **{'ot': 'asc', 'o': r[1]})
             if include_all:
                 yield '', include_all
             if self.reference_display:
@@ -263,10 +309,11 @@ class FormsFormField(models.Model):
                     f = e[r[1]]['value']
                 else:
                     f = e['entity'].pk
-                if t :
+                if t:
                     ec = {}
                     for fd in e['fields']:
-                        ec[fd['slug']] = {'label': fd['label'], 'value': fd['value']}
+                        ec[fd['slug']] = {'label': fd[
+                            'label'], 'value': fd['value']}
                     c = Context(ec)
                     yield f, t.render(c)
                 else:
@@ -277,6 +324,7 @@ class FormsFormField(models.Model):
         Helper that returns True if the field's type is given in any arg.
         """
         return self.field_type in args
+
 
 class FormsFormEntry(ZornaEntity):
     form = models.ForeignKey(FormsForm, related_name="entries")
@@ -307,15 +355,16 @@ class FormsFormEntryExtra(models.Model):
     content_type = models.ForeignKey(ContentType, editable=False)
     object_id = models.IntegerField(editable=False)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    
+
     class Meta:
         verbose_name = _('forms entry extra info')
         verbose_name_plural = _('forms entries extra info')
         db_table = settings.TABLE_PREFIX + "forms_form_entry_extra"
-        
+
     def __unicode__(self):
         return u'%s [%s]' % (self.content_object, self.message)
 """
+
 
 class FormsFieldEntryManager(models.Manager):
 
@@ -324,7 +373,8 @@ class FormsFieldEntryManager(models.Manager):
             form = slug_or_form
         else:
             try:
-                form = FormsForm.objects.select_related(depth=1).get(slug=slug_or_form)
+                form = FormsForm.objects.select_related(
+                    depth=1).get(slug=slug_or_form)
             except Exception as e:
                 return [], []
 
@@ -343,10 +393,11 @@ class FormsFieldEntryManager(models.Manager):
                     if value and value == e[1]:
                         value = e[0]
             if kwargs.has_key(f.slug):
-                if filterFields == None:
+                if filterFields is None:
                     filterFields = Q(value=value, field__slug=f.slug)
                 else:
-                    filterFields = filterFields | Q(value=value, field__slug=f.slug)
+                    filterFields = filterFields | Q(
+                        value=value, field__slug=f.slug)
 
         entries = kwargs.get('entries', None)
         f = kwargs.get('f', None)
@@ -366,29 +417,31 @@ class FormsFieldEntryManager(models.Manager):
                     filter = Q(field__slug=f) & Q(value__iexact=q)
                 else:
                     filter = Q(form_entry__account__last_name__iexact=q) | \
-                            Q(form_entry__account__first_name__iexact=q) | \
-                            Q(value__iexact=q)
+                        Q(form_entry__account__first_name__iexact=q) | \
+                        Q(value__iexact=q)
             else:
                 if f:
                     filter = Q(field__slug=f) & Q(value__icontains=q)
                 else:
                     filter = Q(form_entry__account__last_name__icontains=q) | \
-                            Q(form_entry__account__first_name__icontains=q) | \
-                            Q(value__icontains=q)
-
+                        Q(form_entry__account__first_name__icontains=q) | \
+                        Q(value__icontains=q)
 
         if filter or filterFields:
             if filter and filterFields:
-                field_entries = FormsFieldEntry.objects.filter(Q(form_entry__form=form) & filter & (filterFields))
+                field_entries = FormsFieldEntry.objects.filter(Q(
+                    form_entry__form=form) & filter & (filterFields))
             elif filter:
-                field_entries = FormsFieldEntry.objects.filter(Q(form_entry__form=form) & filter)
+                field_entries = FormsFieldEntry.objects.filter(Q(
+                    form_entry__form=form) & filter)
             else:
-                field_entries = FormsFieldEntry.objects.filter(Q(form_entry__form=form) & filterFields)
+                field_entries = FormsFieldEntry.objects.filter(Q(
+                    form_entry__form=form) & filterFields)
             filter = Q(form_entry__in=[f.form_entry_id for f in field_entries])
         else:
             filter = Q(form_entry__form=form)
-        #Aggregate each column
-        #FormsFormEntry.objects.filter(form=form).values('fields__field__label').annotate(Avg('fields__value'))
+        # Aggregate each column
+        # FormsFormEntry.objects.filter(form=form).values('fields__field__label').annotate(Avg('fields__value'))
         where = kwargs.get('where', '')
         if where:
             try:
@@ -408,10 +461,11 @@ class FormsFieldEntryManager(models.Manager):
                         break
                     slug = f.bind_to_entry.split('.')[0]
 
-                entry = FormsFormEntry.objects.select_related().get(pk=entry_id)
+                entry = FormsFormEntry.objects.select_related().get(
+                    pk=entry_id)
                 if entry.form.slug == form_slug:
                     fr = 'form_entry%s' % fr
-                    filter = filter & Q(**{fr:entry})
+                    filter = filter & Q(**{fr: entry})
                 else:
                     return [], []
             except:
@@ -423,22 +477,26 @@ class FormsFieldEntryManager(models.Manager):
             except:
                 return entry[o]['value'].lower()
 
-
-        if entries == None:
-            field_entries = FormsFieldEntry.objects.select_related(depth=1).filter(filter)
+        if entries is None:
+            field_entries = FormsFieldEntry.objects.select_related(
+                depth=1).filter(filter)
         else:
-            field_entries = FormsFieldEntry.objects.select_related(depth=1).filter(filter, form_entry__in=entries)
+            field_entries = FormsFieldEntry.objects.select_related(
+                depth=1).filter(filter, form_entry__in=entries)
         columns, entries = forms_format_entries(form, field_entries, hidden)
         if o:
             try:
-                entries.sort(key=entry_sort, reverse=False if ot == 'asc' else True)
+                entries.sort(
+                    key=entry_sort, reverse=False if ot == 'asc' else True)
             except:
                 pass
         return columns, entries
 
     def forms_get_entry(self, entry):
-        columns, entries = self.forms_get_entries(entry.form, entries=[entry.pk])
+        columns, entries = self.forms_get_entries(
+            entry.form, entries=[entry.pk])
         return columns, entries[0]
+
 
 class FormsFieldEntry(models.Model):
     field = models.ForeignKey(FormsFormField)
@@ -451,6 +509,7 @@ class FormsFieldEntry(models.Model):
         verbose_name = _('form entry')
         verbose_name_plural = _('form entries')
         db_table = settings.TABLE_PREFIX + "forms_field_entry"
+
 
 def format_field_value(field_entry, field):
     type = field.field_type
@@ -491,11 +550,12 @@ def format_field_value(field_entry, field):
 def get_form_field_values_old(field):
     return FormsFieldEntry.objects.raw('select * from zorna_forms_field_entry where field_id=%s order by value', [field.pk])
 
+
 def get_form_field_values(field, visited=[]):
     if not field.reference:
         return FormsFieldEntry.objects.raw('select * from zorna_forms_field_entry where field_id=%s order by value', [field.pk])
     elif field.reference in visited:
-        #if circular return values of original field
+        # if circular return values of original field
         r = visited[0].split('.')
         field = FormsFormField.objects.get(form__slug=r[0], slug=r[1])
         return FormsFieldEntry.objects.raw('select * from zorna_forms_field_entry where field_id=%s order by value', [field.pk])
@@ -522,6 +582,7 @@ def deepish_copy(org):
 
     return out
 
+
 def forms_format_entries(form, query_set, hidden=[]):
     '''
     return columns and rows from FormFormEntry queryset
@@ -529,36 +590,39 @@ def forms_format_entries(form, query_set, hidden=[]):
         - zorna_owner_last_name
         - zorna_owner_first_name
     if a form is bind to another another form field, a new field is added with slug='slug of target field':
-    
+
     columns are formated as follow:
         - columns[slug] = label . This let you access label directly from slug
         - columns['fields'] = [ { 'slug':slug, 'label': label }, ...] list of columns
-        
+
     rows is a list where each entry is like this:
         - entry['entity'] is FormsFormEntry record
         - entry['id'] is pk  of FormsFormEntry record
         - for each field with slug='slug' in columns:
-            - entry['slug'] = { 'value': value of field, 'type': type of field} 
+            - entry['slug'] = { 'value': value of field, 'type': type of field}
                 where type=text|url|date|list
         - entry[fields] is a list of fields in the same order as columns where each entry is:
-            - { 'value': value of field, 'type': type of field, 'slug':'slug'} 
+            - { 'value': value of field, 'type': type of field, 'slug':'slug'}
                 where type=text|url|date|list
     '''
     cols = {}
-    columns = {'fields':[]}
+    columns = {'fields': []}
     forms_entry_fields = {}
     forms_binds = []
     forms_fields = {}
 
-    form_fields = FormsFormField.objects.filter(form=form).order_by('sort_order_list')
+    form_fields = FormsFormField.objects.filter(
+        form=form).order_by('sort_order_list')
     for f in form_fields:
         forms_fields[f.pk] = f
         # if records are bind to users, add owner column
         if f.field_type == fields.ZORNA_USER_SINGLETON and form.bind_to_account:
             slug = 'zorna_owner'
             columns[slug] = _(u'User')
-            columns['fields'].append({'label':columns[slug], 'slug':slug, 'type':fields.ZORNA_USER, 'values':[]})
-            cols[slug] = {'label':columns[slug], 'help_text':'', 'type':fields.ZORNA_USER, 'value':''}
+            columns['fields'].append({'label': columns[
+                                     slug], 'slug': slug, 'type': fields.ZORNA_USER, 'values': []})
+            cols[slug] = {'label': columns[
+                slug], 'help_text': '', 'type': fields.ZORNA_USER, 'value': ''}
         elif f.field_type == fields.FORM_ENTRY and form.bind_to_entry:
             # if records are bind to entries of an another form
             if form.bind_to_entry:
@@ -570,7 +634,8 @@ def forms_format_entries(form, query_set, hidden=[]):
                         tmp.append([bind, form_target])
                         bind = form_target.bind_to_entry.split('.')
                     else:
-                        target_field = FormsFormField.objects.get(slug=bind[1], form__slug=bind[0])
+                        target_field = FormsFormField.objects.get(
+                            slug=bind[1], form__slug=bind[0])
                         tmp.append([bind, target_field])
                         bind = target_field.form.bind_to_entry.split('.')
 
@@ -582,10 +647,13 @@ def forms_format_entries(form, query_set, hidden=[]):
                         target_slug = 'zorna_owner_%s' % bind[0]
                         forms_entry_fields[target_slug] = {}
                         columns[target_slug] = _("User")
-                        columns['fields'].append({'label':columns[target_slug], 'slug':target_slug, 'type':fields.ZORNA_USER, 'values':[]})
-                        cols[target_slug] = {'label':columns[target_slug], 'help_text':'', 'form_bind':bind[0], 'field_bind':bind[1], 'type':fields.ZORNA_USER, 'value':''}
+                        columns['fields'].append({'label': columns[
+                                                 target_slug], 'slug': target_slug, 'type': fields.ZORNA_USER, 'values': []})
+                        cols[target_slug] = {'label': columns[target_slug], 'help_text': '', 'form_bind': bind[
+                            0], 'field_bind': bind[1], 'type': fields.ZORNA_USER, 'value': ''}
                         form_target = b[1]
-                        tgcols, tgrows = FormsFieldEntry.objects.forms_get_entries(form_target, entries=[e.id for e in FormsFormEntry.objects.filter(form=form_target)])
+                        tgcols, tgrows = FormsFieldEntry.objects.forms_get_entries(
+                            form_target, entries=[e.id for e in FormsFormEntry.objects.filter(form=form_target)])
                         for r in tgrows:
                             forms_entry_fields[target_slug][r['id']] = r
                     else:
@@ -593,16 +661,21 @@ def forms_format_entries(form, query_set, hidden=[]):
                         target_slug = target_field.slug
                         forms_entry_fields[target_slug] = {}
                         columns[target_slug] = target_field.label
-                        columns['fields'].append({'label':columns[target_slug], 'slug':target_slug, 'type':target_field.field_type, 'values':[]})
-                        cols[target_slug] = {'label':columns[target_slug], 'help_text':'', 'form_bind':bind[0], 'field_bind':bind[1], 'type':target_field.field_type, 'value':''}
-                        tgcols, tgrows = forms_format_entries(target_field.form, FormsFieldEntry.objects.select_related(depth=1).filter(field=target_field))
+                        columns['fields'].append({'label': columns[
+                                                 target_slug], 'slug': target_slug, 'type': target_field.field_type, 'values': []})
+                        cols[target_slug] = {'label': columns[target_slug], 'help_text': '', 'form_bind': bind[
+                            0], 'field_bind': bind[1], 'type': target_field.field_type, 'value': ''}
+                        tgcols, tgrows = forms_format_entries(
+                            target_field.form, FormsFieldEntry.objects.select_related(depth=1).filter(field=target_field))
                         for r in tgrows:
                             forms_entry_fields[target_slug][r['id']] = r
                     forms_binds.append(target_slug)
         else:
-            columns['fields'].append({'label':f.label, 'slug':f.slug, 'type':f.field_type, 'total': 0, 'values':[]})
+            columns['fields'].append({
+                                     'label': f.label, 'slug': f.slug, 'type': f.field_type, 'total': 0, 'values': []})
             columns[f.slug] = f.label
-            cols[f.slug] = {'label':f.label, 'help_text':f.help_text, 'type':f.field_type, 'value':''}
+            cols[f.slug] = {'label': f.label, 'help_text':
+                            f.help_text, 'type': f.field_type, 'value': ''}
             f.target_entries = None
             try:
                 form.fields_reference
@@ -616,14 +689,16 @@ def forms_format_entries(form, query_set, hidden=[]):
                     form.fields_reference[f.pk] = [e for e in f.get_choices()]
 
                 f.target_entries = {}
-                for e in  form.fields_reference[f.pk]:
-                    #f.target_entries[e.form_entry_id] = {'value': e.value, 'type':field_target.field_type}  
-                    f.target_entries[e[0]] = {'value': e[1], 'type':f.field_type}
+                for e in form.fields_reference[f.pk]:
+                    # f.target_entries[e.form_entry_id] = {'value': e.value,
+                    # 'type':field_target.field_type}
+                    f.target_entries[e[0]] = {
+                        'value': e[1], 'type': f.field_type}
 
     forms_binds.reverse()
     rows = {}
     rows_order = []
-    rows_set = set() #for fast search
+    rows_set = set()  # for fast search
     for field_entry in query_set:
         try:
             rows[field_entry.form_entry_id]
@@ -631,42 +706,63 @@ def forms_format_entries(form, query_set, hidden=[]):
             rows[field_entry.form_entry_id] = deepish_copy(cols)
 
         try:
-            val = format_field_value(field_entry, forms_fields[field_entry.field_id])
+            val = format_field_value(field_entry,
+                                     forms_fields[field_entry.field_id])
         except:
-            val = {'value': '', 'type': forms_fields[field_entry.field_id].field_type}
-        #if type == fields.FILE:
+            val = {'value': '', 'type':
+                   forms_fields[field_entry.field_id].field_type}
+        # if type == fields.FILE:
         #    val['value'] = request.build_absolute_uri(val['value'])
-        #rows[field_entry.form_entry_id][forms_fields[field_entry.field_id].slug].update(val)
-        rows[field_entry.form_entry_id][forms_fields[field_entry.field_id].slug]['value'] = val['value']
-        rows[field_entry.form_entry_id][forms_fields[field_entry.field_id].slug]['type'] = val['type']
-        rows[field_entry.form_entry_id][forms_fields[field_entry.field_id].slug]['id'] = field_entry.pk
+        # rows[field_entry.form_entry_id][forms_fields[field_entry.field_id].slug].update(val)
+        rows[field_entry.form_entry_id][
+            forms_fields[field_entry.field_id].slug]['value'] = val['value']
+        rows[field_entry.form_entry_id][
+            forms_fields[field_entry.field_id].slug]['type'] = val['type']
+        rows[field_entry.form_entry_id][
+            forms_fields[field_entry.field_id].slug]['id'] = field_entry.pk
         if field_entry.form_entry_id not in rows_set:
             rows_order.append(field_entry.form_entry_id)
             rows_set.add(field_entry.form_entry_id)
-            rows[field_entry.form_entry_id]['zorna_entity'] = field_entry.form_entry
+            rows[field_entry.form_entry_id][
+                'zorna_entity'] = field_entry.form_entry
             if form.bind_to_account:
-                #rows[field_entry.form_entry_id]['zorna_owner'].update({'value':field_entry.form_entry.account.get_full_name(), 'type':fields.NAMES_TPL[fields.ZORNA_USER]})
-                rows[field_entry.form_entry_id]['zorna_owner']['value'] = field_entry.form_entry.account.get_profile()
-                rows[field_entry.form_entry_id]['zorna_owner']['type'] = fields.NAMES_TPL[fields.ZORNA_USER]
+                # rows[field_entry.form_entry_id]['zorna_owner'].update({'value':field_entry.form_entry.account.get_full_name(),
+                # 'type':fields.NAMES_TPL[fields.ZORNA_USER]})
+                rows[field_entry.form_entry_id]['zorna_owner'][
+                    'value'] = field_entry.form_entry.account.get_profile()
+                rows[field_entry.form_entry_id]['zorna_owner'][
+                    'type'] = fields.NAMES_TPL[fields.ZORNA_USER]
             if form.bind_to_entry:
                 e_id = field_entry.form_entry.entry_id
                 for t in forms_binds:
-                    if e_id and forms_entry_fields[t].has_key(e_id):
+                    if e_id and e_id in forms_entry_fields[t]:
                         if t.rfind('zorna_owner_') == 0:
-                            #rows[field_entry.form_entry_id][t].update({'value':forms_entry_fields[t][e_id]['zorna_owner']['value'], 'type':fields.NAMES_TPL[fields.TEXT], 'entry_bind':forms_entry_fields[t][e_id]})
-                            rows[field_entry.form_entry_id][t]['value'] = forms_entry_fields[t][e_id]['zorna_owner']['value']
-                            rows[field_entry.form_entry_id][t]['type'] = fields.NAMES_TPL[fields.TEXT]
-                            rows[field_entry.form_entry_id][t]['entry_bind'] = forms_entry_fields[t][e_id]
+                            # rows[field_entry.form_entry_id][t].update({'value':forms_entry_fields[t][e_id]['zorna_owner']['value'],
+                            # 'type':fields.NAMES_TPL[fields.TEXT],
+                            # 'entry_bind':forms_entry_fields[t][e_id]})
+                            rows[field_entry.form_entry_id][t][
+                                'value'] = forms_entry_fields[t][e_id]['zorna_owner']['value']
+                            rows[field_entry.form_entry_id][t][
+                                'type'] = fields.NAMES_TPL[fields.TEXT]
+                            rows[field_entry.form_entry_id][t][
+                                'entry_bind'] = forms_entry_fields[t][e_id]
                         else:
-                            #rows[field_entry.form_entry_id][t].update({'value':forms_entry_fields[t][e_id][t]['value'], 'type':fields.NAMES_TPL[fields.TEXT], 'entry_bind':forms_entry_fields[t][e_id]})
-                            rows[field_entry.form_entry_id][t]['value'] = forms_entry_fields[t][e_id][t]['value']
-                            rows[field_entry.form_entry_id][t]['type'] = fields.NAMES_TPL[fields.TEXT]
-                            rows[field_entry.form_entry_id][t]['entry_bind'] = forms_entry_fields[t][e_id]
+                            # rows[field_entry.form_entry_id][t].update({'value':forms_entry_fields[t][e_id][t]['value'],
+                            # 'type':fields.NAMES_TPL[fields.TEXT],
+                            # 'entry_bind':forms_entry_fields[t][e_id]})
+                            rows[field_entry.form_entry_id][t][
+                                'value'] = forms_entry_fields[t][e_id][t]['value']
+                            rows[field_entry.form_entry_id][t][
+                                'type'] = fields.NAMES_TPL[fields.TEXT]
+                            rows[field_entry.form_entry_id][t][
+                                'entry_bind'] = forms_entry_fields[t][e_id]
                         e_id = forms_entry_fields[t][e_id]['entity'].entry_id
                     else:
-                        #rows[field_entry.form_entry_id][t].update({'value':'', 'type':fields.NAMES_TPL[fields.TEXT]})
+                        # rows[field_entry.form_entry_id][t].update({'value':'',
+                        # 'type':fields.NAMES_TPL[fields.TEXT]})
                         rows[field_entry.form_entry_id][t]['value'] = ''
-                        rows[field_entry.form_entry_id][t]['type'] = fields.NAMES_TPL[fields.TEXT]
+                        rows[field_entry.form_entry_id][t][
+                            'type'] = fields.NAMES_TPL[fields.TEXT]
 
     for h in hidden:
         if h:
@@ -676,22 +772,24 @@ def forms_format_entries(form, query_set, hidden=[]):
                     del columns['fields'][i]
                     del columns[slug]
                     break
-    #reorder records
+    # reorder records
     entries = []
     for row in rows_order:
         entry = {}
         entry['entity'] = rows[row]['zorna_entity']
         entry['id'] = rows[row]['zorna_entity'].pk
-        #for f in FormsFormEntry._meta.fields:
+        # for f in FormsFormEntry._meta.fields:
         #    entry[f.name] = getattr(rows[row]['zorna_entity'], f.name)
         r = []
         for c in columns['fields']:
             if type in [fields.DECIMAL, fields.INTEGER]:
                 try:
                     if c['type'] == fields.INTEGER:
-                        c['total'] = c['total'] + int(rows[row][c['slug']]['value'])
+                        c['total'] = c['total'] + int(
+                            rows[row][c['slug']]['value'])
                     else:
-                        c['total'] = c['total'] + Decimal(str(rows[row][c['slug']]['value']))
+                        c['total'] = c['total'] + Decimal(
+                            str(rows[row][c['slug']]['value']))
                 except InvalidOperation:
                     pass
             c['values'].append(rows[row][c['slug']]['value'])
@@ -702,4 +800,3 @@ def forms_format_entries(form, query_set, hidden=[]):
         entry['fields'] = r
         entries.append(entry)
     return columns, entries
-

@@ -28,7 +28,7 @@ def month_cal(context, year, month):
     ret = []
     if request.user.is_authenticated():
         evt = EventRelation.objects.get_events_for_object(request.user)
-        period = Period(events=evt, start=datetime.datetime(year, month, 1), 
+        period = Period(events=evt, start=datetime.datetime(year, month, 1),
                         end=datetime.datetime(year, month, 30))
         occurrences = []
         for o in period.occurrences:
@@ -37,8 +37,10 @@ def month_cal(context, year, month):
 
     first_day_of_month = datetime.date(year, month, 1)
     last_day_of_month = get_last_day_of_month(year, month)
-    first_day_of_calendar = first_day_of_month - datetime.timedelta(first_day_of_month.weekday())
-    last_day_of_calendar = last_day_of_month + datetime.timedelta(7 - last_day_of_month.weekday())
+    first_day_of_calendar = first_day_of_month - \
+        datetime.timedelta(first_day_of_month.weekday())
+    last_day_of_calendar = last_day_of_month + \
+        datetime.timedelta(7 - last_day_of_month.weekday())
 
     month_cal = []
     week = []
@@ -68,7 +70,8 @@ def month_cal(context, year, month):
 
     return {'calendar': month_cal, 'headers': week_headers}
 
-register.inclusion_tag('calendars/month_cal.html', takes_context=True)(month_cal)
+register.inclusion_tag(
+    'calendars/month_cal.html', takes_context=True)(month_cal)
 
 
 def get_date_status(value):
@@ -107,7 +110,8 @@ def get_events_for_object(obj, start_date, end_date):
             if o.id:
                 o.details = EventDetails.objects.get_eventdetails_for_object(o)
             else:
-                o.details = EventDetails.objects.get_eventdetails_for_object(o.event)
+                o.details = EventDetails.objects.get_eventdetails_for_object(
+                    o.event)
             occurrences.append(o)
 
     events_list = []
@@ -121,9 +125,11 @@ def get_events_for_object(obj, start_date, end_date):
         ed['title'] = occ.title
         ed['start'] = occ.start
         ed['end'] = occ.end
-        ed['status'] = get_date_status(occ.start)  # 'overdue', 'today' , 'tomorrow' or ''
+        ed['status'] = get_date_status(
+            occ.start)  # 'overdue', 'today' , 'tomorrow' or ''
         ed['description'] = occ.description
-        ed['author'] = User.objects.get(pk=occ.event.creator_id).get_full_name()
+        ed['author'] = User.objects.get(
+            pk=occ.event.creator_id).get_full_name()
         if occ.details.bgcolor:
             ed['backgroundColor'] = occ.details.bgcolor
         elif occ.details.category:
@@ -159,6 +165,7 @@ def user_calendar_events(parser, token):
 
 
 class user_calendar_events_node(template.Node):
+
     def __init__(self, cal_date, limit, var_name):
         sd = cal_date[1:-1]
         if sd:
@@ -176,10 +183,12 @@ class user_calendar_events_node(template.Node):
         request = context['request']
         events_list = []
         if request.user.is_authenticated():
-            events_list = get_events_for_object(User.objects.get(pk=request.user.pk),
-                                                self.start_date, self.end_date)
+            events_list = get_events_for_object(
+                User.objects.get(pk=request.user.pk),
+                self.start_date, self.end_date)
         context[self.var_name] = events_list
         return ''
+
 
 @register.tag(name="resource_calendar_events")
 def resource_calendar_events(parser, token):
@@ -202,6 +211,7 @@ def resource_calendar_events(parser, token):
 
 
 class resource_calendar_events_node(template.Node):
+
     def __init__(self, cal_id, cal_date, limit, var_name):
         sd = cal_date[1:-1]
         if sd:
@@ -224,7 +234,8 @@ class resource_calendar_events_node(template.Node):
             calendar = get_resource_calendar(resource)
             ao = get_allowed_objects(request.user, type(calendar), 'viewer')
             if calendar.pk in ao:
-                events_list = get_events_for_object(resource, self.start_date, self.end_date)
+                events_list = get_events_for_object(
+                    resource, self.start_date, self.end_date)
         except:
             pass
         context[self.var_name] = events_list

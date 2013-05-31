@@ -5,14 +5,17 @@ from django.contrib.sites.models import Site
 
 from zorna.site.models import SiteRegistration
 
+
 def alerts(request):
     from zorna.site.models import SiteAlert
     ao = get_allowed_objects(request.user, SiteAlert, 'viewer')
-    alerts = SiteAlert.objects.filter(pk__in=ao, start__lte=datetime.datetime.now(), end__gte=datetime.datetime.now())
+    alerts = SiteAlert.objects.filter(
+        pk__in=ao, start__lte=datetime.datetime.now(), end__gte=datetime.datetime.now())
     context_extras = {}
     context_extras['ALERTS'] = alerts
 
     return context_extras
+
 
 def zsettings(request):
     """
@@ -30,11 +33,12 @@ def zsettings(request):
     if request.user.is_anonymous():
         usergroups = []
     else:
-        usergroups = [str(g.pk) for g in request.user.get_profile().groups.all()]
+        usergroups = [str(g.pk)
+                      for g in request.user.get_profile().groups.all()]
 
     return {'CKEDITOR_MEDIA_PREFIX': settings.CKEDITOR_MEDIA_PREFIX,
-		  'ZORNA_SKIN': settings.ZORNA_SKIN,
-          'ZORNA_REGISTRATION': allow_registration,
-          'MEDIA_PLUGIN_URL': media_plugin_url,
-          'ZORNA_USER_GROUPS': usergroups,
+            'ZORNA_SKIN': settings.ZORNA_SKIN,
+            'ZORNA_REGISTRATION': allow_registration,
+            'MEDIA_PLUGIN_URL': media_plugin_url,
+            'ZORNA_USER_GROUPS': usergroups,
             }

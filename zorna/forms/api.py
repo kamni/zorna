@@ -28,16 +28,19 @@ def isUserManager(request, slug):
     except:
         return False
 
+
 def forms_get_entries(slug_or_form, *args, **kwargs):
     """
     """
     return FormsFieldEntry.objects.forms_get_entries(slug_or_form, *args, **kwargs)
-    
+
+
 def forms_get_entry(entry):
     if not isinstance(entry, FormsFormEntry):
         entry = FormsFormEntry.objects.get(pk=entry)
     columns, entries = forms_get_entries(entry.form, entries=[entry.pk])
     return columns, entries[0]
+
 
 def forms_delete_entry(entry):
     if not isinstance(entry, FormsFormEntry):
@@ -50,8 +53,10 @@ def forms_delete_entry(entry):
         shutil.rmtree(path)
     ct = ContentType.objects.get_for_model(FormsFormEntry)
     detete_message_community_extra(entry, ct)
-    FormsFieldEntry.objects.filter(field__reference__startswith='%s.' % form.slug, value='%s' % entry.pk).update(value='')
+    FormsFieldEntry.objects.filter(field__reference__startswith='%s.' %
+                                   form.slug, value='%s' % entry.pk).update(value='')
     entry.delete()
+
 
 def forms_get_form(slug):
     try:
@@ -60,22 +65,24 @@ def forms_get_form(slug):
         return None
     return form
 
+
 def forms_get_form_edit_entry(request, entry):
     try:
         entry = FormsFormEntry.objects.get(pk=entry)
         form = entry.form
     except:
         return None
-    
-    rget= request.GET#{'lot.designation': '110'}
+
+    rget = request.GET  # {'lot.designation': '110'}
     args = (form, request.POST or None, request.FILES or None)
     form_for_form = FormForForm(*args, instance=entry, rget=rget)
     return form_for_form
 
+
 def forms_get_form_add_entry(request, form_slug, **kwargs):
     form = forms_get_form(form_slug)
     if form:
-        kwargs['rget'] = request.GET#{'lot.designation': '110'}
+        kwargs['rget'] = request.GET  # {'lot.designation': '110'}
         args = (form, request.POST or None, request.FILES or None)
         form_for_form = FormForForm(*args, **kwargs)
         return form_for_form
@@ -87,7 +94,8 @@ def get_users_profile_form_entries(users):
     try:
         form = FormsForm.objects.get(slug=settings.ZORNA_USER_PROFILE_FORM)
         try:
-            entries = FormsFormEntry.objects.filter(form=form, account__in=users)
+            entries = FormsFormEntry.objects.filter(
+                form=form, account__in=users)
         except FormsFormEntry.DoesNotExist:
             entries = None
     except Exception as e:
@@ -98,12 +106,14 @@ def get_users_profile_form_entries(users):
     else:
         return None, None
 
+
 def get_users_profile_form_entry(user):
-    c,r = get_users_profile_form_entries([user])
+    c, r = get_users_profile_form_entries([user])
     if r:
         return c, r[0]
     else:
-        return None, None 
+        return None, None
+
 
 def forms_form_browse_entries(request, slug, entries=None):
     try:
@@ -111,7 +121,7 @@ def forms_form_browse_entries(request, slug, entries=None):
     except:
         return None
 
-    #dont't verify access, caller must do it for us
+    # dont't verify access, caller must do it for us
     extra_context = {}
     kwargs = {}
     sort = ''
@@ -135,14 +145,12 @@ def forms_form_browse_entries(request, slug, entries=None):
         if not f.visible_in_list:
             hidden.append(f.slug)
     extra_context['params'] = urllib.urlencode(kwargs)
-    
-            
-    kwargs['f'] = request.GET.get('f', '') 
-    kwargs['q'] = request.GET.get('q', '') 
-    kwargs['o'] = request.GET.get('o', sort) 
+
+    kwargs['f'] = request.GET.get('f', '')
+    kwargs['q'] = request.GET.get('q', '')
+    kwargs['o'] = request.GET.get('o', sort)
     kwargs['ot'] = request.GET.get('ot', 'asc')
     kwargs['where'] = request.GET.get('where', '')
-
 
     extra_context['parents'] = []
     if kwargs['where']:
@@ -153,35 +161,37 @@ def forms_form_browse_entries(request, slug, entries=None):
             extra_context['where_form_slug'] = form_slug = bte[0]
             extra_context['where_form_field'] = form_field = bte[1]
             while entry_id:
-                e = FormsFormEntry.objects.select_related().get(pk= entry_id, form__slug=form_slug)
+                e = FormsFormEntry.objects.select_related().get(
+                    pk=entry_id, form__slug=form_slug)
                 c, r = forms_get_entry(e)
-                extra_context['parents'].append({'row': r[form_field], 'entry': e})
+                extra_context['parents'].append({'row': r[
+                                                form_field], 'entry': e})
                 hidden.append(r[form_field]['slug'])
                 if not e.form.bind_to_entry:
-                    break;
+                    break
                 bte = e.form.bind_to_entry.split('.')
                 form_slug = bte[0]
                 form_field = bte[1]
                 entry_id = e.entry.pk
         except Exception as e:
             extra_context['parents'] = []
-    extra_context['parents'].reverse()            
+    extra_context['parents'].reverse()
     kwargs['hidden'] = ','.join(hidden)
 
     columns, entries = forms_get_entries(form, **kwargs)
     for f in form_fields:
         if '.' in f.reference and f.is_a(*fields.CHOICES):
             fl = request.GET.get(f.slug, None)
-            choices = [('','--- %s ---' % f.label)]
+            choices = [('', '--- %s ---' % f.label)]
             for e in form.fields_reference[f.pk]:
-                choices.append((e[0],e[1]))
-            s = forms.Select(choices = choices)
-            extra_context['filters'][f.label]= s.render(f.slug, fl, None)
+                choices.append((e[0], e[1]))
+            s = forms.Select(choices=choices)
+            extra_context['filters'][f.label] = s.render(f.slug, fl, None)
         else:
-            extra_context['field_filters'].append([f.label,f.slug])
+            extra_context['field_filters'].append([f.label, f.slug])
             if fl:
                 kwargs[f.slug] = fl
-    
+
     paginator = Paginator(entries, 25)
     page = int(request.GET.get('page', 1))
     try:
@@ -203,7 +213,7 @@ def forms_form_browse_entries(request, slug, entries=None):
     extra_context['entries'] = entries
     extra_context['rows'] = rows
     extra_context['page'] = page
-    extra_context['paginator'] = paginator            
+    extra_context['paginator'] = paginator
     extra_context['where'] = kwargs['where']
     try:
         r = form.bind_to_entry.split('.')
@@ -211,7 +221,7 @@ def forms_form_browse_entries(request, slug, entries=None):
         extra_context['bind_entry_field'] = r[1]
     except:
         pass
-                
-    extra_context['where'] = kwargs['where']            
+
+    extra_context['where'] = kwargs['where']
 
     return extra_context

@@ -18,12 +18,15 @@ FOLDER_NOTIFICATIONS = (
     (2, _(u'Let the author decide')),
 )
 
+
 class ZornaFolder(MPTTModel, ZornaEntity):
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, related_name='children')
     name = models.CharField(_('name'), max_length=255)
     slug = models.SlugField(_('slug'), max_length=255, null=True, blank=True)
     inherit_permissions = models.BooleanField(_(u'Inherit permissions'))
-    email_notification = models.IntegerField(max_length=1, choices=FOLDER_NOTIFICATIONS, default=0, help_text=_(u'Users will receive email notification when a file is uploaded or updated'))
+    email_notification = models.IntegerField(max_length=1, choices=FOLDER_NOTIFICATIONS, default=0, help_text=_(
+        u'Users will receive email notification when a file is uploaded or updated'))
     objects = ZornaFolderManager()
 
     class Meta:
@@ -46,13 +49,14 @@ class ZornaFolder(MPTTModel, ZornaEntity):
             'reader': ugettext_noop(u'Who can browse this folder'),
             'writer': ugettext_noop(u'Who can upload files to this folder'),
             'manager': ugettext_noop(u'Who can manage this folder'),
-            }
+        }
     get_acl_permissions = staticmethod(get_acl_permissions)
 
 
 class ZornaFile(ZornaEntity):
     description = models.CharField(max_length=255)
-    folder = models.CharField(_('root_folder'), max_length=255, default='', editable=False)
+    folder = models.CharField(_(
+        'root_folder'), max_length=255, default='', editable=False)
     tags = TagField()
 
     class Meta:

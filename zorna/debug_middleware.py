@@ -68,12 +68,16 @@ if Template.render != instrumented_test_render:
     Template.render = instrumented_test_render
 # MONSTER monkey-patch
 old_template_init = Template.__init__
+
+
 def new_template_init(self, template_string, origin=None, name='<Unknown Template>'):
     old_template_init(self, template_string, origin, name)
     self.origin = origin
 Template.__init__ = new_template_init
 
+
 class DebugFooter:
+
     def process_request(self, request):
         self.time_started = time.time()
         self.templates_used = []
@@ -85,7 +89,7 @@ class DebugFooter:
 
         # Don't bother if the url doesn't have the "debug"  query  string
         # Added by Jeff Schroeder for dynamically enabling/disabling this
-        if not request.GET.has_key("debug"):
+        if "debug" not in request.GET:
             return response
 
         # Only include debug info for text/html pages not accessed via Ajax
@@ -99,9 +103,9 @@ class DebugFooter:
         templates = []
         for t in self.templates_used:
             if t.origin and t.origin.name:
-                templates.append( (t.name, t.origin.name) )
+                templates.append((t.name, t.origin.name))
             else:
-                templates.append( (t.name, "no origin") )
+                templates.append((t.name, "no origin"))
 
         sql_queries = connection.queries[self.sql_offset_start:]
         # Reformat sql queries a bit
@@ -111,33 +115,33 @@ class DebugFooter:
             raw_sql = query['sql']
             query['sql'] = reformat_sql(query['sql'])
             sql_total += float(query['time'])
-            count = sql_counts.get(raw_sql,0) + 1
+            count = sql_counts.get(raw_sql, 0) + 1
             sql_counts[raw_sql] = count
             if count > 1:
-                query['count'] = mark_safe('<p>duplicate query count=%s</p>' % count)
+                query['count'] = mark_safe(
+                    '<p>duplicate query count=%s</p>' % count)
             else:
                 query['count'] = ''
 
         from django.core.urlresolvers import resolve
         view_func = resolve(request.META['PATH_INFO'])[0]
 
-        view =  '%s.%s' % (view_func.__module__, view_func.__name__)
+        view = '%s.%s' % (view_func.__module__, view_func.__name__)
 
         vf = view_func
         breaker = 10
-        while not hasattr(vf,'func_code'):
-            if hasattr(vf,'view_func'):
+        while not hasattr(vf, 'func_code'):
+            if hasattr(vf, 'view_func'):
                 vf = vf.view_func
             else:
-                break # somethings wrong about the assumptions of the decorator
+                break  # somethings wrong about the assumptions of the decorator
             breaker = breaker - 1
             if breaker < 0:
                 break
-        if hasattr(vf,'func_code'):
+        if hasattr(vf, 'func_code'):
             co = vf.func_code
-            filename = co.co_filename
-            lineno = co.co_firstlineno
-            view = '- '.join([view, ':'.join([co.co_filename, str(co.co_firstlineno)])])
+            view = '- '.join([view, ':'.join(
+                [co.co_filename, str(co.co_firstlineno)])])
 
         debug_content = Template(TEMPLATE).render(Context({
             'debug': settings.DEBUG,
@@ -145,13 +149,14 @@ class DebugFooter:
             'templates': templates,
             'sql': sql_queries,
             'sql_total': sql_total,
-            'num_queries' : len(sql_queries),
+            'num_queries': len(sql_queries),
             'template_dirs': settings.TEMPLATE_DIRS,
             'view': view
         }))
 
         content = response.content
-        response.content = force_unicode(content).replace('</body>', debug_content)
+        response.content = force_unicode(
+            content).replace('</body>', debug_content)
 
         return response
 
@@ -162,6 +167,7 @@ class DebugFooter:
         context = kwargs.get('context')
         if(context):
             self.contexts_used.append(context)
+
 
 def reformat_sql(sql):
     if sql:

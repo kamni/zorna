@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+
 class ArticleCategoryManager(models.Manager):
 
     def on_site(self, site_id=None):
@@ -14,13 +15,13 @@ class ArticleCategoryManager(models.Manager):
     def root(self):
         """Return a :class:`QuerySet` of categories without parent."""
         return self.on_site().filter(parent__isnull=True)
-        
+
     def from_path(self, complete_path):
         """
         return category from complete path
-        otherwise returns None 
+        otherwise returns None
         """
-        if complete_path == None or complete_path == '':
+        if complete_path is None or complete_path == '':
             return None
         if complete_path.endswith("/"):
             complete_path = complete_path[:-1]
@@ -33,13 +34,13 @@ class ArticleCategoryManager(models.Manager):
                 return None
         slug = complete_path.split("/")[-1]
         categories_list = self.on_site().filter(slug=slug)
-        
+
         category_ret = None
-        if len(categories_list) == 1 :
+        if len(categories_list) == 1:
             category_ret = categories_list[0]
-        elif len(categories_list) > 1 :
+        elif len(categories_list) > 1:
             for category in categories_list:
-                pp = category.get_complete_slug()+slug        
+                pp = category.get_complete_slug() + slug
                 if category and pp == complete_path:
                     category_ret = category
                     break
