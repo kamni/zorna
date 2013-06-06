@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Gestion des droits d’accès &mdash; zorna 1.1.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="zorna 1.1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Documentation de ZORNA en français" href="../index.html" />
+    <link rel="next" title="3. Publication des articles" href="articles.html" />
+    <link rel="prev" title="1. ZORNA Présentation" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="articles.html" title="3. Publication des articles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. ZORNA Présentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">zorna 1.1.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Documentation de ZORNA en français</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gestion-des-droits-d-acces">
+<h1>2. Gestion des droits d&#8217;accès<a class="headerlink" href="#gestion-des-droits-d-acces" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preambule">
+<h2>2.1. Préambule<a class="headerlink" href="#preambule" title="Permalink to this headline">¶</a></h2>
+<p>ZORNA utilise les groupes pour gérer les droits sur les objets. Un groupe est un ensemble d&#8217;utilisateurs enregistrés dans la base de données. Les groupes sont hiérarchiques c&#8217;est à dire organisés sous forme d&#8217;arborescence.</p>
+<p>Pour octroyer des droits sur un objet géré par ZORNA ( article, faq, fichier, etc ...), on done le droit au groupe ou on le lui refuse.
+Tous les membres d&#8217;un groupe bénéficient des droits octroyés à ce groupe.</p>
+<p>Pour éviter inutilement la création de groupes, ZORNA permet d&#8217;octroyer des droits par utilisateur.</p>
+<p>Un droit peut être accordé à un groupe ou au groupe et à ses descendants.</p>
+<p>De la même manière un droit peut être refusé à un groupe ou à ses descendants.</p>
+<p>On peut accorder un droit à un groupe et ses descendants et le refuser pour quelques groupes dans la hiérarchie.</p>
+<p>Cette façon de gérer les droits évite la multiplication des groupes et offre beaucoup plus de souplesse.</p>
+</div>
+<div class="section" id="les-groupes">
+<h2>2.2. Les groupes<a class="headerlink" href="#les-groupes" title="Permalink to this headline">¶</a></h2>
+<p>ZORNA permet d&#8217;organiser les groupes de manière hiérachique:</p>
+<img alt="../../_images/adm-groupes.png" src="../../_images/adm-groupes.png" />
+<p>Pour créer un groupe, en tant qu&#8217;administrateur, cliquez sur le lien &#8220;Administration -&gt; Groupes&#8221; puis &#8220;Ajouter un groupe&#8221;.</p>
+<p>Pour voir les membres d&#8217;un groupe ou en ajouter cliquez l&#8217;icône &#8220;Les Membres&#8221;</p>
+</div>
+<div class="section" id="les-droits-sur-un-objet">
+<h2>2.3. Les droits sur un objet<a class="headerlink" href="#les-droits-sur-un-objet" title="Permalink to this headline">¶</a></h2>
+<p>Chaque objet a des droits spécifiques. Ainsi pour un objet on peut octroyer un droit de lecture ou de création alors que pour un autre on utilise plutôt un droit d&#8217;accès ou tout autre.</p>
+<p>Les autorisations de droit pour les groupes sont:</p>
+<ul class="simple">
+<li><strong>Allow</strong>: pour autoriser le droit au groupe</li>
+<li><strong>Allow++</strong>: pour autoriser le droit au groupe et à ses descendants</li>
+<li><strong>Deny</strong>: pour refuser le droit au groupe</li>
+<li><strong>Deny++</strong>: pour refuser le droit au groupe et à ses descendants</li>
+</ul>
+<p>Les autorisations d&#8217;un droit pour un utilisateur sont:</p>
+<ul class="simple">
+<li><strong>Allow:</strong> pour autoriser le droit à l&#8217;utilisateur</li>
+<li><strong>Deny</strong>: pour refuser le droit</li>
+</ul>
+<img alt="../../_images/adm-rights.png" src="../../_images/adm-rights.png" />
+</div>
+<div class="section" id="duplication-des-droits">
+<h2>2.4. Duplication des droits<a class="headerlink" href="#duplication-des-droits" title="Permalink to this headline">¶</a></h2>
+<p>L&#8217;octroi des droits à un objet peut facilement devenir fastidueux surtout si le nombre de groupes est trop important.</p>
+<p>Pour éviter cela, ZORNA vous permet de dupliquer les droits d&#8217;un objet pour les appliquer à un autre.</p>
+<p>Pour cela il suffit de créer le nouvel objet et d&#8217;aller à l&#8217;interface de création des droits. Sur cette interface, déroulez la listbox &#8220;Charger les permissions à partir de&#8221; pour charger les permissions à partir d&#8217;un autre objet. ZORNA charge les droits octroyés à l&#8217;objet pour les appliquer au nouvel objet.
+Enregistrer pour sauvegarder les nouveaux droits.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Gestion des droits d&#8217;accès</a><ul>
+<li><a class="reference internal" href="#preambule">2.1. Préambule</a></li>
+<li><a class="reference internal" href="#les-groupes">2.2. Les groupes</a></li>
+<li><a class="reference internal" href="#les-droits-sur-un-objet">2.3. Les droits sur un objet</a></li>
+<li><a class="reference internal" href="#duplication-des-droits">2.4. Duplication des droits</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">1. ZORNA Présentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="articles.html"
+                        title="next chapter">3. Publication des articles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/fr/guides/acl.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="articles.html" title="3. Publication des articles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. ZORNA Présentation"
+             >previous</a> |</li>
+        <li><a href="../../index.html">zorna 1.1.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Documentation de ZORNA en français</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, AFRAZ.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

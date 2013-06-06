@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Personnalisation d’un site ZORNA &mdash; zorna 1.1.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="zorna 1.1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Documentation de ZORNA en français" href="../index.html" />
+    <link rel="prev" title="3. Publication des articles" href="articles.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="articles.html" title="3. Publication des articles"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">zorna 1.1.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Documentation de ZORNA en français</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="personnalisation-d-un-site-zorna">
+<h1>4. Personnalisation d&#8217;un site ZORNA<a class="headerlink" href="#personnalisation-d-un-site-zorna" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>4.1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>ZORNA vous permet de personnaliser les pages d&#8217;accueils de votre site en contenus et en graphisme. On distingue deux sortes de pages d&#8217;accueil:</p>
+<ul>
+<li><p class="first"><strong>La page d&#8217;accueil publique</strong></p>
+<blockquote>
+<div><p>Cette page est la page d&#8217;arrivée sur le site lorsque l&#8217;utilisateur n&#8217;est pas encore authentifié</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>La page d&#8217;accueil privée</strong></p>
+<blockquote>
+<div><p>C&#8217;est la page où l&#8217;utilisateur sera dirigé une fois authentifié.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>ZORNA vous permet de personnaliser ces deux pages pour adopter votre charte graphique ou pour présenter des contenus spécifiques.
+Le design de ces pages est du ressort du web master. Les connaissances du HTML, CSS et éventuellement du Javascript sont nécessaires. En plus pour une bonne connaissance du langage du moteur de template de DJANGO est requise pour afficher du contenu provenant de la base de données de ZORNA.</p>
+<p>Dans le répertoire &#8220;skins/default&#8221; à la racine de votre site, on trouve ces deux pages et d&#8217;autres:</p>
+<ul class="simple">
+<li><strong>public.html</strong> est la page d&#8217;accueil publique</li>
+<li><strong>private.html</strong> est la page d&#8217;accueil privée</li>
+<li><strong>base.html</strong> pour personnaliser la description, les mots clés ( meta ) du site</li>
+<li><strong>header.html</strong> contient les menus en haut à droite et le logo du site</li>
+<li><strong>footer.html</strong> contient le bas de la page</li>
+<li><strong>page_menu.html</strong> contient les menus de la page</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. Personnalisation d&#8217;un site ZORNA</a><ul>
+<li><a class="reference internal" href="#introduction">4.1. Introduction</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="articles.html"
+                        title="previous chapter">3. Publication des articles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/fr/guides/skins.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="articles.html" title="3. Publication des articles"
+             >previous</a> |</li>
+        <li><a href="../../index.html">zorna 1.1.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Documentation de ZORNA en français</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, AFRAZ.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

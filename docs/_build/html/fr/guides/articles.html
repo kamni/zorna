@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Publication des articles &mdash; zorna 1.1.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="zorna 1.1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Documentation de ZORNA en français" href="../index.html" />
+    <link rel="prev" title="2. Gestion des droits d’accès" href="acl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="acl.html" title="2. Gestion des droits d’accès"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">zorna 1.1.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Documentation de ZORNA en français</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="publication-des-articles">
+<h1>3. Publication des articles<a class="headerlink" href="#publication-des-articles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preambule">
+<h2>3.1. Préambule<a class="headerlink" href="#preambule" title="Permalink to this headline">¶</a></h2>
+<p>Les articles sont publiés dans des catégories d&#8217;articles. Les catégories d&#8217;articles sont organisées de manière hiérarchique ( sous forme d&#8217;arborescence ). Cette organisation permet à ZORNA de générer dynamiquement des menus hiérarchiques.
+Un article peut être publié dans une ou plusieurs catégories.</p>
+<img alt="../../_images/adm-articles-categories.png" src="../../_images/adm-articles-categories.png" />
+</div>
+<div class="section" id="creation-des-categories-articles">
+<h2>3.2. Création des catégories articles<a class="headerlink" href="#creation-des-categories-articles" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creation">
+<h3>3.2.1. Création<a class="headerlink" href="#creation" title="Permalink to this headline">¶</a></h3>
+<p>Seul l&#8217;administrateur peut créer des catégories d&#8217;articles. Pour celà il faut cliquer sur le lien &#8220;Administration -&gt; Articles&#8221; et ensuite sur le lien &#8220;Ajouter une catégorie&#8221;. Renseignez le nom de la catégorie d&#8217;articles. Indiquez son parent s&#8217;il y a lieu et sauvegardez en cliquant sur le bouton &#8220;Enregistrer&#8221;.</p>
+</div>
+<div class="section" id="droits-d-acces">
+<h3>3.2.2. Droits d&#8217;accès<a class="headerlink" href="#droits-d-acces" title="Permalink to this headline">¶</a></h3>
+<p>Une fois la catégorie créée, on doit spécifier ses droits d&#8217;accès.
+Pour celà, cliquez sur l&#8217;image en forme de clé et configurer les droits d&#8217;accès. Vous pouvez spécifier les droits en utilisant les groupes ou les octroyer explicitement à des utilisateurs.</p>
+<p>Pour définir les droits d&#8217;accès sur une catégorie, cliquez sur le bouton en forme de clé:</p>
+<img alt="../../_images/adm-rights.png" src="../../_images/adm-rights.png" />
+<p>Pour chaque catégorie les droits d&#8217;accès sont définis comme suit:</p>
+<ul class="simple">
+<li><strong>Reader</strong>: Le ou les groupes d&#8217;utilisateurs ayant le droit de lire les articles de la catégories</li>
+<li><strong>Manager</strong>: Le ou les groupes d&#8217;utilisateurs ayant le droit de gérer les articles de cette catégorie</li>
+<li><strong>Writer</strong>: Le ou les groupes d&#8217;utilisateur ayant le droit de publier des articles dans cette catégorie</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>3.3. Publication des articles<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="liste-de-mes-articles">
+<h3>3.3.1. Liste de mes articles<a class="headerlink" href="#liste-de-mes-articles" title="Permalink to this headline">¶</a></h3>
+<p>Un utilisateur qui a le droit de publier des articles accède à l&#8217;espace de publication des articles par le menu &#8220;Utilisateur&#8221; en cliquant sur le lien &#8220;Publication&#8221;. Il se retrouve avec la liste des articles qu&#8217;il a publié:</p>
+<img alt="../../_images/my-articles.png" src="../../_images/my-articles.png" />
+<p>Les articles avec une croix rouge sont des brouillons, c&#8217;est à dire qu&#8217;ils ne sont publiés dans aucune catégorie.
+Les autres sont des articles en ligne et donc publiés dans au moins une catégorie.</p>
+</div>
+<div class="section" id="publication">
+<h3>3.3.2. Publication<a class="headerlink" href="#publication" title="Permalink to this headline">¶</a></h3>
+<p>Pour publier un article, cliquez sur le lien &#8220;Rédiger un article&#8221;
+Indiquez dans quelles catégories vous souhaitez plubliez cet article:</p>
+<img alt="../../_images/pub-categories.png" src="../../_images/pub-categories.png" />
+<p>Indquez ensuite les éléments suivants:</p>
+<ul class="simple">
+<li>Titre de l&#8217;article</li>
+<li>Slug (il est mis à jour automatiquement). Vous pouvez le modifier si vous le souhaitez.</li>
+<li>En-tête de l&#8217;article</li>
+<li>Le corps de votre article. Un éditeur WYSIWYG vous facilite la mise en page</li>
+<li>Si vous souhaitez illustrer votre article, indiquez le fichier qui contient l&#8217;image dans le champ &#8220;Image&#8221;</li>
+<li>Vous avez la possibilité de joindre à votre article un ou deux fichiers.</li>
+</ul>
+<p>Cliquez sur le bouton &#8220;Enregistrer&#8221; pour enregistrer et publier votre article.</p>
+<p>Si vous souhaitez ne pas publier votre article tout de suite et de rester en mode brouillon, ne sélectionner aucune catégorie de publication.</p>
+<p>Une fois l&#8217;article enregistré, vous avez la possiblité de supprimer l&#8217;image ou de remplacer.
+De même pour les fichiers joints.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Publication des articles</a><ul>
+<li><a class="reference internal" href="#preambule">3.1. Préambule</a></li>
+<li><a class="reference internal" href="#creation-des-categories-articles">3.2. Création des catégories articles</a><ul>
+<li><a class="reference internal" href="#creation">3.2.1. Création</a></li>
+<li><a class="reference internal" href="#droits-d-acces">3.2.2. Droits d&#8217;accès</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">3.3. Publication des articles</a><ul>
+<li><a class="reference internal" href="#liste-de-mes-articles">3.3.1. Liste de mes articles</a></li>
+<li><a class="reference internal" href="#publication">3.3.2. Publication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="acl.html"
+                        title="previous chapter">2. Gestion des droits d&#8217;accès</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/fr/guides/articles.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="acl.html" title="2. Gestion des droits d’accès"
+             >previous</a> |</li>
+        <li><a href="../../index.html">zorna 1.1.5 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Documentation de ZORNA en français</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, AFRAZ.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
