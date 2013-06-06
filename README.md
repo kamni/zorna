@@ -5,6 +5,8 @@ Open source, Django based CMS and collaborative web portal
 
 [Website](http://en.zornaproject.com)
 
+[Documentation](https://zorna.readthedocs.org/en/latest/index.html)
+
 Installation
 ------------
 The best way to test ZORNA is to use virtualenv. Virtualenv creates a virtual environment and isolate the installation of Python packages needed and the OS.
