@@ -3,7 +3,7 @@ Zorna
 
 Open source, Django based CMS and collaborative web portal
 
-[Website](http://en.zornaproject.com)
+[Website](http://en.zornaproject.com) (en)
 
 [Documentation](https://zorna.readthedocs.org/en/latest/index.html)
 
