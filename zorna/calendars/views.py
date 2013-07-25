@@ -235,8 +235,18 @@ def view_calendar(request):
         request.session['my_calendars'] = my_calendars
         extra_context['my_calendars'] = ZornaCalendar.objects.filter(pk__in=list(set(
             my_calendars) & set([ao.pk for ao in allowed_objects]))).order_by('calendar__name')
+        for cal in extra_context['my_calendars']:
+            try:
+                cal.description = cal.content_object.description
+            except AttributeError:
+                cal.description = ''
         extra_context['calendars_viewer'] = ZornaCalendar.objects.filter(
             pk__in=allowed_objects).exclude(pk__in=my_calendars).order_by('calendar__name')
+        for cal in extra_context['calendars_viewer']:
+            try:
+                cal.description = cal.content_object.description
+            except AttributeError:
+                cal.description = ''
         context = RequestContext(request)
         return render_to_response('calendars/calendar.html', extra_context, context_instance=context)
     else:

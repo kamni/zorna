@@ -227,7 +227,7 @@ $(document).ready(function() {
         	{% for cal in my_calendars %}
 	        	<div class="my_calendars  calshow">
         			<a href="{% url remove_from_view_calendar cal.pk %}" class="util-button delete"></a>
-	        		<span  id="cal-{{cal.pk}}" calid="{{cal.pk}}" slug="{{cal.calendar.slug}}" class="my_calendar">{{cal.calendar.name}}</span>
+	        		<span  id="cal-{{cal.pk}}" calid="{{cal.pk}}" slug="{{cal.calendar.slug}}" class="my_calendar" title="{{cal.description}}">{{cal.calendar.name}}</span>
 	        	</div>
         	{% endfor %}
         </div>
@@ -235,7 +235,7 @@ $(document).ready(function() {
         <div id="shared_calendars">
         	{% for cal in calendars_viewer %}
         	<div id="cal-{{cal.pk}}" calid="{{cal.pk}}" slug="{{cal.calendar.slug}}" class="shared_calendars">
-        		<span><a href="{% url add_to_view_calendar cal.pk %}">{{cal.calendar.name}}</a></span>
+        		<span><a href="{% url add_to_view_calendar cal.pk %}" title="{{cal.description}}">{{cal.calendar.name}}</a></span>
         	</div>
         	{% endfor %}
         </div>
