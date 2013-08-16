@@ -7,6 +7,7 @@ from zorna.calendars.models import ZornaCalendar
 
 from zorna.calendars.models import EventDetails
 from zorna.communities.models import Community
+from zorna.communities.api import get_communities
 from zorna.site.models import SiteOptions
 
 
@@ -20,12 +21,15 @@ def get_user_calendars(user, permissions=['viewer']):
     if b_personal_calendar:
         pcal = get_personal_calendar(User.objects.get(pk=user.pk))
         allowed_objects.update([pcal.pk])
+
+    communities = get_communities(user)
+    for com in communities:
+        if com.enable_calendar:
+            cal = com.get_calendar()
+            allowed_objects.update([cal.pk])
+
     allowed_objects = ZornaCalendar.objects.filter(pk__in=allowed_objects)
-    exclude = []
-    for obj in allowed_objects:
-        if isinstance(obj.content_object, Community) and obj.content_object.enable_calendar is False:
-            exclude.append(obj)
-    return allowed_objects.exclude(pk__in=[obj.pk for obj in exclude])
+    return allowed_objects
 
 
 def get_personal_calendar(user):
