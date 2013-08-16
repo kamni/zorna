@@ -201,7 +201,7 @@ def calendar_update_event_dates(request):
         return HttpResponse("error", mimetype="text/javascript", status=400)
 
 
-def view_calendar(request):
+def view_calendar(request, calendar_id = None):
     if request.user.is_authenticated():
         allowed_objects = get_user_calendars(
             request.user, ['viewer', 'manager', 'creator'])
@@ -227,6 +227,8 @@ def view_calendar(request):
         extra_context['end_date'] = extra_context['start_date']
         extra_context['calendar'] = cal
         my_calendars = request.session.get('my_calendars', [])
+        if calendar_id and int(calendar_id) in [c.pk for c in allowed_objects]:
+            my_calendars = [int(calendar_id)]
         if not len(my_calendars):
             if cal in allowed_objects:
                 my_calendars = [cal.pk]
@@ -310,7 +312,7 @@ def create_calendar_event(request):
             event.calendar = calendar.calendar
             if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
                 event.end_recurring_period = event.end_recurring_period + \
-                    datetime.timedelta(days=1, seconds=-1)
+                    datetime.timedelta(days=1, seconds= -1)
 
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
@@ -378,7 +380,7 @@ def edit_calendar_simple_event(request, event_id, event, occurrence):
             event.calendar = calendar.calendar
             if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
                 event.end_recurring_period = event.end_recurring_period + \
-                    datetime.timedelta(days=1, seconds=-1)
+                    datetime.timedelta(days=1, seconds= -1)
             if request.POST['rule'] != '':
                 params = "interval:" + request.POST['interval']
                 if request.POST['rule'] == 'WEEKLY':
@@ -483,7 +485,7 @@ def edit_calendar_reccurrent_event(request, event_id, event, occurrence):
             evt.calendar = calendar.calendar
             if 'end_recurring_period' in form.cleaned_data and form.cleaned_data['end_recurring_period']:
                 evt.end_recurring_period = evt.end_recurring_period + \
-                    datetime.timedelta(days=1, seconds=-1)
+                    datetime.timedelta(days=1, seconds= -1)
             rule = event.rule
             if rule and request.POST['rule'] == '':
                 persisted_occurrences = event.occurrence_set.all()
@@ -741,9 +743,7 @@ def admin_edit_calendar(request, resource_calendar):
                 rcalendar = form.save(commit=False)
                 rcalendar.modifier = request.user
                 rcalendar.save()
-                c.calendar.calendar.name = form.cleaned_data['name']
-                c.calendar.calendar.save()
-
+                c.calendar.rename(form.cleaned_data['name'])
                 return HttpResponseRedirect(reverse('admin_list_calendars'))
         else:
             form = ResourceCalendarForm(

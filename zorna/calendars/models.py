@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_noop
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from django.template.defaultfilters import slugify
 
 from schedule.models.events import Calendar
 from zorna.models import ZornaEntity
@@ -147,6 +148,12 @@ class ZornaCalendar(ZornaEntity):
         salt = h.hexdigest()[:5]
         h.update(salt + self.calendar.slug)
         self.secret_key = h.hexdigest()
+
+    def rename(self, name):
+        self.calendar.name = name
+        self.calendar.slug = slugify(name)
+        self.calendar.save()
+        return self
 
     def get_acl_permissions():
         return {
