@@ -368,7 +368,7 @@ jQuery(document).ready(function() {
 	$('#fm-mydoc').fileTree({ 
 		root: '', 
 		script: '{% url dirlist_personal_folders %}', 
-		folderEvent: 'dblclick', 
+		folderEvent: 'click', 
 		expandSpeed: 1, 
 		collapseSpeed: 1, 
 		folderHandler: personalFolderHandler
@@ -379,7 +379,7 @@ jQuery(document).ready(function() {
 	$('#fm-com').fileTree({ 
 		root: '', 
 		script: '{% url dirlist_communities_folders %}', 
-		folderEvent: 'dblclick', 
+		folderEvent: 'click', 
 		expandSpeed: 1, 
 		collapseSpeed: 1,
 		folderHandler: communitiesFolderHandler 
@@ -390,7 +390,7 @@ jQuery(document).ready(function() {
 	$('#fm-shared').fileTree({ 
 		root: '', 
 		script: '{% url dirlist_shared_folders %}', 
-		folderEvent: 'dblclick', 
+		folderEvent: 'click', 
 		expandSpeed: 1, 
 		collapseSpeed: 1,
 		folderHandler: sharedFolderHandler 
