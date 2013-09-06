@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load calendars_tags %}
+{% load communities_tags %}
+{% load accounts_tags %}
+{% load acl_tags %}
+
+
+{% block zorna_extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/community.css" />
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_title_page %}
+{% trans "Communities" %}
+{% endblock%}
+
+
+{% block zorna_page_content %}
+<div style="background-color: #FFF;">
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tbody>
+			<tr>
+				<td width="25%" id="left-nav" valign="top">
+					<div class="com_inner">
+						<div class="com_inner_box">
+							<div class="user_info">
+								{% if avatar %}
+								<img src="/{{ avatar.avatar|thumbnail:"42x42" }}" />
+								{% else %}
+								<img src="{{ MEDIA_URL }}images/unknown.jpg" />
+								{% endif %}
+								<a href=""><strong>{{request.user.get_full_name}}</strong></a>
+								<a href="#" class="small">{% trans "Community" %}:</a>
+								<a href="#" style="font-size: 18px;">{{community.name}}</a>
+							</div>
+						</div>
+						<div class="com_inner_box">
+							<h3>{% trans "Shortcuts" %}</h3>
+							  <ul>
+							    <li style="padding-bottom: 3px;">   	
+							    	<a href="{% url communities_home_page %}?community_id={{community.pk}}">{% trans "Discussion" %}</a>
+							    </li>
+							  	{% if community.enable_calendar %}
+							    <li style="padding-bottom: 3px;">   	
+							    	<a href="{% url view_calendar community.calendar.pk %}">{% trans "Calendar" %}</a>
+							    </li>
+							    {% endif %}
+							  	{% if community.enable_documents %}
+							    <li style="padding-bottom: 3px;">   	
+							    	<a href="{% url documents %}?dir=C{{community.pk}}">{% trans "Documents" %}</a>
+							    </li>
+							    {% endif %}
+							  </ul>
+						</div>
+						{% if communities.count > 1 %}
+						<div class="com_inner_box">
+							<h3>{% trans "My communities" %}</h3>
+							  <ul>
+							  {% for com in communities %}
+							    <li style="padding-bottom: 3px;">   	
+							    	<a href="{% url community_dashboard com.pk %}">{{com.name}}</a>
+							    </li>
+							  {% endfor %}
+							  </ul>
+						</div>
+						{% endif %}
+
+						<div class="com_inner_box">
+							<h3>{% trans "Next events" %}</h3>
+							{% calendar_events_for_object community '' '70,70' as events %}
+							  <ul>
+							  {% for event in events %}
+							    <li>
+									<time style="width: 25%;">
+									<span class="com-day">{{event.start|date:"d"}}</span>
+									<span class="com-month">{{event.start|date:"M"}} {{event.start|date:"Y"}}</span>
+									<span class="com-time">{{event.start|date:"H:i"}}</span>
+									</time>    	
+							    	<a href="#">{{event.title}}</a>
+							    </li>
+							  {% endfor %}
+							  </ul>
+						</div>
+					</div>
+				</td>
+				{% get_last_communities_pages community 10 as pages %}
+				<td width="50%" id="middle-nav" valign="top">
+				{% for page in pages %}
+					<div class="com_inner">
+						<div class="com_inner_box">
+							<h3><a href="{% url communities_home_page %}?all_msg=message&message_id={{page.message.pk}}">{{page.title}}</a></h3>
+							<div style="padding: 10px;">
+								{{page.body|safe}}
+							</div>
+						</div>
+					</div>		
+				{% endfor %}
+				</td>
+				<td width="25%" id="right-nav" valign="top">
+					<div class="com_inner">
+						<div class="com_inner_box">
+							<h3>{% trans "Last pages" %}</h3>
+							  <ul>
+							  {% for page in pages %}
+							    <li style="padding-bottom: 10px;">   	
+							    	<a href="{% url communities_home_page %}?all_msg=message&message_id={{page.message.pk}}">{{page.title}}</a>
+							    </li>
+							  {% endfor %}
+							  </ul>
+						</div>
+						{% get_last_communities_attachments community 10 as files %}
+						{% if files %}
+						<div class="com_inner_box">
+						<h3>{% trans "Last files" %}</h3>	
+						<ul>
+						  {% for att in files %}
+						  {% for file in att.files %}
+							<li>
+							   	<a href="{% url get_file att.message.id file %}"><img class="link_image" src="{{ MEDIA_URL }}images/download-icon.png" /></a>&nbsp;<a href="{% url communities_home_page %}?all_msg=message&message_id={{att.message.pk}}">{{file}}</a>
+						    </li>
+						{% endfor %}
+						{% endfor %}
+						  </ul>
+						</div>
+						{% endif %}
+					</div>					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+
+
