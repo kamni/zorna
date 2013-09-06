@@ -152,6 +152,10 @@
     background-position: 18px -122px !important;
 }
 
+.sidebar_left ol.com_menu li.pages a {
+    background-position: 18px -475px !important;
+}
+
 .sidebar_left ol.com_menu li.files a {
     background-position: 18px -154px !important;
 }
@@ -285,7 +289,7 @@
 .msg_container {
 	background-color: #FFFFFF;
 	border-top: 1px solid #EEEEEE;
-	margin:0px 10px 10px;
+	margin:0px 10px 15px;
 }
 
 .msg_entry {
@@ -551,8 +555,7 @@ span.msg-date {
     border-radius: 5px 5px 5px 5px;
     float: left;
     margin-bottom: 1em;
-    padding: 5px 10px;
-    width: 94%;
+    width: 100%;
     box-shadow: 1px 1px 1px 0 #AAAAAA;
 }
 
@@ -583,6 +586,7 @@ span.msg-date {
     line-height: 12px;
     margin-bottom: 9px;
     padding-bottom: 4px;
+    padding-left: 10px;
     text-transform: uppercase;
 }
 
@@ -917,4 +921,42 @@ A.com-button.selected {
 	width: 25px;
 	height: 25px;
 	float: left;
+}
+
+.page-selector {
+font-size:11px;
+line-height:22px;
+margin:5px 15px;
+}
+.page-selector a:link, .page-selector a:visited {
+background:none repeat scroll 0 0 white;
+border:1px solid #CCCCCC;
+padding:2px 6px;
+text-decoration:none;
+}
+.page-selector a.showall {
+border:medium none !important;
+padding:0 !important;
+}
+.page-selector a.showall:hover {
+background:none repeat scroll 0 0 transparent !important;
+color:#003366 !important;
+}
+.page-selector .end {
+border-width:2px !important;
+margin-right:6px;
+}
+.page-selector .this-page {
+background:none repeat scroll 0 0 #5B80B2 !important;
+border-color:#003366;
+color:white;
+font-size:13px;
+font-weight:bold;
+padding:2px 6px;
+vertical-align:top;
+}
+.page-selector a:hover {
+background:none repeat scroll 0 0 #5B80B2;
+border-color:#003366;
+color:white;
 }

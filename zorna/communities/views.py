@@ -24,14 +24,16 @@ from zorna import defines
 from zorna.acl.models import ACLPermission, get_acl_users_by_object
 from zorna.site.email import ZornaEmail
 
-from zorna.communities.models import EventCommunity, PollCommunity, PollCommunityChoice, UrlCommunity
-from zorna.communities.forms import CommunityAdminAddForm, MessageCommunityForm, EventCommunityForm, InviteCommunityForm, PollCommunityForm, PollCommunityChoiceForm, UrlCommunityForm, EMBEDLY_RE
+from zorna.communities.models import EventCommunity, PollCommunity, PollCommunityChoice, UrlCommunity, PageCommunity
+from zorna.communities.forms import CommunityAdminAddForm, MessageCommunityForm, EventCommunityForm, \
+    InviteCommunityForm, PollCommunityForm, PollCommunityChoiceForm, UrlCommunityForm, \
+    PageCommunityForm, EMBEDLY_RE
 from zorna.utilit import get_upload_communities
 from zorna.forms.forms import comforms_community, FormsForm
 from zorna.communities.api import *
 from zorna.forms.api import forms_get_entries
 
-NB_MESSAGES_BY_PAGE = 10
+NB_MESSAGES_BY_PAGE = 20
 NB_COMMUNITIES_BY_PAGE = 15
 
 
@@ -429,7 +431,7 @@ class zornaurl_community(ZornaCommunityAddons):
         if instance_id:
             try:
                 instance = UrlCommunity.objects.get(pk=instance_id)
-            except EventCommunity.DoesNotExist:
+            except UrlCommunity.DoesNotExist:
                 instance = None
         else:
             instance = None
@@ -503,6 +505,126 @@ class zornaurl_community(ZornaCommunityAddons):
         return q
 
 
+class zornapage_community(ZornaCommunityAddons):
+
+    def get_title(self, id):
+        return _(u'Page')
+
+    def get_content_type(self, id):
+        ct = ContentType.objects.get_for_model(PageCommunity)
+        return ct
+
+    def get_content_types(self):
+        ct = ContentType.objects.get_for_model(PageCommunity)
+        return [ct]
+
+    def get_content_type_id(self, id):
+        ct = ContentType.objects.get_by_natural_key(
+            'communities', 'pagecommunity')
+        return ct.pk
+
+    def get_css_file(self, id):
+        # return '/skins/%s/css/event.css' % settings.ZORNA_SKIN
+        return None
+
+    def get_message(self, id):
+        return None
+
+    def get_communities(self, request, id):
+        return get_allowed_objects(request.user, Community, 'manage')
+
+    def get_users(self, request, id):
+        return []
+
+    def get_tabs(self, request, community_id=0):
+        ao = get_allowed_objects(request.user, Community, 'manage')
+        if len(ao):
+            return ['page']
+        else:
+            return []
+
+    def get_menus(self, request, community_id=0):
+        id = 'zornapage_page_menu'
+        return [{'title': _(u'Pages'), 'url': reverse('communities_home_plugin', args=(id,)), 'id': id, 'css_icon': 'pages'}]
+
+    def get_page_title(self, request, id):
+        return _(u'Pages')
+
+    def render_form_by_id(self, request, id, post=False):
+        if id == 'page':
+            form = self.get_form(request, id, post)
+            return self.render_form(request, form)
+        else:
+            return ''
+
+    def render_form(self, request, form):
+        try:
+            t = loader.get_template("communities/page_form.html")
+            c = RequestContext(request, {'form_extra': form})
+            return t.render(c)
+        except:
+            return ''
+
+    def get_form(self, request, id, post=False, instance_id=None):
+        if instance_id:
+            try:
+                instance = PageCommunity.objects.get(pk=instance_id)
+            except PageCommunity.DoesNotExist:
+                instance = None
+        else:
+            instance = None
+
+        if post:
+            form = PageCommunityForm(request.POST, instance=instance)
+        else:
+            if instance:
+                form = PageCommunityForm(instance=instance)
+            else:
+                form = PageCommunityForm(instance=instance)
+
+        return form
+
+    def save(self, request, id, form, message=None):
+        return form.save()
+
+    def render_message(self, request, extra):
+        t = loader.get_template('communities/page_view.html')
+        context = {}
+        context['title'] = extra.title
+        context['body'] = extra.body
+        c = RequestContext(request, {'msg': context})
+        return t.render(c)
+
+    def render_widget(self, request, id, community_id=0):
+        return '', ''
+
+    def render_page(self, request, id, context={}):
+        ct = ContentType.objects.get_for_model(PageCommunity)
+        # m =
+        # MessageCommunityExtra.objects.select_related().filter(content_type =
+        # ct).order_by('-message_time_updated')
+        community_id = context.get('community_id', 0)
+        messages = get_messages_extra_by_content_type(
+            request, ct, community_id)
+        extra = {}
+        for m in messages:
+            extra[m.object_id] = m
+        q = context.get('search_string', None)
+        if q:
+            messages = PageCommunity.objects.filter(
+                Q(body__icontains=q), pk__in=extra.keys(),)
+        else:
+            messages = PageCommunity.objects.filter(pk__in=extra.keys())
+        messages = messages.order_by('-time_created')
+        t = loader.get_template('communities/page_view.html')
+        q = []
+        for m in messages:
+            m.message = extra[m.pk].message
+            q.append({'html': self.render_message(
+                request, m), 'message': extra[m.pk].message, 'id': m.pk})
+        return q
+
+
 class CommunityAddons(object):
     plugins = {}
     content_types = {}
@@ -516,6 +638,7 @@ class CommunityAddons(object):
             self.register_addon(zornaurl_community())
             self.register_addon(zornaevent_community())
             self.register_addon(zornapoll_community())
+            self.register_addon(zornapage_community())
             try:
                 if settings.ZORNA_COMMUNITY_FORMS:
                     self.register_addon(comforms_community(request))
@@ -652,7 +775,8 @@ def admin_edit_community(request, community):
                 com = form.save(commit=False)
                 com.modifier = request.user
                 com.save()
-                get_community_calendar(com)
+                cal = get_community_calendar(com)
+                cal.rename(com.name)
                 return HttpResponseRedirect(reverse('admin_list_communities'))
             else:
                 form = CommunityAdminAddForm(request.POST, instance=community)
@@ -954,21 +1078,17 @@ def communities_home_members(request):
     profiles = {}
 
     kwargs['q'] = ret['search_string'].decode('utf8')
-    if entries:
-        kwargs['entries'] = entries
-        columns, rows = forms_get_entries(
-            settings.ZORNA_COMMUNITY_USER_PROFILE_FORM, **kwargs)
-        for r in rows:
-            profiles[r['entity'].account_id] = r
-    else:
-        columns, rows = None, None
+    ret['page'] = request.GET.get('page', "")
 
-    t = loader.get_template("account/user_card.html")
     ret['com_members'] = []
     index = 0
     for x in ret['members']:
-        if kwargs['q'] and not profiles.has_key(x.pk) and kwargs['q'].lower() not in x.get_full_name().lower():
+        full_name = x.get_full_name().lower()
+        if kwargs['q'] and kwargs['q'].lower() not in full_name:
             continue
+        if ret['page'] and not full_name.startswith(ret['page']):
+            continue
+
         if not ret['users_avatars'].has_key(x.pk):
             try:
                 ret['users_avatars'][
@@ -976,33 +1096,12 @@ def communities_home_members(request):
             except UserAvatar.DoesNotExist:
                 ret['users_avatars'][x.pk] = None
         x.avatar_user = ret['users_avatars'][x.pk]
-        if profiles.has_key(x.pk):
-            row = profiles[x.pk]
-        else:
-            row = None
-        c = RequestContext(request, {
-                           'row': row, 'columns': columns, 'account': x, 'index': index})
-        x.html = t.render(c)
         ret['com_members'].append(x)
-        index += 1
 
     def entry_sort(entry):
         return entry.get_full_name()
 
     ret['com_members'].sort(key=entry_sort)
-
-    paginator = Paginator(ret['com_members'], NB_MESSAGES_BY_PAGE)
-    page = int(request.GET.get('page', 1))
-    try:
-        ret['com_members'] = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        ret['com_members'] = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        ret['com_members'] = paginator.page(paginator.num_pages)
-    ret['page'] = page
-    ret['paginator'] = paginator
 
     return communities_home(request, ret, 'communities/home_members.html')
 
@@ -1659,3 +1758,43 @@ def invite_list_users(request, community_id):
         pass
     data = simplejson.dumps(ret)
     return HttpResponse(data)
+
+
+def community_dashboard(request, community_id = None):
+    communities_ids = get_communities_ids(request.user)
+    if not len(communities_ids):
+        return HttpResponseRedirect('/')
+
+    if community_id and int(community_id) in communities_ids:
+        current_community = int(community_id)
+    else:
+        current_community = request.session.get('user_current_community', 0)
+        if not current_community or not current_community in communities_ids:
+            current_community = communities_ids[0]
+    request.session['user_current_community'] = current_community
+    try:
+        t = loader.get_template('community_dashboard_%s.html' % current_community)
+    except:
+        t = loader.get_template('communities/community_dashboard.html')
+
+    try:
+        avatar_user = UserAvatar.objects.get(user=request.user)
+    except UserAvatar.DoesNotExist:
+        avatar_user = None
+
+    communities = Community.objects.filter(pk__in=communities_ids)
+    community = None
+    for com in communities:
+        com.calendar = get_community_calendar(com)
+        if current_community == com.pk:
+            community = com
+
+    if not community:
+        return HttpResponseRedirect('/')           
+        
+    ctx = { 'community': community,
+            'avatar': avatar_user,
+            'communities': communities,
+            }
+    c = RequestContext(request, ctx)
+    return HttpResponse(t.render(c))

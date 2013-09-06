@@ -1,16 +1,17 @@
 import os
 from django import template
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.utils import simplejson
 from django.template import TemplateSyntaxError
 from django.template import Variable
 
-from zorna.communities.models import Community, MessageCommunity
+from zorna.communities.models import Community, MessageCommunity, EventCommunity, PageCommunity
 from zorna.acl.models import ACLPermission
 from zorna import defines
 from zorna.utilit import get_upload_path, get_upload_communities
 from zorna.acl.models import get_acl_for_model, get_allowed_objects, get_acl_by_object
-from zorna.communities.views import get_all_messages
+from zorna.communities.views import get_all_messages, get_messages_extra_by_content_type
 
 register = template.Library()
 
@@ -96,6 +97,9 @@ class community_messages(template.Node):
 
 @register.tag(name="get_community_messages")
 def get_community_messages(parser, token):
+    """
+    
+    """
     bits = token.split_contents()
     if 4 != len(bits):
         raise TemplateSyntaxError('%r expects 4 arguments' % bits[0])
@@ -169,6 +173,10 @@ class last_communities_attachments(template.Node):
 
 @register.tag(name="get_last_communities_attachments")
 def get_last_communities_attachments(parser, token):
+    """
+    Return the the nb_files last attachments for a community
+    {% get_last_communities_attachments community nb_files as attachments %}
+    """
     bits = token.split_contents()
     if 5 != len(bits):
         raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
@@ -179,3 +187,93 @@ def get_last_communities_attachments(parser, token):
     number = int(bits[2])
     varname = bits[-1]
     return last_communities_attachments(community, number, varname)
+
+
+class last_communities_events(template.Node):
+
+    def __init__(self, community, number, var_name):
+        self.community = Variable(community)
+        self.var_name = var_name
+        self.number = number
+
+    def render(self, context):
+        request = context['request']
+        community = self.community.resolve(context)
+        ct = ContentType.objects.get_for_model(EventCommunity)
+        messages = get_messages_extra_by_content_type(
+            request, ct, community.pk if community else 0)
+        messages = messages.order_by('-message__time_updated')
+        extra = {}
+        for m in messages:
+            extra[m.object_id] = m
+
+        m = EventCommunity.objects.filter(
+            pk__in=extra.keys()).order_by('-event__start')[0:self.number]
+        for c in m:
+            c.message = extra[c.pk].message
+
+        context[self.var_name] = m
+        return ''
+
+
+@register.tag(name="get_last_communities_events")
+def get_last_communities_events(parser, token):
+    """
+    Return the nb last events for a community
+    {% get_last_communities_events community nb as attachments %}
+    """
+    bits = token.split_contents()
+    if 5 != len(bits):
+        raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the second argument' % bits[0])
+    community = bits[1]
+    number = int(bits[2])
+    varname = bits[-1]
+    return last_communities_events(community, number, varname)
+
+
+class last_communities_pages(template.Node):
+
+    def __init__(self, community, number, var_name):
+        self.community = Variable(community)
+        self.var_name = var_name
+        self.number = number
+
+    def render(self, context):
+        request = context['request']
+        community = self.community.resolve(context)
+        ct = ContentType.objects.get_for_model(PageCommunity)
+        messages = get_messages_extra_by_content_type(
+            request, ct, community.pk if community else 0)
+        messages = messages.order_by('-message__time_updated')
+        extra = {}
+        for m in messages:
+            extra[m.object_id] = m
+
+        m = PageCommunity.objects.filter(
+            pk__in=extra.keys())[0:self.number]
+        for c in m:
+            c.message = extra[c.pk].message
+
+        context[self.var_name] = m
+        return ''
+
+
+@register.tag(name="get_last_communities_pages")
+def get_last_communities_pages(parser, token):
+    """
+    Return the nb last events for a community
+    {% get_last_communities_pages community nb as attachments %}
+    """
+    bits = token.split_contents()
+    if 5 != len(bits):
+        raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the second argument' % bits[0])
+    community = bits[1]
+    number = int(bits[2])
+    varname = bits[-1]
+    return last_communities_pages(community, number, varname)

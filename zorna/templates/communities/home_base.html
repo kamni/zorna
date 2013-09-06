@@ -107,20 +107,9 @@ $(document).ready(function() {
 				<option value="{{com.pk}}" {% if current_community.pk == com.pk %}selected="selected"{% endif %}>{{com.name}}</option>	
 			{% endfor %}
 			</select>
-			{% if current_community.manager %}
 			<div id="com_actions_wrapper">
-				<ul id="com_actions_menu">
-					<li>
-						<span>{% trans "Actions" %}...</span>
-						<ul>
-						<li><a href="{% url manage_community_members community_id %}">{% trans "Show members" %}</a></li>
-						<li><a href="{% url manage_community_managers community_id %}">{% trans "Show managers" %}</a></li>
-						<li><a href="{% url invite_community_member community_id %}" rel="facebox">{% trans "Invite..." %}</a></li>
-						</ul>
-					</li>
-				</ul>				
+				{% block main_actions %}{% endblock%}
 			</div>
-			{%endif%}
 		</div>
 		{% block main_content %}{% endblock %}
 	</div>

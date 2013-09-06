@@ -2,15 +2,34 @@
 
 <script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.form.js"></script>
 <script type="text/javascript">
-	$('#submitform').ajaxForm({
-		target: '#facebox .content',
+	var ckinstances = CKEDITOR.instances;
+	for(k in  ckinstances) {
+		if (ckinstances[k]) { ckinstances[k].destroy(true); }
+	}
+$('#submitform').submit(function(){
+	try {
+		for ( instance in CKEDITOR.instances ) {
+	    	CKEDITOR.instances[instance].updateElement();
+		}
+	} catch(err) {
+		var editor = false;
+	}
+			
+	$(this).ajaxSubmit({
+		dataType: 'json',
 		success: function(data) {
-			if (data == ''){
+			if (data == null  | data == ""){
 				window.location.href = window.location.href
 			}
 		}
-		
 	});
+	return false;
+});	
+
+$("#btn-update").click(function(){
+	$('#submitform').submit();
+	return false;
+});
 </script>
 
 <h2 id="popuptitle">{% trans "Update" %}</h2>
@@ -18,7 +37,7 @@
 <form id="submitform" action="{{action}}" method="post">{% csrf_token %}
 {{form_extra}}
 	<fieldset>
-	<input class="button" type="submit" value="{% trans "Update" %}" />
+	<input id="btn-update" class="button" type="submit" value="{% trans "Update" %}" />
 	</fieldset>
 </form>
 <div class="clear"></div>

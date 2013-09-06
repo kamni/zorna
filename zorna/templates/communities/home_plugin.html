@@ -3,6 +3,8 @@
 {% load accounts_tags %}
 
 {% block zorna_extrahead %}{{ block.super }}
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
+
 {% if css_file %}
 <link rel="stylesheet" type="text/css" href="{{css_file}}" />
 {% endif %}

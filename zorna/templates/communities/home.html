@@ -13,6 +13,7 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.formset.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.multiselect.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.jeditable.mini.js"></script>
+<script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 var jsfollow = '{{jsfollow}}';
 var jsunfollow = '{{jsunfollow}}';
@@ -88,7 +89,11 @@ $(document).ready(function() {
 
   //On Click Event
   $("div.msg-tabs li").click(function() {
-
+	var ckinstances = CKEDITOR.instances;
+	for(k in  ckinstances) {
+		if (ckinstances[k]) { ckinstances[k].destroy(true); }
+	}
+	
 	$("div.msg-tabs div").removeClass("selected"); 
     $("div", this).addClass("selected"); //Add "active" class to selected tab
 

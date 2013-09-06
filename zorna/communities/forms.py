@@ -13,9 +13,10 @@ from django.core.urlresolvers import reverse
 
 from schedule.models.events import Event
 from schedule.models.calendars import Calendar
+from ckeditor.widgets import CKEditorWidget
 
 from zorna.site.email import ZornaEmail
-from zorna.communities.models import Community, MessageCommunity, EventCommunity, PollCommunityChoice, PollCommunity, UrlCommunity
+from zorna.communities.models import Community, MessageCommunity, EventCommunity, PollCommunityChoice, PollCommunity, UrlCommunity, PageCommunity
 from zorna.acl.models import get_allowed_objects, get_acl_by_object
 from zorna.utilit import get_upload_library, get_upload_communities
 from zorna.fileman.models import ZornaFile
@@ -245,14 +246,14 @@ class PollCommunityForm(ModelForm):
 
 
 class PollCommunityChoiceForm(ModelForm):
-    choice = forms.CharField(widget=forms.TextInput(attrs={'size': 80}))
+    choice = forms.CharField(widget=forms.TextInput())
 
     class Meta:
         model = PollCommunityChoice
 
 
 class UrlCommunityForm(ModelForm):
-    url = forms.CharField(widget=forms.TextInput(attrs={'size': 80}))
+    url = forms.CharField(widget=forms.TextInput(attrs={'size': 60}))
 
     class Meta:
         model = UrlCommunity
@@ -293,3 +294,9 @@ class UrlCommunityForm(ModelForm):
                                   'url'], title='', excerpt='')
             uc.save()
         return uc
+
+class PageCommunityForm(ModelForm):
+    body = forms.CharField(_(u'body'), widget=CKEditorWidget())
+
+    class Meta:
+        model = PageCommunity
