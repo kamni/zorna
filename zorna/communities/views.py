@@ -1772,10 +1772,7 @@ def community_dashboard(request, community_id = None):
         if not current_community or not current_community in communities_ids:
             current_community = communities_ids[0]
     request.session['user_current_community'] = current_community
-    try:
-        t = loader.get_template('community_dashboard_%s.html' % current_community)
-    except:
-        t = loader.get_template('communities/community_dashboard.html')
+    t = loader.select_template(['community_dashboard_%s.html' % current_community,'community_dashboard.html','communities/community_dashboard.html'])
 
     try:
         avatar_user = UserAvatar.objects.get(user=request.user)
