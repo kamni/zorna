@@ -171,7 +171,6 @@ def get_folder_files(folder, limit=None):
     fileList = {}
     files_id = []
     if os.path.isdir(fullpath):
-        print fullpath
         for f in os.listdir(fullpath):
             ff = os.path.join(fullpath, f)
             if os.path.isdir(ff):
