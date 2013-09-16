@@ -44,4 +44,5 @@ def zsettings(request):
             'ZORNA_REGISTRATION': allow_registration,
             'MEDIA_PLUGIN_URL': media_plugin_url,
             'ZORNA_USER_GROUPS': usergroups,
+            'ZORNA_USER_CALENDAR': calendar,
             }
