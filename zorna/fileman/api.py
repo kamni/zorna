@@ -167,9 +167,6 @@ def recent_files(request, what, limit):
 
 def get_folder_files(folder, limit=None):
     fullpath = get_upload_library() + '/%s' % folder
-    buser, bmanager = get_user_access_to_path(request.user, fullpath)
-    if not buser and not bmanager:
-        return []
 
     fileList = {}
     files_id = []
