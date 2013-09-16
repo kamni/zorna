@@ -719,7 +719,7 @@ class CommunityAddons(object):
             return None
 
     def get_id_by_content_type(self, ct):
-        return self.id_by_content_type[ct]
+        return self.id_by_content_type.get(ct, None)
 
 
 @login_required()
