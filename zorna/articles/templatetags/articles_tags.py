@@ -164,6 +164,43 @@ def get_recent_stories(parser, token):
     return get_recent_stories_node(limit, varname)
 
 
+class get_story_node(template.Node):
+
+    def __init__(self, story, var_name):
+        self.story = Variable(story)
+        self.var_name = var_name
+
+    def render(self, context):
+        request = context['request']
+        s = self.story.resolve(context)
+        allowed_objects = get_allowed_objects(
+            request.user, ArticleCategory, 'reader')
+        stories = ArticleStory.objects.filter(
+            categories__in=allowed_objects, pk=int(s))
+
+        if stories:
+            story = stories[0]
+            story.current_categories = story.categories.all()
+            story.current_category = story.current_categories[0]
+            context[self.var_name] = story
+        else:
+            context[self.var_name] = None
+        return ''
+
+
+@register.tag(name="get_story")
+def get_story(parser, token):
+    bits = token.split_contents()
+    if 4 != len(bits):
+        raise TemplateSyntaxError('%r expects 4 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the second argument' % bits[0])
+    story = bits[1]
+    varname = bits[-1]
+    return get_story_node(story, varname)
+
+
 class get_story_attachments_node(template.Node):
 
     def __init__(self, story, var_name):
@@ -214,3 +251,51 @@ pages_item_menu = register.inclusion_tag(
     'extends.html',
     takes_context=True
 )(pages_item_menu)
+
+
+class get_category_stories_node(template.Node):
+
+    def __init__(self, category, limit, var_name):
+        self.category = template.Variable(category)
+        self.limit = limit
+        self.var_name = var_name
+
+    def render(self, context):
+        request = context['request']
+        category = self.category.resolve(context)
+        try:
+            print category.split(',')
+            categories = map(int, category.split(','))
+        except:
+            context[self.var_name] = []
+            return ''
+
+        allowed_objects = get_allowed_objects(
+            request.user, ArticleCategory, 'reader')
+        categories = [ c for c in categories if c in allowed_objects]
+        if categories:
+            categories = ArticleCategory.objects.filter(pk__in=categories)
+
+            stories = ArticleStory.objects.select_related().filter(
+                categories__in=categories).distinct().order_by('-time_updated')[:int(self.limit)]
+            for story in stories:
+                story.current_categories = story.categories.all()
+                story.current_category = story.current_categories[0]
+        else:
+            stories = []
+        context[self.var_name] = stories
+        return ''
+
+
+@register.tag(name="get_category_stories")
+def get_category_stories(parser, token):
+    bits = token.split_contents()
+    if 5 != len(bits):
+        raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the third argument' % bits[0])
+    category = bits[1]
+    limit = bits[2]
+    varname = bits[-1]
+    return get_category_stories_node(category, limit, varname)
