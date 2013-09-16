@@ -110,7 +110,7 @@ class get_shared_folder_files_node(template.Node):
         aof = get_allowed_shared_folders(request.user, ['reader'])
         if self.folder_id in aof:
             context[self.var_name] = get_folder_files(
-                'F%s/%s' % (self.folder_id, self.path), self.limit)
+                'F%s/%s' % (self.folder_id, self.path) if self.path else 'F%s' % self.folder_id, self.limit)
         else:
             context[self.var_name] = []
         return ''
