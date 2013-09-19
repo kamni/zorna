@@ -278,9 +278,9 @@
 
 
 #community_title h1 {
-  font-size: 1.9em; 
+  font-size: 30px; 
   margin: 0 0; 
-  padding:.2em 1em;
+  padding:10px 30px;
   color:#3265B0;
   background:inherit;
   float:left;
@@ -303,7 +303,7 @@
 }
 
 .msg_header {
-	font-size: 0.9em;
+	font-size: 12px;
 }
 
 .msg_header > a {
@@ -356,7 +356,7 @@
 }
 .msg_entry_footer {
 	margin-top: 5px;
-	font-size: 0.9em;
+	font-size: 12px;
 }
 
 span.msg-date {
@@ -646,19 +646,19 @@ time {
 
 span.com-day {
     float: left;
-    font-size: 180%;
+    font-size: 20px;
     letter-spacing: -3px;
     padding-right: 5px;
 }
 span.com-month {
     display: block;
-    font-size: 80%;
+    font-size: 12px;
     font-weight: bold;
     line-height: 12px;
 }
 span.com-time {
     display: block;
-    font-size: 80%;
+    font-size: 12px;
     line-height: 15px;
 }
 
@@ -784,7 +784,7 @@ button.btn_sm b, a.btn_sm span {
 #embed-container h3 {
     margin: 0 0 0 90px;
     line-height: 1.2em;
-    font-size: 1.2em;
+    font-size: 16px;
     color: #7799BB;
     font-weight: bold;
     display: block;
