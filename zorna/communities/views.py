@@ -1529,7 +1529,6 @@ def get_messages(request):
         messages = messages.filter(owner=ret['from_id'], reply__isnull=True)
 
     messages = messages.annotate(nb_replies=Count('messagecommunity'))
-    messages = messages.annotate(nb_followers=Count('followers'))
     messages = messages.order_by('-time_updated')
 
     if max_msg_id == 0:
@@ -1561,6 +1560,7 @@ def get_messages(request):
                 reply__isnull=False, reply=msg).order_by('time_updated')
             msg.replies = replies
 
+        msg.nb_followers = msg.followers.count()
         if ret['users_avatars'].has_key(msg.owner_id):
             extra_context['avatar_user'] = ret['users_avatars'][msg.owner_id]
         else:
