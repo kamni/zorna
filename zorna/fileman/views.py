@@ -156,21 +156,13 @@ def notify_users(request, folder, files, upload=True):
 def documents(request):
     if request.user.is_authenticated:
         extra_context = {}
-        ppath = request.GET.get('dir', '')
+        ppath = request.GET.get('path', '')
         ppath = urllib.unquote(ppath.rstrip('/'))
         path = clean_path(ppath)
         if path != ppath:
             path = ''
 
-        extra_context['dir'] = path
-        if path and path[0] == 'U':
-            extra_context['dir_url'] = reverse('personal_folder_content')
-        elif path and path[0] == 'F':
-            extra_context['dir_url'] = reverse('shared_folder_content')
-        elif path and path[0] == 'C':
-            extra_context['dir_url'] = reverse('communities_folder_content')
-        else:
-            extra_context['dir_url'] = ''
+        extra_context['path'] = path
 
         if request.user.is_anonymous():
             extra_context['bpersonal_folder'] = False
@@ -183,16 +175,30 @@ def documents(request):
         ao = [com.pk for com in communities if com.enable_documents]
         if ao:
             extra_context['bcommunities_folder'] = True
-            extra_context['bcommunities_dir'] = 'C%s/' % ao[0]
         else:
             extra_context['bcommunities_folder'] = False
         ao = get_allowed_shared_folders(
             request.user, ['reader', 'manager', 'writer'])
         if ao:
             extra_context['bshared_folder'] = True
-            extra_context['bshared_dir'] = 'F%s/' % ao[0]
         else:
             extra_context['bshared_folder'] = False
+
+        if path and path[0] == 'U':
+            extra_context['dir_url'] = reverse('personal_folder_content')
+            extra_context['bshared_folder'] = False
+            extra_context['bcommunities_folder'] = False
+        elif path and path[0] == 'F':
+            extra_context['dir_url'] = reverse('shared_folder_content')
+            extra_context['bpersonal_folder'] = False
+            extra_context['bcommunities_folder'] = False
+        elif path and path[0] == 'C':
+            extra_context['dir_url'] = reverse('communities_folder_content')
+            extra_context['bshared_folder'] = False
+            extra_context['bpersonal_folder'] = False
+        else:
+            extra_context['dir_url'] = ''
+
         if extra_context['bpersonal_folder'] or extra_context['bcommunities_folder'] or extra_context['bshared_folder']:
             context = RequestContext(request)
             return render_to_response('fileman/fm_home.html', extra_context, context_instance=context)
@@ -230,6 +236,9 @@ def get_sub_folders(dir_path, user=None):
         ob_list = ZornaFolder.objects.filter(Q(pk__in=allowed_objects) | Q(
             inherit_permissions=True), parent__pk=dirs[0][1:])
         for f in ob_list:
+            fullpath = u"%s/%s" % (root_path, u"F%s" % f.pk)
+            if not os.path.isdir(fullpath):
+                os.makedirs(fullpath)
             ret.append({'name': f.name, 'rel': 'F%s' % f.pk})
 
     path = u"%s/%s" % (root_path, d)
@@ -252,7 +261,18 @@ def dirlist_personal_folders(request):
         path = ''
 
     if not path:
-        ret = [{'name': root_name, 'rel': root}]
+        ppath = request.GET.get('path', None)
+        if ppath:
+            ppath = urllib.unquote(ppath.rstrip('/'))
+            folder_dest = clean_path(ppath)
+            buser, bmanager = get_user_access_to_path(
+                request.user, folder_dest)
+            if buser:
+                ret = get_sub_folders(folder_dest, request.user)
+            else:
+                ret = []
+        else:
+            ret = [{'name': root_name, 'rel': root}]
     else:
         buser, bmanager = get_user_access_to_path(request.user, path)
         if buser:
@@ -261,8 +281,9 @@ def dirlist_personal_folders(request):
             ret = []
 
     for d in ret:
-        r.append('<li class="directory collapsed"><a href="#" rel="%s/" title="%s/">%s</a></li>' %
-                 (d['rel'], d['rel'], d['name']))
+        r.append(
+            '<li class="directory collapsed"><a href="#" rel="%s/" title="%s/">%s</a></li>' %
+            (d['rel'], d['rel'], d['name']))
 
     r.append('</ul>')
     return HttpResponse(''.join(r))
@@ -282,35 +303,47 @@ def dirlist_communities_folders(request):
         else:
             ret = []
     else:
-        allowed_objects = set([])
-        for perm in ['member', 'manage']:
-            objects = get_allowed_objects(request.user, Community, perm)
-            allowed_objects = allowed_objects.union(set(objects))
-        root_path = get_upload_library()
-        ret = []
-        com = Community.objects.filter(
-            pk__in=allowed_objects, enable_documents=True)
-        for c in com:
-            path = u"C%s" % c.pk
-            fullpath = u"%s/%s" % (root_path, path)
-            if not os.path.isdir(fullpath):
-                os.makedirs(fullpath)
-            pathx = c.name
-            ret.append({'name': pathx, 'rel': path})
+        ppath = request.GET.get('path', None)
+        if ppath:
+            ppath = urllib.unquote(ppath.rstrip('/'))
+            folder_dest = clean_path(ppath)
+            buser, bmanager = get_user_access_to_path(
+                request.user, folder_dest)
+            if buser:
+                ret = get_sub_folders(folder_dest, request.user)
+            else:
+                ret = []
+        else:
+            allowed_objects = set([])
+            for perm in ['member', 'manage']:
+                objects = get_allowed_objects(request.user, Community, perm)
+                allowed_objects = allowed_objects.union(set(objects))
+            root_path = get_upload_library()
+            ret = []
+            com = Community.objects.filter(
+                pk__in=allowed_objects, enable_documents=True)
+            for c in com:
+                path = u"C%s" % c.pk
+                fullpath = u"%s/%s" % (root_path, path)
+                if not os.path.isdir(fullpath):
+                    os.makedirs(fullpath)
+                pathx = c.name
+                ret.append({'name': pathx, 'rel': path})
 
     for d in ret:
-        r.append('<li class="directory collapsed"><a href="#" rel="%s/" title="%s/">%s</a></li>' %
-                 (d['rel'], d['rel'], d['name']))
+        r.append(
+            '<li class="directory collapsed"><a href="#" rel="%s/" title="%s/">%s</a></li>' %
+            (d['rel'], d['rel'], d['name']))
     r.append('</ul>')
     return HttpResponse(''.join(r))
 
 
 def dirlist_shared_folders(request):
     r = ['<ul class="jqueryFileTree" style="display: none;">']
-    ppath = request.GET.get('dir', '')
-    ppath = urllib.unquote(ppath.rstrip('/'))
-    path = clean_path(ppath)
-    if path != ppath:
+    pdir = request.GET.get('dir', '')
+    pdir = urllib.unquote(pdir.rstrip('/'))
+    path = clean_path(pdir)
+    if path != pdir:
         path = ''
 
     if path:
@@ -320,22 +353,34 @@ def dirlist_shared_folders(request):
         else:
             ret = []
     else:
-        allowed_objects = get_allowed_shared_folders(
-            request.user, ['reader', 'manager', 'writer'])
-        ret = []
-        ob_list = ZornaFolder.objects.filter(
-            pk__in=allowed_objects, parent__isnull=True)
-        root_path = get_upload_library()
-        for f in ob_list:
-            path = u"F%s" % f.pk
-            fullpath = u"%s/%s" % (root_path, path)
-            if not os.path.isdir(fullpath):
-                os.makedirs(fullpath)
-            ret.append({'name': f.name, 'rel': path})
+        ppath = request.GET.get('path', None)
+        if ppath:
+            ppath = urllib.unquote(ppath.rstrip('/'))
+            folder_dest = clean_path(ppath)
+            buser, bmanager = get_user_access_to_path(
+                request.user, folder_dest)
+            if buser:
+                ret = get_sub_folders(folder_dest, request.user)
+            else:
+                ret = []
+        else:
+            allowed_objects = get_allowed_shared_folders(
+                request.user, ['reader', 'manager', 'writer'])
+            ret = []
+            ob_list = ZornaFolder.objects.filter(
+                pk__in=allowed_objects, parent__isnull=True)
+            root_path = get_upload_library()
+            for f in ob_list:
+                path = u"F%s" % f.pk
+                fullpath = u"%s/%s" % (root_path, path)
+                if not os.path.isdir(fullpath):
+                    os.makedirs(fullpath)
+                ret.append({'name': f.name, 'rel': path})
 
     for d in ret:
-        r.append('<li class="directory collapsed"><a href="#" rel="%s/" title="%s/">%s</a></li>' %
-                 (d['rel'], d['rel'], d['name']))
+        r.append(
+            '<li class="directory collapsed"><a href="#" rel="%s/" title="%s/">%s</a></li>' %
+            (d['rel'], d['rel'], d['name']))
     r.append('</ul>')
     return HttpResponse(''.join(r))
 

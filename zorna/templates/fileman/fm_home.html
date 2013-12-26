@@ -367,7 +367,7 @@ jQuery(document).ready(function() {
 	{% if bpersonal_folder %}
 	$('#fm-mydoc').fileTree({ 
 		root: '', 
-		script: '{% url dirlist_personal_folders %}', 
+		script: '{% url dirlist_personal_folders %}{% if path %}?path={{path}}{% endif %}', 
 		folderEvent: 'click', 
 		expandSpeed: 1, 
 		collapseSpeed: 1, 
@@ -378,7 +378,7 @@ jQuery(document).ready(function() {
 	{% if bcommunities_folder %}
 	$('#fm-com').fileTree({ 
 		root: '', 
-		script: '{% url dirlist_communities_folders %}', 
+		script: '{% url dirlist_communities_folders %}{% if path %}?path={{path}}{% endif %}', 
 		folderEvent: 'click', 
 		expandSpeed: 1, 
 		collapseSpeed: 1,
@@ -389,7 +389,7 @@ jQuery(document).ready(function() {
 	{% if bshared_folder %}
 	$('#fm-shared').fileTree({ 
 		root: '', 
-		script: '{% url dirlist_shared_folders %}', 
+		script: '{% url dirlist_shared_folders %}{% if path %}?path={{path}}{% endif %}', 
 		folderEvent: 'click', 
 		expandSpeed: 1, 
 		collapseSpeed: 1,
@@ -424,18 +424,18 @@ jQuery(document).ready(function() {
 		return false;
 	});	
 
-	{% if dir %}
-		var dir = '{{dir}}';
-		dirlistHandler({'dir': dir}, '{{dir_url}}');
+	{% if path %}
+		var path = '{{path}}';
+		dirlistHandler({'dir': path}, '{{dir_url}}');
 	{% else %}
 		{% if bpersonal_folder %}
-			personalFolderHandler('{{bpersonal_dir}}');
+			dirlistHandler({'dir': $("div#fm-mydoc > ul > li:first > a").attr('rel')}, '{% url personal_folder_content %}');
 		{% else %}
 			{% if bcommunities_folder %}
-				communitiesFolderHandler('{{bcommunities_dir}}');
+				dirlistHandler({'dir': $("div#fm-com > ul > li:first > a").attr('rel')}, '{% url communities_folder_content %}');
 			{% else %}
 				{% if bshared_folder %}
-					sharedFolderHandler('{{bshared_dir}}');
+					dirlistHandler({'dir': $("div#fm-shared > ul > li:first > a").attr('rel')}, '{% url shared_folder_content %}');
 				{% endif %}
 			{% endif %}
 		{% endif %}
