@@ -310,6 +310,10 @@ def edit_story(request, story):
         if form_story.is_valid():
             if 'selected_image' in request.POST:
                 story.image.delete()
+                try:
+                    shutil.rmtree(u"%s/%s" % (get_upload_articles_images(), story.pk))
+                except:
+                    pass
             if 'image' in request.FILES:
                 story.mimetype = request.FILES['image'].content_type
             else:

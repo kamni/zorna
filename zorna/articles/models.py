@@ -73,7 +73,7 @@ ARTICLE_STATES = (
 )
 
 article_image_storage = FileSystemStorage(
-    location=get_upload_articles_images(), base_url='/articles/image')
+    location=get_upload_articles_images(), base_url='/images/articles/')
 
 
 def get_image_filepath_storage(instance, filename):
