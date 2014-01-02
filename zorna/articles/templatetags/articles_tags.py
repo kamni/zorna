@@ -134,34 +134,46 @@ def category_roots(parser, token):
 
 class get_recent_stories_node(template.Node):
 
-    def __init__(self, limit, var_name):
+    def __init__(self, limit, categories, var_name):
         self.limit = limit
         self.var_name = var_name
+        self.categories = categories
 
     def render(self, context):
         request = context['request']
         allowed_objects = get_allowed_objects(
             request.user, ArticleCategory, 'reader')
+        if self.categories is not None:
+            categories = map(int, self.categories.split(','))
+            allowed_objects = [ c for c in categories if c in allowed_objects]
         stories = ArticleStory.objects.select_related().filter(
             categories__in=allowed_objects).distinct().order_by('-time_updated')[:int(self.limit)]
         for story in stories:
             story.current_categories = story.categories.all()
             story.current_category = story.current_categories[0]
+            story.url = reverse('view_story', args=[story.current_category.pk, story.pk, story.slug])
         context[self.var_name] = stories
         return ''
 
 
 @register.tag(name="get_recent_stories")
 def get_recent_stories(parser, token):
+    """
+    {% get_recent_stories [ids] limit as stories %}
+    ids : optional or as 2,3
+    limit: how many stories
+    """
     bits = token.split_contents()
-    if 4 != len(bits):
-        raise TemplateSyntaxError('%r expects 4 arguments' % bits[0])
+    len_bits = len(bits)
+    if len_bits not in [4,5]:
+        raise TemplateSyntaxError('%r expects 4 or 5 arguments' % bits[0])
     if bits[-2] != 'as':
         raise TemplateSyntaxError(
             '%r expects "as" as the third argument' % bits[0])
-    limit = bits[1]
+    categories = bits[1] if len_bits == 5 else None
+    limit = bits[1] if len_bits == 4 else bits[2]
     varname = bits[-1]
-    return get_recent_stories_node(limit, varname)
+    return get_recent_stories_node(limit, categories, varname)
 
 
 class get_story_node(template.Node):
@@ -264,7 +276,6 @@ class get_category_stories_node(template.Node):
         request = context['request']
         category = self.category.resolve(context)
         try:
-            print category.split(',')
             categories = map(int, category.split(','))
         except:
             context[self.var_name] = []

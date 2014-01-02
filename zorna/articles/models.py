@@ -100,6 +100,7 @@ class ArticleStory(ZornaEntity):
         verbose_name = _('story')
         verbose_name_plural = _('stories')
         db_table = settings.TABLE_PREFIX + "stories"
+        ordering = ['-time_updated']
 
     def get_absolute_url(self, category_id=None):
         if category_id is None:
