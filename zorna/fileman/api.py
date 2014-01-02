@@ -89,26 +89,7 @@ def get_path_components(path):
     return cdir_components
 
 
-def recent_files(request, what, limit):
-
-    roots = []
-    if what == 'all' or what == 'personal':
-        bpersonal = SiteOptions.objects.is_access_valid(
-            request.user, 'zorna_personal_documents')
-        if bpersonal:
-            roots.extend(['U%s' % request.user.pk])
-    if what == 'all' or what == 'shared':
-        aof = get_allowed_shared_folders(
-            request.user, ['writer', 'reader', 'manager'])
-        roots.extend(['F%s' % f for f in aof])
-        for f in aof:
-            for d in ZornaFolder.objects.get(pk=f).get_descendants().exclude(inherit_permissions=False):
-                roots.append('F%s' % d.pk)
-    if what == 'all' or what == 'communities':
-        aof = get_allowed_objects(
-            request.user, Community, ['manage', 'member'])
-        roots.extend(['C%s' % f for f in aof])
-
+def recent_files_folders(request, roots, limit):
     results = {}
     if roots:
         files = ZornaFile.objects.filter(
@@ -163,6 +144,29 @@ def recent_files(request, what, limit):
         return files
     else:
         return []
+
+def recent_files(request, what, limit):
+
+    roots = []
+    if what == 'all' or what == 'personal':
+        bpersonal = SiteOptions.objects.is_access_valid(
+            request.user, 'zorna_personal_documents')
+        if bpersonal:
+            roots.extend(['U%s' % request.user.pk])
+    if what == 'all' or what == 'shared':
+        aof = get_allowed_shared_folders(
+            request.user, ['writer', 'reader', 'manager'])
+        roots.extend(['F%s' % f for f in aof])
+        for f in aof:
+            for d in ZornaFolder.objects.get(pk=f).get_descendants().exclude(inherit_permissions=False):
+                roots.append('F%s' % d.pk)
+    if what == 'all' or what == 'communities':
+        aof = get_allowed_objects(
+            request.user, Community, ['manage', 'member'])
+        roots.extend(['C%s' % f for f in aof])
+
+    return recent_files_folders(request, roots, limit)
+
 
 
 def get_folder_files(folder, limit=None):

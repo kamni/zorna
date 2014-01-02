@@ -2,7 +2,7 @@
 <li class="webpage">
 	<table style="table-layout: fixed;">
 		<tr valign="top">
-			<td width="1%">
+			<td width="3%">
 		      	<a href="{% url get_file %}?file={{ f.file_info.path}}/{{ f.file_info.realname}}">
 		        	{% if f.file_info.ext in "pdf xls ppt doc" %}
 		          	<img src="{{ MEDIA_URL }}images/icons/{{f.file_info.ext}}.gif" />
@@ -16,10 +16,10 @@
 				<br />
 				<span class="smalltext">&nbsp;{{f.description}}</span>
 			</td>
-			<td width="5%"  valign="middle">
+			<td width="9%"  valign="middle">
 				<span class="smalltext">&nbsp;{{f.file_info.size|filesizeformat}}</span>
 			</td>
-			<td width="25%">
+			<td width="20%">
 				<div>
 			    	<ul class="fm-tags">
 				    	{% for tag in f.get_tag_list %}
@@ -28,7 +28,7 @@
 			    	</ul>
 			    </div>
 			</td>
-			<td width="25%">
+			<td width="24%">
 			    <div>		
 					<div class="creator">
 						<span class="smalltext">{{f.owner.get_full_name}} {% trans "on" %} {{f.time_created}}</span>
@@ -39,7 +39,7 @@
 							</div>
 						{% endif %}
 				</div>
-			<td width="5%" nowrap="nowrap">
+			<td width="17%" nowrap="nowrap">
 				<ul class="options">
 					{% if manager %}
 					<li><a title="{% trans "Properties"%}" href="#" rel="{{cdir}}" class="properties"><img src="/zmedia/images/icons/properties.png" alt="{% trans "Properties"%}"/></a></li>

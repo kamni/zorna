@@ -6,7 +6,7 @@ from tagging.models import Tag
 
 from zorna.fileman.api import recent_files, get_allowed_shared_folders
 from zorna.fileman.models import ZornaFile
-from zorna.fileman.api import get_folder_files
+from zorna.fileman.api import get_folder_files, recent_files_folders
 
 register = template.Library()
 
@@ -135,3 +135,38 @@ def get_shared_folder_files(parser, token):
     limit = bits[3]
     varname = bits[-1]
     return get_shared_folder_files_node(folder_id, path, limit, varname)
+
+
+class get_shared_folder_recent_files_node(template.Node):
+
+    def __init__(self, folders, limit, varname):
+        self.folders = folders
+        self.limit = limit
+        self.var_name = varname
+
+    def render(self, context):
+        request = context['request']
+        aof = get_allowed_shared_folders(request.user, ['reader'])
+        folders = map(int, self.folders.split(','))
+        folders = ['F%s' % f for f in folders if f in aof]
+        context[self.var_name] = recent_files_folders(request, folders, self.limit)
+        return ''
+
+
+@register.tag(name="get_shared_folder_recent_files")
+def get_shared_folder_recent_files(parser, token):
+    """
+    {% get_shared_folder_recent_files folder_id 10 as recent_files %}
+    folder_id as U2 or F2 or C4 for example
+    """
+    bits = token.split_contents()
+    len_bits = len(bits)
+    if len_bits not in [5]:
+        raise TemplateSyntaxError('%r expects 5 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the penultimate argument' % bits[0])
+    folders = bits[1]
+    limit = bits[-3]
+    varname = bits[-1]
+    return get_shared_folder_recent_files_node(folders, limit, varname)
