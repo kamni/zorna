@@ -212,7 +212,7 @@ msgstr ""
 
 #: account/models.py:95
 msgid "User profile"
-msgstr "Profile utilisateur"
+msgstr "Profil utilisateur"
 
 #: account/models.py:177
 msgid "User avatar"
@@ -1819,11 +1819,11 @@ msgstr "Charger une nouvelle image"
 #: templates/account/users_administrators.html:34
 #: templates/account/users_list.html:31 templates/account/users_list.html:32
 msgid "Click to edit user profile"
-msgstr "Cliquez pour éditer le profile de l'utilisateur"
+msgstr "Cliquez pour éditer le profil de l'utilisateur"
 
 #: templates/account/admin_right_menu.html:5
 msgid "Edit profile"
-msgstr "Editez le profile"
+msgstr "Editez le profil"
 
 #: templates/account/admin_right_menu.html:6
 msgid "Click to change user password"
@@ -1919,7 +1919,7 @@ msgstr "Changer le mot de passe pour"
 
 #: templates/account/edit_user.html:6
 msgid "User profile for"
-msgstr "Profile utilisateur de"
+msgstr "Profil utilisateur de"
 
 #: templates/account/email_reset_password_html.html:3
 #: templates/account/email_reset_password_text.html:2
@@ -2123,7 +2123,7 @@ msgstr "Supprimer l'image courante"
 
 #: templates/account/user_settings.html:24
 msgid "Change your profile"
-msgstr "Changer votre profile"
+msgstr "Changer votre profil"
 
 #: templates/account/users_administrators.html:19
 #: templates/communities/manage_community_users.html:21
@@ -4325,7 +4325,7 @@ msgstr ""
 #~ msgstr "Photo de l'utilisateur"
 
 #~ msgid "Profile"
-#~ msgstr "Profile"
+#~ msgstr "Profil"
 
 #~ msgid "Avatar"
 #~ msgstr "Photo"
