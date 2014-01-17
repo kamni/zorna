@@ -102,7 +102,27 @@ var manage_folder = {
 					$("h1.hnpath span.nlast").html(new_folder);
 					$("INPUT[name=path_rel]").val(r.data);
 				} else {
-					$("#left-panel a[rel="+path_rel+"]").last().after(r.data);
+					var pfolder = $("#left-panel a[rel="+path_rel+"]");
+					var divid;
+					var ulid;
+					if(pfolder.length == 0) {
+						if(path_rel[0]== 'F') {
+							divid = 'fm-shared';
+						} else if (path_rel[0]== 'C') {
+							divid = 'fm-com';
+						} else {
+							divid = 'fm-mydoc'
+						}
+						ulid = $("#"+divid+" >ul").first();
+						if (ulid.length == 0) {
+							$('<ul class="jqueryFileTree" style="">'+r.data+'</ul>').appendTo("#"+divid);
+						} else {
+							ulid.show();
+							$(r.data).appendTo(ulid);
+						}
+					} else {
+						pfolder.last().after(r.data);
+					}
 				}
 				manage_folder.hide('normal');
 			} else {
