@@ -3,12 +3,13 @@ from django import template
 from django.template import TemplateSyntaxError
 from django.contrib.auth.models import User
 from django.template import Variable
+from django.core.urlresolvers import reverse
 from schedule.models.events import EventRelation
 from schedule.periods import Period
 
 from zorna.acl.models import get_allowed_objects
 from zorna.calendars.models import EventDetails, ZornaResourceCalendar
-from zorna.calendars.api import get_resource_calendar, get_events_for_object
+from zorna.calendars.api import get_resource_calendar, get_events_for_object, get_user_calendars
 
 
 register = template.Library()
@@ -220,3 +221,35 @@ class calendar_events_for_object_node(template.Node):
         context[self.var_name] = events_list
         return ''
 
+
+class resource_calendars(template.Node):
+
+    def __init__(self, var_name, perm):
+        self.var_name = var_name
+        self.perm = perm
+
+    def render(self, context):
+        request = context['request']
+        calendars = get_user_calendars(request.user, self.perm)
+        context[self.var_name] = [cal for cal in calendars if type(cal.content_object)==ZornaResourceCalendar]
+        for cal in context[self.var_name]:
+            cal.name = cal.content_object.name
+            cal.description = cal.content_object.description
+            cal.url = reverse('view_calendar', args=[cal.pk])
+        return ''
+
+
+@register.tag(name="get_resource_calendars")
+def get_resource_calendars(parser, token):
+    bits = token.split_contents()
+    if len(bits) not in [3,4]:
+        raise TemplateSyntaxError('%r expects 3 or 4 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the second argument' % bits[0])
+    varname = bits[-1]
+    if len(bits) == 4:
+        perm = bits[1].split(',')
+    else:
+        perm = ['viewer']
+    return resource_calendars(varname, perm)
