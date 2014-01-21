@@ -22,7 +22,7 @@ from zorna.acl.models import get_allowed_objects, get_acl_by_object
 from zorna.site.email import ZornaEmail
 from zorna.articles.models import ArticleCategory, ArticleStory, ArticleAttachments, ArticleComments
 from zorna.articles.forms import ArticleCategoryForm, ArticleStoryForm, ArticleAttachmentsForm, ArticleCommentsForm
-from zorna.utilit import get_upload_articles_images, get_upload_articles_files
+from zorna.utilit import get_upload_articles_images, get_upload_articles_files, resize_image
 from zorna.account.models import UserAvatar
 
 
@@ -379,7 +379,7 @@ def edit_story(request, story):
     return render_to_response('articles/edit_article.html', extra_context, context_instance=context)
 
 
-def get_story_image(request, story):
+def get_story_image(request, story, size=None):
     try:
         story = ArticleStory.objects.select_related().get(pk=story)
         allowed_objects = get_allowed_objects(
@@ -390,12 +390,17 @@ def get_story_image(request, story):
     except:
         return HttpResponseRedirect('/')
 
+    path = u"%s/%s" % (get_upload_articles_images(), story.image)
+    if size:
+        miniature = resize_image(story.image.path, size)
+        split = path.rsplit('/', 1)
+        path = '%s/%s' % (split[0], miniature)
+
     try:
-        path = u"%s/%s" % (get_upload_articles_images(), story.image)
         image_data = open(path, "rb").read()
         return HttpResponse(image_data, mimetype=story.mimetype)
     except:
-        return HttpResponseRedirect('/')
+        return HttpResponse('')
 
 
 def get_story_file(request, file_id):

@@ -83,6 +83,7 @@ def resize_image(path, size=None):
         new_y = (float(max_x) / x) * y
         return (int(max_x), int(new_y))
 
+    csize = size
     if (size.lower().endswith('h')):
         mode = 'h'
         size = size[:-1]
@@ -97,7 +98,7 @@ def resize_image(path, size=None):
     # defining the filename and the miniature filename
     filehead, filetail = os.path.split(path)
     basename, format = os.path.splitext(filetail)
-    miniature = basename + '_' + size + format
+    miniature = basename + '_' + csize + format
     filename = path
     miniature_filename = os.path.join(filehead, miniature)
     filehead, filetail = os.path.split(filetail)
