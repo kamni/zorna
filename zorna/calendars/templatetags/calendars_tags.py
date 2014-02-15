@@ -241,6 +241,13 @@ class resource_calendars(template.Node):
 
 @register.tag(name="get_resource_calendars")
 def get_resource_calendars(parser, token):
+    '''
+    {% get_resource_calendars as calendars %}
+    {% for f in calendars %}
+    <a href="{{f.url}}" >{{f.name}}</a>
+    <div><i>{{f.description}}</i></div>
+    {% endfor %}
+    '''
     bits = token.split_contents()
     if len(bits) not in [3,4]:
         raise TemplateSyntaxError('%r expects 3 or 4 arguments' % bits[0])
