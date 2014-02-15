@@ -161,6 +161,14 @@ class FormsFormPanelForm(ModelForm):
     class Meta:
         model = FormsFormPanel
 
+class FormsFormDuplicate(forms.Form):
+    name = forms.CharField(label=_(
+        u'Name'), widget=forms.TextInput(attrs={'size': 80}))
+    slug = forms.CharField(widget=forms.TextInput(attrs={'size': 80}))
+    workspace = forms.ModelChoiceField(queryset=FormsWorkspace.objects.none(), label=_(u'Workspace'), empty_label=None, required=True)
+
+
+
 SEPARATOR_CHOICES = (
     (";", _("Semicolon")),
     (",", _("Comma")),
@@ -241,6 +249,12 @@ class FormForForm(forms.ModelForm):
             where_id = r[1]
         else:
             where_field = None
+
+        url_redirect_to = rget.get('url_redirect_to', '')
+        print rget
+        if url_redirect_to:
+            self.fields['url_redirect_to'] = forms.CharField(
+                widget=forms.HiddenInput(), initial=url_redirect_to)
 
         if form.bind_to_entry:
             try:

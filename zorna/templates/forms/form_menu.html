@@ -45,6 +45,10 @@
 			<a href="{% url forms_form_panels current_form.pk %}"  title="{% trans "Click to set form panels" %}">
 				<img src="{{ MEDIA_URL }}images/icons/panel-16x16.gif" />{% trans "Panels" %}</a>
 		</li>
+		<li>
+			<a href="{% url forms_form_duplicate current_form.pk %}"  title="{% trans "Click to duplicate this form" %}">
+				<img src="{{ MEDIA_URL }}images/icons/duplicate-16x16.png" />{% trans "Duplicate" %}</a>
+		</li>
 	</ul>	
 </div>
 </td>

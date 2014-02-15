@@ -117,4 +117,7 @@ urlpatterns = patterns('',
                        url(r'^panels/edit/(?P<panel_pk>\d+)/$',
                            views.forms_form_panel_edit,
                            name='forms_form_panel_edit'),
+                       url(r'^duplicate/(?P<form_pk>\d+)/$',
+                           views.forms_form_duplicate,
+                           name='forms_form_duplicate'),
                        )

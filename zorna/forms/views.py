@@ -31,7 +31,7 @@ from zorna.forms.models import FormsList, FormsListEntry, FormsWorkspace, FormsF
 from zorna.forms.forms import FormsListForm, FormsListEntryForm, FormsWorkspaceForm, \
     FormsFormForm, FormsFormFieldForm, FormForForm, FormsExportForm, FormsFormTemplateForm, FormsFormEntry, \
     FormsFormImportCsv, forms_factory, FormsFormFormEmail, FormsFormActionMessageForm, FormsFormActionUrlForm, \
-    FormsFormPanelForm
+    FormsFormPanelForm, FormsFormDuplicate
 
 
 def get_user_workspaces(request):
@@ -693,15 +693,20 @@ def forms_add_form_entry(request, slug):
 
     rget = {}
     rget['where'] = request.GET.get('where', '')
+    rget['url_redirect_to'] = request.GET.get('form_next', '')
     args = (form, request.POST or None, request.FILES or None)
     form_for_form = FormForForm(*args, rget=rget)
     if request.method == "POST":
         if form_for_form.is_valid():
             entry = form_for_form.save(request=request)
-            if check.viewer_formsform(form, request.user):
-                return HttpResponseRedirect(reverse('form_browse_entries_view', args=[form.slug]) + '?where=' + request.POST.get('where', ''))
+            if rget['url_redirect_to']:
+                return HttpResponseRedirect(rget['url_redirect_to'])
+            elif check.viewer_formsform(form, request.user):
+                return HttpResponseRedirect(reverse('form_browse_entries_view',
+                    args=[form.slug]) + '?where=' + request.POST.get('where', ''))
             else:
-                return HttpResponseRedirect(reverse('form_sent', args=[entry.pk]))
+                return HttpResponseRedirect(reverse('form_sent',
+                    args=[entry.pk]))
 
     if form.template:
         t = Template(form.template)
@@ -738,8 +743,8 @@ def forms_add_form_entry(request, slug):
     else:
         extra_context['can_browse'] = True
 
-    c = RequestContext(request, extra_context)
-    return HttpResponse(t.render(c))
+    ctx = RequestContext(request, extra_context)
+    return HttpResponse(t.render(ctx))
 
 
 def forms_add_formset_entry(request, slug):
@@ -766,7 +771,8 @@ def forms_add_formset_entry(request, slug):
                 if f.cleaned_data and f.is_valid():
                     f.save(request=request)
             if check.viewer_formsform(form, request.user):
-                return HttpResponseRedirect(reverse('form_browse_entries_view', args=[form.slug]) + '?where=' + request.POST.get('where', ''))
+                return HttpResponseRedirect(reverse('form_browse_entries_view',
+                    args=[form.slug]) + '?where=' + request.POST.get('where', ''))
             else:
                 return HttpResponseRedirect('/')
 
@@ -1696,3 +1702,67 @@ def forms_form_panel_edit(request, panel_pk):
         extra_context['form'] = ff
         extra_context['bdelete'] = True
         return render_to_response('forms/edit_form_panel.html', extra_context, RequestContext(request))
+
+def forms_form_duplicate(request, form_pk):
+    if request.user.is_authenticated():
+        try:
+            form = FormsForm.objects.select_related(depth=1).get(pk=form_pk)
+            fw = isUserManager(request, form.workspace.slug)
+            if fw is False:
+                return HttpResponseForbidden()
+        except:
+            return HttpResponseForbidden()
+
+        tpl_form = FormsFormDuplicate(request.POST if request.method == 'POST' else None)
+        tpl_form.fields['workspace'].queryset = get_user_workspaces(request)
+        if request.method == 'POST' and tpl_form.is_valid():
+            try:
+                print request.POST.get('slug','')
+                FormsForm.objects.get(slug=request.POST.get('slug',''))
+            except FormsForm.DoesNotExist:
+                original_form = FormsForm.objects.get(pk=form_pk)
+                original_form.pk = None
+                original_form.workspace = FormsWorkspace.objects.get(
+                                pk=request.POST.get('workspace', ''))
+                original_form.bind_to_entry = ''
+                original_form.display = ''
+                original_form.slug = request.POST.get('slug','')
+                original_form.name = request.POST.get('name','')
+                original_form.modifier = original_form.owner = request.user
+                original_form.save()
+                form_action_set = form.formsformaction_set.all()
+                if form_action_set:
+                    form_action = form_action_set[0]
+                    form_action.content_object.pk=None
+                    form_action.content_object.form=original_form
+                    form_action.content_object.save()
+                    FormsFormAction.objects.create(
+                        form=original_form, content_object=form_action.content_object)
+                panels = {}
+                for panel in form.formsformpanel_set.all():
+                    panel_id=panel.pk
+                    panel.pk = None
+                    panel.form = original_form
+                    panel.save()
+                    panels[panel_id] = panel
+
+                for field in form.fields.all():
+                    field.pk = None
+                    field.form = original_form
+                    if field.panel and field.panel.pk in panels:
+                        field.panel = panels[field.panel.pk]
+                    field.save()
+                return forms_form(request, original_form.pk, extra={'load_navigation': True})
+            else:
+                tpl_form.errors['__all__'] = tpl_form.error_class([_(u"A form with this slug already exist")])
+                pass
+
+        extra_context = {}
+        extra_context['form'] = tpl_form
+        extra_context['current_form'] = form
+        context = RequestContext(request)
+        extra_context['zorna_title_page'] = _(u'Forms')
+        extra_context['workspace'] = fw
+        return render_to_response('forms/edit_form_duplicate.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseForbidden()

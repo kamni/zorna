@@ -295,9 +295,13 @@ class FormsFormField(models.Model):
                 yield v.value, v.value
         elif self.reference and '.' in self.reference:
             r = self.reference.split('.')
-            form_target = FormsForm.objects.get(slug=r[0])
-            columns, entries = FormsFieldEntry.objects.forms_get_entries(
-                form_target, **{'ot': 'asc', 'o': r[1]})
+            try:
+                form_target = FormsForm.objects.get(slug=r[0])
+                columns, entries = FormsFieldEntry.objects.forms_get_entries(
+                    form_target, **{'ot': 'asc', 'o': r[1]})
+            except:
+                entries = []
+
             if include_all:
                 yield '', include_all
             if self.reference_display:
@@ -488,7 +492,8 @@ class FormsFieldEntryManager(models.Manager):
             try:
                 entries.sort(
                     key=entry_sort, reverse=False if ot == 'asc' else True)
-            except:
+            except Exception as e:
+                print e
                 pass
         return columns, entries
 
@@ -514,7 +519,7 @@ class FormsFieldEntry(models.Model):
 def format_field_value(field_entry, field):
     type = field.field_type
     if type == fields.ZORNA_USER:
-        value = User.objects.get(pk=field_entry.value).get_profile()
+        value = User.objects.get(pk=field_entry.value).get_profile().__unicode()
     elif type == fields.FILE:
         value = reverse("file_view", args=(field_entry.id,))
     elif type in fields.DATES:
@@ -675,7 +680,7 @@ def forms_format_entries(form, query_set, hidden=[]):
                                      'label': f.label, 'slug': f.slug, 'type': f.field_type, 'total': 0, 'values': []})
             columns[f.slug] = f.label
             cols[f.slug] = {'label': f.label, 'help_text':
-                            f.help_text, 'type': f.field_type, 'value': ''}
+                            f.help_text, 'type': fields.NAMES_TPL[f.field_type], 'value': ''}
             f.target_entries = None
             try:
                 form.fields_reference
@@ -729,7 +734,7 @@ def forms_format_entries(form, query_set, hidden=[]):
                 # rows[field_entry.form_entry_id]['zorna_owner'].update({'value':field_entry.form_entry.account.get_full_name(),
                 # 'type':fields.NAMES_TPL[fields.ZORNA_USER]})
                 rows[field_entry.form_entry_id]['zorna_owner'][
-                    'value'] = field_entry.form_entry.account.get_profile()
+                    'value'] = field_entry.form_entry.account.get_profile().__unicode__()
                 rows[field_entry.form_entry_id]['zorna_owner'][
                     'type'] = fields.NAMES_TPL[fields.ZORNA_USER]
             if form.bind_to_entry:

@@ -4,8 +4,8 @@ from django.template import Variable
 
 
 from zorna.acl.models import get_acl_for_model
-from zorna.forms.models import FormsForm
-from zorna.forms.api import forms_get_entries
+from zorna.forms.models import FormsForm, FormsFormEntry
+from zorna.forms.api import forms_get_entries, isUserManager, forms_get_entry
 
 register = template.Library()
 
@@ -211,6 +211,64 @@ def show_form_test(context, slug):
 
 show_form_test = register.inclusion_tag('forms/form_body_test.html',
                                         takes_context=True)(show_form_test)
+
+
+
+class get_form_entry_node(template.Node):
+
+    def __init__(self, entry, var_name):
+        self.var_name = var_name
+        self.entry = entry
+
+    def render(self, context):
+        request = context['request']
+        try:
+            entry = FormsFormEntry.objects.select_related(depth=1).get(pk=self.entry)
+            form = entry.form
+            check = get_acl_for_model(form)
+            if not check.viewer_formsform(form, request.user) and not isUserManager(request, form.workspace.slug):
+                return ''
+        except Exception as e:
+            print e
+            return ''
+        columns, row = forms_get_entry(entry)
+        panels = {'':{}}
+        for panel in form.formsformpanel_set.all():
+            panel.fields = []
+            panels[panel.label] = panel
+        for f in form.fields.visible():
+            if f.panel:
+                panels[f.panel.label].fields.append(row[f.slug])
+            else:
+                panels[''].setdefault('fields', []).append(row[f.slug])
+        context[self.var_name] = panels
+        return ''
+
+
+@register.tag(name="get_form_entry")
+def get_form_entry(parser, token):
+    '''
+    {% get_form_entry 10 as entry %}
+    {% for label,panel in entry.items %}
+    <span>{{panel.panel_header|safe}}</span><br />
+    <div>
+        <span>{{label}}</span><br />
+        {% for f in panel.fields %}
+        <span>{{f.label}}</span>:<span>{{f.value}}</span><br />
+        {% endfor %}
+    </div>
+    <span>{{panel.panel_footer|safe}}</span><br />
+    {% endfor %}
+    '''
+    bits = token.split_contents()
+    if 4 != len(bits):
+        raise TemplateSyntaxError('%r expects 4 arguments' % bits[0])
+    if bits[-2] != 'as':
+        raise TemplateSyntaxError(
+            '%r expects "as" as the second argument' % bits[0])
+    entry = bits[1]
+    varname = bits[-1]
+    return get_form_entry_node(entry, varname)
 
 
 @register.filter(name='zstr')
