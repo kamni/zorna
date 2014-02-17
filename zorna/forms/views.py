@@ -120,16 +120,56 @@ def get_forms_navigation(request, slug, form=None):
         return ''
 
 
-def forms_json_forms(request, slug, form=None):
-    if request.user.is_authenticated():
+def forms_json_forms(request, slug):
+    fw = isUserManager(request, slug)
+    if fw and request.user.is_authenticated() :
         ret = {}
-        ret['content'] = get_forms_navigation(request, slug, form)
-        ret['current_form'] = form
-        json_data = simplejson.dumps(ret)
+        ob_list = FormsForm.objects.filter(workspace=fw)
+        for ob in ob_list:
+            ob.zfields = ob.fields.all()
+        source = []
+
+        for item in ob_list:
+            items = {}
+            items['title'] = item.name
+            items['isFolder'] = True
+            items['children'] = []
+            items['pk'] = item.pk
+            items['url'] = reverse('forms_form', args=[item.pk])
+            for field in item.fields.all():
+                items['children'].append(
+                    {'title': field.label,
+                    'url': reverse('forms_form_edit_field', args=[field.pk]),
+                    'pk':field.pk})
+            source.append(items)
+        json_data = simplejson.dumps(source)
         return HttpResponse(json_data)
     else:
         return HttpResponseForbidden()
 
+
+def forms_json_lists(request, slug):
+    fw = isUserManager(request, slug)
+    if fw and request.user.is_authenticated() :
+        ret = {}
+        lists = FormsList.objects.filter(workspace=fw)
+        source = []
+
+        items = {}
+        items['title'] = u'Lists'
+        items['isFolder'] = True
+        items['children'] = []
+        items['url'] = reverse('forms_lists_list', args=[slug])
+        for item in lists:
+            items['children'].append(
+                {'title': item.name,
+                'url': reverse('forms_edit_list', args=[item.pk]),
+                'pk':item.pk})
+        source.append(items)
+        json_data = simplejson.dumps(source)
+        return HttpResponse(json_data)
+    else:
+        return HttpResponseForbidden()
 
 @login_required()
 def forms_home(request, slug, form=None):
@@ -588,12 +628,13 @@ def forms_edit_list(request, list):
                 FormsList, FormsListEntry, can_delete=True)
             form_set = entry_form_set(request.POST, instance=list)
             if form_list.is_valid():
+                form_list.save()
                 if form_set.is_valid():
                     instances = form_set.save(commit=False)
                     for instance in instances:
                         instance.list = list
                         instance.save()
-                    return forms_lists_list(request, fw.slug)
+                    return forms_lists_list(request, fw.slug, extra={'load_navigation': True})
         else:
             form_list = FormsListForm(instance=list)
             entry_form_set = inlineformset_factory(

@@ -5,9 +5,10 @@
 {% block zorna_extrahead %}
 <script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/forms.css" />
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.treeTable.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}javascript/dynatree/ui.dynatree.css" />
 <script type="text/javascript" src="{{ MEDIA_URL }}javascript/splitter.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.treeTable.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/jquery.cookie.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/dynatree/jquery.dynatree.min.js"></script>
 {% endblock %}
 
 
@@ -15,19 +16,8 @@
 <script type="text/javascript">
 var current_form = 0;
 function loadForms(){
-	var param = "";
-    jQuery.ajax({
-      url: "{% url forms_json_forms workspace.slug %}",
-      cache: false,
-      data: param,
-      dataType: "json",
-      success: function(data) {
-      	$("#forms-left-items").html(data.content);
-      	current_form = data.current_form;
-		$("#forms-table").treeTable({ treeColumn : 1, initialState: 'expanded'  });
-		$("#forms-table-masters").treeTable({ treeColumn : 1, initialState: 'expanded'  });
-		}
-      });
+$('#folders-forms-tree').dynatree('getTree').reload();
+$('#folders-lists-tree').dynatree('getTree').reload();
 }
 
 function updatePathForms(path){
@@ -47,7 +37,34 @@ $(document).ready(function() {
 		resizeToWidth: true,
 		accessKey: 'I'
 	});
-	loadForms();
+	//loadForms();
+
+ 	$("#folders-forms-tree").dynatree({
+ 	  	initAjax: {url: '{% url forms_json_forms workspace.slug %}'},
+        persist: true,
+        clickFolderMode: 3,
+		onClick: function(node, event) {
+			if(node.getEventTargetType(event) == "title"){
+				var iframe = $("#iframe_right_content");
+				iframe.attr('src', node.data.url)
+				return true;
+			}
+		}
+ 	});
+
+ 	$("#folders-lists-tree").dynatree({
+ 	  	initAjax: {url: '{% url forms_json_lists workspace.slug %}'},
+        persist: true,
+        clickFolderMode: 3,
+		onClick: function(node, event) {
+			if(node.getEventTargetType(event) == "title"){
+				var iframe = $("#iframe_right_content");
+				iframe.attr('src', node.data.url)
+				return true;
+			}
+		}
+ 	});
+
 });
 </script>
 
@@ -60,7 +77,11 @@ $(document).ready(function() {
 				</div>
 		</div>
 		<div id="forms-left-items" class="forms-left-items">
-
+			<div id="folders-forms-tree" style="padding:5px;"></div>
+			<div class="forms-masters-title">
+				<span>{% trans "Masters" %}</span>
+			</div>
+			<div id="folders-lists-tree" style="padding:5px;"></div>
 		</div>
 	</div>
 	<div id="forms-right-panel">

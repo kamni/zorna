@@ -1,0 +1,55 @@
+{% extends "iframe_base.html" %}
+{% load i18n %}
+
+{% block iframe_extrahead %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/forms.css" />
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function()
+{
+  $("#id_name").keyup(function() { $("#id_slug").val(string_to_slug($("#id_name").val())); });
+});
+
+-->
+</script>
+{% endblock %}
+
+
+{% block iframe_content %}
+{% include "forms/form_menu.html"%}
+<div class="zbloc">
+{% if form.non_field_errors %}
+<div id="form-errors">
+  <strong>{{ form.non_field_errors }}</strong>
+</div>
+{% endif %}
+<form id="form_edit_field" action="" method="post">{% csrf_token %}
+  <fieldset class="module aligned">
+  {% for field in form %}
+  <div class="form-row">
+    <div>
+  		<table>
+  			<tr>
+  				<td>
+			      {{ field.label_tag }}
+  				</td>
+  				<td>
+					{% if field.errors %}
+		  			<ul class="errorlist">
+		      		{% for error in field.errors %}
+		        		<li>{{ error }}</li>
+		      		{% endfor %}
+		      		</ul>
+		      		{% endif %}
+				  {{ field }}
+  				</td>
+  			</tr>
+  		</table>
+    </div>
+  </div>
+  {% endfor %}
+  </fieldset>
+<input type="submit" value="{% trans "Duplicate" %}" />
+</form>
+</div>
+{% endblock %}
