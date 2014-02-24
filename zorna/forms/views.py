@@ -1058,22 +1058,23 @@ def form_process_import_fields(request, form):
                                 if col_lists[i] and col not in lists[col_lists[i]]:  # list
                                     lists[col_lists[i]].append(col)
                     i = i + 1
-            from django.db import connection, transaction
-            qn = connection.ops.quote_name
-            cursor = connection.cursor()
-            fe_fields = ['field_id', 'form_entry_id', 'value']
-            flds = ', '.join([qn(f) for f in fe_fields])
-            arg_string = ', '.join([u'(' + ', '.join(['%s'] * len(
-                fe_fields)) + ')'] * (len(bulk_values) / len(fe_fields)))
-            sql = "INSERT INTO %s (%s) VALUES %s" % (
-                FormsFieldEntry._meta.db_table, flds, arg_string,)
-            cursor.execute(sql, bulk_values)
-            transaction.commit_unless_managed()
-            cursor.close()
+            if bulk_values:
+                from django.db import connection, transaction
+                qn = connection.ops.quote_name
+                cursor = connection.cursor()
+                fe_fields = ['field_id', 'form_entry_id', 'value']
+                flds = ', '.join([qn(f) for f in fe_fields])
+                arg_string = ', '.join([u'(' + ', '.join(['%s'] * len(
+                    fe_fields)) + ')'] * (len(bulk_values) / len(fe_fields)))
+                sql = "INSERT INTO %s (%s) VALUES %s" % (
+                    FormsFieldEntry._meta.db_table, flds, arg_string,)
+                cursor.execute(sql, bulk_values)
+                transaction.commit_unless_managed()
+                cursor.close()
 
-            for list, values in lists.iteritems():
-                for v in values:
-                    FormsListEntry.objects.create(value=v, list_id=list)
+                for list, values in lists.iteritems():
+                    for v in values:
+                        FormsListEntry.objects.create(value=v, list_id=list)
             csv_file.close()
             os.unlink(tempfile)
         return forms_form(request, form.pk, extra={'load_navigation': True})
