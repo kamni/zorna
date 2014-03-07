@@ -57,7 +57,7 @@ def show_menu(context, menu_name, menu_type=None):
     if menu_type:
         context['menu_type'] = menu_type
     return context
-register.inclusion_tag('menus/menu.html', takes_context=True)(show_menu)
+register.inclusion_tag('menu.html', takes_context=True)(show_menu)
 
 
 def show_menu_item(context, menu_item):
@@ -72,7 +72,7 @@ def show_menu_item(context, menu_item):
     context['menu_item_children'] = get_menu_children(request, menu_item)
     return context
 register.inclusion_tag(
-    'menus/menu_item.html', takes_context=True)(show_menu_item)
+    'menu_item.html', takes_context=True)(show_menu_item)
 
 
 @register.tag(name="menu_item")

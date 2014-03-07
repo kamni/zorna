@@ -1,7 +1,7 @@
 # Copyright (c) 2010, AFRAZ ( http://www.afraz.fr )
 # All rights reserved.
 
-VERSION = (1, 1, 7, "final", 0)
+VERSION = (1, 1, 8, "final", 0)
 
 from django.contrib.auth.models import User, Group
 from django.contrib.sites.models import Site
