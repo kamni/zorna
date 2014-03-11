@@ -1,3 +1,5 @@
+import datetime
+import time
 from decimal import Decimal, InvalidOperation
 from django.conf import settings
 from django.db import models
@@ -9,6 +11,7 @@ from django.template import Context, Template
 from django.db.models import Q
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from django.utils import formats
 
 from zorna.forms import fields
 from zorna.models import ZornaEntity
@@ -787,7 +790,7 @@ def forms_format_entries(form, query_set, hidden=[]):
         #    entry[f.name] = getattr(rows[row]['zorna_entity'], f.name)
         r = []
         for c in columns['fields']:
-            if type in [fields.DECIMAL, fields.INTEGER]:
+            if c['type'] in [fields.DECIMAL, fields.INTEGER]:
                 try:
                     if c['type'] == fields.INTEGER:
                         c['total'] = c['total'] + int(
@@ -797,6 +800,18 @@ def forms_format_entries(form, query_set, hidden=[]):
                             str(rows[row][c['slug']]['value']))
                 except InvalidOperation:
                     pass
+            elif c['type'] == fields.DATE_TIME:
+                try:
+                    rows[row][c['slug']]['value'] = formats.date_format(
+                        datetime.datetime(*time.strptime(rows[row][c['slug']]['value'], "%Y-%m-%d %H:%M:%S")[0:5]), "SHORT_DATETIME_FORMAT")
+                except Exception, e:
+                    rows[row][c['slug']]['value'] = ''
+            elif c['type'] == fields.DATE:
+                try:
+                    rows[row][c['slug']]['value'] = formats.date_format(
+                        datetime.datetime(*time.strptime(rows[row][c['slug']]['value'], "%Y-%m-%d")[0:5]), "SHORT_DATE_FORMAT")
+                except Exception, e:
+                    rows[row][c['slug']]['value'] = ''
             c['values'].append(rows[row][c['slug']]['value'])
 
             entry[c['slug']] = rows[row][c['slug']]
