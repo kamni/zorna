@@ -307,17 +307,26 @@ class FormForForm(forms.ModelForm):
                             for rfield_entry in rfield_entries:
                                 c = []
                                 for field_entry in FormsFieldEntry.objects.filter(field=field, form_entry__entry=rfield_entry.form_entry).order_by("value"):
-                                    iv = format_value(
-                                        field_entry.value, field.field_type)
-                                    c.append([field_entry.form_entry_id, iv])
-                                choices.append([
-                                               format_value(rfield_entry.value, rfield.field_type), c])
+                                    try:
+                                        iv = format_value(
+                                                field_entry.value, field.field_type)
+                                        c.append([field_entry.form_entry_id, iv])
+                                    except:
+                                        pass
+                                try:
+                                    choices.append([
+                                                   format_value(rfield_entry.value, rfield.field_type), c])
+                                except Exception, e:
+                                    pass
 
                         else:
                             for field_entry in FormsFieldEntry.objects.filter(field=field).order_by("value"):
-                                iv = format_value(
-                                    field_entry.value, field.field_type)
-                                choices.append([field_entry.form_entry_id, iv])
+                                try:
+                                    iv = format_value(
+                                        field_entry.value, field.field_type)
+                                    choices.append([field_entry.form_entry_id, iv])
+                                except Exception, e:
+                                    pass
                 if badd:
                     self.fields[form.bind_to_entry_slug] = forms.ChoiceField(
                         label=label, choices=choices, initial=initial)
@@ -333,8 +342,11 @@ class FormForForm(forms.ModelForm):
                 fe = FormsFieldEntry.objects.filter(form_entry=self.instance)
                 instance_fields = {}
                 for e in fe:
-                    instance_fields[e.field.pk] = format_value(
-                        e.value, e.field.field_type)
+                    try:
+                        instance_fields[e.field.pk] = format_value(
+                            e.value, e.field.field_type)
+                    except:
+                        instance_fields[e.field.pk] = None
             except FormsFieldEntry.DoesNotExist:
                 instance_fields = None
 

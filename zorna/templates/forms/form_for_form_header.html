@@ -32,6 +32,9 @@ $(document).ready(function() {
 	$(".datefield").each(function(i){
   	    $(this).datepicker();
 	});	
+	$(".timefield").each(function(i){
+  	    $(this).datepicker();
+	});	
   $("#bdelete").click(function (){
 	var x=window.confirm("{% trans "Are you sur you want to delete this entry" %}");
 	return x;

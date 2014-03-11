@@ -45,6 +45,9 @@ $(document).ready(function() {
 	$(".datefield").each(function(i){
     	$(this).datepicker();
 	});
+	$(".timefield").each(function(i){
+    	$(this).timeEntry(tmOptions);
+	});
 	{% if load_navigation %}
 	parent.loadForms();
 	{% endif %}

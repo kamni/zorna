@@ -21,6 +21,7 @@ ZORNA_USER = 14
 DECIMAL = 15
 INTEGER = 16
 REFERENCE = 17
+TIME = 18
 ZORNA_USER_SINGLETON = 100
 FORM_ENTRY = 101
 
@@ -43,6 +44,7 @@ NAMES = (
     (DECIMAL, _("Decimal")),
     (INTEGER, _("Integer")),
     (REFERENCE, _("Reference")),
+    (TIME, _("Time")),
 )
 
 # Names for all available field types to be used in templates.
@@ -64,6 +66,7 @@ NAMES_TPL = {
     DECIMAL: 'decimal',
     INTEGER: 'integer',
     REFERENCE: 'reference',
+    TIME: 'time',
     ZORNA_USER_SINGLETON: 'zorna_user',
 }
 
@@ -86,6 +89,7 @@ CLASSES = {
     DECIMAL: forms.DecimalField,
     INTEGER: forms.IntegerField,
     REFERENCE: forms.CharField,
+    TIME: forms.TimeField,
 }
 
 # Widgets for field types where a specialised widget is required.
