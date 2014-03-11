@@ -33,7 +33,7 @@ $(document).ready(function() {
   	    $(this).datepicker();
 	});	
 	$(".timefield").each(function(i){
-  	    $(this).datepicker();
+  	    $(this).timeEntry(tmOptions);
 	});	
   $("#bdelete").click(function (){
 	var x=window.confirm("{% trans "Are you sur you want to delete this entry" %}");
