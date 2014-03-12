@@ -571,7 +571,7 @@ class FormForForm(forms.ModelForm):
                         if bdelete_file:
                             fs.delete(fe.value)
                             os.rmdir(os.path.dirname(fs.path(fe.value)))
-                        fe.value = value
+                        fe.value = value if value else ''
                         fe.save()
                     except FormsFieldEntry.DoesNotExist:
                         if value:
