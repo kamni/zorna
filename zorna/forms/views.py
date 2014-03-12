@@ -24,7 +24,7 @@ from django.contrib.auth.decorators import login_required
 from zorna.forms import fields
 from zorna.acl.models import get_acl_for_model
 from zorna.acl.models import get_allowed_objects
-from zorna.utilit import get_upload_forms_attachments
+from zorna.utilit import get_upload_forms_attachments, resize_image
 from zorna.forms.api import isUserManager, forms_form_browse_entries, forms_get_entry, forms_delete_entry
 from zorna.forms.models import FormsList, FormsListEntry, FormsWorkspace, FormsFormPanel, \
     FormsForm, FormsFormField, FormsFieldEntry, FormsFormAction, FormsFormActionMessage, FormsFormActionUrl
@@ -1386,7 +1386,7 @@ def forms_form_export_entries(request, form):
         return render_to_response(template, extra_context, RequestContext(request))
 
 
-def file_view(request, file):
+def file_view(request, file, size=None):
     """
     Output the file for the requested field entry.
     """
@@ -1402,9 +1402,22 @@ def file_view(request, file):
 
     fs = FileSystemStorage(location=get_upload_forms_attachments())
     path = join(fs.location, field_entry.value)
+    try:
+        from PIL import Image
+    except ImportError:
+        import Image
+    try:
+        Image.open(path).verify()
+        if size:
+            miniature = resize_image(path, size)
+            split = path.rsplit('/', 1)
+            path = '%s/%s' % (split[0], miniature)
+    except:
+        pass
+
     response = HttpResponse(mimetype=guess_type(path)[0])
     f = open(path, "r+b")
-    response["Content-Disposition"] = "attachment; filename=%s" % f.name
+    response["Content-Disposition"] = "attachment; filename=%s" % path.rsplit('/', 1)[1]
     response.write(f.read())
     f.close()
     return response

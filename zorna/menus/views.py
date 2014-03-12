@@ -1,3 +1,5 @@
+import shutil
+import os
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -5,11 +7,14 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.template.defaultfilters import slugify
+
 
 from zorna.menus.models import ZornaMenuItem
 from zorna.site.models import SiteOptions
 from zorna.menus.forms import ZornaMenuItemUrlForm, ZornaMenuItemArticleCategoryForm, \
     ZornaMenuItemFaqForm, ZornaMenuItemFormsForm, ZornaMenuItemPageContentForm
+from zorna.utilit import get_upload_menus
 
 
 def user_has_access_to_menus(user):
@@ -27,14 +32,34 @@ def menus_home_view(request):
     else:
         return HttpResponseRedirect('/')
 
+def save_form(request, form):
+    if 'image' in request.FILES:
+        image_file = request.FILES['image']
+    else:
+        image_file = None
+
+    if image_file:
+        item = form.save()
+        upload_path = get_upload_menus()
+        path_src = u"%s/%s" % (upload_path, item.image)
+        filehead, filename = os.path.split(path_src)
+        s = os.path.splitext(filename)
+        filename = u"%s%s" % (slugify(s[0]), s[1])
+        path_dest = u"%s/m%s" % (upload_path, item.pk)
+        os.makedirs(path_dest)
+        shutil.move(path_src, path_dest+"/%s" % filename)
+        item.image = "m%s/%s" % (item.pk, filename)
+    else:
+        item = form.save(commit=False)
+    return item
 
 @login_required()
 def menus_add_item_url(request):
     if user_has_access_to_menus(request.user):
         if request.method == 'POST':
-            form = ZornaMenuItemUrlForm(request.POST)
+            form = ZornaMenuItemUrlForm(request.POST, request.FILES)
             if form.is_valid():
-                item = form.save(commit=False)
+                item = save_form(request, form)
                 item.url = form.cleaned_data['url']
                 item.save()
                 return HttpResponseRedirect(reverse('menus_home_view'))
@@ -55,7 +80,7 @@ def menus_add_item_url(request):
 def menus_edit_item_url(request, item):
     if request.method == 'POST':
         form = ZornaMenuItemUrlForm(
-            request.POST, instance=item, initial={'url': item.url})
+            request.POST, request.FILES, instance=item, initial={'url': item.url})
         if form.is_valid():
             item = form.save(commit=False)
             item.url = form.cleaned_data['url']
@@ -76,9 +101,9 @@ def menus_edit_item_url(request, item):
 def menus_add_item_article_category(request):
     if user_has_access_to_menus(request.user):
         if request.method == 'POST':
-            form = ZornaMenuItemArticleCategoryForm(request.POST)
+            form = ZornaMenuItemArticleCategoryForm(request.POST, request.FILES)
             if form.is_valid():
-                item = form.save(commit=False)
+                item = save_form(request, form)
                 item.content_object = form.cleaned_data['category']
                 item.save()
                 return HttpResponseRedirect(reverse('menus_home_view'))
@@ -99,7 +124,7 @@ def menus_add_item_article_category(request):
 def menus_edit_item_article_category(request, item):
     if request.method == 'POST':
         form = ZornaMenuItemArticleCategoryForm(
-            request.POST, instance=item, initial={'category': item.object_id})
+            request.POST, request.FILES, instance=item, initial={'category': item.object_id})
         if form.is_valid():
             item = form.save(commit=False)
             item.content_object = form.cleaned_data['category']
@@ -121,9 +146,9 @@ def menus_edit_item_article_category(request, item):
 def menus_add_item_faq(request):
     if user_has_access_to_menus(request.user):
         if request.method == 'POST':
-            form = ZornaMenuItemFaqForm(request.POST)
+            form = ZornaMenuItemFaqForm(request.POST, request.FILES)
             if form.is_valid():
-                item = form.save(commit=False)
+                item = save_form(request, form)
                 item.content_object = form.cleaned_data['faq']
                 item.save()
                 return HttpResponseRedirect(reverse('menus_home_view'))
@@ -144,7 +169,7 @@ def menus_add_item_faq(request):
 def menus_edit_item_faq(request, item):
     if request.method == 'POST':
         form = ZornaMenuItemFaqForm(
-            request.POST, instance=item, initial={'faq': item.object_id})
+            request.POST, request.FILES, instance=item, initial={'faq': item.object_id})
         if form.is_valid():
             item = form.save(commit=False)
             item.content_object = form.cleaned_data['faq']
@@ -166,9 +191,9 @@ def menus_edit_item_faq(request, item):
 def menus_add_item_form_submission(request):
     if user_has_access_to_menus(request.user):
         if request.method == 'POST':
-            form = ZornaMenuItemFormsForm(request.POST)
+            form = ZornaMenuItemFormsForm(request.POST, request.FILES)
             if form.is_valid():
-                item = form.save(commit=False)
+                item = save_form(request, form)
                 item.content_object = form.cleaned_data['form']
                 item.extra_info = 'submission'
                 item.save()
@@ -190,9 +215,9 @@ def menus_add_item_form_submission(request):
 def menus_add_item_form_browse(request):
     if user_has_access_to_menus(request.user):
         if request.method == 'POST':
-            form = ZornaMenuItemFormsForm(request.POST)
+            form = ZornaMenuItemFormsForm(request.POST, request.FILES)
             if form.is_valid():
-                item = form.save(commit=False)
+                item = save_form(request, form)
                 item.content_object = form.cleaned_data['form']
                 item.extra_info = 'browse'
                 item.save()
@@ -214,7 +239,7 @@ def menus_add_item_form_browse(request):
 def menus_edit_item_form(request, item):
     if request.method == 'POST':
         form = ZornaMenuItemFormsForm(
-            request.POST, instance=item, initial={'form': item.object_id})
+            request.POST, request.FILES, instance=item, initial={'form': item.object_id})
         if form.is_valid():
             item = form.save(commit=False)
             item.content_object = form.cleaned_data['form']
@@ -239,9 +264,9 @@ def menus_edit_item_form(request, item):
 @login_required()
 def menus_add_item_page_content(request):
     if user_has_access_to_menus(request.user):
-        form = ZornaMenuItemPageContentForm(request.POST or None)
+        form = ZornaMenuItemPageContentForm(request.POST or None, request.FILES or None)
         if request.method == 'POST' and form.is_valid():
-            item = form.save(commit=False)
+            item = save_form(request, form)
             item.url = form.cleaned_data['page']
             item.save()
             return HttpResponseRedirect(reverse('menus_home_view'))
@@ -258,18 +283,25 @@ def menus_add_item_page_content(request):
 def menus_edit_item(request, item_id):
     if user_has_access_to_menus(request.user):
         item = ZornaMenuItem.objects.get(pk=item_id)
-        if request.method == 'POST' and request.POST.has_key('bdelete'):
-            item.delete()
-            return HttpResponseRedirect(reverse('menus_home_view'))
-        if request.method == 'POST' and request.POST.has_key('childs_ids') and request.POST['childs_ids']:
-            ids = request.POST['childs_ids'].split(',')
-            last_m = ZornaMenuItem.objects.get(pk=ids.pop(0))
-            last_m.move_to(last_m.parent, position='first-child')
-            for id in ids:
-                last_m = ZornaMenuItem.objects.get(pk=last_m.id)
-                m = ZornaMenuItem.objects.get(pk=id)
-                m.move_to(last_m, position='right')
-                last_m = m
+        if request.method == 'POST':
+            if request.POST.has_key('bdelete'):
+                item.delete()
+                return HttpResponseRedirect(reverse('menus_home_view'))
+            if request.FILES or 'image-clear' in request.POST:
+                try:
+                    shutil.rmtree(u"%s/m%s" % (get_upload_menus(), item.pk))
+                except Exception, e:
+                    print e
+
+            if request.POST.has_key('childs_ids') and request.POST['childs_ids']:
+                ids = request.POST['childs_ids'].split(',')
+                last_m = ZornaMenuItem.objects.get(pk=ids.pop(0))
+                last_m.move_to(last_m.parent, position='first-child')
+                for id in ids:
+                    last_m = ZornaMenuItem.objects.get(pk=last_m.id)
+                    m = ZornaMenuItem.objects.get(pk=id)
+                    m.move_to(last_m, position='right')
+                    last_m = m
 
         if item.object_id:
             if item.content_type == ContentType.objects.get(model='articlecategory'):

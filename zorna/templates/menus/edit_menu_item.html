@@ -46,7 +46,7 @@ jQuery(document).ready(function()
   {% else %}
   <h1>{{title}}</h1>
   {% endif %}
-<form action="" method="post">{% csrf_token %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
   <fieldset class="module aligned">
   {% for field in form %}
   <div class="form-row">
@@ -58,9 +58,16 @@ jQuery(document).ready(function()
   		{% endfor %}
   		</ul>
   		{% endif %}
-      {{ field.label_tag }}{{ field }}
+      <span class="{%if field.field.required %}required{% endif%}">
+            {{ field.label_tag }}
+          </span>
+          {% if field.help_text %}
+        {{ field.help_text }}
+          <br />
+          {% endif %}
+      {{ field }}
     </div>
-  </div>  
+  </div>
   {% endfor %}
   </fieldset>
  {% if curitem and not curitem.is_leaf_node %}

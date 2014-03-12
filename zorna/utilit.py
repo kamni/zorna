@@ -35,6 +35,13 @@ def get_upload_avatars():
     return get_upload_path()
 
 
+def get_upload_menus():
+    path = u"%s/%s" % (get_upload_path(), "menus")
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    return path
+
+
 def get_upload_articles():
     path = u"%s/%s" % (settings.ZORNA_UPLOAD_PATH, "articles")
     if not os.path.isdir(path):
