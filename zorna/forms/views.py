@@ -1417,7 +1417,7 @@ def file_view(request, file, size=None):
 
     response = HttpResponse(mimetype=guess_type(path)[0])
     f = open(path, "r+b")
-    response["Content-Disposition"] = "attachment; filename=%s" % path.rsplit('/', 1)[1]
+    response["Content-Disposition"] = "attachment; filename=\"%s\"" % smart_str(path.rsplit('/', 1)[1])
     response.write(f.read())
     f.close()
     return response
