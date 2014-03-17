@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-12 08:52+0100\n"
+"POT-Creation-Date: 2014-03-17 18:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr "Activation du compte sur"
 msgid "Your site has recorded a new registration"
 msgstr "Votre site a enregistré un nouvel utilisateur"
 
-#: account/forms.py:215 articles/forms.py:67
+#: account/forms.py:215 articles/forms.py:74
 #, python-format
 msgid ""
 "%(ext)s is an invalid file extension. Authorized extensions are : "
@@ -122,40 +122,40 @@ msgstr ""
 msgid "Please, choose a valid image file"
 msgstr "Choisissez une fichier image valide"
 
-#: account/forms.py:223 forms/forms.py:173 templates/forms/export_form.html:53
+#: account/forms.py:223 forms/forms.py:198 templates/forms/export_form.html:53
 msgid "Semicolon"
 msgstr "point virgule"
 
-#: account/forms.py:224 forms/forms.py:174 templates/forms/export_form.html:54
+#: account/forms.py:224 forms/forms.py:199 templates/forms/export_form.html:54
 msgid "Comma"
 msgstr "Virgule"
 
-#: account/forms.py:225 forms/forms.py:175
+#: account/forms.py:225 forms/forms.py:200
 msgid "Tabulation"
 msgstr "Tabulation"
 
-#: account/forms.py:228 forms/forms.py:178
+#: account/forms.py:228 forms/forms.py:203
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: account/forms.py:229 forms/forms.py:179
+#: account/forms.py:229 forms/forms.py:204
 msgid "ISO-8859-1"
 msgstr "ISO-8859-1"
 
 #: account/forms.py:234 fileman/forms.py:38 fileman/forms.py:48
-#: fileman/forms.py:61 forms/forms.py:184 templates/fileman/log_files.html:16
+#: fileman/forms.py:61 forms/forms.py:209 templates/fileman/log_files.html:16
 msgid "File"
 msgstr "Fichier"
 
-#: account/forms.py:236 forms/forms.py:186
+#: account/forms.py:236 forms/forms.py:211
 msgid "Separator"
 msgstr "avec le séparateur"
 
-#: account/forms.py:238 forms/forms.py:188
+#: account/forms.py:238 forms/forms.py:213
 msgid "Other"
 msgstr "Autres"
 
-#: account/forms.py:240 forms/forms.py:190
+#: account/forms.py:240 forms/forms.py:215
 msgid "Encoding"
 msgstr "Encodage"
 
@@ -247,7 +247,7 @@ msgstr "Un ou plusieurs champs sont vides"
 msgid "Invalid file name"
 msgstr "Nom de fichier invalide"
 
-#: account/views.py:653 forms/forms.py:689 forms/forms.py:734
+#: account/views.py:653 forms/forms.py:714 forms/forms.py:759
 #: forms/views.py:1130
 msgid "Nickname"
 msgstr "Identifiant"
@@ -320,46 +320,48 @@ msgstr "Articles de la catégorie %s"
 msgid "Articles recently published in category %s"
 msgstr "Articles récemment publiés dans la catégorie %s"
 
-#: articles/forms.py:33 faq/forms.py:26 faq/forms.py:51
+#: articles/forms.py:34 faq/forms.py:27 faq/forms.py:52
 msgid "You must provide a slug or a category name"
 msgstr "Vous devez fournir un slug ou un nom de catégorie"
 
-#: articles/forms.py:38 notes/forms.py:39
+#: articles/forms.py:39 notes/forms.py:43
 #: templates/articles/edit_article.html:157
 msgid "Attachment"
 msgstr "Fichier joint"
 
-#: articles/forms.py:40 articles/models.py:133 communities/forms.py:35
-#: fileman/forms.py:40 fileman/forms.py:50 forms/forms.py:59 forms/forms.py:81
-#: forms/models.py:44 forms/models.py:86 notes/forms.py:41
+#: articles/forms.py:41 articles/models.py:133 communities/forms.py:36
+#: fileman/forms.py:40 fileman/forms.py:50 forms/forms.py:60 forms/forms.py:82
+#: forms/models.py:44 forms/models.py:86 notes/forms.py:45
 #: templates/communities/admin_list_communities.html:19
 #: templates/forms/list_lists.html:37
 #: templates/workflow/list_workflows.html:18 workflow/forms.py:11
 msgid "Description"
 msgstr "Description"
 
-#: articles/forms.py:50 communities/models.py:127 communities/models.py:139
-#: menus/models.py:28 pages/forms.py:26
+#: articles/forms.py:51 communities/models.py:127 communities/models.py:139
+#: menus/models.py:28 pages/forms.py:29
 #: templates/admin/account/usergroup/change_list_table.html:10
 #: templates/admin/pages/page/change_list_table.html:9
 msgid "title"
 msgstr "Titre"
 
-#: articles/forms.py:51 articles/models.py:31 articles/models.py:89
+#: articles/forms.py:52 articles/models.py:31 articles/models.py:89
 #: fileman/models.py:26 menus/models.py:27 notes/models.py:22
 msgid "slug"
 msgstr "slug"
 
-#: articles/forms.py:53
+#: articles/forms.py:54
 msgid "head"
 msgstr "Entête"
 
-#: articles/forms.py:55 communities/forms.py:299 communities/models.py:140
-#: notes/forms.py:13
+#: articles/forms.py:56 articles/forms.py:65 communities/forms.py:300
+#: communities/forms.py:310 communities/models.py:140 faq/forms.py:68
+#: forms/forms.py:95 forms/forms.py:121 forms/forms.py:183 forms/forms.py:185
+#: notes/forms.py:14 notes/forms.py:24
 msgid "body"
 msgstr "Corps"
 
-#: articles/forms.py:81
+#: articles/forms.py:88
 msgid "You must provide a slug or a story title"
 msgstr "Vous devez fournir un slug ou un titre"
 
@@ -415,7 +417,7 @@ msgid "categories"
 msgstr "catégories"
 
 #: articles/models.py:88 articles/models.py:145 forms/models.py:167
-#: notes/forms.py:12 templates/articles/story_default.html:87
+#: notes/forms.py:13 templates/articles/story_default.html:87
 #: templates/articles/writer_stories_list.html:17
 msgid "Title"
 msgstr "Titre"
@@ -514,18 +516,18 @@ msgstr "Ven"
 msgid "Sat"
 msgstr "Sam"
 
-#: calendars/forms.py:33 communities/forms.py:164 forms/forms.py:675
+#: calendars/forms.py:33 communities/forms.py:165 forms/forms.py:700
 #: site/models.py:15
 msgid "Start date"
 msgstr "Date de début"
 
-#: calendars/forms.py:34 communities/forms.py:167 forms/forms.py:676
+#: calendars/forms.py:34 communities/forms.py:168 forms/forms.py:701
 #: site/models.py:16
 msgid "End date"
 msgstr "Date de fin"
 
-#: calendars/forms.py:35 calendars/forms.py:54 communities/forms.py:168
-#: communities/forms.py:181 site/forms.py:27
+#: calendars/forms.py:35 calendars/forms.py:54 communities/forms.py:169
+#: communities/forms.py:182 site/forms.py:27
 msgid "The end time must be later than start time."
 msgstr "La date de fin doit être plus tard que la date de début"
 
@@ -665,7 +667,7 @@ msgstr "Peut modifier les événements"
 msgid "Can add new event"
 msgstr "Peut ajouter un nouveau événement"
 
-#: calendars/models.py:169 communities/models.py:24 pages/forms.py:29
+#: calendars/models.py:169 communities/models.py:24 pages/forms.py:32
 #: workflow/models.py:15
 msgid "description"
 msgstr "Description"
@@ -697,9 +699,10 @@ msgstr "Envoyés à moi"
 msgid "Content type"
 msgstr "Content type"
 
-#: communities/api.py:177 communities/forms.py:154 communities/views.py:1206
-#: forms/forms.py:99 forms/forms.py:104 forms/models.py:95 forms/models.py:139
-#: templates/articles/story_default.html:91 workflow/models.py:90
+#: communities/api.py:177 communities/forms.py:155 communities/views.py:1206
+#: forms/forms.py:107 forms/forms.py:112 forms/models.py:95
+#: forms/models.py:139 templates/articles/story_default.html:91
+#: workflow/models.py:90
 msgid "Message"
 msgstr "Message"
 
@@ -709,62 +712,62 @@ msgstr "Message"
 msgid "All"
 msgstr "Tous"
 
-#: communities/forms.py:33 fileman/forms.py:16 forms/forms.py:58
-#: forms/forms.py:73 forms/forms.py:166 forms/models.py:42 forms/models.py:76
+#: communities/forms.py:34 fileman/forms.py:16 forms/forms.py:59
+#: forms/forms.py:74 forms/forms.py:191 forms/models.py:42 forms/models.py:76
 #: forms/models.py:166 templates/fileman/file_properties_popup.html:3
 #: templates/forms/list_lists.html:36 workflow/forms.py:10
 #: workflow/models.py:14 workflow/models.py:51 workflow/models.py:66
 msgid "Name"
 msgstr "Nom"
 
-#: communities/forms.py:45
+#: communities/forms.py:46
 msgid "Recipients"
 msgstr "Destinataires"
 
-#: communities/forms.py:46 communities/views.py:1013
+#: communities/forms.py:47 communities/views.py:1013
 msgid "Attachments"
 msgstr "Fichiers joints"
 
-#: communities/forms.py:139
+#: communities/forms.py:140
 #: templates/communities/email_notification_html.html:9
 #: templates/communities/email_notification_text.html:3
 msgid "A new message has been posted in communities"
 msgstr "Un nouveau message a été publié dans les communautés"
 
-#: communities/forms.py:151
+#: communities/forms.py:152
 msgid "Choose"
 msgstr "Choisissez"
 
-#: communities/forms.py:151
+#: communities/forms.py:152
 msgid "Enter names"
 msgstr "Saisissez les noms"
 
-#: communities/forms.py:152
+#: communities/forms.py:153
 msgid "Manager"
 msgstr "Gestionnaire"
 
-#: communities/forms.py:153
+#: communities/forms.py:154
 msgid "Check this if you want to invite these people as managers"
 msgstr ""
 "Cochez cette case si vous souhaitez les inviter en tant que gestionnaires"
 
-#: communities/forms.py:157
+#: communities/forms.py:158
 msgid "Tell them why you're adding them"
 msgstr "Dites leurs pourquoi vous les avez ajouté"
 
-#: communities/forms.py:178
+#: communities/forms.py:179
 msgid "You must specify start and end dates"
 msgstr "Vous devez spécifier des dates de début et de fin"
 
-#: communities/forms.py:239 communities/forms.py:244
+#: communities/forms.py:240 communities/forms.py:245
 msgid "You must specify at least two choices"
 msgstr "Vous devez spécifier au moins deux choix"
 
-#: communities/forms.py:271
+#: communities/forms.py:272
 msgid "Invalid url"
 msgstr "URL invalide"
 
-#: communities/forms.py:274
+#: communities/forms.py:275
 msgid "Invalid url or script embed codes are not supported"
 msgstr "URL invalid ou les codes saisis ne sont pas autorisés"
 
@@ -995,11 +998,11 @@ msgstr "gestionnaire"
 msgid "member"
 msgstr "membre"
 
-#: faq/forms.py:55
+#: faq/forms.py:56
 msgid "Question"
 msgstr "Question"
 
-#: faq/forms.py:57
+#: faq/forms.py:58
 msgid "Answer"
 msgstr "Réponse"
 
@@ -1211,105 +1214,104 @@ msgstr "Référence"
 msgid "Time"
 msgstr "Heure"
 
-#: forms/forms.py:53
+#: forms/forms.py:54
 msgid "You must provide a slug or a workspace name"
 msgstr "Vous devez fournir un slug ou un nom d'espace de travail"
 
-#: forms/forms.py:68 forms/models.py:60
+#: forms/forms.py:69 forms/models.py:60
 msgid "Value"
 msgstr "Valeur"
 
-#: forms/forms.py:77 forms/models.py:85
+#: forms/forms.py:78 forms/models.py:85
 msgid "Button text"
 msgstr "Text du bouton"
 
-#: forms/forms.py:78 forms/models.py:85
+#: forms/forms.py:79 forms/models.py:85
 #: templates/fileman/upload_documents.html:68
 msgid "Submit"
 msgstr "Soumettre"
 
-#: forms/forms.py:79 forms/models.py:80
+#: forms/forms.py:80 forms/models.py:80
 msgid "Bind to entry"
 msgstr "Associer à un enregistrement"
 
-#: forms/forms.py:80 forms/models.py:81
+#: forms/forms.py:81 forms/models.py:81
 msgid "If filled, each record will be linked to target form entry"
 msgstr ""
 "Si coché, chaque enregistrement sera lié à un enregistrement du formualire "
 "cible"
 
-#: forms/forms.py:92 forms/models.py:87
+#: forms/forms.py:100 forms/models.py:87
 #: templates/communities/home_members.html:57
 #: templates/communities/home_pages.html:49
 msgid "Send email"
 msgstr "Envoyer un email"
 
-#: forms/forms.py:92 forms/models.py:88
+#: forms/forms.py:100 forms/models.py:88
 msgid "If checked, an email will be sent"
 msgstr "Si coché, un email sera envoyé"
 
-#: forms/forms.py:93 forms/models.py:89
+#: forms/forms.py:101 forms/models.py:89
 msgid "From address"
 msgstr "Adresse d'expédition"
 
-#: forms/forms.py:94 forms/models.py:90
+#: forms/forms.py:102 forms/models.py:90
 msgid "The address the email will be sent from"
 msgstr "Adresse qui sera utilisé comme expéditrice"
 
-#: forms/forms.py:95 forms/models.py:91
+#: forms/forms.py:103 forms/models.py:91
 msgid "Send copies to"
 msgstr "Envoyé des copies à"
 
-#: forms/forms.py:96 forms/models.py:92
+#: forms/forms.py:104 forms/models.py:92
 msgid "One or more email addresses, separated by commas"
 msgstr "Une ou plusieurs adresses séparées par des virgules"
 
-#: forms/forms.py:98 forms/models.py:94
+#: forms/forms.py:106 forms/models.py:94
 msgid "Subject"
 msgstr "Sujet"
 
-#: forms/forms.py:135
+#: forms/forms.py:150
 msgid "Panel"
 msgstr "Panel"
 
-#: forms/forms.py:145 forms/models.py:166
+#: forms/forms.py:160 forms/models.py:166
 msgid "Control name"
 msgstr "Nom du contôle"
 
-#: forms/forms.py:147 forms/models.py:168 templates/forms/form_panels.html:38
+#: forms/forms.py:162 forms/models.py:168 templates/forms/form_panels.html:38
 msgid "Panel title"
 msgstr "Titre du panel"
 
-#: forms/forms.py:149 forms/models.py:170 forms/models.py:258
+#: forms/forms.py:164 forms/models.py:170 forms/models.py:258
 msgid "Width including units (px, %, ...)"
 msgstr "Largeur avec les unités ( px, %, ...)"
 
-#: forms/forms.py:151 forms/models.py:172
+#: forms/forms.py:166 forms/models.py:172
 msgid "Height including units (px, %, ...)"
 msgstr "Hauteur avec les unités (px, %, ...)"
 
-#: forms/forms.py:153 forms/models.py:174 forms/models.py:260
+#: forms/forms.py:168 forms/models.py:174 forms/models.py:260
 msgid "Margin including units (px, %, ...)"
 msgstr "Marge avec les unités (px, %, ...)"
 
-#: forms/forms.py:155 forms/models.py:176 forms/models.py:264
+#: forms/forms.py:170 forms/models.py:176 forms/models.py:264
 msgid "Css classes"
 msgstr "Classes CSS"
 
-#: forms/forms.py:157 forms/models.py:181
+#: forms/forms.py:172 forms/models.py:181
 msgid "Panel header"
 msgstr "En-tête du panel"
 
-#: forms/forms.py:159 forms/models.py:182
+#: forms/forms.py:174 forms/models.py:182
 msgid "Panel footer"
 msgstr "Pied du panel"
 
-#: forms/forms.py:168
-#, fuzzy
+#: forms/forms.py:193
 msgid "Workspace"
-msgstr "Espaces de travail"
+msgstr "Espace de travail"
 
-#: forms/forms.py:238 forms/forms.py:241 forms/forms.py:271
+#: forms/forms.py:263 forms/forms.py:266 forms/forms.py:296
 #: forms/models.py:629 forms/models.py:657 forms/views.py:281
 #: forms/views.py:330 forms/views.py:382
 #: forms/migrations/0010_added_panels_fieldstyle.py:92
@@ -1318,23 +1320,23 @@ msgstr "Espaces de travail"
 msgid "User"
 msgstr "Utilisateur"
 
-#: forms/forms.py:490 forms/forms.py:508
+#: forms/forms.py:515 forms/forms.py:533
 msgid "You must provide a registered user"
 msgstr "Vous devez fournir un utilisateur enregistré"
 
-#: forms/forms.py:502
+#: forms/forms.py:527
 msgid "A record with this user already exist"
 msgstr "Un enregsitrement avec cet utilisateur existe déjà"
 
-#: forms/forms.py:518
+#: forms/forms.py:543
 msgid "You must provide a valid form entry"
 msgstr "Vous devez fournir un slug ou un titre"
 
-#: forms/forms.py:695 forms/forms.py:738
+#: forms/forms.py:720 forms/forms.py:763
 msgid "Creation date"
 msgstr "Date de création"
 
-#: forms/forms.py:697 forms/forms.py:740
+#: forms/forms.py:722 forms/forms.py:765
 msgid "Row ID"
 msgstr "N° enregistrement"
 
@@ -1688,7 +1690,7 @@ msgstr "La note a été supprimée avec succès"
 msgid "Note updated successfully"
 msgstr "Note mise à jour avec succès"
 
-#: pages/forms.py:28
+#: pages/forms.py:31
 msgid "keywords"
 msgstr "mots clés"
 
@@ -1741,45 +1743,49 @@ msgstr ""
 msgid "validation type"
 msgstr "type de validation"
 
-#: site/models.py:86
+#: site/models.py:93
 msgid "option"
 msgstr "option"
 
-#: site/models.py:87
+#: site/models.py:94
 msgid "key"
 msgstr "Clé"
 
-#: site/models.py:99
+#: site/models.py:106
 msgid "Who can access this option"
 msgstr "Qui peut accéder à cette option"
 
-#: site/models.py:104
+#: site/models.py:111
 msgid "Who can have personal calendar"
 msgstr "Qui peut avoir un agenda personnel"
 
-#: site/models.py:105
+#: site/models.py:112
 msgid "Who can store personal documents on the server"
 msgstr "Qui peut avoir un espace de stockage de fichiers privé"
 
-#: site/models.py:106
+#: site/models.py:113
 msgid "Who can manage static pages"
 msgstr "Qui peut gérer les pages statiques"
 
-#: site/models.py:107
+#: site/models.py:114
 msgid "Who can manage pages templates"
 msgstr "Qui peut gérer les templates des pages statiques"
 
-#: site/models.py:108
+#: site/models.py:115
 msgid "Who can have personal notes"
 msgstr "Qui peut utiliser les notes personnelles"
 
-#: site/models.py:109
+#: site/models.py:116
 msgid "Who can validate registration"
 msgstr "Qui peut valider les inscriptions"
 
-#: site/models.py:110
+#: site/models.py:117
 msgid "Who can manage menus"
 msgstr "Qui peut gérer les menus"
+
+#: site/models.py:118
+msgid "Who can use full ckeditor"
+msgstr "Qui peut utiliser l'éditeur WYSIWYG amélioré"
 
 #: templates/account/activate.html:8
 msgid "Account successfully activated"
@@ -4434,9 +4440,6 @@ msgstr ""
 
 #~ msgid "Field master"
 #~ msgstr "Champ patron"
-
-#~ msgid "Who can fill this form"
-#~ msgstr "Qui peut soumettre ce formulaire"
 
 #~ msgid "start"
 #~ msgstr "Article"
