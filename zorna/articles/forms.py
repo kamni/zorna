@@ -7,6 +7,7 @@ from ckeditor.widgets import CKEditorWidget
 
 
 from zorna.articles.models import ArticleCategory, ArticleAttachments, ArticleStory, ArticleComments
+from zorna.site.models import SiteOptions
 
 from mptt.forms import TreeNodeChoiceField
 
@@ -52,10 +53,16 @@ class ArticleStoryForm(ModelForm):
         attrs={'size': '80'}), required=False)
     head = forms.CharField(label=_(u'head'), widget=forms.Textarea(
         attrs={'rows': '5', 'cols': '80'}), required=False)
-    body = forms.CharField(label=_(u'body'), widget=CKEditorWidget())
+    body = forms.CharField(label=_(u'body'), widget=forms.Textarea(
+        attrs={'rows': '5', 'cols': '80'}))
 
     class Meta:
         model = ArticleStory
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        super(ArticleStoryForm, self).__init__(*args, **kwargs)
+        self.fields['body'] = forms.CharField(label=_(u'body'), widget=CKEditorWidget(config_name=SiteOptions.objects.get_ckeditor_config(request)))
 
     def clean_image(self):
         data = self.cleaned_data['image']

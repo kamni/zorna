@@ -283,7 +283,7 @@ def edit_page(request):
                    'Your changes have been saved successfully.'}
             return HttpResponse(simplejson.dumps(ret))
 
-        form = PageEditFileForm(extra=blocks)
+        form = PageEditFileForm(extra=blocks, request=request)
         if header:
             initial_data = {}
             initial_data['title'] = context_yaml[

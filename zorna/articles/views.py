@@ -219,7 +219,7 @@ def add_new_story(request):
         return HttpResponseRedirect('/')
 
     if request.method == 'POST':
-        form_story = ArticleStoryForm(request.POST, request.FILES)
+        form_story = ArticleStoryForm(request.POST, request.FILES, request=request)
         fa_set = formset_factory(ArticleAttachmentsForm, extra=2)
         form_attachments_set = fa_set(request.POST, request.FILES)
         if form_story.is_valid():
@@ -269,7 +269,7 @@ def add_new_story(request):
 
             return HttpResponseRedirect(reverse('writer_stories_list', args=[]))
     else:
-        form_story = ArticleStoryForm()
+        form_story = ArticleStoryForm(request=request)
         fa_set = formset_factory(ArticleAttachmentsForm, extra=2)
         form_attachments_set = fa_set()
 
@@ -306,7 +306,7 @@ def edit_story(request, story):
             return HttpResponseRedirect(reverse('writer_stories_list', args=[]))
 
         form_story = ArticleStoryForm(
-            request.POST, request.FILES, instance=story)
+            request.POST, request.FILES, instance=story, request=request)
         if form_story.is_valid():
             if 'selected_image' in request.POST:
                 story.image.delete()
@@ -326,7 +326,7 @@ def edit_story(request, story):
             selected_categories = request.POST.getlist('_selected_action')
             story.categories = selected_categories
 
-        form_story = ArticleStoryForm(instance=story)
+        form_story = ArticleStoryForm(instance=story, request=request)
 
         if len(attachments) < 2:
             fa_set = formset_factory(
@@ -361,7 +361,7 @@ def edit_story(request, story):
             notify_users(request, story, story.categories.all(), False)
 
     else:
-        form_story = ArticleStoryForm(instance=story)
+        form_story = ArticleStoryForm(instance=story, request=request)
         extra = len(attachments)
         if extra < 2:
             fa_set = formset_factory(ArticleAttachmentsForm, extra=2 - extra)

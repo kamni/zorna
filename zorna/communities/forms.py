@@ -16,6 +16,7 @@ from schedule.models.calendars import Calendar
 from ckeditor.widgets import CKEditorWidget
 
 from zorna.site.email import ZornaEmail
+from zorna.site.models import SiteOptions
 from zorna.communities.models import Community, MessageCommunity, EventCommunity, PollCommunityChoice, PollCommunity, UrlCommunity, PageCommunity
 from zorna.acl.models import get_allowed_objects, get_acl_by_object
 from zorna.utilit import get_upload_library, get_upload_communities
@@ -296,7 +297,14 @@ class UrlCommunityForm(ModelForm):
         return uc
 
 class PageCommunityForm(ModelForm):
-    body = forms.CharField(_(u'body'), widget=CKEditorWidget())
+    body = forms.CharField(_(u'body'), widget=forms.Textarea(
+        attrs={'rows': '5', 'cols': '80'}))
+
 
     class Meta:
         model = PageCommunity
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        super(PageCommunityForm, self).__init__(*args, **kwargs)
+        self.fields['body'] = forms.CharField(label=_(u'body'), widget=CKEditorWidget(config_name=SiteOptions.objects.get_ckeditor_config(request)))

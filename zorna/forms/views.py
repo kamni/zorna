@@ -319,7 +319,7 @@ def forms_add_form(request, slug):
     fw = isUserManager(request, slug)
     if request.user.is_authenticated() and fw:
         if request.method == 'POST':
-            form = FormsFormForm(request.POST)
+            form = FormsFormForm(request.POST, request=request)
             if form.is_valid():
                 f = form.save(commit=False)
                 f.owner = f.modifier = request.user
@@ -333,7 +333,7 @@ def forms_add_form(request, slug):
                     add_bind_entry_field(form, f.bind_to_entry)
                 return forms_form(request, f.pk, extra={'load_navigation': True})
         else:
-            form = FormsFormForm()
+            form = FormsFormForm(request=request)
 
         extra_context = {}
         extra_context['form'] = form
@@ -373,7 +373,7 @@ def forms_edit_form(request, form):
 
             bind_to_account = form.bind_to_account
             bind_to_entry = form.bind_to_entry
-            form_form = FormsFormForm(request.POST, instance=form)
+            form_form = FormsFormForm(request.POST, instance=form, request=request)
             if form_form.is_valid():
                 f = form_form.save(commit=False)
                 f.modifier = request.user
@@ -394,7 +394,7 @@ def forms_edit_form(request, form):
                 f.save()
                 return forms_form(request, f.pk, extra={'load_navigation': True})
         else:
-            form_form = FormsFormForm(instance=form)
+            form_form = FormsFormForm(instance=form, request=request)
 
         extra_context['form'] = form_form
         extra_context['current_form'] = form
@@ -1591,7 +1591,7 @@ def forms_action_edit_message(request, form_pk):
             ffam = None
 
         if request.method == 'POST':
-            tpl_form = FormsFormActionMessageForm(request.POST, instance=ffam)
+            tpl_form = FormsFormActionMessageForm(request.POST, instance=ffam, request=request)
             if tpl_form.is_valid():
                 ffam = tpl_form.save(commit=False)
                 ffam.form = form
@@ -1606,9 +1606,9 @@ def forms_action_edit_message(request, form_pk):
                 return form_form_action_home(request, form.pk)
             else:
                 tpl_form = FormsFormActionMessageForm(
-                    request.POST, instance=ffam)
+                    request.POST, instance=ffam, request=request)
         else:
-            tpl_form = FormsFormActionMessageForm(instance=ffam)
+            tpl_form = FormsFormActionMessageForm(instance=ffam, request=request)
 
         extra_context = {}
         extra_context['form'] = tpl_form
@@ -1709,7 +1709,7 @@ def forms_form_panel_add(request, form_pk):
 
         extra_context = {}
         if request.method == 'POST':
-            ff = FormsFormPanelForm(request.POST)
+            ff = FormsFormPanelForm(request.POST, request=request)
             if ff.is_valid():
                 fmax = FormsFormPanel.objects.filter(
                     form=form).aggregate(max_sort_order=Max('sort_order'))
@@ -1721,7 +1721,7 @@ def forms_form_panel_add(request, form_pk):
                 ff.save()
                 return HttpResponseRedirect(reverse('forms_form_panels', args=[form_pk]))
         else:
-            ff = FormsFormPanelForm()
+            ff = FormsFormPanelForm(request=request)
         extra_context['zorna_title_page'] = _(u'Forms')
         extra_context['current_form'] = form
         extra_context['form'] = ff
@@ -1743,7 +1743,7 @@ def forms_form_panel_edit(request, panel_pk):
 
         extra_context = {}
         if request.method == 'POST':
-            ff = FormsFormPanelForm(request.POST, instance=panel)
+            ff = FormsFormPanelForm(request.POST, instance=panel, request=request)
             if request.POST.has_key('bdelete'):
                 panel.delete()
                 return HttpResponseRedirect(reverse('forms_form_panels', args=[form.pk]))
@@ -1751,7 +1751,7 @@ def forms_form_panel_edit(request, panel_pk):
                 ff.save()
                 return HttpResponseRedirect(reverse('forms_form_panels', args=[form.pk]))
         else:
-            ff = FormsFormPanelForm(instance=panel)
+            ff = FormsFormPanelForm(instance=panel, request=request)
         extra_context['zorna_title_page'] = _(u'Forms')
         extra_context['current_form'] = form
         extra_context['form'] = ff

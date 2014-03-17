@@ -81,6 +81,13 @@ class SiteOptionsManager(models.Manager):
         except Exception as e:
             return []
 
+    def get_ckeditor_config(self, request):
+        baccess = self.is_access_valid(request.user, 'zorna_ckeditor')
+        if baccess:
+            return 'default'
+        else:
+            return 'basic'
+
 
 class SiteOptions(ZornaEntity):
     option = models.CharField(_('option'), max_length=255)
@@ -108,6 +115,7 @@ SITES_OPTIONS = {
     'zorna_personal_notes': ugettext_noop(u'Who can have personal notes'),
     'zorna_validate_registration': ugettext_noop(u'Who can validate registration'),
     'zorna_menus': ugettext_noop(u'Who can manage menus'),
+    'zorna_ckeditor': ugettext_noop(u'Who can use full ckeditor'),
 }
 
 

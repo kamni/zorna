@@ -575,12 +575,12 @@ class zornapage_community(ZornaCommunityAddons):
             instance = None
 
         if post:
-            form = PageCommunityForm(request.POST, instance=instance)
+            form = PageCommunityForm(request.POST, instance=instance, request=request)
         else:
             if instance:
-                form = PageCommunityForm(instance=instance)
+                form = PageCommunityForm(instance=instance, request=request)
             else:
-                form = PageCommunityForm(instance=instance)
+                form = PageCommunityForm(instance=instance, request=request)
 
         return form
 

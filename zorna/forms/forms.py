@@ -27,6 +27,7 @@ from zorna.forms import fields as fc
 from zorna.forms.models import FormsList, FormsForm, FormsFormField, FormsFormEntry, FormsFieldEntry, FormsWorkspace, \
     forms_format_entries, FormsFormActionMessage, FormsFormActionUrl, FormsFormPanel
 from zorna.communities.api import ZornaCommunityAddons, get_messages_extra_by_content_type
+from zorna.site.models import SiteOptions
 
 '''
 Largement inspired by the code stephenmcd / django-forms-builder
@@ -78,13 +79,20 @@ class FormsFormForm(ModelForm):
         "Submit"), widget=forms.TextInput(attrs={'size': 80}))
     bind_to_entry = forms.CharField(label=_(u'Bind to entry'), widget=forms.TextInput(attrs={
                                     'size': 80}), help_text=_("If filled, each record will be linked to target form entry"), required=False)
-    description = forms.CharField(_(u'Description'), widget=CKEditorWidget())
+    description = forms.CharField(_(u'Description'), widget=forms.Textarea(
+        attrs={'rows': '5', 'cols': '80'}))
+
     # bind_display =
     # forms.CharField(widget=forms.TextInput(attrs={'size':80}),
     # required=False)
 
     class Meta:
         model = FormsForm
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        super(FormsFormForm, self).__init__(*args, **kwargs)
+        self.fields['description'] = forms.CharField(label=_(u'body'), widget=CKEditorWidget(config_name=SiteOptions.objects.get_ckeditor_config(request)))
 
 
 class FormsFormFormEmail(forms.Form):
@@ -101,10 +109,17 @@ class FormsFormFormEmail(forms.Form):
 
 
 class FormsFormActionMessageForm(ModelForm):
-    message = forms.CharField(_(u'Message'), widget=CKEditorWidget())
+    message = forms.CharField(_(u'Message'), widget=forms.Textarea(
+        attrs={'rows': '5', 'cols': '80'}))
 
     class Meta:
         model = FormsFormActionMessage
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        super(FormsFormActionMessageForm, self).__init__(*args, **kwargs)
+        self.fields['message'] = forms.CharField(label=_(u'body'), 
+            widget=CKEditorWidget(config_name=SiteOptions.objects.get_ckeditor_config(request)))
 
 
 class FormsFormActionUrlForm(ModelForm):
@@ -160,6 +175,16 @@ class FormsFormPanelForm(ModelForm):
 
     class Meta:
         model = FormsFormPanel
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        ckeditor_config_name = SiteOptions.objects.get_ckeditor_config(request)
+        super(FormsFormPanelForm, self).__init__(*args, **kwargs)
+        self.fields['panel_header'] = forms.CharField(label=_(u'body'), 
+            widget=CKEditorWidget(config_name=ckeditor_config_name))
+        self.fields['panel_footer'] = forms.CharField(label=_(u'body'), 
+            widget=CKEditorWidget(config_name=ckeditor_config_name))
+
 
 class FormsFormDuplicate(forms.Form):
     name = forms.CharField(label=_(

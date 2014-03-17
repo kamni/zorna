@@ -5,12 +5,14 @@ from mptt.forms import TreeNodeChoiceField
 from zorna.notes.models import ZornaNote, ZornaNoteCategory, ZornaNoteFile
 from ckeditor.widgets import CKEditorWidget
 
+from zorna.site.models import SiteOptions
 
 class ZornaNoteForm(ModelForm):
     category = TreeNodeChoiceField(queryset=ZornaNoteCategory.tree.filter())
     title = forms.CharField(label=_(
         u'Title'), widget=forms.TextInput(attrs={'size': '80'}))
-    content = forms.CharField(_(u'body'), widget=CKEditorWidget())
+    content = forms.CharField(_(u'body'), widget=forms.Textarea(
+        attrs={'rows': '5', 'cols': '80'}))
 
     class Meta:
         model = ZornaNote
@@ -19,6 +21,8 @@ class ZornaNoteForm(ModelForm):
         super(ZornaNoteForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = ZornaNoteCategory.tree.filter(
             owner=request.user)
+        self.fields['content'] = forms.CharField(label=_(u'body'), 
+            widget=CKEditorWidget(config_name=SiteOptions.objects.get_ckeditor_config(request)))
 
 
 class ZornaNoteCategoryForm(ModelForm):
