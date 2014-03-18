@@ -452,7 +452,7 @@ def view_story(request, category, story, slug):
         for s in extra_context['recent_stories']:
             s.category = s.categories.all()[0]
         context = RequestContext(request)
-        return render_to_response(['story_default.html', 'articles/story_default.html'], extra_context, context_instance=context)
+        return render_to_response(['story_%s.html' % category.slug, 'story_default.html', 'articles/story_default.html'], extra_context, context_instance=context)
     else:
         return HttpResponseRedirect('/')
 
