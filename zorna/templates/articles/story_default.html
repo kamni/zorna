@@ -21,7 +21,7 @@
 	            </div>
 	            <div class="clear line"></div>
 	            <p class="meta">
-	                <span class="left">posted by <a href="#" title="Posts by antoscarface">{{story.get_owner_full_name }}</a> | </span> 
+	                <span class="left">{% trans "posted by" %} <a href="#" title="Posts by antoscarface">{{story.get_owner_full_name }}</a> | </span> 
 	                <span class="left comment"> <a href="#" title="Comment on {{story.title}}">{{story_comments.count}} {% trans "comment" %}{{ story_comments.count|pluralize }}</a></span>
 				</p>
 				<div class="clear"></div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-17 18:10+0100\n"
+"POT-Creation-Date: 2014-03-19 16:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -184,7 +184,7 @@ msgstr "Anonymes"
 msgid "Registered"
 msgstr "Utilisateurs enregistrés"
 
-#: account/models.py:21 acl/models.py:98 articles/models.py:30
+#: account/models.py:21 acl/models.py:98 articles/models.py:31
 #: calendars/models.py:168 communities/models.py:23 fileman/models.py:25
 #: menus/models.py:26 notes/models.py:21 workflow/forms.py:38
 msgid "name"
@@ -329,7 +329,7 @@ msgstr "Vous devez fournir un slug ou un nom de catégorie"
 msgid "Attachment"
 msgstr "Fichier joint"
 
-#: articles/forms.py:41 articles/models.py:133 communities/forms.py:36
+#: articles/forms.py:41 articles/models.py:145 communities/forms.py:36
 #: fileman/forms.py:40 fileman/forms.py:50 forms/forms.py:60 forms/forms.py:82
 #: forms/models.py:44 forms/models.py:86 notes/forms.py:45
 #: templates/communities/admin_list_communities.html:19
@@ -345,7 +345,7 @@ msgstr "Description"
 msgid "title"
 msgstr "Titre"
 
-#: articles/forms.py:52 articles/models.py:31 articles/models.py:89
+#: articles/forms.py:52 articles/models.py:32 articles/models.py:90
 #: fileman/models.py:26 menus/models.py:27 notes/models.py:22
 msgid "slug"
 msgstr "slug"
@@ -365,96 +365,96 @@ msgstr "Corps"
 msgid "You must provide a slug or a story title"
 msgstr "Vous devez fournir un slug ou un titre"
 
-#: articles/models.py:17 fileman/models.py:16
+#: articles/models.py:18 fileman/models.py:16
 msgid "No email notification"
 msgstr "Pas de notification par email"
 
-#: articles/models.py:18 fileman/models.py:17
+#: articles/models.py:19 fileman/models.py:17
 msgid "Send email notification"
 msgstr "Envoyer une notification par email"
 
-#: articles/models.py:19 fileman/models.py:18
+#: articles/models.py:20 fileman/models.py:18
 msgid "Let the author decide"
 msgstr "Laisser le choix à l'auteur"
 
-#: articles/models.py:32 forms/models.py:96
+#: articles/models.py:33 forms/models.py:96
 msgid "Template"
 msgstr "Template"
 
-#: articles/models.py:33 articles/models.py:97
+#: articles/models.py:34 articles/models.py:98
 msgid "Allow comment"
 msgstr "Autoriser les commentaires"
 
-#: articles/models.py:35
+#: articles/models.py:36
 msgid ""
 "Users will receive email notification when an article is published or updated"
 msgstr ""
 "Les utilisateurs seront informés par email quan un article est publié ou mis "
 "à jour"
 
-#: articles/models.py:39
+#: articles/models.py:40
 msgid "articles category"
 msgstr "catégorie d'article"
 
-#: articles/models.py:40
+#: articles/models.py:41
 msgid "articles categories"
 msgstr "catégorie d'articles"
 
-#: articles/models.py:63
+#: articles/models.py:64
 msgid "Who can browse this category"
 msgstr "Qui peut visualiser cette catégorie"
 
-#: articles/models.py:64
+#: articles/models.py:65
 msgid "Who can submit articles to this category"
 msgstr "Qui peut soumettre des articles dans cette catégorie"
 
-#: articles/models.py:65
+#: articles/models.py:66
 msgid "Who can manage this category"
 msgstr "Qui peut gérer cette catgéorie"
 
-#: articles/models.py:87
+#: articles/models.py:88
 msgid "categories"
 msgstr "catégories"
 
-#: articles/models.py:88 articles/models.py:145 forms/models.py:167
+#: articles/models.py:89 articles/models.py:157 forms/models.py:167
 #: notes/forms.py:13 templates/articles/story_default.html:87
-#: templates/articles/writer_stories_list.html:17
+#: templates/articles/writer_stories_list.html:26
 msgid "Title"
 msgstr "Titre"
 
-#: articles/models.py:90
+#: articles/models.py:91
 msgid "Head"
 msgstr "Entête"
 
-#: articles/models.py:91
+#: articles/models.py:92
 msgid "Body"
 msgstr "Corps"
 
-#: articles/models.py:100
+#: articles/models.py:101
 msgid "story"
 msgstr "Article"
 
-#: articles/models.py:101
+#: articles/models.py:102
 msgid "stories"
 msgstr "Articles"
 
-#: articles/models.py:136 articles/models.py:148
+#: articles/models.py:148 articles/models.py:160
 msgid "article"
 msgstr "article"
 
-#: articles/models.py:139 articles/models.py:140
+#: articles/models.py:151 articles/models.py:152
 msgid "article attachments"
 msgstr "Fichiers joints à l'article"
 
-#: articles/models.py:146 workflow/models.py:221
+#: articles/models.py:158 workflow/models.py:221
 msgid "Comment"
 msgstr "Commentaire"
 
-#: articles/models.py:151
+#: articles/models.py:163
 msgid "article comment"
 msgstr "Commentaire de l'article"
 
-#: articles/models.py:152
+#: articles/models.py:164
 msgid "article comments"
 msgstr "Commentaires de l'article"
 
@@ -1703,6 +1703,7 @@ msgid "Double click to edit file"
 msgstr "Double cliquez pour éditer le fichier"
 
 #: search/form.py:7 templates/account/users_list.html:9
+#: templates/articles/writer_stories_list.html:19
 #: templates/communities/home_base.html:119
 #: templates/communities/home_base.html:127 templates/fileman/fm_home.html:478
 #: templates/forms/browse_entries.html:21 templates/search/search_form.html:14
@@ -2178,7 +2179,6 @@ msgid "User's groups"
 msgstr "Les groupes de l'utilisateur"
 
 #: templates/acl/acl_groups.html:15 templates/acl/admin_acl_users.html:24
-#: templates/articles/publication_right_menu.html:8
 #: templates/articles/right_menu.html:9
 #: templates/calendars/admin_right_menu.html:8
 #: templates/communities/admin_right_menu.html:7
@@ -2208,9 +2208,7 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: templates/acl/acl_groups.html:93 templates/acl/admin_acl_users.html:16
-#: templates/acl/user_acl_users.html:15
-#: templates/articles/publication_right_menu.html:7
-#: templates/articles/right_menu.html:8
+#: templates/acl/user_acl_users.html:15 templates/articles/right_menu.html:8
 #: templates/calendars/admin_right_menu.html:7
 #: templates/communities/admin_right_menu.html:8
 #: templates/faq/admin_right_menu.html:7 templates/fileman/right_menu.html:7
@@ -2415,17 +2413,32 @@ msgstr "Ordonner les catégories"
 msgid "Update Order"
 msgstr "Mettre à jour l'ordre"
 
-#: templates/articles/publication_right_menu.html:6
+#: templates/articles/publication_right_menu.html:2
+#: templates/articles/publication_right_menu.html:4
+#: templates/articles/writer_stories_list.html:12
+msgid "Stories"
+msgstr "Articles"
+
+#: templates/articles/publication_right_menu.html:4
+msgid "List of my stories"
+msgstr "Liste de mes articles"
+
+#: templates/articles/publication_right_menu.html:5
+msgid "Click to begin writing a new story"
+msgstr "Cliquez pour commencer à rédiger un article"
+
+#: templates/articles/publication_right_menu.html:5
+msgid "Write new story"
+msgstr "Rédiger un article"
+
 #: templates/articles/right_menu.html:7 templates/fileman/right_menu.html:6
 msgid "Click to edit category"
 msgstr "Cliquez pour éditer la catégorie"
 
-#: templates/articles/publication_right_menu.html:6
 #: templates/articles/right_menu.html:7
 msgid "Edit category"
 msgstr "Editer la catégorie"
 
-#: templates/articles/publication_right_menu.html:7
 #: templates/articles/right_menu.html:8
 #: templates/calendars/admin_right_menu.html:7
 #: templates/communities/admin_right_menu.html:8
@@ -2435,7 +2448,6 @@ msgstr "Editer la catégorie"
 msgid "Click to edit permissions by users"
 msgstr "Cliquez pour éditer les permissions par utilisateur"
 
-#: templates/articles/publication_right_menu.html:8
 #: templates/articles/right_menu.html:9
 #: templates/calendars/admin_right_menu.html:8
 #: templates/communities/admin_right_menu.html:7
@@ -2444,27 +2456,6 @@ msgstr "Cliquez pour éditer les permissions par utilisateur"
 #: templates/site/admin_right_menu.html:7
 msgid "Click to edit permissions by groups"
 msgstr "Cliquez pour éditer les permissions par groupe"
-
-#: templates/articles/publication_right_menu.html:11
-msgid "Stories"
-msgstr "Articles"
-
-#: templates/articles/publication_right_menu.html:13
-msgid "List of my stories"
-msgstr "Liste de mes articles"
-
-#: templates/articles/publication_right_menu.html:13
-#: templates/articles/writer_stories_list.html:12
-msgid "My stories"
-msgstr "Mes articles"
-
-#: templates/articles/publication_right_menu.html:14
-msgid "Click to begin writing a new story"
-msgstr "Cliquez pour commencer à rédiger un article"
-
-#: templates/articles/publication_right_menu.html:14
-msgid "Write new story"
-msgstr "Rédiger un article"
 
 #: templates/articles/right_menu.html:14
 msgid "List of articles categories"
@@ -2478,6 +2469,10 @@ msgstr "Cliquez pour ajouter une nouvelle catégorie"
 #: templates/articles/right_menu.html:17
 msgid "Click to order categories"
 msgstr "Cliquez pour ordonner les catégories"
+
+#: templates/articles/story_default.html:24
+msgid "posted by"
+msgstr "publié par"
 
 #: templates/articles/story_default.html:25
 #: templates/articles/story_default.html:46
@@ -2496,22 +2491,22 @@ msgstr "Envoyer le commentaire"
 msgid "His recent posts"
 msgstr "Ses dernières publications"
 
-#: templates/articles/writer_stories_list.html:18
-msgid "Updated on"
-msgstr "Mis à jour le"
-
-#: templates/articles/writer_stories_list.html:19
+#: templates/articles/writer_stories_list.html:27
 msgid "Created on"
 msgstr "Créé le"
 
-#: templates/articles/writer_stories_list.html:27
+#: templates/articles/writer_stories_list.html:28
+msgid "Updated on"
+msgstr "Mis à jour le"
+
+#: templates/articles/writer_stories_list.html:36
 #, fuzzy, python-format
 msgid "Published on one category"
 msgid_plural "Published on %(counter)s categories"
 msgstr[0] "Ajouter une catégorie de note"
 msgstr[1] "Ajouter une catégorie de note"
 
-#: templates/articles/writer_stories_list.html:29
+#: templates/articles/writer_stories_list.html:38
 #: templates/communities/admin_list_communities.html:26
 #: templates/site/list_alerts.html:27
 #: templates/site/list_calendar_categories.html:24
@@ -4187,6 +4182,9 @@ msgstr ""
 #: workflow/models.py:229
 msgid "worflow responses"
 msgstr ""
+
+#~ msgid "My stories"
+#~ msgstr "Mes articles"
 
 #~ msgid "Show members"
 #~ msgstr "Afficher les membres"
