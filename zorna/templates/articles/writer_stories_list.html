@@ -9,14 +9,23 @@
 
 {% block zorna_left_content %}
 <div class="bloc">
-  <h1>{% trans "My stories" %}</h1>  
+  <h1>{% trans "Stories" %}</h1>  
+  <div>
+    <form id="forms-search" action="" method="get">
+      <label for="searchbar">
+        <img alt="" src="{{ MEDIA_URL }}images/icon_search.gif" />
+      </label>
+      <input id="searchbar" type="text" value="{{q}}" name="q" size="40"/>
+      <input type="submit" value="{% trans "Search"%}">
+    </form>
+  </div>
 <table id="story-table-dnd">
   <thead>
     <tr>
     <th></th>
     <th>{% trans "Title" %}</th>
-    <th>{% trans "Updated on" %}</th>
     <th>{% trans "Created on" %}</th>
+    <th>{% trans "Updated on" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -27,8 +36,8 @@
     	<img src="{{ MEDIA_URL }}images/icons/{% if story.categories__count %}mini-check.gif{%else%}mini-uncheck.gif{%endif%}" title="{% blocktrans count counter=story.categories__count %}Published on one category{% plural %}Published on {{counter}} categories{% endblocktrans %}"/>
     	</td>
     <td><a href="{% url edit_story story.pk %}" title="{% trans "Click to edit item" %}">{{story.title}}</a></td>
-    <td>{{story.time_updated|date:"SHORT_DATETIME_FORMAT"}}</td>
-    <td>{{story.time_created|date:"SHORT_DATETIME_FORMAT"}}</td>
+    <td>{{story.time_created|date:"SHORT_DATETIME_FORMAT"}}<br />{{story.owner.get_full_name}}</td>
+    <td>{% if story.modifier %}{{story.time_updated|date:"SHORT_DATETIME_FORMAT"}}<br />{{story.modifier.get_full_name}}{% endif %}</td>
     </tr>
     {% endfor %}
     {% endif %}

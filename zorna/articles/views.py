@@ -13,7 +13,7 @@ from django.forms.formsets import formset_factory
 from django.utils.text import truncate_words
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.core.paginator import Paginator, InvalidPage
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
@@ -281,15 +281,19 @@ def add_new_story(request):
 
 @login_required()
 def edit_story(request, story):
+    allowed_objects = get_allowed_objects(
+            request.user, ArticleCategory, 'manager')
     try:
         story = ArticleStory.objects.select_related().get(pk=story)
-        if story.owner != request.user:
+        categories = story.categories.all()
+        intersect = set(allowed_objects).intersection( set([category.pk for category in categories]))
+        if story.owner != request.user and not intersect:
             return HttpResponseRedirect('/')
-    except:
+    except Exception as e:
+        print e
         return HttpResponseRedirect('/')
 
     attachments = story.articleattachments_set.all()
-    categories = story.categories.all()
     if request.method == 'POST':
         if 'bdelstory' in request.POST:
             story.articleattachments_set.all().delete()
@@ -435,6 +439,7 @@ def view_story(request, category, story, slug):
             story = ArticleStory.objects.get(pk=story, categories=category)
         except ArticleStory.DoesNotExist:
             return HttpResponseForbidden()
+        story.edit_url = story.get_edit_url(request.user)
         extra_context = {}
         extra_context['ancestors'] = category.get_ancestors()
         extra_context['category'] = category
@@ -473,18 +478,19 @@ def add_story_comment(request, story):
 
 @login_required()
 def writer_stories_list(request):
-    ob_list = ArticleStory.objects.filter(owner=request.user).annotate(
+    q = request.GET.get('q', None)
+    allowed_objects = get_allowed_objects(
+            request.user, ArticleCategory, 'manager')
+    if q:
+        ob_list = ArticleStory.objects.filter(Q(title__icontains=q) & (Q(owner=request.user) | Q(categories__in=allowed_objects))).annotate(
+        Count('categories')).order_by('-time_updated')
+    else:
+        ob_list = ArticleStory.objects.filter(Q(owner=request.user) | Q(categories__in=allowed_objects)).annotate(
         Count('categories')).order_by('-time_updated')
     extra_context = {}
     context = RequestContext(request)
     if ob_list:
         extra_context['stories_list'] = ob_list
         return render_to_response('articles/writer_stories_list.html', extra_context, context_instance=context)
-    else:
-        allowed_objects = get_allowed_objects(
-            request.user, ArticleCategory, 'writer')
-        if len(allowed_objects):
-            extra_context['stories_list'] = None
-            return render_to_response('articles/writer_stories_list.html', extra_context, context_instance=context)
 
     return HttpResponseForbidden()

@@ -8,6 +8,7 @@ from django.core.files.storage import FileSystemStorage
 from django.template.defaultfilters import slugify
 
 from zorna.models import ZornaEntity
+from zorna.acl.models import get_allowed_objects
 from zorna.utilit import get_upload_articles_images, get_upload_articles_files
 from zorna.articles.managers import ArticleCategoryManager
 
@@ -113,6 +114,17 @@ class ArticleStory(ZornaEntity):
             return reverse('view_story', args=[category_id, self.pk, self.slug])
         else:
             return ''
+
+    def get_edit_url(self, user):
+        if self.owner == user:
+            return reverse('edit_story', args=[self.pk])
+        allowed_objects = get_allowed_objects(
+                user, ArticleCategory, 'manager')
+        intersect = set(allowed_objects).intersection( set([category.pk for category in self.categories.all()]))
+        if intersect:
+            return reverse('edit_story', args=[self.pk])
+
+        return None
 
     def __unicode__(self):
         return self.title

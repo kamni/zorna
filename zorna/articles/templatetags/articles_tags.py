@@ -143,6 +143,9 @@ class get_recent_stories_node(template.Node):
         request = context['request']
         allowed_objects = get_allowed_objects(
             request.user, ArticleCategory, 'reader')
+        mao = get_allowed_objects(
+                request.user, ArticleCategory, 'manager')
+
         if self.categories is not None:
             categories = map(int, self.categories.split(','))
             allowed_objects = [ c for c in categories if c in allowed_objects]
@@ -152,6 +155,9 @@ class get_recent_stories_node(template.Node):
             story.current_categories = story.categories.all()
             story.current_category = story.current_categories[0]
             story.url = reverse('view_story', args=[story.current_category.pk, story.pk, story.slug])
+            intersect = set(mao).intersection( set([category.pk for category in story.current_categories]))
+            if intersect:
+                story.edit__url = reverse('edit_story', args=[story.pk])
         context[self.var_name] = stories
         return ''
 
@@ -187,6 +193,8 @@ class get_story_node(template.Node):
         s = self.story.resolve(context)
         allowed_objects = get_allowed_objects(
             request.user, ArticleCategory, 'reader')
+        mao = get_allowed_objects(
+            request.user, ArticleCategory, 'manager')
         stories = ArticleStory.objects.filter(
             categories__in=allowed_objects, pk=int(s))
 
@@ -194,6 +202,10 @@ class get_story_node(template.Node):
             story = stories[0]
             story.current_categories = story.categories.all()
             story.current_category = story.current_categories[0]
+            story.url = reverse('view_story', args=[story.current_category.pk, story.pk, story.slug])
+            intersect = set(mao).intersection( set([category.pk for category in story.current_categories]))
+            if intersect:
+                story.edit__url = reverse('edit_story', args=[story.pk])
             context[self.var_name] = story
         else:
             context[self.var_name] = None
@@ -286,12 +298,18 @@ class get_category_stories_node(template.Node):
         categories = [ c for c in categories if c in allowed_objects]
         if categories:
             categories = ArticleCategory.objects.filter(pk__in=categories)
+            mao = get_allowed_objects(
+                request.user, ArticleCategory, 'reader')
 
             stories = ArticleStory.objects.select_related().filter(
                 categories__in=categories).distinct().order_by('-time_updated')[:int(self.limit)]
             for story in stories:
                 story.current_categories = story.categories.all()
                 story.current_category = story.current_categories[0]
+                story.url = reverse('view_story', args=[story.current_category.pk, story.pk, story.slug])
+                intersect = set(mao).intersection( set([category.pk for category in story.current_categories]))
+                if intersect:
+                    story.edit__url = reverse('edit_story', args=[story.pk])
         else:
             stories = []
         context[self.var_name] = stories
