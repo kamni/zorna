@@ -20,10 +20,70 @@ from django.template.defaultfilters import slugify
 
 from zorna.acl.models import get_allowed_objects, get_acl_by_object
 from zorna.site.email import ZornaEmail
-from zorna.articles.models import ArticleCategory, ArticleStory, ArticleAttachments, ArticleComments
-from zorna.articles.forms import ArticleCategoryForm, ArticleStoryForm, ArticleAttachmentsForm, ArticleCommentsForm
+from zorna.articles.models import ArticleCategory, ArticleStory, ArticleAttachments, ArticleComments, ArticleTags
+from zorna.articles.forms import ArticleCategoryForm, ArticleStoryForm, ArticleAttachmentsForm, ArticleCommentsForm, ArticleTagForm
 from zorna.utilit import get_upload_articles_images, get_upload_articles_files, resize_image
 from zorna.account.models import UserAvatar
+
+
+def admin_list_articles_tags(request):
+    if request.user.is_superuser:
+        ob_list = ArticleTags.objects.all()
+        extra_context = {}
+        extra_context['tags_list'] = ob_list
+        context = RequestContext(request)
+        return render_to_response('articles/list_tags.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
+@login_required()
+def admin_add_articles_tag(request):
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            form = ArticleTagForm(request.POST)
+            if form.is_valid():
+                tag_name = form.cleaned_data['tag']
+
+                if not tag_name in ArticleTags.objects.values_list('name', flat=True):
+                    tag = ArticleTags(name=tag_name, slug=slugify(tag_name))
+                    tag.save()
+                return HttpResponseRedirect(reverse('admin_list_articles_tags'))
+            else:
+                form = ArticleTagForm(request.POST)
+        else:
+            form = ArticleTagForm()
+
+        context = RequestContext(request)
+        extra_context = {'form': form, 'curtag': False}
+        return render_to_response('articles/edit_tag.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
+
+@login_required()
+def admin_edit_articles_tag(request, tag):
+    if request.user.is_superuser:
+        tag = ArticleTags.objects.get(pk=tag)
+        if request.method == 'POST':
+            if request.POST.has_key('bdelete'):
+                tag.delete()
+                return HttpResponseRedirect(reverse('admin_list_articles_tags'))
+            form = ArticleTagForm(request.POST, initial={'tag': tag.name})
+            if form.is_valid():
+                tag_name = form.cleaned_data['tag']
+                tag.name = tag_name
+                tag.slug = slugify(tag_name)
+                tag.save()
+                return HttpResponseRedirect(reverse('admin_list_articles_tags'))
+        else:
+            form = ArticleTagForm(initial={'tag': tag.name})
+
+        context = RequestContext(request)
+        extra_context = {'form': form, 'curtag': tag}
+        return render_to_response('articles/edit_tag.html', extra_context, context_instance=context)
+    else:
+        return HttpResponseRedirect('/')
+
 
 
 @login_required()
@@ -264,6 +324,11 @@ def add_new_story(request):
                         attachment.attached_file.save(file.name, file)
                     except:
                         pass
+
+            tags = map(int, request.POST.getlist('article_tags[]', []))
+            tags = ArticleTags.objects.filter(pk__in=tags)
+            story.tags.add(*tags)
+
             if story.categories:
                 notify_users(request, story, story.categories.all(), True)
 
@@ -273,9 +338,12 @@ def add_new_story(request):
         fa_set = formset_factory(ArticleAttachmentsForm, extra=2)
         form_attachments_set = fa_set()
 
+    tags = ArticleTags.objects.all()
     context = RequestContext(request)
-    extra_context = {'form_story':
-                     form_story, 'form_attachments': form_attachments_set}
+    extra_context = {'form_story': form_story, 
+                    'form_attachments': form_attachments_set,
+                    'tags': tags,
+                    }
     return render_to_response('articles/new_article.html', extra_context, context_instance=context)
 
 
@@ -361,6 +429,10 @@ def edit_story(request, story):
         else:
             form_attachments_set = None
 
+        tags = map(int, request.POST.getlist('article_tags[]', []))
+        story.tags.clear()
+        tags = ArticleTags.objects.filter(pk__in=tags)
+        story.tags.add(*tags)
         if story.categories:
             notify_users(request, story, story.categories.all(), False)
 
@@ -373,9 +445,15 @@ def edit_story(request, story):
         else:
             form_attachments_set = None
 
+    tags = ArticleTags.objects.all()
+    story_tags = story.tags.all()
+    for tag in tags:
+        if tag in story_tags:
+            tag.checked = True
     context = RequestContext(request)
     extra_context = {'form_story': form_story,
                      'story': story,
+                     'tags': tags,
                      'form_attachments': form_attachments_set,
                      'attachments': attachments,
                      'categories': [c.pk for c in categories],

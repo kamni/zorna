@@ -11,6 +11,11 @@ from zorna.site.models import SiteOptions
 
 from mptt.forms import TreeNodeChoiceField
 
+class ArticleTagForm(forms.Form):
+    """
+    Form to edit or add tag
+    """
+    tag = forms.CharField(label=_(u'Tag'))
 
 class ArticleCategoryForm(ModelForm):
     parent = TreeNodeChoiceField(
@@ -58,6 +63,7 @@ class ArticleStoryForm(ModelForm):
 
     class Meta:
         model = ArticleStory
+        exclude = ('tags',)
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop('request')

@@ -5,6 +5,15 @@ from zorna.articles.feeds import ArticleCategoryFeed
 
 
 urlpatterns = patterns('',
+                       url(r'^tags/list/$',
+                           views.admin_list_articles_tags,
+                           name='admin_list_articles_tags'),
+                       url(r'^tags/add/$',
+                           views.admin_add_articles_tag,
+                           name='admin_add_articles_tag'),
+                       url(r'^tags/edit/(?P<tag>\d+)/$',
+                           views.admin_edit_articles_tag,
+                           name='admin_edit_articles_tag'),
                        url(r'^categories/list/$',
                            views.admin_list_categories,
                            name='admin_list_categories'),

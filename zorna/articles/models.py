@@ -6,6 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 from django.core.files.storage import FileSystemStorage
 from django.template.defaultfilters import slugify
+from taggit.managers import TaggableManager
+from taggit.models import TagBase, ItemBase
 
 from zorna.models import ZornaEntity
 from zorna.acl.models import get_allowed_objects
@@ -24,6 +26,33 @@ ARTICLES_NOTIFICATIONS = (
 # cache category slug( id:slug )
 categories_slugs = {}
 
+class ArticleTags(TagBase):
+    # ... fields here
+
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
+        ordering = ['name']
+        db_table = settings.TABLE_PREFIX + "articles_tags"
+
+
+
+class TaggedArticleStory(ItemBase):
+    content_object = models.ForeignKey('ArticleStory')
+    tag = models.ForeignKey(ArticleTags, related_name="%(app_label)s_%(class)s_items")
+
+    class Meta:
+        db_table = settings.TABLE_PREFIX + "tagged_articles"
+
+    @classmethod
+    def tags_for(cls, model, instance=None):
+        if instance is not None:
+            return cls.tag_model().objects.filter(**{
+                '%s__content_object' % cls.tag_relname(): instance
+            })
+        return cls.tag_model().objects.filter(**{
+            '%s__content_object__isnull' % cls.tag_relname(): False
+        }).distinct()
 
 class ArticleCategory(MPTTModel, ZornaEntity):
     parent = models.ForeignKey(
@@ -96,6 +125,8 @@ class ArticleStory(ZornaEntity):
         upload_to=get_image_filepath_storage, storage=article_image_storage, blank=True)
     mimetype = models.CharField(max_length=64, editable=False)
     allow_comments = models.BooleanField(_(u'Allow comment'))
+
+    tags = TaggableManager(through=TaggedArticleStory)
 
     class Meta:
         verbose_name = _('story')

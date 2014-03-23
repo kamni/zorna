@@ -1,0 +1,32 @@
+{% extends "left_right.html" %}
+{% load i18n %}
+{% load acl_tags %}
+
+{% block zorna_extrahead %}
+<script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
+{% endblock %}
+
+
+{% block zorna_left_content %}
+<div class="bloc">
+  <h1>{% trans "Articles tags" %} </h1>
+<table id="category-table-dnd">
+  <thead>
+    <tr>
+    <th>{% trans "Tags" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tag in tags_list %}
+    <td><a href="{% url admin_edit_articles_tag tag.pk %}" title="{% trans "Click to edit tag" %}">{{tag.name}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
+
+{% block zorna_right_content %}
+{% include "articles/right_menu.html" %}
+{% endblock %}
+

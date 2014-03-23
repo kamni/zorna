@@ -5,9 +5,11 @@
 {% block zorna_extrahead %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/publication.css" />
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/treeview/jquery.treeview.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/ui-multiselect/jquery.multiselect.css" />
 <script type="text/javascript">var media_url = "{{MEDIA_URL}}"; var page_media_url = "{{MEDIA_URL}}";</script>
 <script type="text/javascript" src="{{ CKEDITOR_MEDIA_PREFIX }}ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}javascript/treeview/jquery.treeview.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}javascript/ui-multiselect/jquery.multiselect.min.js"></script>
 {% endblock %}
 
 
@@ -23,6 +25,13 @@ jQuery(document).ready(function()
 		control:"#sidetreecontrol",
 		persist: "location"
 	});
+
+  $("#article_tags").multiselect({
+    checkAllText: '{% trans "Check all" %}',
+    uncheckAllText: '{% trans "Uncheck all" %}',
+    noneSelectedText: '{% trans "Select tags" %}',
+    selectedText: '{% trans "# tags" %}'
+  });
 });
 
 -->
@@ -102,6 +111,19 @@ jQuery(document).ready(function()
 	<input type="checkbox" id="id_notify_users" name="notify_users">
 	</div>  	
   </div>  
+  </fieldset>
+
+  <fieldset class="module aligned">
+  <div class="form-row">
+  <div>
+  <label for="id_article_tags">{% trans "Tags"%}</label>
+    <select id="article_tags" name="article_tags[]" multiple="multiple">
+      {% for tag in tags %}
+      <option value="{{tag.pk}}" {% if tag.checked %}selected="selected"{% endif %}>{{tag.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  </div>
   </fieldset>
 
 <input type="submit" name="baddarticle" value="Submit" />

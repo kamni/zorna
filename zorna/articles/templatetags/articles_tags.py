@@ -195,7 +195,7 @@ class get_story_node(template.Node):
             request.user, ArticleCategory, 'reader')
         mao = get_allowed_objects(
             request.user, ArticleCategory, 'manager')
-        stories = ArticleStory.objects.filter(
+        stories = ArticleStory.objects.select_related().filter(
             categories__in=allowed_objects, pk=int(s))
 
         if stories:
@@ -236,7 +236,7 @@ class get_story_attachments_node(template.Node):
         s = self.story.resolve(context)
         allowed_objects = get_allowed_objects(
             request.user, ArticleCategory, 'reader')
-        stories = ArticleStory.objects.filter(
+        stories = ArticleStory.objects.select_related().filter(
             categories__in=allowed_objects, pk=s.pk)
         attachments = s.articleattachments_set.all()
         for f in attachments:

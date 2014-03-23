@@ -16,4 +16,6 @@
 {% if not curcategory %}
   <li><a href="{% url admin_order_categories %}" title="{% trans "Click to order categories" %}">{% trans "Order categories" %}</a></li>
 {% endif %}
+  <li><a href="{% url admin_list_articles_tags %}" title="{% trans "List of tags" %}">{% trans "Tags" %}</a>
+  	 [ <a href="{% url admin_add_articles_tag %}" title="{% trans "Click to add new tag"%}">{% trans "New" %}</a> ]</li>
 </ul>

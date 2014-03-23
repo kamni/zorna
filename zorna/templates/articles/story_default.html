@@ -43,10 +43,9 @@
 	           </div>
 				<div class="clear"></div>
 				<div id="comments">
-					<h3 id="comments-title">{{story_comments.count}} <span>{% trans "comment" %}{{ story_comments.count|pluralize }}</span></h3>
-
 					<!-- LIST COMMENTS -->
 					{% if story_comments %}
+					<h3 id="comments-title">{{story_comments.count}} <span>{% trans "comment" %}{{ story_comments.count|pluralize }}</span></h3>
 					<ol class="commentlist">
 						{% for comment in story_comments %}
 						<li class="comment bypostauthor depth-1">
