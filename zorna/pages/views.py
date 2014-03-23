@@ -16,9 +16,34 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template import Template
 from django.template.loader_tags import BlockNode
+from whoosh.index import open_dir
 
+from zorna.pages.signals import zorna_page_save
 from zorna.pages.forms import PageEditTemplateForm, PageEditFileForm, PageEditFileContextForm
 from zorna.site.models import SiteOptions
+
+
+def delete_document(url):
+    ix = open_dir(
+        settings.HAYSTACK_WHOOSH_PATH, indexname="ZORNA_PAGES")
+    ix.delete_by_term('url', url)
+
+
+def update_document(path, **kwargs):
+    ix = open_dir(
+        settings.HAYSTACK_WHOOSH_PATH, indexname="ZORNA_PAGES")
+    clone = kwargs.get('clone', False)
+    with ix.searcher() as searcher:
+        doc = searcher.document(url=path)
+        if not clone:
+            ix.delete_by_term('url', path)
+        writer = ix.writer()
+        title = kwargs.get('title', doc['title'])
+        content = kwargs.get('content', doc['content'])
+        url = kwargs.get('url', path)
+        writer.add_document(title=unicode(title), content=content,
+                                    url=unicode(url))
+        writer.commit()
 
 
 def normalize_path(path):
@@ -96,8 +121,9 @@ def dirlist(request, path, template=True):
         help_txt = ugettext_noop(u'Double click to edit file')
         for f in files:
             e = os.path.splitext(f)[1][1:]  # get .ext and remove dot
-            r.append('<li class="%s ext_%s"><a href="#" rel="%s%s" title="%s">%s</a></li>' %
-                     (file_type, e, rel, f, help_txt, f))
+            r.append(
+                '<li class="%s ext_%s"><a href="#" rel="%s%s" title="%s">%s</a></li>' %
+                (file_type, e, rel, f, help_txt, f))
     except Exception, e:
         r.append('Could not load directory: %s' % str(e))
     r.append('</ul>')
@@ -218,6 +244,7 @@ def edit_page(request):
         import yaml
         context_yaml = yaml.load(header)
         if request.method == 'POST':
+            document = ''
             try:
                 import codecs
                 lflr = '\r\n'
@@ -226,6 +253,7 @@ def edit_page(request):
                 to_add = []
                 for key, value in request.POST.iteritems():
                     if key[0:2] == '__':
+                        document = document + ' ' + value
                         repl = "%s block %s %s\n%s\n%s endblock %s" % (
                             '{%', key, '%}', value, '{%', '%}')
                         pre = re.compile(r'(%s\s*block\s*%s\s*%s)(.*?)(%s\s*endblock.*?\s*%s)' % (re.escape(
@@ -263,6 +291,8 @@ def edit_page(request):
                     fd.truncate()
                     fd.write(text)
                     fd.close()
+                    zorna_page_save.send(
+                        None, created=False, content=document, title=request.POST.get("title", page), url=page)
                 else:
                     # create temporary file
                     head, tail = os.path.split(page)
@@ -372,6 +402,7 @@ def clone_webpage(request):
     new_page = request.POST.get("new_page", None)
     if (b_pages_manager or b_templates_manager) and webpage is not None and new_page is not None:
         try:
+            webpage = webpage[1:] if webpage[0] == os.sep else webpage
             if file_type == 'template' and b_templates_manager:
                 path = settings.PROJECT_PATH + os.sep + 'skins' + os.sep
             else:
@@ -380,27 +411,31 @@ def clone_webpage(request):
             new_page = slugify(new_page)
             f = new_page + '.html'
             cdir, origin_file = os.path.split(webpage)
-            src = path + webpage
-            dest = path + cdir + os.sep + f
+            src = os.path.join(path, webpage)
+            dest = os.path.join(path, cdir, f)
             if os.path.isfile(dest):
                 ret['status'] = 'error'
                 ret['message'] = 'A file with the same name already exist'
             else:
                 shutil.copyfile(src, dest)
+                if file_type != 'template':
+                    url = os.path.join(cdir,f)
+                    update_document(webpage, url=url, clone=True)
+
                 t = loader.get_template("pages/fm_folder_item.html")
                 if cdir:
                     cdir = cdir + '/'
                 c = RequestContext(request, {
                                    'cdir': cdir, 'f': new_page, 'file_type': file_type})
                 ret['html'] = t.render(c)
-                ret['rel'] = "%s%s" % (cdir, f)
-                ret['head_html'] = '<li class="%s ext_html"><a href="#" rel="%s%s">%s</a></li>' % (
+                ret['rel'] = "/%s%s" % (cdir, f)
+                ret['head_html'] = '<li class="%s ext_html"><a href="#" rel="/%s%s">%s</a></li>' % (
                     file_type, cdir, f, f)
                 ret['status'] = 'success'
                 ret['message'] = 'File has been cloned'
-        except IOError:
+        except Exception as e:
             ret['status'] = 'error'
-            ret['message'] = 'Invalid file name'
+            ret['message'] = 'Invalid file name (%s)' % e
     else:
         ret['status'] = 'error'
         ret['message'] = 'Access denied'
@@ -414,13 +449,17 @@ def delete_webpage(request):
         file_type = request.POST.get("file_type", None)
         webpage = request.POST.get("webpage", None)
         try:
+
+            webpage = webpage[1:] if webpage[0] == os.sep else webpage
             if file_type == 'template' and b_templates_manager:
-                path = settings.PROJECT_PATH + os.sep + 'skins' + os.sep
+                path = settings.PROJECT_PATH + os.sep + 'skins'
             else:
                 path = settings.PROJECT_PATH + \
-                    os.sep + settings.ZORNA_CONTENT + os.sep
-            src = path + webpage
+                    os.sep + settings.ZORNA_CONTENT
+            src = path + os.sep + webpage
             os.remove(src)
+            if file_type != 'template':
+                delete_document(webpage)
             ret['status'] = 'success'
             ret['message'] = 'Removed file successfully'
         except IOError:
@@ -440,16 +479,20 @@ def rename_webpage(request):
     new_name = request.POST.get("new_name", None)
     if (b_pages_manager or b_templates_manager) and webpage is not None and new_name is not None:
         try:
+            webpage = webpage[1:] if webpage[0] == os.sep else webpage
             if file_type == 'template' and b_templates_manager:
                 path = settings.PROJECT_PATH + os.sep + 'skins' + os.sep
             else:
                 path = settings.PROJECT_PATH + \
                     os.sep + settings.ZORNA_CONTENT + os.sep
-            src = path + webpage
+            src = os.path.join(path, webpage)
             head, tail = os.path.split(src)
-            new_name = slugify(new_name)
-            dest = os.path.join(head, new_name + '.html')
+            new_name = slugify(new_name) + '.html'
+            dest = os.path.join(head, new_name)
             os.rename(src, dest)
+            if file_type != 'template':
+                head, tail = os.path.split(webpage)
+                update_document(webpage, url=os.path.join(head, new_name))
             ret['status'] = 'success'
             ret['message'] = 'File renamed successfully'
         except IOError:
@@ -477,6 +520,8 @@ def past_webpage(request):
             src = path + webpage
             dest = path + webrel
             shutil.move(src, dest)
+            if file_type != 'template':
+                update_document(webpage, url=webrel+os.path.split(src)[1])
             head, tail = os.path.split(src)
             t = loader.get_template("pages/fm_folder_item.html")
             c = RequestContext(request, {'cdir': webrel.rstrip(
@@ -486,9 +531,9 @@ def past_webpage(request):
                 file_type, webrel, tail, tail)
             ret['status'] = 'success'
             ret['message'] = 'File pasted successfully'
-        except IOError:
+        except Exception as e:
             ret['status'] = 'error'
-            ret['message'] = 'File error'
+            ret['message'] = 'File error (%s)' % e
     else:
         ret['status'] = 'error'
         ret['message'] = 'Access denied'
