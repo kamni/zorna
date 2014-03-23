@@ -22,7 +22,7 @@ class Command(BaseCommand):
                     path_file = os.path.join(dirName, file_name)
                     context, text = get_context_text(path_file)
                     pars = HTMLParser.HTMLParser()
-                    text = pars.unescape(text)
+                    text = pars.unescape(unicode(text,'utf-8'))
                     text = ''.join( BeautifulSoup( text ).findAll( text = True ))
                     url = path_file.replace(root, '')
                     title = os.path.splitext(os.path.split(path_file)[1])[0]
@@ -37,5 +37,5 @@ class Command(BaseCommand):
                                     url=unicode(url))
                 except Exception as e:
                     print e
-                    raise e
+                    pass
         writer.commit()

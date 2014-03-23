@@ -2,7 +2,7 @@ import os
 
 ACTSTREAM_SETTINGS = {
     'MODELS': ('auth.user',),
-    }
+}
 plugins_path = os.path.join(PROJECT_PATH, 'zorna_plugins')
 if os.path.isdir(plugins_path):
     for app in os.listdir(plugins_path):
@@ -92,7 +92,8 @@ INSTALLED_APPS = (
     'ckeditor',
     'south',
     'schedule',
-    'tagging'
+    'tagging',
+    'taggit',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -110,7 +111,7 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django.request':{
+        'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,

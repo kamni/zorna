@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-19 16:22+0100\n"
+"POT-Creation-Date: 2014-03-23 11:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr "Activation du compte sur"
 msgid "Your site has recorded a new registration"
 msgstr "Votre site a enregistré un nouvel utilisateur"
 
-#: account/forms.py:215 articles/forms.py:74
+#: account/forms.py:215 articles/forms.py:80
 #, python-format
 msgid ""
 "%(ext)s is an invalid file extension. Authorized extensions are : "
@@ -184,7 +184,7 @@ msgstr "Anonymes"
 msgid "Registered"
 msgstr "Utilisateurs enregistrés"
 
-#: account/models.py:21 acl/models.py:98 articles/models.py:31
+#: account/models.py:21 acl/models.py:98 articles/models.py:60
 #: calendars/models.py:168 communities/models.py:23 fileman/models.py:25
 #: menus/models.py:26 notes/models.py:21 workflow/forms.py:38
 msgid "name"
@@ -320,16 +320,20 @@ msgstr "Articles de la catégorie %s"
 msgid "Articles recently published in category %s"
 msgstr "Articles récemment publiés dans la catégorie %s"
 
-#: articles/forms.py:34 faq/forms.py:27 faq/forms.py:52
+#: articles/forms.py:18 articles/models.py:33
+msgid "Tag"
+msgstr "Etiquette"
+
+#: articles/forms.py:39 faq/forms.py:27 faq/forms.py:52
 msgid "You must provide a slug or a category name"
 msgstr "Vous devez fournir un slug ou un nom de catégorie"
 
-#: articles/forms.py:39 notes/forms.py:43
-#: templates/articles/edit_article.html:157
+#: articles/forms.py:44 notes/forms.py:43
+#: templates/articles/edit_article.html:165
 msgid "Attachment"
 msgstr "Fichier joint"
 
-#: articles/forms.py:41 articles/models.py:145 communities/forms.py:36
+#: articles/forms.py:46 articles/models.py:176 communities/forms.py:36
 #: fileman/forms.py:40 fileman/forms.py:50 forms/forms.py:60 forms/forms.py:82
 #: forms/models.py:44 forms/models.py:86 notes/forms.py:45
 #: templates/communities/admin_list_communities.html:19
@@ -338,132 +342,139 @@ msgstr "Fichier joint"
 msgid "Description"
 msgstr "Description"
 
-#: articles/forms.py:51 communities/models.py:127 communities/models.py:139
+#: articles/forms.py:56 communities/models.py:127 communities/models.py:139
 #: menus/models.py:28 pages/forms.py:29
 #: templates/admin/account/usergroup/change_list_table.html:10
 #: templates/admin/pages/page/change_list_table.html:9
 msgid "title"
 msgstr "Titre"
 
-#: articles/forms.py:52 articles/models.py:32 articles/models.py:90
+#: articles/forms.py:57 articles/models.py:61 articles/models.py:119
 #: fileman/models.py:26 menus/models.py:27 notes/models.py:22
 msgid "slug"
 msgstr "slug"
 
-#: articles/forms.py:54
+#: articles/forms.py:59
 msgid "head"
 msgstr "Entête"
 
-#: articles/forms.py:56 articles/forms.py:65 communities/forms.py:300
+#: articles/forms.py:61 articles/forms.py:71 communities/forms.py:300
 #: communities/forms.py:310 communities/models.py:140 faq/forms.py:68
 #: forms/forms.py:95 forms/forms.py:121 forms/forms.py:183 forms/forms.py:185
 #: notes/forms.py:14 notes/forms.py:24
 msgid "body"
 msgstr "Corps"
 
-#: articles/forms.py:88
+#: articles/forms.py:94
 msgid "You must provide a slug or a story title"
 msgstr "Vous devez fournir un slug ou un titre"
 
-#: articles/models.py:18 fileman/models.py:16
+#: articles/models.py:20 fileman/models.py:16
 msgid "No email notification"
 msgstr "Pas de notification par email"
 
-#: articles/models.py:19 fileman/models.py:17
+#: articles/models.py:21 fileman/models.py:17
 msgid "Send email notification"
 msgstr "Envoyer une notification par email"
 
-#: articles/models.py:20 fileman/models.py:18
+#: articles/models.py:22 fileman/models.py:18
 msgid "Let the author decide"
 msgstr "Laisser le choix à l'auteur"
 
-#: articles/models.py:33 forms/models.py:96
+#: articles/models.py:34 templates/articles/edit_article.html:207
+#: templates/articles/list_tags.html:16
+#: templates/articles/new_article.html:119
+#: templates/articles/right_menu.html:19
+msgid "Tags"
+msgstr "Mots clés"
+
+#: articles/models.py:62 forms/models.py:96
 msgid "Template"
 msgstr "Template"
 
-#: articles/models.py:34 articles/models.py:98
+#: articles/models.py:63 articles/models.py:127
 msgid "Allow comment"
 msgstr "Autoriser les commentaires"
 
-#: articles/models.py:36
+#: articles/models.py:65
 msgid ""
 "Users will receive email notification when an article is published or updated"
 msgstr ""
 "Les utilisateurs seront informés par email quan un article est publié ou mis "
 "à jour"
 
-#: articles/models.py:40
+#: articles/models.py:69
 msgid "articles category"
 msgstr "catégorie d'article"
 
-#: articles/models.py:41
+#: articles/models.py:70
 msgid "articles categories"
 msgstr "catégorie d'articles"
 
-#: articles/models.py:64
+#: articles/models.py:93
 msgid "Who can browse this category"
 msgstr "Qui peut visualiser cette catégorie"
 
-#: articles/models.py:65
+#: articles/models.py:94
 msgid "Who can submit articles to this category"
 msgstr "Qui peut soumettre des articles dans cette catégorie"
 
-#: articles/models.py:66
+#: articles/models.py:95
 msgid "Who can manage this category"
 msgstr "Qui peut gérer cette catgéorie"
 
-#: articles/models.py:88
+#: articles/models.py:117
 msgid "categories"
 msgstr "catégories"
 
-#: articles/models.py:89 articles/models.py:157 forms/models.py:167
-#: notes/forms.py:13 templates/articles/story_default.html:87
+#: articles/models.py:118 articles/models.py:188 forms/models.py:167
+#: notes/forms.py:13 templates/articles/story_default.html:86
 #: templates/articles/writer_stories_list.html:26
 msgid "Title"
 msgstr "Titre"
 
-#: articles/models.py:91
+#: articles/models.py:120
 msgid "Head"
 msgstr "Entête"
 
-#: articles/models.py:92
+#: articles/models.py:121
 msgid "Body"
 msgstr "Corps"
 
-#: articles/models.py:101
+#: articles/models.py:132
 msgid "story"
 msgstr "Article"
 
-#: articles/models.py:102
+#: articles/models.py:133
 msgid "stories"
 msgstr "Articles"
 
-#: articles/models.py:148 articles/models.py:160
+#: articles/models.py:179 articles/models.py:191
 msgid "article"
 msgstr "article"
 
-#: articles/models.py:151 articles/models.py:152
+#: articles/models.py:182 articles/models.py:183
 msgid "article attachments"
 msgstr "Fichiers joints à l'article"
 
-#: articles/models.py:158 workflow/models.py:221
+#: articles/models.py:189 workflow/models.py:221
 msgid "Comment"
 msgstr "Commentaire"
 
-#: articles/models.py:163
+#: articles/models.py:194
 msgid "article comment"
 msgstr "Commentaire de l'article"
 
-#: articles/models.py:164
+#: articles/models.py:195
 msgid "article comments"
 msgstr "Commentaires de l'article"
 
-#: articles/views.py:204 templates/articles/email_notification_html.html:9
+#: articles/views.py:264 templates/articles/email_notification_html.html:9
 #: templates/articles/email_notification_text.html:3
 msgid "A new article has been published"
 msgstr "Un nouvel article a été publié"
 
-#: articles/views.py:206 templates/articles/email_notification_html.html:9
+#: articles/views.py:266 templates/articles/email_notification_html.html:9
 #: templates/articles/email_notification_text.html:3
 msgid "An article has been updated"
 msgstr "Un article a été mis à jour"
@@ -701,7 +712,7 @@ msgstr "Content type"
 
 #: communities/api.py:177 communities/forms.py:155 communities/views.py:1206
 #: forms/forms.py:107 forms/forms.py:112 forms/models.py:95
-#: forms/models.py:139 templates/articles/story_default.html:91
+#: forms/models.py:139 templates/articles/story_default.html:90
 #: workflow/models.py:90
 msgid "Message"
 msgstr "Message"
@@ -942,7 +953,8 @@ msgstr "Page"
 #: templates/pages/fm_edit_file.html:5
 #: templates/pages/fm_edit_template.html:14
 #: templates/pages/fm_manage_folder.html:20
-#: templates/pages/fmbrowser_home.html:720 templatetags/zorna_tags.py:115
+#: templates/pages/fmbrowser_home.html:720
+#: templates/search/search_results.html:14 templatetags/zorna_tags.py:115
 msgid "Pages"
 msgstr "Pages"
 
@@ -1694,11 +1706,11 @@ msgstr "Note mise à jour avec succès"
 msgid "keywords"
 msgstr "mots clés"
 
-#: pages/views.py:88
+#: pages/views.py:113
 msgid "Double click to open or close folder"
 msgstr "Double cliquez pour ouvrit ou fermer le répertoire"
 
-#: pages/views.py:96
+#: pages/views.py:121
 msgid "Double click to edit file"
 msgstr "Double cliquez pour éditer le fichier"
 
@@ -1928,7 +1940,7 @@ msgstr "Changer le mot de passe"
 
 #: templates/account/edit_group.html:29
 #: templates/account/users_administrators.html:41
-#: templates/articles/edit_article.html:197
+#: templates/articles/edit_article.html:217
 #: templates/communities/edit_plugin.html:35
 #: templates/communities/edit_plugin.html:40
 #: templates/communities/manage_community_users.html:40
@@ -2268,50 +2280,71 @@ msgstr "Flux RSS"
 msgid "Last entries"
 msgstr "Dernières publications"
 
-#: templates/articles/edit_article.html:34
+#: templates/articles/edit_article.html:36
 msgid "Are you sur you want to delete this article"
 msgstr "Etes-vous sûr de vouloir supprimer cet article"
 
+#: templates/articles/edit_article.html:41
+#: templates/articles/new_article.html:30
+msgid "Check all"
+msgstr "Tout cocher"
+
+#: templates/articles/edit_article.html:42
+#: templates/articles/new_article.html:31
+msgid "Uncheck all"
+msgstr "Tout décocher"
+
 #: templates/articles/edit_article.html:43
+#: templates/articles/new_article.html:32
+msgid "Select tags"
+msgstr "Sélectionner les étiquettes"
+
+#: templates/articles/edit_article.html:44
+#: templates/articles/new_article.html:33
+msgid "# tags"
+msgstr "# étiquettes"
+
+#: templates/articles/edit_article.html:51
 msgid "Edit story"
 msgstr "Editer l'article"
 
-#: templates/articles/edit_article.html:51
+#: templates/articles/edit_article.html:59
 #: templates/articles/list_categories.html:24
-#: templates/articles/new_article.html:41
+#: templates/articles/new_article.html:50
 #: templates/articles/right_menu.html:12
 #: templates/faq/manager_right_menu.html:6
 msgid "Categories"
 msgstr "Catégories"
 
-#: templates/articles/edit_article.html:54
-#: templates/articles/new_article.html:44
+#: templates/articles/edit_article.html:62
+#: templates/articles/new_article.html:53
 msgid "Collapse All"
 msgstr "Réduire tout"
 
-#: templates/articles/edit_article.html:54
-#: templates/articles/new_article.html:44
+#: templates/articles/edit_article.html:62
+#: templates/articles/new_article.html:53
 msgid "Expand All"
 msgstr "Développer tout"
 
-#: templates/articles/edit_article.html:84
-#: templates/articles/edit_article.html:160
+#: templates/articles/edit_article.html:92
+#: templates/articles/edit_article.html:168
 msgid "Delete this attachment"
 msgstr "Supprimer ce fichier joint"
 
-#: templates/articles/edit_article.html:189
-#: templates/articles/new_article.html:99
+#: templates/articles/edit_article.html:197
+#: templates/articles/new_article.html:108
 #: templates/fileman/file_properties.html:128
 #: templates/fileman/upload_documents.html:53
 msgid "Notify users"
 msgstr "Notifiez les utilisateurs"
 
-#: templates/articles/edit_article.html:190
-#: templates/articles/new_article.html:100
+#: templates/articles/edit_article.html:198
+#: templates/articles/new_article.html:109
 msgid "If allowed, send an email to notify users"
 msgstr "Si autorisé, envoyez un e-mail pour informer les utilisateurs"
 
-#: templates/articles/edit_article.html:198
+#: templates/articles/edit_article.html:218
+#: templates/articles/edit_tag.html:39
 #: templates/calendars/calendar_edit.html:167
 #: templates/communities/message_entry.html:63
 #: templates/communities/message_reply.html:17
@@ -2349,6 +2382,30 @@ msgstr "Cliquez et glissez les lignes pour les réordonner"
 #: templates/menus/edit_menu_item.html:79
 msgid "Childs"
 msgstr "Enfants"
+
+#: templates/articles/edit_tag.html:13
+msgid "Update tag"
+msgstr "Mettre à jour l'étiquette"
+
+#: templates/articles/edit_tag.html:15
+msgid "Add new tag"
+msgstr "Ajouter une nouvelle étiquette"
+
+#: templates/articles/edit_tag.html:37
+#: templates/calendars/calendar_edit.html:165
+#: templates/calendars/calendar_settings.html:40
+#: templates/fileman/edit_folder.html:57
+#: templates/forms/edit_form_action_message.html:57
+#: templates/forms/edit_form_action_url.html:56
+#: templates/forms/edit_form_email.html:53
+#: templates/forms/edit_form_panel.html:145
+#: templates/forms/edit_form_template.html:38
+#: templates/forms/new_field.html:131 templates/forms/new_form.html:67
+#: templates/forms/new_list.html:70 templates/forms/new_master_field.html:42
+#: templates/menus/edit_menu_item.html:92 templates/pages/fm_edit_file.html:57
+#: templates/pages/fm_edit_template.html:31 templates/site/edit_alert.html:44
+msgid "Save"
+msgstr "Enregistrer"
 
 #: templates/articles/email_notification_html.html:9
 #: templates/articles/email_notification_text.html:3
@@ -2397,7 +2454,15 @@ msgstr "Cliquez pour éditer droits"
 msgid "Click to edit articles category"
 msgstr "Cliquez pour éditer la catégorie"
 
-#: templates/articles/new_article.html:33
+#: templates/articles/list_tags.html:12
+msgid "Articles tags"
+msgstr "Etiquette d'articles"
+
+#: templates/articles/list_tags.html:21
+msgid "Click to edit tag"
+msgstr "Cliquez pour modifier l'étiquette"
+
+#: templates/articles/new_article.html:42
 msgid "New story"
 msgstr "Nouvel article"
 
@@ -2470,24 +2535,38 @@ msgstr "Cliquez pour ajouter une nouvelle catégorie"
 msgid "Click to order categories"
 msgstr "Cliquez pour ordonner les catégories"
 
+#: templates/articles/right_menu.html:19
+msgid "List of tags"
+msgstr "Liste des étiquettes"
+
+#: templates/articles/right_menu.html:20
+msgid "Click to add new tag"
+msgstr "Cliquez pour ajouter une étiquette"
+
+#: templates/articles/right_menu.html:20 templates/forms/fields_home.html:31
+#: templates/forms/home.html:76 templates/site/admin_right_menu.html:24
+#: templates/site/admin_right_menu.html:28
+msgid "New"
+msgstr "Nouveau"
+
 #: templates/articles/story_default.html:24
 msgid "posted by"
 msgstr "publié par"
 
 #: templates/articles/story_default.html:25
-#: templates/articles/story_default.html:46
+#: templates/articles/story_default.html:48
 msgid "comment"
 msgstr "commentaire"
 
-#: templates/articles/story_default.html:83
+#: templates/articles/story_default.html:82
 msgid "Leave a Comment"
 msgstr "Ecrire un commentaire"
 
-#: templates/articles/story_default.html:95
+#: templates/articles/story_default.html:94
 msgid "Post Comment"
 msgstr "Envoyer le commentaire"
 
-#: templates/articles/story_default.html:126
+#: templates/articles/story_default.html:125
 msgid "His recent posts"
 msgstr "Ses dernières publications"
 
@@ -2750,21 +2829,6 @@ msgstr ""
 #: templates/calendars/settings_right_menu.html:3
 msgid "Back to calendars"
 msgstr "Retour à l'agenda"
-
-#: templates/calendars/calendar_edit.html:165
-#: templates/calendars/calendar_settings.html:40
-#: templates/fileman/edit_folder.html:57
-#: templates/forms/edit_form_action_message.html:57
-#: templates/forms/edit_form_action_url.html:56
-#: templates/forms/edit_form_email.html:53
-#: templates/forms/edit_form_panel.html:145
-#: templates/forms/edit_form_template.html:38
-#: templates/forms/new_field.html:131 templates/forms/new_form.html:67
-#: templates/forms/new_list.html:70 templates/forms/new_master_field.html:42
-#: templates/menus/edit_menu_item.html:92 templates/pages/fm_edit_file.html:57
-#: templates/pages/fm_edit_template.html:31 templates/site/edit_alert.html:44
-msgid "Save"
-msgstr "Enregistrer"
 
 #: templates/calendars/calendar_settings.html:7
 msgid "Update calendar settings"
@@ -3114,8 +3178,9 @@ msgstr "Editer la faq"
 #: templates/faq/list_faqs.html.py:18 templates/faq/manager_list_faqs.html:12
 #: templates/faq/manager_list_faqs.html:16
 #: templates/faq/manager_right_menu.html:12
-#: templates/faq/manager_right_menu.html:14 templates/search/search.html:14
-#: templatetags/zorna_tags.py:132 templatetags/zorna_tags.py:181
+#: templates/faq/manager_right_menu.html:14
+#: templates/search/search_results.html:8 templatetags/zorna_tags.py:132
+#: templatetags/zorna_tags.py:181
 msgid "Faqs"
 msgstr "Faqs"
 
@@ -3150,7 +3215,7 @@ msgstr "Ajouter une nouvelle question"
 
 #: templates/faq/list_categories.html:33 templates/faq/list_questions.html:33
 #: templates/faq/manager_edit_faq.html:13 templates/menus/right_menu.html:11
-#: templates/search/search.html:33
+#: templates/search/search_results.html:34
 msgid "Faq"
 msgstr "Faq"
 
@@ -3256,7 +3321,8 @@ msgid "Created"
 msgstr "Créé le"
 
 #: templates/fileman/file_properties.html:34
-#: templates/fileman/file_properties.html:58 templates/search/search.html:30
+#: templates/fileman/file_properties.html:58
+#: templates/search/search_results.html:31
 msgid "By"
 msgstr "Par"
 
@@ -3533,12 +3599,6 @@ msgstr "Dernièrs enregistrements"
 #: templates/forms/fields_home.html:31
 msgid "Fields"
 msgstr "Champs"
-
-#: templates/forms/fields_home.html:31 templates/forms/home.html:76
-#: templates/site/admin_right_menu.html:24
-#: templates/site/admin_right_menu.html:28
-msgid "New"
-msgstr "Nouveau"
 
 #: templates/forms/fields_menu.html:8
 msgid "Click to display lists"
@@ -3879,25 +3939,25 @@ msgstr "Coller"
 msgid "You will lose the changes made in the editor"
 msgstr "Vous allez perdre les modifications faites dans l\\'éditeur"
 
-#: templates/search/search.html:10
-msgid "Search results"
-msgstr "Résultats de la recherche"
-
-#: templates/search/search.html:17 templatetags/zorna_tags.py:176
-msgid "Articles"
-msgstr "Articles"
-
-#: templates/search/search.html:29
-msgid "Article"
-msgstr "Articles"
-
-#: templates/search/search.html:58
-msgid "No results found"
-msgstr "Aucun résultat trouvé"
-
 #: templates/search/search_form.html:4
 msgid "SEARCH"
 msgstr "RECHERCHE"
+
+#: templates/search/search_results.html:4
+msgid "Search results"
+msgstr "Résultats de la recherche"
+
+#: templates/search/search_results.html:11 templatetags/zorna_tags.py:176
+msgid "Articles"
+msgstr "Articles"
+
+#: templates/search/search_results.html:30
+msgid "Article"
+msgstr "Articles"
+
+#: templates/search/search_results.html:62
+msgid "No results found"
+msgstr "Aucun résultat trouvé"
 
 #: templates/site/admin_right_menu.html:4
 msgid "Alert"
@@ -4279,9 +4339,6 @@ msgstr ""
 
 #~ msgid "Upload"
 #~ msgstr "Charger"
-
-#~ msgid "Tags"
-#~ msgstr "Mots clés"
 
 #~ msgid "Click to rename file..."
 #~ msgstr "Cliquez pour changer le nom du fichier"
