@@ -557,17 +557,19 @@ def add_story_comment(request, story):
 @login_required()
 def writer_stories_list(request):
     q = request.GET.get('q', None)
-    allowed_objects = get_allowed_objects(
+    aom = get_allowed_objects(
             request.user, ArticleCategory, 'manager')
+    aow = get_allowed_objects(
+            request.user, ArticleCategory, 'writer')
     if q:
-        ob_list = ArticleStory.objects.filter(Q(title__icontains=q) & (Q(owner=request.user) | Q(categories__in=allowed_objects))).annotate(
+        ob_list = ArticleStory.objects.filter(Q(title__icontains=q) & (Q(owner=request.user) | Q(categories__in=aom))).annotate(
         Count('categories')).order_by('-time_updated')
     else:
-        ob_list = ArticleStory.objects.filter(Q(owner=request.user) | Q(categories__in=allowed_objects)).annotate(
+        ob_list = ArticleStory.objects.filter(Q(owner=request.user) | Q(categories__in=aom)).annotate(
         Count('categories')).order_by('-time_updated')
     extra_context = {}
     context = RequestContext(request)
-    if ob_list:
+    if ob_list or aow:
         extra_context['stories_list'] = ob_list
         return render_to_response('articles/writer_stories_list.html', extra_context, context_instance=context)
 
