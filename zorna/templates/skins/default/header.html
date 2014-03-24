@@ -12,7 +12,7 @@
           <a href="{% url user_logout %}">{% trans "Log out" %}</a>
     </li>
     <li>  
-      <a href="">{% trans "User" %}</a>
+      <a href="#">{% trans "User" %}</a>
       <ul>
         {% get_user_menus as user_menus %}
         {% for item in user_menus %}
@@ -23,7 +23,7 @@
     {% get_administrator_menus as user_menus %}
     {% if user_menus %}    
     <li>  
-      <a href="">{% trans "Administration" %}</a>
+      <a href="#">{% trans "Administration" %}</a>
       <ul>
         {% for item in user_menus %}
         <li><a href="{{item.url}}">{{item.text}}</a></li>
