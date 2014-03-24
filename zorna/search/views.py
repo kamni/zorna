@@ -58,7 +58,7 @@ def search(request):
                 ix = open_dir(settings.HAYSTACK_WHOOSH_PATH, indexname="ZORNA_PAGES")
                 with ix.searcher() as searcher:
                     qp = QueryParser("content", schema=ix.schema)
-                    q = qp.parse(query)
+                    q = qp.parse("*"+query+"*")
                     pages = searcher.search(q)
                     if len(pages):
                         pages_result = []
