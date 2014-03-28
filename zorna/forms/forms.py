@@ -584,8 +584,10 @@ class FormForForm(forms.ModelForm):
                 if field.is_a(fc.ZORNA_USER):
                     value = self.cleaned_data[field_key + '-id']
                 if value and hasattr(value, 'name') and self.fields[field_key].widget.needs_multipart_form:
+                    s = os.path.splitext(value.name)
+                    filename = u"%s%s" % (slugify(s[0]), s[1])
                     value = fs.save(join(str(self.form.pk), str(
-                        entry.pk), str(uuid4()), value.name), value)
+                        entry.pk), str(uuid4()), filename), value)
                     bdelete_file = True
                 if isinstance(value, list):
                     value = ",".join([v.strip() for v in value])
