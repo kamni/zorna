@@ -41,7 +41,6 @@ body {
     border-left: 1px solid #FFF;
     display: inline;
     padding: 0 0.75em;
-    white-space: nowrap;
 }    
 
 .header li ul {
