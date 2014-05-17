@@ -1,3 +1,7 @@
 *.pyc
 *.pyo
 /*.sqlite
+.project
+.pydevproject
+.settings
+public/ckeditor
