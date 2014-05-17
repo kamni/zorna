@@ -14,7 +14,7 @@ Le but de ce guide est de fournir assez d'informations pour commprendre comment 
 Caractéristiques
 ****************
 * Pages de navigation hiérarchiques
-* Editeur WYSIWYG 
+* Editeur WYSIWYG
 * Publication d'articles organisés par catétgories
 * Publication d'un même article dans plusieurs catégories
 * Ajout de fichiers joints à l'article
@@ -49,7 +49,7 @@ Pour cela, installer virtualenv comme suit:
 .. code-block:: bash
 
 	$ sudo pip install virtualenv
-	
+
 Une fois l'installation faite, créez un environnement virtuel comme suit:
 
 .. code-block:: bash
@@ -97,7 +97,7 @@ Créez le répertoire où ZORNA stockera les documents chargés par l'utilisateu
 
 .. code-block:: bash
 
-	(myEnv)$ mkdir upload && mkdir upload/ickeditor
+	(myEnv)$ mkdir -p upload/ickeditor
 
 Créez les liens symboliques suivants:
 
