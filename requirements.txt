@@ -2,7 +2,6 @@ Django==1.4.3
 https://github.com/zorna/django-schedule/archive/master.zip
 git+git://github.com/justquick/django-activity-stream.git#egg=django-activity-stream
 BeautifulSoup==3.2.1
-PIL==1.1.7
 Pillow==1.7.8
 PyYAML==3.10
 South==0.7.6
