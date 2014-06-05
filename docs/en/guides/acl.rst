@@ -75,7 +75,6 @@ To avoid this, ZORNA allows you to duplicate the permissions of an object and
 to apply those permissions to another object.
 
 Just create the new object and go to screen for setting permissions. On this
-screen, scroll to the listbox "Load permissions from" to load the permissions
-from another object. ZORNA will apply the  granted to the object to apply the new object. Save to save the new rights.
-Pour cela il suffit de créer le nouvel objet et d'aller à l'interface de création des droits. Sur cette interface, déroulez la listbox "Charger les permissions à partir de" pour charger les permissions à partir d'un autre objet. ZORNA charge les droits octroyés à l'objet pour les appliquer au nouvel objet.
-Enregistrer pour sauvegarder les nouveaux droits.
+screen, scroll to the dropdown "Load permissions from" to add the permissions
+from another object. ZORNA will apply the permissions from the selected
+object to the new object. Click 'Save' to save the new access permissions.
